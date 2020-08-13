@@ -13,7 +13,10 @@ with lib;
       packages = with pkgs; [
         bitwarden-cli
         jq
+        keyutils
       ];
+
+      zsh.rc = '' keyctl link @u @s '';
     };
   };
 }

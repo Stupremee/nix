@@ -5,5 +5,6 @@
     ./bspwm.nix
     ./browsers
     ./apps
+    ./term
   ];
 }

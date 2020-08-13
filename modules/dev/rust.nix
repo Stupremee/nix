@@ -16,7 +16,7 @@ with lib;
 
       env.RUSTUP_HOME = "$XDG_DATA_HOME/rustup";
       env.CARGO_HOME = "$XDG_DATA_HOME/cargo";
-      env.CARGO_TARGET = "$XDG_CACHE_DIR/cargo_target";
+      env.CARGO_TARGET_DIR = "$XDG_CACHE_HOME/cargo_target";
       env.PATH = [ "$CARGO_HOME/bin" ];
     };
   };

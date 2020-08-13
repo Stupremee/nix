@@ -16,7 +16,6 @@ with lib;
       lightdm
       dunst
       libnotify
-      alacritty
       maim
       (polybar.override {
         pulseSupport = true;
@@ -36,9 +35,6 @@ with lib;
               { output = "HDMI-0"; primary = true; } ];
       };
     };
-
-    my.env.TERMINAL = "alacritty";
-    environment.variables.TERMINAL = "alacritty";
 
     my.home.xdg.configFile = {
       "bspwm" = {

@@ -26,6 +26,9 @@
       browsers.firefox.enable = true;
       browsers.qutebrowser.enable = true;
 
+      term.alacritty.enable = true;
+      term.default = "alacritty";
+
       apps.discord.enable = true;
       apps.rofi.enable = true;
     };

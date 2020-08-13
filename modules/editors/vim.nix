@@ -18,7 +18,16 @@ with lib;
             configure = {
               customRC = lib.readFile <config/nvim/init.vim>;
               packages.myNeovimPackage = with pkgs.vimPlugins; {
-                start = [ vim-plug ];
+                start = [
+                  nord-vim
+                  vim-sneak
+                  vim-rooter
+                  neoformat
+                  nerdcommenter
+                  fzf-vim
+                  vim-polyglot
+                  vim-nix
+                ];
               };
             };
           }

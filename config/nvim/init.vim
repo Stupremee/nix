@@ -6,26 +6,12 @@ let g:localleader=","
 " Plugins
 " ------------------
 
-" call plug#begin("~/.config/nvim/plugged")
-" 
-" Plug 'arcticicestudio/nord-vim'
-" Plug 'justinmk/vim-sneak'
-" Plug 'airblade/vim-rooter'
-" Plug 'sbdchd/neoformat'
-" Plug 'scrooloose/nerdcommenter'
-" Plug 'junegunn/fzf'
-" Plug 'junegunn/fzf.vim'
-" Plug 'sheerun/vim-polyglot'
-" Plug 'LnL7/vim-nix'
-" 
-" call plug#end()
-
 filetype plugin indent on
 syntax on
 
 " Set colortheme
 set background=dark
-" colorscheme nord
+colorscheme nord
 
 " Set custom statusline
 set laststatus=2
@@ -70,9 +56,9 @@ set undofile
 " Plugin settings
 " ------------------
 
-" augroup fmt
-"     autocmd BufWritePre * Neoformat
-" augroup END
+augroup fmt
+    autocmd BufWritePre * Neoformat
+augroup END
 
 " ------------------
 " Shortcuts

@@ -7,7 +7,9 @@ device: username:
   imports = [
     ./modules
     "${./hosts}/${device}"
-  ];
+  ] ++ (if builtins.pathExists(./secrets.nix) then [
+    ./secrets.nix
+  ] else []);
 
   nix.autoOptimiseStore = true;
   nix.nixPath = options.nix.nixPath.default ++ [

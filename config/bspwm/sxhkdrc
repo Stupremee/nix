@@ -11,6 +11,8 @@ super + shift + w
   $BROWSER
 super + Print
   screenshot
+super + m
+  bwmenu
 
 # Multimedia stuff
 XF86AudioMute
@@ -39,7 +41,7 @@ super + @space
 super + shift + space
   bspc node focused -t \~floating
 # quit/restart bspwm
-super + shift + {q,r}
+super + shift + {e,r}
   bspc {quit,wm -r}
 
 

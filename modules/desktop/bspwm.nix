@@ -17,6 +17,7 @@ with lib;
       dunst
       libnotify
       alacritty
+      maim
       (polybar.override {
         pulseSupport = true;
         nlSupport = true;

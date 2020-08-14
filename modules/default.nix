@@ -12,6 +12,7 @@ in {
     ./editors
     ./dev
     ./media
+    ./themes
   ];
 
   options = {

@@ -26,5 +26,20 @@ with lib;
     ];
 
     my.env.XDG_DESKTOP_DIR = "$HOME";
+
+    my.home.home.file =
+      let cfg = config.modules.desktop.browsers.firefox; in
+      {
+        ".mozilla/firefox/profiles.ini".text = ''
+          [Profile0]
+          Name=default
+          IsRelative=1
+          Path=${cfg.profileName}.default
+          Default=1
+          [General]
+          StartWithLastProfile=1
+          Version=2
+        '';
+      };
   };
 }

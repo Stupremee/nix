@@ -31,6 +31,7 @@ in {
         ripgrep-all
         pulsemixer
         procs
+        pastel
       ];
       env.ZDOTDIR   = "$XDG_CONFIG_HOME/zsh";
       env.ZSH_CACHE = "$XDG_CACHE_HOME/zsh";

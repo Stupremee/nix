@@ -48,6 +48,8 @@
       mpv.enable = true;
       spotify.enable = true;
     };
+
+    themes.nord.enable = true;
   };
 
   networking.networkmanager.enable = true;

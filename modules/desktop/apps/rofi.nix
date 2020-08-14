@@ -11,11 +11,6 @@ with lib;
 
   config = mkIf config.modules.desktop.apps.rofi.enable {
     my = {
-      home.xdg.configFile."rofi" = {
-        source = <config/rofi>;
-        recursive = true;
-      };
-
       packages = [ pkgs.rofi ];
     };
   };

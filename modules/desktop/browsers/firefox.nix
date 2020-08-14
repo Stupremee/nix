@@ -15,6 +15,10 @@ with lib;
   config = mkIf config.modules.desktop.browsers.firefox.enable {
     my.packages = with pkgs; [
       firefox-devedition-bin
+      (writeScriptBin "firefox" ''
+        #!${stdenv.shell}
+        ${firefox-devedition-bin}/bin/firefox-devedition -P default
+      '')
       (makeDesktopItem {
         name = "firefox-private";
         desktopName = "Firefox (Private)";

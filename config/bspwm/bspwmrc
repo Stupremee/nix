@@ -7,6 +7,7 @@ bpsc rule -r "*"
 
 sxhkd -c ~/.config/bspwm/sxhkdrc &
 xrandr --output DP-3 --auto --left-of HDMI-0
+feh --bg-fill ~/.background-image
 
 ### Configure monitor workspaces
 
@@ -16,13 +17,7 @@ bspc monitor DP-3 -d 6 7 8 9 10
 
 ### General settings
 
-bspc config remove_disabled_monitors true
-bspc config remove_unplugged_monitors true
 bspc config focus_follows_pointer true
-
-bspc config border_width 3
-bspc config window_gap 15
-bspc config bottom_padding 8
 
 bspc rule -a Pinentry state=floating center=on
 

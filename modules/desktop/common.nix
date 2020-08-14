@@ -28,7 +28,7 @@
     ];
     fontconfig.defaultFonts = {
       sansSerif = ["Ubuntu"];
-      monospace = ["Hack"];
+      monospace = ["Hack Nerd Font"];
     };
   };
 

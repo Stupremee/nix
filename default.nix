@@ -18,6 +18,7 @@ device: username:
   ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = import ./packages;
 
   environment.systemPackages = with pkgs; [
     coreutils

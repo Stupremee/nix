@@ -12,6 +12,12 @@ with lib;
     my = {
       packages = with pkgs; [
         rustup
+        cargo-edit
+        cargo-expand
+        tokei
+
+        unstable.cargo-deny
+        unstable.rust-analyzer
       ];
 
       env.RUSTUP_HOME = "$XDG_DATA_HOME/rustup";

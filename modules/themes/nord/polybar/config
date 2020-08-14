@@ -124,6 +124,7 @@ ramp-volume-2 = ""
 
 label-muted = "  muted"   
 label-muted-padding = 0
+label-muted-foreground = ${colors.highlight}
 
 [module/previous]
 type = custom/script

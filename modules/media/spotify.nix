@@ -10,24 +10,24 @@ with lib;
 
   config = mkIf config.modules.media.spotify.enable {
     my.packages = with pkgs; [
-      spotifyd
-      (writeScriptBin "spt" ''
-        #!${stdenv.shell}
-        if ! systemctl --user is-active spotifyd >/dev/null; then
-          systemctl --user start spotifyd
-        fi
-        echo $TMUX >/tmp/spt.tmux
-        exec ${spotify-tui}/bin/spt
-      '')
-
+      # my.spotifyd
+      # (writeScriptBin "spt" ''
+      #   #!${stdenv.shell}
+      #   if ! systemctl --user is-active spotifyd >/dev/null; then
+      #     systemctl --user start spotifyd
+      #   fi
+      #   echo $TMUX >/tmp/spt.tmux
+      #   exec ${spotify-tui}/bin/spt
+      # '')
+      spotify
       playerctl
 
-      (writeScriptBin "spt-send-notify" ''
-         #!${stdenv.shell}
-         client_id=$(pass Spotify.com | grep -E '^client_id:' | awk '{print $2}')
-         client_secretd=$(pass Spotify.com | grep -E '^client_secret:' | awk '{print $2}')
-         jq="${pkgs.jq}/bin/jq"
-      '')
+      # (writeScriptBin "spt-send-notify" ''
+      #    #!${stdenv.shell}
+      #    client_id=$(pass Spotify.com | grep -E '^client_id:' | awk '{print $2}')
+      #    client_secretd=$(pass Spotify.com | grep -E '^client_secret:' | awk '{print $2}')
+      #    jq="${pkgs.jq}/bin/jq"
+      # '')
     ];
 
     systemd.user.services.spotifyd.serviceConfig = 

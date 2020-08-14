@@ -54,6 +54,8 @@ in {
         source = <config/zsh>;
         recursive = true;
       };
+
+      home.xdg.configFile."starship.toml".source = <config/starship.toml>;
     };
 
     programs.zsh = {

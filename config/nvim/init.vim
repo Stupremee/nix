@@ -2,10 +2,6 @@
 let g:mapleader="\<Space>"
 let g:localleader=","
 
-" ------------------
-" Plugins
-" ------------------
-
 filetype plugin indent on
 syntax on
 

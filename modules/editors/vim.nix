@@ -11,24 +11,27 @@ with lib;
   config = mkIf config.modules.editors.vim.enable {
     my = {
       packages = with pkgs; [
+        nodejs
         xsel
         editorconfig-core-c
         (
           neovim.override {
             configure = {
               customRC = lib.readFile <config/nvim/init.vim>;
-              packages.myNeovimPackage = with pkgs.vimPlugins; {
-                start = [
-                  nord-vim
-                  vim-sneak
-                  vim-rooter
-                  neoformat
-                  nerdcommenter
-                  fzf-vim
-                  vim-polyglot
-                  vim-nix
-                ];
-              };
+              plug.plugins = with pkgs.vimPlugins; [
+                nord-vim
+                vim-sneak
+                vim-rooter
+                neoformat
+                nerdcommenter
+                fzf-vim
+                vim-polyglot
+                vim-nix
+                vim-fugitive
+
+                coc-nvim
+                coc-git
+              ];
             };
           }
         )

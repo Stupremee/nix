@@ -27,7 +27,7 @@ with lib;
         editorconfig-core-c
       ];
 
-      env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
+      env.PATH = [ "$HOME/.emacs.d/bin" ];
 
       home.home.file.".doom.d".source = <config/doom>;
     };

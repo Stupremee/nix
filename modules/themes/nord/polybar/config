@@ -152,6 +152,7 @@ label-foreground = ${colors.highlight}
 
 [module/spotify]
 type = custom/script
+label = %output:0:25:...%
 exec = playerctl -p spotify metadata --format '{{artist}} - {{title}}'
 exec-if = "pgrep spotify"
 format-padding = 1

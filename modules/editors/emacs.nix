@@ -25,10 +25,11 @@ with lib;
         aspellDicts.en-science
         languagetool
         editorconfig-core-c
-        rust-analyzer
       ];
 
       env.PATH = [ "$XDG_CONFIG_HOME/emacs/bin" ];
+
+      home.home.file.".doom.d".source = <config/doom>;
     };
 
     fonts.fonts = [

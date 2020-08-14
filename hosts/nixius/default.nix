@@ -36,6 +36,7 @@
     editors = {
       default = "vim";
       vim.enable = true;
+      emacs.enable = true;
     };
 
     dev = {

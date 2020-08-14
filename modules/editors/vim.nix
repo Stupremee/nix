@@ -29,8 +29,9 @@ with lib;
                 vim-nix
                 vim-fugitive
 
-                coc-nvim
+                unstable.pkgs.vimPlugins.coc-nvim
                 coc-git
+                unstable.pkgs.vimPlugins.coc-rust-analyzer
               ];
             };
           }

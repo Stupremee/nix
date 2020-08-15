@@ -18,21 +18,23 @@ with lib;
           neovim.override {
             configure = {
               customRC = lib.readFile <config/nvim/init.vim>;
-              plug.plugins = with pkgs.vimPlugins; [
-                nord-vim
-                vim-sneak
-                vim-rooter
-                neoformat
-                nerdcommenter
-                fzf-vim
-                vim-polyglot
-                vim-nix
-                vim-fugitive
+              packages.myNeovimPackage = with pkgs.vimPlugins; {
+                start = [
+                  nord-vim
+                  vim-sneak
+                  vim-rooter
+                  neoformat
+                  nerdcommenter
+                  vim-polyglot
+                  vim-nix
+                  vim-fugitive
+                  fzf-vim
 
-                unstable.pkgs.vimPlugins.coc-nvim
-                coc-git
-                unstable.pkgs.vimPlugins.coc-rust-analyzer
-              ];
+                  unstable.pkgs.vimPlugins.coc-nvim
+                  coc-git
+                  unstable.pkgs.vimPlugins.coc-rust-analyzer
+                ];
+              };
             };
           }
         )

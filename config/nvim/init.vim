@@ -90,13 +90,14 @@ nmap <silent> [e <Plug>(coc-diagnostic-prev)
 nmap <silent> ]e <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <leader>cd <Plug>(coc-definition)
+nmap <silent> <leader>ct <Plug>(coc-type-definition)
+nmap <silent> <leader>ci <Plug>(coc-implementation)
+nmap <silent> <leader>cD <Plug>(coc-references)
+nmap <leader>ac <Plug>(coc-codeaction)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>cl :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -110,4 +111,4 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>cr <Plug>(coc-rename)

@@ -5,6 +5,7 @@
     ./bspwm.nix
     ./browsers
     ./apps
+    ./gaming
     ./term
   ];
 }

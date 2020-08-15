@@ -31,6 +31,8 @@
 
       apps.discord.enable = true;
       apps.rofi.enable = true;
+
+      gaming.steam.enable = true;
     };
 
     editors = {

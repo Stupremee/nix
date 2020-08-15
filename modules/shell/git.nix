@@ -14,6 +14,7 @@ with lib;
       packages = with pkgs; [
         gitAndTools.hub
         gitAndTools.diff-so-fancy
+        gitAndTools.gh
       ];
       home.xdg.configFile = {
         "git/config".source = <config/git/config>;

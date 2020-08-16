@@ -10,12 +10,16 @@ with lib;
 
   config = mkIf config.modules.dev.cc.enable {
     my.packages = with pkgs; [
-      clang
       gcc
       bear
       gdb
       cmake
+
+      llvmPackages.bintools
+      llvmPackages.clang
+      llvmPackages.clang-manpages
       llvmPackages.libcxx
+      llvmPackages.llvm
     ];
   };
 }

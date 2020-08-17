@@ -54,6 +54,7 @@
 
     services = {
       docker.enable = true;
+      lorri.enable = true;
     };
 
     themes.nord.enable = true;

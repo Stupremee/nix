@@ -1,7 +1,8 @@
 add_newline = true
 prompt_order = [
-    "kubernetes",
+    "nix_shell",
     "directory",
+    "kubernetes",
     "git_branch",
     "git_commit",
     "git_state",
@@ -31,6 +32,14 @@ prompt_order = [
 [character]
 symbol = "λ ›"
 vicmd_symbol = "λ ·"
+
+[nix_shell]
+disabled = false
+use_name = true
+symbol = "❄️"
+impure_msg = "impure"
+pure_msg = "pure"
+style = "bold red"
 
 [cmd_duration]
 disabled = true

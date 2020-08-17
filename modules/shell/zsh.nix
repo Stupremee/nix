@@ -52,6 +52,7 @@ in {
       alias.sc = "systemctl";
       alias.ssc = "sudo systemctl";
       alias.ps = "procs";
+      alias.nsh = "nix-shell --run zsh";
 
       home.xdg.configFile."zsh" = {
         source = <config/zsh>;

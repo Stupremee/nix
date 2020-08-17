@@ -3,5 +3,6 @@
 {
   imports = [
     ./docker.nix
+    ./lorri.nix
   ];
 }

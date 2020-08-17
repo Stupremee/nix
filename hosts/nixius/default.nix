@@ -52,6 +52,10 @@
       spotify.enable = true;
     };
 
+    services = {
+      docker.enable = true;
+    };
+
     themes.nord.enable = true;
   };
 

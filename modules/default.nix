@@ -9,6 +9,7 @@ in {
 
     ./shell
     ./desktop
+    ./services
     ./editors
     ./dev
     ./media

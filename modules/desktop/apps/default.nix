@@ -4,5 +4,6 @@
   imports = [
     ./discord.nix
     ./rofi.nix
+    ./qemu.nix
   ];
 }

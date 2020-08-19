@@ -14,5 +14,5 @@
   lg = "log --oneline"
   lp = "log -p"
   p = "push"
-  c = "commit -S -m"
+  c = "commit -S"
   a = "add"

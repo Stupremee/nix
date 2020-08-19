@@ -29,6 +29,8 @@ with lib;
                   vim-nix
                   vim-fugitive
                   fzf-vim
+                  nerdtree
+                  nerdtree-git-plugin
 
                   unstable.pkgs.vimPlugins.coc-nvim
                   coc-git

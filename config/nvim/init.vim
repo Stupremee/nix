@@ -94,7 +94,7 @@ nmap <silent> <leader>cd <Plug>(coc-definition)
 nmap <silent> <leader>ct <Plug>(coc-type-definition)
 nmap <silent> <leader>ci <Plug>(coc-implementation)
 nmap <silent> <leader>cD <Plug>(coc-references)
-nmap <leader>ac <Plug>(coc-codeaction)
+nmap <leader>ac :CocAction<CR>
 
 " Use K to show documentation in preview window.
 nnoremap <silent> <leader>cl :call <SID>show_documentation()<CR>
@@ -112,3 +112,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>cr <Plug>(coc-rename)
+
+" Open file explorer
+nmap <C-n> :NERDTreeToggle<CR>

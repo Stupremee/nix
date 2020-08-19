@@ -47,11 +47,6 @@
     shadowExclude = [
       "! name~='(rofi|scratch|Dunst)$'"
     ];
-    settings.blur-background-exclude = [
-      "window_type = 'dock'"
-      "window_type = 'desktop'"
-      "class_g = 'Rofi'"
-      "_GTK_FRAME_EXTENTS@:c"
-    ];
+    settings.blur.method = "none";
   };
 }

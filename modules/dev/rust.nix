@@ -14,6 +14,8 @@ with lib;
         rustup
         cargo-edit
         cargo-expand
+        cargo-make
+        cargo-release
         tokei
 
         unstable.cargo-deny

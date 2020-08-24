@@ -64,6 +64,10 @@ else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
+if has('nvim')
+  autocmd BufRead Cargo.toml call crates#toggle()
+endif
+
 " ------------------
 " Shortcuts
 " ------------------

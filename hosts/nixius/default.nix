@@ -32,6 +32,7 @@
       apps.discord.enable = true;
       apps.rofi.enable = true;
       apps.qemu.enable = true;
+      apps.r2.enable = true;
 
       gaming.steam.enable = true;
     };

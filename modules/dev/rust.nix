@@ -16,6 +16,7 @@ with lib;
         cargo-expand
         cargo-make
         cargo-release
+        wasm-pack
         tokei
 
         unstable.cargo-deny

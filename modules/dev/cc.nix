@@ -14,8 +14,10 @@ with lib;
       bear
       gdb
       cmake
+      pkgconfig
 
       llvmPackages.bintools
+      llvmPackages.libclang
       llvmPackages.clang
       llvmPackages.clang-manpages
       llvmPackages.libcxx

@@ -4,6 +4,7 @@
   imports = [
     ./zsh.nix
     ./git.nix
+    ./mc.nix
     ./pulsemixer.nix
     ./gnupg.nix
     ./ranger.nix

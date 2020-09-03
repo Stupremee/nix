@@ -34,6 +34,7 @@ in {
         pastel
         imagemagick
         licensor
+        mdcat
         man-db
         man-pages
       ];

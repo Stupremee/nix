@@ -14,6 +14,7 @@
       pulsemixer.enable = true;
       pass.enable = true;
       bitwarden.enable = true;
+      mc.enable = true;
 
       gnupg.enable = true;
       yubico.enable = true;
@@ -33,6 +34,7 @@
       apps.rofi.enable = true;
       apps.qemu.enable = true;
       apps.r2.enable = true;
+      apps.ghidra.enable = true;
 
       gaming.steam.enable = true;
     };

@@ -7,11 +7,11 @@ in {
   imports = [
     <home-manager/nixos>
 
+    ./dev
     ./shell
     ./desktop
     ./services
     ./editors
-    ./dev
     ./media
     ./themes
   ];

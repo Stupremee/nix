@@ -11,7 +11,7 @@ with lib;
   config = mkIf config.modules.shell.mc.enable {
     my = {
       packages = with pkgs; [
-        minio-client
+        unstable.minio-client
       ];
     };
   };

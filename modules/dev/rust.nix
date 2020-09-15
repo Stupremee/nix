@@ -21,7 +21,15 @@ with lib;
 
         unstable.cargo-deny
         unstable.rust-analyzer
+        unstable.sccache
       ];
+
+      alias.ncargo = "env -u CARGO_TARGET_DIR cargo";
+
+      #home.xdg.configFile.".cargo/config.toml".text = ''
+        #[build]
+        #rustc-wrapper = "${pkgs.unstable.sccache}/bin/sccache"
+      #'';
 
       env.RUSTUP_HOME = "$XDG_DATA_HOME/rustup";
       env.CARGO_HOME = "$XDG_DATA_HOME/cargo";

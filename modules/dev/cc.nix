@@ -9,19 +9,22 @@ with lib;
   };
 
   config = mkIf config.modules.dev.cc.enable {
-    my.packages = with pkgs; [
-      gcc
-      bear
-      gdb
-      cmake
-      pkgconfig
+    my = {
+      packages = with pkgs; [
+        gcc
+        bear
+        gdb
+        cmake
+        pkgconfig
 
-      llvmPackages.bintools
-      llvmPackages.libclang
-      llvmPackages.clang
-      llvmPackages.clang-manpages
-      llvmPackages.libcxx
-      llvmPackages.llvm
-    ];
+        llvmPackages.bintools
+        llvmPackages.libclang
+        llvmPackages.clang
+        llvmPackages.clang-manpages
+        llvmPackages.libcxx
+        llvmPackages.llvm
+      ];
+      zsh.env = ''export LIBCLANG_PATH=${pkgs.llvmPackages.libclang}/lib'';
+    };
   };
 }

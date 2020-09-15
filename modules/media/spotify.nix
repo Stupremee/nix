@@ -19,7 +19,7 @@ with lib;
       #   echo $TMUX >/tmp/spt.tmux
       #   exec ${spotify-tui}/bin/spt
       # '')
-      spotify
+      unstable.spotify
       playerctl
 
       # (writeScriptBin "spt-send-notify" ''

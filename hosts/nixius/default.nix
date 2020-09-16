@@ -37,6 +37,7 @@
       apps.ghidra.enable = true;
 
       gaming.steam.enable = true;
+      gaming.multimc.enable = true;
     };
 
     editors = {

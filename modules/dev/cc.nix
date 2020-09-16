@@ -24,7 +24,9 @@ with lib;
         llvmPackages.libcxx
         llvmPackages.llvm
       ];
-      zsh.env = ''export LIBCLANG_PATH=${pkgs.llvmPackages.libclang}/lib'';
+      zsh.env = ''
+        export LIBCLANG_PATH=${pkgs.llvmPackages.libclang}/lib
+      '';
     };
   };
 }

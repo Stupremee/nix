@@ -4,5 +4,6 @@
   imports = [
     ./emulators.nix
     ./steam.nix
+    ./multimc.nix
   ];
 }

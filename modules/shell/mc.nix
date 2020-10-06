@@ -12,6 +12,7 @@ with lib;
     my = {
       packages = with pkgs; [
         unstable.minio-client
+        unstable.rclone
       ];
     };
   };

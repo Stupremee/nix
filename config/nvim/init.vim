@@ -96,7 +96,7 @@ nmap <silent> ]e <Plug>(coc-diagnostic-next)
 " GoTo code navigation.
 nmap <silent> <leader>cd <Plug>(coc-definition)
 nmap <silent> <leader>ct <Plug>(coc-type-definition)
-nmap <silent> <leader>ci <Plug>(coc-implementation)
+nmap <silent> <leader>cI <Plug>(coc-implementation)
 nmap <silent> <leader>cD <Plug>(coc-references)
 nmap <leader>ac :CocAction<CR>
 

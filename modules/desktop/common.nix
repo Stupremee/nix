@@ -36,6 +36,7 @@
     displayManager.lightdm.greeters.mini.user = config.my.username;
     xkbOptions = "caps:swapescape";
     videoDrivers = [ "nvidia" ];
+    layout = "eu";
   };
 
   services.picom = {

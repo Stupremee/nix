@@ -35,6 +35,7 @@
       apps.qemu.enable = true;
       apps.r2.enable = true;
       apps.ghidra.enable = true;
+      apps.flutter.enable = true;
 
       gaming.steam.enable = true;
       gaming.multimc.enable = true;

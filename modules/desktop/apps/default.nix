@@ -7,5 +7,6 @@
     ./qemu.nix
     ./radare2.nix
     ./ghidra.nix
+    ./flutter.nix
   ];
 }

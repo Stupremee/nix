@@ -11,6 +11,7 @@ with lib;
   config = mkIf config.modules.editors.vim.enable {
     my = {
       packages = with pkgs; [
+        bc
         nodejs
         xsel
         editorconfig-core-c
@@ -35,14 +36,18 @@ with lib;
                   unstable.pkgs.vimPlugins.vim-crates
 
                   unstable.pkgs.vimPlugins.coc-nvim
-                  coc-git
                   unstable.pkgs.vimPlugins.coc-rust-analyzer
+                  coc-json
+                  coc-git
                 ];
               };
             };
           }
         )
       ];
+
+      home.xdg.configFile."nvim/coc-settings.json".source = <config/nvim/coc-settings.json>;
+
 
       alias.vim = "nvim";
       alias.v = "nvim";

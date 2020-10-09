@@ -17,12 +17,12 @@ with lib;
         cmake
         pkgconfig
 
-        llvmPackages.bintools
-        llvmPackages.libclang
-        llvmPackages.clang
-        llvmPackages.clang-manpages
-        llvmPackages.libcxx
-        llvmPackages.llvm
+        llvmPackages_10.bintools
+        llvmPackages_10.libclang
+        llvmPackages_10.clang
+        llvmPackages_10.clang-manpages
+        llvmPackages_10.libcxx
+        llvmPackages_10.llvm
       ];
       zsh.env = ''
         export LIBCLANG_PATH=${pkgs.llvmPackages.libclang}/lib

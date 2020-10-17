@@ -5,5 +5,6 @@
     ./emulators.nix
     ./steam.nix
     ./multimc.nix
+    ./lutris.nix
   ];
 }

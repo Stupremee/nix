@@ -39,6 +39,7 @@
 
       gaming.steam.enable = true;
       gaming.multimc.enable = true;
+      gaming.lutris.enable = true;
     };
 
     editors = {

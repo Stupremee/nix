@@ -16,6 +16,7 @@
       bitwarden.enable = true;
       mc.enable = true;
 
+      ddlog.enable = true;
       gnupg.enable = true;
       yubico.enable = true;
     };

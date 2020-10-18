@@ -10,10 +10,15 @@ with lib;
   };
 
   config = mkIf config.modules.desktop.term.alacritty.enable {
-    my.zsh.env = ''[ "$TERM" = xst-256color ] && export TERM=xterm-256color'';
+    my = {
+      zsh.env = ''[ "$TERM" = xst-256color ] && export TERM=xterm-256color'';
 
-    my.packages = with pkgs; [
-      alacritty
-    ];
+      packages = with pkgs; [
+        unstable.alacritty
+      ];
+
+      home.xdg.configFile."alacritty/alacritty.yml".source = <config/alacritty/alacritty.yml>;
+    };
+
   };
 }

@@ -10,6 +10,9 @@ with lib;
   };
 
   config = mkIf config.modules.desktop.gaming.lutris.enable {
-    my.packages = with pkgs; [ lutris ];
+    my.packages = with pkgs; [
+      unstable.lutris-unwrapped
+      mesa
+    ];
   };
 }

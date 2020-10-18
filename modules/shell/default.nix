@@ -3,6 +3,7 @@
 {
   imports = [
     ./zsh.nix
+    ./ddlog.nix
     ./git.nix
     ./mc.nix
     ./pulsemixer.nix

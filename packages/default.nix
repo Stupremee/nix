@@ -2,6 +2,7 @@
   (self: super: with super; {
     my = {
       spotifyd = (callPackage ./spotifyd.nix {});
+      ddlog = (callPackage ./ddlog.nix {});
     };
 
     unstable = import <nixos-unstable> { inherit config; };

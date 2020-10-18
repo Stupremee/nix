@@ -1,4 +1,5 @@
 window:
+  dynamic_title: true
   title: Alacritty
 
   class:
@@ -27,7 +28,7 @@ font:
   size: 14.0
 
 
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
   color: '#ffffff'
@@ -37,8 +38,6 @@ background_opacity: 1
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
   save_to_clipboard: false
-
-dynamic_title: true
 
 cursor:
   style: Block
@@ -71,9 +70,9 @@ key_bindings:
   - { key: Subtract, mods: Control,                 action: DecreaseFontSize  }
   - { key: Minus,    mods: Control,                 action: DecreaseFontSize  }
 
-  # Vi Mode
-  # - { key: V,  mods: Shift|Alt, mode: Vi, action: ScrollToBottom              }
-  # - { key: V,  mods: Shift|Alt,           action: ToggleViMode                }
+    # Vi Mode
+  - { key: V,  mods: Shift|Alt, mode: Vi, action: ScrollToBottom              }
+  - { key: V,  mods: Shift|Alt,           action: ToggleViMode                }
 
 
 colors:

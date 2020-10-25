@@ -12,6 +12,10 @@ with lib;
   config = mkIf config.modules.desktop.bspwm.enable {
     environment.systemPackages = with pkgs; [
       bspwm
+      slop
+      ffcast
+      xorg.xwininfo
+      ffmpeg
       sxhkd
       lightdm
       dunst

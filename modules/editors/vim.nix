@@ -28,17 +28,12 @@ with lib;
                   nerdcommenter
                   vim-polyglot
                   vim-nix
-                  vim-fugitive
                   fzf-vim
-                  nerdtree
-                  nerdtree-git-plugin
 
                   unstable.pkgs.vimPlugins.vim-crates
-
                   unstable.pkgs.vimPlugins.coc-nvim
                   unstable.pkgs.vimPlugins.coc-rust-analyzer
                   coc-json
-                  coc-git
                 ];
               };
             };

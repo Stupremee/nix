@@ -24,7 +24,6 @@ with lib;
                   nord-vim
                   vim-sneak
                   vim-rooter
-                  neoformat
                   nerdcommenter
                   vim-polyglot
                   vim-nix

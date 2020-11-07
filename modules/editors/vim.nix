@@ -41,7 +41,7 @@ with lib;
       ];
 
       home.xdg.configFile."nvim/coc-settings.json".source = <config/nvim/coc-settings.json>;
-
+      home.xdg.configFile."nvim/syntax/dl.vim".source = <config/nvim/dl.vim>;
 
       alias.vim = "nvim";
       alias.v = "nvim";

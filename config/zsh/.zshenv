@@ -1,3 +1,5 @@
+export FZF_DEFAULT_COMMAND='fd --type f'
+
 # Colorize man pages.
 export PAGER=less
 export LESS_TERMCAP_mb=$'\e[1;32m'

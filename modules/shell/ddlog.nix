@@ -9,6 +9,9 @@ with lib;
   };
 
   config = mkIf config.modules.shell.ddlog.enable {
-    my.packages = with pkgs; [ my.ddlog ];
+    my.zsh.env = ''
+      export DDLOG_HOME=${pkgs.my.ddlog}
+      export PATH="$PATH:${pkgs.my.ddlog}/bin"
+    '';
   };
 }

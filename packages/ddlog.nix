@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp -a ddlog/bin/ddlog $out/bin/ddlog
+    cp -r -a ddlog/* $out/
   '';
 
   meta = with stdenv.lib; {

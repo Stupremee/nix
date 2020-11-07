@@ -18,6 +18,7 @@ in {
         zsh-completions
         zsh-syntax-highlighting
         zsh-fast-syntax-highlighting
+        unstable.pueue
         starship
         file
         bat

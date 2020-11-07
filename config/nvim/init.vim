@@ -46,6 +46,8 @@ set smarttab
 set undodir=~/.cache/vimdid
 set undofile
 
+let g:netrw_dirhistmax = 0
+
 " ------------------
 " Plugin settings
 " ------------------
@@ -66,6 +68,7 @@ if has('nvim')
   autocmd BufRead Cargo.toml call crates#toggle()
 endif
 
+au BufRead,BufNewFile *.dl set filetype=dl
 
 " ------------------
 " Shortcuts

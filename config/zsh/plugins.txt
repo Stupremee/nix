@@ -1,9 +1,0 @@
-# Utilities
-caarlos0/zsh-mkc
-
-# Completions
-zsh-users/zsh-completions
-
-# Syntax highlighting
-zsh-users/zsh-syntax-highlighting
-zdharma/fast-syntax-highlighting

@@ -25,6 +25,9 @@
           # Set the hostname
           networking.hostName = hostName;
 
+          # Set system revision to flake's revision
+          system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+
           # Redirect global nixpkgs to nixpkgs flage defined here
           nix.registry.nixpkgs.flake = nixpkgs;
 

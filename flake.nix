@@ -20,7 +20,7 @@
 
   outputs = { self, nixpkgs, home-manager, flake-utils, pre-commit-hooks }:
     let
-      systemModule = { hostName, path }:
+      systemModule = hostName:
         ({ pkgs, ... }: {
           # Set the hostname
           networking.hostName = hostName;
@@ -29,20 +29,17 @@
           nix.registry.nixpkgs.flake = nixpkgs;
 
           # Import the modules
-          imports = [ path home-manager.nixosModules.home-manager ];
+          imports = [
+            (./hosts + "/${hostName}")
+            home-manager.nixosModules.home-manager
+          ];
         });
     in {
 
       # My workstation at home.
       nixosConfigurations.nixius = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [
-          nixpkgs.nixosModules.notDetected
-          (systemModule {
-            hostName = "nixius";
-            path = ./hosts/nixius;
-          })
-        ];
+        modules = [ nixpkgs.nixosModules.notDetected (systemModule "nixius") ];
       };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
@@ -52,6 +49,10 @@
           hooks = { nixfmt.enable = true; };
         };
       in {
-        devShell = pkgs.mkShell { inherit (pre-commit-check) shellHook; };
+        devShell = pkgs.mkShell {
+          inherit (pre-commit-check) shellHook;
+          buildInputs = [ pkgs.nixfmt ];
+          runScript = "zsh";
+        };
       });
 }

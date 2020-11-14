@@ -1,3 +1,5 @@
+# Hardware configuration for my home pc.
+
 { config, lib, pkgs, ... }:
 
 {

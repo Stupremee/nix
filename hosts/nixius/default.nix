@@ -1,5 +1,6 @@
 { config, pkgs, ... }: {
-  imports = [ ./hardware-configuration.nix ../../hardware/nvidia.nix ];
+  imports =
+    [ ./hardware-configuration.nix ../../hardware/nvidia.nix ../../desktop ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -29,6 +30,8 @@
 
   services.smartd.enable = true;
   services.smartd.notifications.x11.enable = true;
+
+  services.resolved.enable = true;
 
   # Sound configuration
   sound.enable = true;

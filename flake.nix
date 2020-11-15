@@ -4,24 +4,30 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     pre-commit-hooks = {
       url =
         "github:Myhlamaeus/pre-commit-hooks.nix/8d48a4cd434a6a6cc8f2603b50d2c0b2981a7c55";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    mozilla-overlay = {
+      url = "github:mozilla/nixpkgs-mozilla";
+      flake = false;
     };
   };
 
   # Probably I will need it some time
   # inputs.nur.url = "github:nix-community/NUR/master";
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, pre-commit-hooks }:
+  outputs = { self, nixpkgs, home-manager, flake-utils, pre-commit-hooks
+    , mozilla-overlay }:
     let
-      overlays.mozilla = import ./pkgs/mozilla;
-
       systemModule = hostName:
         ({ pkgs, ... }: {
           # Set the hostname
@@ -40,7 +46,7 @@
           ];
         });
     in {
-      inherit overlays;
+      overlay = final: prev: { mozilla = mozilla-overlay; };
 
       # My workstation at home.
       nixosConfigurations.nixius = nixpkgs.lib.nixosSystem {

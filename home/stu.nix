@@ -1,13 +1,12 @@
 { pkgs, ... }: {
   imports = [
-    ./dev
     ./shell
 
     ./gpg.nix
     ./git.nix
   ];
 
-  home.packages = [
+  home.packages = with pkgs; [
     discord
     libreoffice
 

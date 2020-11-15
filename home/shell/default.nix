@@ -79,6 +79,10 @@ in {
     '';
   };
 
+  home.sessionVariables = with pkgs; {
+    FZF_DEFAULT_COMMAND = "${ripgrep}/bin/rg --files --hidden";
+  };
+
   programs.starship = {
     enable = true;
     enableZshIntegration = true;

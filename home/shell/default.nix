@@ -49,6 +49,17 @@ in {
       }
     ];
 
+    shellAliases = {
+      mixer = "pulsemixer";
+      exa = "exa --group-directories-first";
+      l = "exa -1";
+      ll = "exa -lg";
+      la = "exa -la";
+      sc = "systemctl";
+      ps = "procs";
+      nsh = "nix-shell --run zsh";
+    };
+
     initExtra = ''
       ZSH_AUTOSUGGEST_USE_ASYNC=1
       ZSH_AUTOSUGGEST_STRATEGY=(history completion)
@@ -79,4 +90,21 @@ in {
     enableZshIntegration = true;
     enableNixDirenvIntegration = true;
   };
+
+  home.packages = with pkgs; [
+    coreutils-full
+    ripgrep
+    ripgrep-all
+    tldr
+    fd
+    fzf
+    ytop
+    exa
+    bat
+    file
+    pulsemixer
+    procs
+    licensor
+    tokei
+  ];
 }

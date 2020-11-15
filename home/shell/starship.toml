@@ -33,9 +33,6 @@ prompt_order = [
 symbol = "λ ›"
 vicmd_symbol = "λ ·"
 
-[git_status]
-disabled=true
-
 [nix_shell]
 disabled = false
 use_name = true

@@ -20,6 +20,8 @@
 
   outputs = { self, nixpkgs, home-manager, flake-utils, pre-commit-hooks }:
     let
+      overlays.mozilla = import ./pkgs/mozilla;
+
       systemModule = hostName:
         ({ pkgs, ... }: {
           # Set the hostname
@@ -38,6 +40,7 @@
           ];
         });
     in {
+      inherit overlays;
 
       # My workstation at home.
       nixosConfigurations.nixius = nixpkgs.lib.nixosSystem {

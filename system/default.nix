@@ -7,7 +7,6 @@
 
   fonts.fonts = with pkgs; [
     fira-code
-    hack-font
     noto-fonts
     noto-fonts-extra
     noto-fonts-cjk

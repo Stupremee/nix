@@ -1,14 +1,31 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  installDesktopEntry = pkg: src: name:
+    pkg.overrideAttrs (old: {
+      postInstall = old.postInstall + ''
+        install -Dm644 ${src} $out/share/applications/${name}
+      '';
+    });
+in {
   imports = [
     ./shell
     ./editors
+    ./desktop
 
     ./gpg.nix
     ./git.nix
   ];
 
+  xdg.enable = true;
+  home.enableDebugInfo = true;
   home.packages = with pkgs; [
     discord
+
+    (installDesktopEntry zathura "data/org.pwmt.zathura.desktop.in"
+      "org.pwmt.zathura.desktop")
+    (installDesktopEntry mpv "etc/mpv.desktop" "mpv.desktop")
+    # TODO: Add desktop entry for feh
+    feh
     libreoffice
 
     # Gaming 

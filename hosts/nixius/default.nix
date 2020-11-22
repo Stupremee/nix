@@ -1,6 +1,11 @@
 { config, pkgs, ... }: {
-  imports =
-    [ ./hardware-configuration.nix ../../hardware/nvidia.nix ../../desktop ];
+  imports = [
+    ./hardware-configuration.nix
+
+    ../../hardware/nvidia.nix
+    ../../desktop
+    ../../system
+  ];
 
   nixpkgs.config.allowUnfree = true;
 

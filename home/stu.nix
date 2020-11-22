@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./shell
+    ./editors
 
     ./gpg.nix
     ./git.nix

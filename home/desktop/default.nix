@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 let
   nord-xresources = pkgs.fetchFromGitHub {
     owner = "arcticicestudio";
@@ -7,7 +7,9 @@ let
     sha256 = "0000000000000000000000000000000000000";
   } + "/src/nord";
 in {
-  imports = [ ./gtk.nix ./mimeapps.nix ];
+  imports = [ ./gtk.nix ./mimeapps.nix ./bspwm.nix ];
+
+  home.file.".background-image".source = ../../background-image.png;
 
   xresources.extraConfig = builtins.readFile nord-xresources;
 }

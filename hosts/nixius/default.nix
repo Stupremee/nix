@@ -18,16 +18,20 @@
   };
   nix.trustedUsers = [ "root" "stu" ];
 
-  services.xserver.xrandrHeads = [
-    {
-      output = "DP-3";
-      monitorConfig = ''Option "LeftOf" "HDMI-0" '';
-    }
-    {
-      output = "HDMI-0";
-      primary = true;
-    }
-  ];
+  services.xserver = {
+    windowManager.bspwm.enable = true;
+    displayManager.defaultSession = "none+bspwm";
+    xrandrHeads = [
+      {
+        output = "DP-3";
+        monitorConfig = ''Option "LeftOf" "HDMI-0" '';
+      }
+      {
+        output = "HDMI-0";
+        primary = true;
+      }
+    ];
+  };
 
   home-manager = {
     useUserPackages = true;

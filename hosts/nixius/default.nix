@@ -16,6 +16,7 @@
     extraGroups = [ "wheel" "audio" "docker" "disk" "networkmanager" ];
     shell = pkgs.zsh;
   };
+  nix.trustedUsers = [ "root" "stu" ];
 
   services.xserver.xrandrHeads = [
     {

@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
-  loadYaml = path: (pkgs.trivial.importJSON (yamlToJson path));
+  loadYaml = path: (yamlToJson path);
 
   yamlToJson = path:
-    pkgs.runCommand { nativeBuildInputs = [ pkgs.yq-go ]; }
+    pkgs.runCommand "yaml2json" { nativeBuildInputs = [ pkgs.yq-go ]; }
     "${pkgs.yq-go}/bin/yq r -j ${path} > $out";
 
   keybind = key: mods: action: { inherit key mods action; };
@@ -84,7 +84,7 @@ in {
         "Shift|Alt"
         "ToggleViMode"
       ];
-    } // loadYaml ./nord-theme.yml;
+    } // (loadYaml ./nord-theme.yml);
 
   };
 }

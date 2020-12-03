@@ -8,8 +8,10 @@ let
       owner = "neovim";
       repo = "neovim";
       rev = "0a95549d66df63c06d775fcc329f7b63cbb46b2f";
-      sha256 = "0000000000000000000000000000000000000000000000000000";
+      sha256 = "sha256-hHpsZYdVwE9tW0WVee3Y55lrrYQYsT+hGH+3MJrspCg=";
     };
+    nativeBuildInputs = oldAttrs.nativeBuildInputs
+      ++ [ pkgs.utf8proc pkgs.tree-sitter ];
   });
 in {
   home.packages = with pkgs; [ curl nixfmt ];

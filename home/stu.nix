@@ -1,12 +1,4 @@
-{ pkgs, ... }:
-let
-  installDesktopEntry = pkg: src: name:
-    pkg.overrideAttrs (old: {
-      postInstall = old.postInstall + ''
-        install -Dm644 ${src} $out/share/applications/${name}
-      '';
-    });
-in {
+{ pkgs, ... }: {
   imports = [
     ./shell
     ./editors
@@ -15,10 +7,7 @@ in {
 
     ./gpg.nix
     ./git.nix
-    ./docker.nix
   ];
-
-  nix.trustedUsers = [ "root" "stu" ];
 
   xdg.enable = true;
   home.enableDebugInfo = true;
@@ -26,10 +15,9 @@ in {
     discord
     spotify
 
-    (installDesktopEntry zathura "data/org.pwmt.zathura.desktop.in"
-      "org.pwmt.zathura.desktop")
-    (installDesktopEntry mpv "etc/mpv.desktop" "mpv.desktop")
-    # TODO: Add desktop entry for feh
+    # TODO: Add desktop entries
+    zathura
+    mpv
     feh
     libreoffice
 

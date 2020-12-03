@@ -26,12 +26,9 @@ in {
     defaultKeymap = "viins";
     dotDir = ".config/zsh";
     plugins = with pkgs; [
-      simpleZshPlugin
-      zsh-completions
-      simpleZshPlugin
-      nix-zsh-completions
-      simpleZshPlugin
-      zsh-syntax-highlighting
+      (simpleZshPlugin zsh-completions)
+      (simpleZshPlugin nix-zsh-completions)
+      (simpleZshPlugin zsh-syntax-highlighting)
       {
         name = "first-tab";
         src = lib.cleanSource ./.;
@@ -86,7 +83,7 @@ in {
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-    settings = builtins.fromTOML ./starship.toml;
+    settings = builtins.fromTOML (builtins.readFile ./starship.toml);
   };
 
   programs.direnv = {
@@ -104,7 +101,7 @@ in {
     tldr
     fd
     fzf
-    ytop
+    bottom
     exa
     bat
     file

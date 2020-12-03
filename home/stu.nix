@@ -15,6 +15,7 @@ in {
 
     ./gpg.nix
     ./git.nix
+    ./docker.nix
   ];
 
   nix.trustedUsers = [ "root" "stu" ];
@@ -23,6 +24,7 @@ in {
   home.enableDebugInfo = true;
   home.packages = with pkgs; [
     discord
+    spotify
 
     (installDesktopEntry zathura "data/org.pwmt.zathura.desktop.in"
       "org.pwmt.zathura.desktop")

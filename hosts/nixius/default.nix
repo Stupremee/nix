@@ -13,7 +13,7 @@
 
   users.users.stu = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "docker" "disk" ];
+    extraGroups = [ "wheel" "audio" "docker" "disk" "networkmanager" ];
     shell = pkgs.zsh;
   };
 
@@ -49,7 +49,11 @@
 
   services.resolved.enable = true;
 
-  networking.firewall.enable = true;
+  # Netowrking configuration
+  networking = {
+    firewall.enable = true;
+    networkmanager.enable = true;
+  };
 
   # Sound configuration
   sound.enable = true;

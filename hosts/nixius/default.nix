@@ -49,6 +49,8 @@
 
   services.resolved.enable = true;
 
+  networking.firewall.enable = true;
+
   # Sound configuration
   sound.enable = true;
   hardware.pulseaudio = {

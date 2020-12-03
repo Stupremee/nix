@@ -11,10 +11,13 @@ in {
     ./shell
     ./editors
     ./desktop
+    ./browsers
 
     ./gpg.nix
     ./git.nix
   ];
+
+  nix.trustedUsers = [ "root" "stu" ];
 
   xdg.enable = true;
   home.enableDebugInfo = true;

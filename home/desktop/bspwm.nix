@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ playerctl ];
+  home.packages = with pkgs; [ playerctl pulsemixer ];
 
   # TODO: Probably we have to setup a session for the display manager
   xsession.windowManager.bspwm = {
@@ -89,4 +89,6 @@
       '';
     };
   };
+
+  xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi.rasi;
 }

@@ -11,6 +11,7 @@
   nixpkgs.config.allowUnfree = true;
 
   programs.zsh.enable = true;
+  environment.pathsToLink = [ "/share/zsh" ];
 
   users.users.stu = {
     isNormalUser = true;

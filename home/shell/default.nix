@@ -1,8 +1,9 @@
 { pkgs, ... }:
 let
-  simpleZshPlugin = src: {
+  zshUsersPlugin = src: rec {
     inherit src;
     name = src.pname;
+    file = "share/${name}/${name}.zsh";
   };
 in {
   imports = [ ./terminal.nix ];
@@ -20,15 +21,14 @@ in {
 
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
     enableCompletion = true;
     autocd = true;
     defaultKeymap = "viins";
     dotDir = ".config/zsh";
+
     plugins = with pkgs; [
-      (simpleZshPlugin zsh-completions)
-      # (simpleZshPlugin nix-zsh-completions)
-      (simpleZshPlugin zsh-syntax-highlighting)
+      (zshUsersPlugin zsh-syntax-highlighting)
+      (zshUsersPlugin zsh-history-substring-search)
       {
         name = "first-tab";
         src = lib.cleanSource ./.;
@@ -59,14 +59,25 @@ in {
     };
 
     initExtra = ''
-      ZSH_AUTOSUGGEST_USE_ASYNC=1
-      ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+      bindkey -v
+
+      autoload -U colors && colors
+      setopt incappendhistory
+      setopt sharehistory 
+
+      autoload -U compinit
+      zstyle ':completion:*' menu select
+      zmodload zsh/complist
+      compinit
+
+      # Include hidden files in completions
+      _comp_options+=(globdots)
 
       # Use vi keys in completion menu
-      # bindkey -M menuselect 'h' vi-backward-char
-      # bindkey -M menuselect 'k' vi-up-line-or-history
-      # bindkey -M menuselect 'l' vi-forward-char
-      # bindkey -M menuselect 'j' vi-down-line-or-history
+      bindkey -M menuselect 'h' vi-backward-char
+      bindkey -M menuselect 'k' vi-up-line-or-history
+      bindkey -M menuselect 'l' vi-forward-char
+      bindkey -M menuselect 'j' vi-down-line-or-history
 
       bindkey -M vicmd 'k' history-substring-search-up
       bindkey -M vicmd 'j' history-substring-search-down
@@ -78,7 +89,7 @@ in {
   };
 
   home.sessionVariables = with pkgs; {
-    FZF_DEFAULT_COMMAND = "${ripgrep}/bin/rg --files";
+    FZF_DEFAULT_COMMAND = "${fd}/bin/fd --type f";
   };
 
   programs.starship = {

@@ -22,11 +22,22 @@
 
   services.xserver = {
     windowManager.bspwm.enable = true;
+
+    displayManager.lightdm = {
+      greeters.mini.user = "stu";
+      greeters.mini.extraConfig = ''
+        text-color = "#a3be8c"
+        password-background-color = "#2e3440"
+        window-color = "#4c566a"
+        border-color = "#4c566a"
+      '';
+    };
+
     displayManager.defaultSession = "none+bspwm";
     displayManager.setupCommands = ''
       ${pkgs.xlibs.xrandr}/bin/xrandr --output DP-3 --auto --left-of HDMI-0
-      $HOME/.fehbg
     '';
+
     xrandrHeads = [
       {
         output = "HDMI-0";

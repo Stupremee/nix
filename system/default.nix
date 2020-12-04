@@ -6,17 +6,14 @@
   time.timeZone = "Europe/Berlin";
 
   fonts.fonts = with pkgs; [
-    fira-code
-    noto-fonts
-    noto-fonts-extra
-    noto-fonts-cjk
+    (nerdfonts.override { fonts = [ "FiraCode" "Hack" ]; })
     noto-fonts-emoji
   ];
 
   fonts.fontconfig.defaultFonts = {
-    serif = [ "Noto Serif" "Noto Color Emoji" ];
-    sansSerif = [ "Noto Sans" "Noto Color Emoji" ];
-    monospace = [ "Fira Code" "Noto Color Emoji" ];
+    serif = [ "Noto Serif Nerd Font" ];
+    sansSerif = [ "Noto Sans Nerd Font" ];
+    monospace = [ "FiraCode Nerd Font" ];
     emoji = [ "Noto Color Emoji" ];
   };
 

@@ -6,6 +6,8 @@ let
     pkgs.runCommand "yaml2json" { nativeBuildInputs = [ pkgs.yq-go ]; }
     "${pkgs.yq-go}/bin/yq r -j ${path} > $out";
 
+  theme = builtins.fromJSON (builtins.readFile (loadYaml ./nord-theme.yml));
+
   keybind = key: mods: action: { inherit key mods action; };
   viKeybind = key: mods: action: {
     inherit key mods action;
@@ -17,9 +19,10 @@ in {
   programs.alacritty = {
     enable = true;
     settings = {
+      colors = theme.colors;
 
       font = {
-        size = 14;
+        size = 12;
         normal.family = "monospace";
         bold = {
           family = "monospace";
@@ -42,49 +45,21 @@ in {
       mouse.url.launcher.program = "xdg-open";
 
       key_bindings = [
-        keybind
-        "V"
-        "Alt"
-        "Paste"
-        keybind
-        "C"
-        "Alt"
-        "Copy"
+        (keybind "V" "Alt" "Paste")
+        (keybind "C" "Alt" "Copy")
 
-        keybind
-        "Key0"
-        "Controll"
-        "ResetFontSize"
+        (keybind "Key0" "Control" "ResetFontSize")
 
-        keybind
-        "Equals"
-        "Control"
-        "IncreaseFontSize"
-        keybind
-        "Add"
-        "Control"
-        "IncreaseFontSize"
+        (keybind "Equals" "Control" "IncreaseFontSize")
+        (keybind "Add" "Control" "IncreaseFontSize")
 
-        keybind
-        "Subtract"
-        "Control"
-        "DecreaseFontSize"
-        keybind
-        "Minus"
-        "Control"
-        "DecreaseFontSize"
+        (keybind "Subtract" "Control" "DecreaseFontSize")
+        (keybind "Minus" "Control" "DecreaseFontSize")
 
         # Vi Mode
-        viKeybind
-        "V"
-        "Shift|Alt"
-        "ScrolllToBottom"
-        keybind
-        "V"
-        "Shift|Alt"
-        "ToggleViMode"
+        (viKeybind "V" "Shift|Alt" "ScrollToBottom")
+        (keybind "V" "Shift|Alt" "ToggleViMode")
       ];
-    } // (loadYaml ./nord-theme.yml);
-
+    };
   };
 }

@@ -2,7 +2,8 @@
   description = "My NixOS system configurations";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/20.09";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
     flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {
@@ -25,9 +26,11 @@
   # Probably I will need it some time
   # inputs.nur.url = "github:nix-community/NUR/master";
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, pre-commit-hooks
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, flake-utils, pre-commit-hooks
     , mozilla-overlay }:
     let
+      system = "x86_64-linux";
+
       systemModule = hostName:
         ({ pkgs, ... }: {
           # Set the hostname
@@ -50,8 +53,10 @@
 
       # My workstation at home.
       nixosConfigurations.nixius = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [ nixpkgs.nixosModules.notDetected (systemModule "nixius") ];
+        inherit system;
+        modules = [
+          (systemModule "nixius")
+        ];
       };
     } // flake-utils.lib.eachDefaultSystem (system:
       let

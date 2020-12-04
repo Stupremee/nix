@@ -27,7 +27,7 @@ in {
     dotDir = ".config/zsh";
     plugins = with pkgs; [
       (simpleZshPlugin zsh-completions)
-      (simpleZshPlugin nix-zsh-completions)
+      # (simpleZshPlugin nix-zsh-completions)
       (simpleZshPlugin zsh-syntax-highlighting)
       {
         name = "first-tab";
@@ -55,6 +55,7 @@ in {
       sc = "systemctl";
       ps = "procs";
       nsh = "nix-shell --run zsh";
+      g = "git";
     };
 
     initExtra = ''
@@ -62,10 +63,10 @@ in {
       ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
       # Use vi keys in completion menu
-      bindkey -M menuselect 'h' vi-backward-char
-      bindkey -M menuselect 'k' vi-up-line-or-history
-      bindkey -M menuselect 'l' vi-forward-char
-      bindkey -M menuselect 'j' vi-down-line-or-history
+      # bindkey -M menuselect 'h' vi-backward-char
+      # bindkey -M menuselect 'k' vi-up-line-or-history
+      # bindkey -M menuselect 'l' vi-forward-char
+      # bindkey -M menuselect 'j' vi-down-line-or-history
 
       bindkey -M vicmd 'k' history-substring-search-up
       bindkey -M vicmd 'j' history-substring-search-down
@@ -77,7 +78,7 @@ in {
   };
 
   home.sessionVariables = with pkgs; {
-    FZF_DEFAULT_COMMAND = "${ripgrep}/bin/rg --files --hidden";
+    FZF_DEFAULT_COMMAND = "${ripgrep}/bin/rg --files";
   };
 
   programs.starship = {
@@ -101,7 +102,7 @@ in {
     tldr
     fd
     fzf
-    bottom
+    gotop
     exa
     bat
     file

@@ -12,7 +12,7 @@ with lib; {
   security.lockKernelModules = mkDefault true;
   security.protectKernelImage = mkDefault true;
 
-  security.apparmor.enable = mkDefault true;
+  # security.apparmor.enable = mkDefault true;
 
   boot.blacklistedKernelModules = [
     # Obscure network protocols

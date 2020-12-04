@@ -1,40 +1,53 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs; [ playerctl pulsemixer ];
+{ pkgs, ... }:
+let
+  inherit (builtins) concatStringsSep concatLists attrValues;
+
+  desktops = {
+    primary = [ "code" "web" "term" "media" "V" ];
+    secondary = [ "web2" "media2" "IIX" "IX" "X" ];
+  };
+
+  desktopStrings = concatStringsSep "," (concatLists (attrValues desktops));
+in {
+  home.packages = with pkgs; [ playerctl pulsemixer maim ];
 
   # TODO: Probably we have to setup a session for the display manager
-  xsession.windowManager.bspwm = {
+  xsession = {
     enable = true;
+    windowManager.bspwm = {
+      enable = true;
 
-    monitors = {
-      HDMI-0 = [ "1" "2" "3" "4" "5" ];
-      DP-3 = [ "6" "7" "8" "9" "10" ];
-    };
+      monitors = {
+        HDMI-0 = desktops.primary;
+        DP-3 = desktops.secondary;
+      };
 
-    settings = {
-      focus_follows_pointer = true;
-      borderless_monocle = true;
-      gapless_monocle = true;
+      settings = {
+        focus_follows_pointer = true;
+        borderless_monocle = true;
+        gapless_monocle = true;
 
-      border_width = 3;
-      window_gap = 15;
-      bottom_padding = 8;
+        border_width = 3;
+        window_gap = 15;
+        bottom_padding = 8;
 
-      # Nord theme
-      normal_border_color = "#3b4252";
-      active_border_color = "#3b4252";
-      focused_border_color = "#5e81ac";
-      presel_feedback_color = "#5e81ac";
-    };
+        # Nord theme
+        normal_border_color = "#3b4252";
+        active_border_color = "#3b4252";
+        focused_border_color = "#5e81ac";
+        presel_feedback_color = "#5e81ac";
+      };
 
-    # home-manager doesn't allow it to provide settings with a `-m` argument
-    extraConfig = ''
-      bspc config -m primary top_padding 40
-    '';
+      # home-manager doesn't allow it to provide settings with a `-m` argument
+      extraConfig = ''
+        bspc config -m primary top_padding 40
+      '';
 
-    rules = {
-      "Pinentry" = {
-        state = "floating";
-        center = true;
+      rules = {
+        "Pinentry" = {
+          state = "floating";
+          center = true;
+        };
       };
     };
   };
@@ -43,7 +56,7 @@
     enable = true;
 
     keybindings = {
-      "super + Return" = "$TERMINAL";
+      "super + Return" = "alacritty";
       "super + p" = "rofi -show combi";
       "super + shift + w" = "$BROWSER";
       "super + Print" = "screenshot";
@@ -71,7 +84,8 @@
       "super + {_,shift +}{h,j,k,l}" =
         "bspc node -{f,s} {west,south,north,east}";
       # Focus workspace or send window to workspace
-      "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} ^{1-9,10}";
+      "super + {_,shift + }{1-9,0}" =
+        "bspc {desktop -f,node -d} {${desktopStrings}}";
       # Preselect ratio of the new windows size
       "super + ctrl + {1-9}" = "bspc node -o .{1-9}";
       # Cancel preselection
@@ -85,10 +99,11 @@
         , d1=right;  d2=left;   dx=$n;  dy=0;   \
         } \
         bspc node --resize $d1 $dx $dy || bspc node --resize $d2 $dx $dy
-
       '';
     };
   };
+
+  programs.rofi.enable = true;
 
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi.rasi;
 }

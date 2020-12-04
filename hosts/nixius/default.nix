@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
 
     ../../hardware/nvidia.nix
+    ../../hardware/yubico.nix
     ../../desktop
     ../../system
   ];
@@ -21,18 +22,20 @@
   services.xserver = {
     windowManager.bspwm.enable = true;
     displayManager.defaultSession = "none+bspwm";
+    displayManager.setupCommands = ''
+      ${pkgs.xlibs.xrandr}/bin/xrandr --output DP-3 --auto --left-of HDMI-0
+      $HOME/.fehbg
+    '';
     xrandrHeads = [
-      {
-        output = "DP-3";
-        monitorConfig = ''Option "LeftOf" "HDMI-0" '';
-      }
       {
         output = "HDMI-0";
         primary = true;
       }
+      "DP-3"
     ];
   };
 
+  programs.dconf.enable = true;
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;

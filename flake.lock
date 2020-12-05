@@ -118,7 +118,7 @@
         "type": "github"
       }
     },
-    "mozilla-overlay": {
+    "mozpkgs": {
       "flake": false,
       "locked": {
         "lastModified": 1603906276,
@@ -166,6 +166,22 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1607157232,
+        "narHash": "sha256-NsZdZnL+yzAGBGCCs3slfLpjKzFfrsb7EhE7clRz/h0=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "aec5d3b885eb87f968fea592c8e3122237418d20",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "master",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks": {
       "inputs": {
         "cabal-fmt-src": "cabal-fmt-src",
@@ -196,9 +212,10 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "mozilla-overlay": "mozilla-overlay",
+        "mozpkgs": "mozpkgs",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nur": "nur",
         "pre-commit-hooks": "pre-commit-hooks"
       }
     }

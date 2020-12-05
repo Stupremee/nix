@@ -42,9 +42,9 @@ in {
         bspc config -m primary top_padding 40
       '';
 
-      startupPrograms = ''
-        $HOME/.fehbg
-      '';
+      startupPrograms = [
+        "$HOME/.fehbg"
+      ];
 
       rules = {
         "Pinentry" = {

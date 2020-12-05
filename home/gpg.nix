@@ -1,8 +1,9 @@
 # GPG and SSH configurations
 
-{ ... }: {
+{ pkgs, ... }: {
   programs.gpg.enable = true;
 
+  home.packages = with pkgs; [ pinentry ];
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;

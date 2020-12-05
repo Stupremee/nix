@@ -52,6 +52,10 @@ let g:netrw_dirhistmax = 0
 " Plugin settings
 " ------------------
 
+augroup fmt
+  autocmd BufWritePre * Neoformat
+augroup END
+
 if has('nvim')
   autocmd BufRead Cargo.toml call crates#toggle()
 endif

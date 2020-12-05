@@ -12,7 +12,7 @@
   xdg.enable = true;
   home.enableDebugInfo = true;
   home.packages = with pkgs; [
-    discord
+    unstable.discord-canary
     spotify
 
     # TODO: Add desktop entries
@@ -22,7 +22,7 @@
     libreoffice
 
     # Gaming 
-    steam
+    # (steam.override { nativeOnly = true; })
     lutris
 
     # Man pages

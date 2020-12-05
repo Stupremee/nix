@@ -5,15 +5,14 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 lua << EOF
-local nvim_lsp = require'nvim_lsp'
+local lspconfig = require'lspconfig'
 
 local on_attach = function(client)
     require'completion'.on_attach(client)
-    require'diagnostic'.on_attach(client)
 end
 
 -- Rust Analyzer
-nvim_lsp.rust_analyzer.setup({ on_attach=on_attach })
+lspconfig.rust_analyzer.setup({ on_attach=on_attach })
 EOF
 
 " Run completion on <TAB>
@@ -48,7 +47,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 EOF
 
-autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 
 " Inlay hints
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *

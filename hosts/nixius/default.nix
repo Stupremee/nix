@@ -10,7 +10,7 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  programs.steam.enable = true;
+  # programs.steam.enable = true;
   hardware.steam-hardware.enable = true;
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];

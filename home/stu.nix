@@ -22,7 +22,7 @@
     libreoffice
 
     # Gaming 
-    # (steam.override { nativeOnly = true; })
+    steam
     lutris
 
     # Man pages

@@ -4,7 +4,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl = {
     enable = true;
-    # driSupport32Bit = true;
+    driSupport32Bit = true;
     extraPackages = with pkgs; [ libvdpau-va-gl vaapiVdpau ];
   };
 }

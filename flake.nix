@@ -66,6 +66,8 @@
           { nixpkgs.overlays = (builtins.attrValues self.overlays); }
         ];
       };
+
+      templates = import ./templates { };
     } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};

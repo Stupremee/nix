@@ -60,6 +60,8 @@ if has('nvim')
   autocmd BufRead Cargo.toml call crates#toggle()
 endif
 
+au BufRead,BufNewFile *.tf set filetype=terraform
+
 " ------------------
 " Shortcuts
 " ------------------

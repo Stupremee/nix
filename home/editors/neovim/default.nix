@@ -3,13 +3,12 @@ let
   inherit (builtins) readFile;
 
   neovim-nightly = pkgs.neovim-unwrapped.overrideAttrs (oldAttrs: {
-    version = "f75be5e";
+    version = "nightly";
     src = pkgs.fetchFromGitHub {
       owner = "neovim";
       repo = "neovim";
-      # Commit where builtin diagnostics feature was introduced
-      rev = "f75be5e9d510d5369c572cf98e78d9480df3b0bb";
-      sha256 = "sha256-kGMAUWs1N3SCGvzaiLRihXacI9BGNWPAjaXiBDH8ON4=";
+      rev = "nightly";
+      sha256 = "sha256-NwPf19cCVJVcP3QBp0h0aOtHbdW/7HmFGFEyBB3BBrM=";
     };
     nativeBuildInputs = oldAttrs.nativeBuildInputs
       ++ [ pkgs.utf8proc pkgs.unstable.tree-sitter ];

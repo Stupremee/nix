@@ -13,6 +13,9 @@ end
 
 -- Rust Analyzer
 lspconfig.rust_analyzer.setup({ on_attach=on_attach })
+
+-- Terraform
+lspconfig.terraformls.setup({ on_attach=on_attach })
 EOF
 
 " Run completion on <TAB>

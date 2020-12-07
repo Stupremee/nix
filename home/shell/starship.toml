@@ -6,7 +6,6 @@ prompt_order = [
     "git_branch",
     "git_commit",
     "git_state",
-    "git_status",
     "package",
     "dotnet",
     "golang",
@@ -32,6 +31,9 @@ prompt_order = [
 [character]
 symbol = "λ ›"
 vicmd_symbol = "λ ·"
+
+[git_status]
+disabled = true
 
 [nix_shell]
 disabled = false

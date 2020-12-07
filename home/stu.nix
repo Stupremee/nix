@@ -36,5 +36,9 @@
     { allowUnfree = true; }
   '';
 
+  # Install rust overlay
+  xdg.configFile."nixpkgs/overlays/rust-overlay.nix".source =
+    ../overlays/rust-overlay.nix;
+
   home.stateVersion = "20.09";
 }

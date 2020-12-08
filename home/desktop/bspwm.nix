@@ -42,9 +42,7 @@ in {
         bspc config -m primary top_padding 40
       '';
 
-      startupPrograms = [
-        "$HOME/.fehbg"
-      ];
+      startupPrograms = [ "$HOME/.fehbg" ];
 
       rules = {
         "Pinentry" = {
@@ -62,7 +60,8 @@ in {
       "super + Return" = "alacritty";
       "super + p" = "rofi -show combi";
       "super + shift + w" = "$BROWSER";
-      "super + Print" = "${pkgs.maim}/bin/maim -s | ${pkgs.xclip}/bin/xclip -sel c -t image/png";
+      "super + Print" =
+        "${pkgs.maim}/bin/maim -s | ${pkgs.xclip}/bin/xclip -sel c -t image/png";
 
       "XF86AudioMute" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
       "XF86Audio{Raise,Lower}Volume" = "pulsemixer --change-volume {+,-}5";
@@ -109,4 +108,18 @@ in {
   programs.rofi.enable = true;
 
   xdg.configFile."rofi/config.rasi".text = builtins.readFile ./rofi.rasi;
+
+  services.polybar = {
+    enable = true;
+    package = (pkgs.polybar.override {
+      pulseSupport = true;
+      githubSupport = true;
+    });
+    extraConfig = builtins.readFile ./polybar.config;
+    script = ''
+      polybar -rq music &
+      polybar -rq tray &
+      polybar -rq ws &
+    '';
+  };
 }

@@ -46,8 +46,7 @@
         # `nix develop`
         devShell = pkgs.mkShell {
           nativeBuildInputs = [
-            rust.override
-            { extensions = [ "rust-src" ]; }
+            (rust.override { extensions = [ "rust-src" ]; })
             pkgs.rust-analyer
           ];
         };

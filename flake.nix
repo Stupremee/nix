@@ -46,7 +46,7 @@
             home-manager.nixosModules.home-manager
           ];
         });
-    in {
+    in rec {
       overlays = {
         mozila = final: prev: { mozilla = mozpkgs; };
         nur = nur.overlay;
@@ -63,7 +63,7 @@
         inherit system;
         modules = [
           (systemModule "nixius")
-          { nixpkgs.overlays = (builtins.attrValues self.overlays); }
+          { nixpkgs.overlays = (builtins.attrValues overlays); }
         ];
       };
 

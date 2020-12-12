@@ -44,7 +44,7 @@ in {
         completion-nvim
       ]);
 
-    extraConfig = (readFile ./lsp.vim) + (readFile ./init.vim);
+    extraConfig = (readFile ./init.vim) + (readFile ./lsp.vim);
   };
 
   home.sessionVariables.MANPAGER = "nvim +Man!";

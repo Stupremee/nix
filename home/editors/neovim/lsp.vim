@@ -29,15 +29,15 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-nnoremap <silent> [e            <cmd>vim.lsp.diagnostic.goto_prev()<cr>
-nnoremap <silent> ]e            <cmd>vim.lsp.diagnostic.goto_next()<cr>
+nnoremap <silent> [e            :vim.lsp.diagnostic.goto_prev()<cr>
+nnoremap <silent> ]e            :vim.lsp.diagnostic.goto_next()<cr>
 
-nnoremap <silent> <leader>cd    <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <leader>ct    <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> <leader>cI    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <leader>cD    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> K             <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <leader>a     <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> <leader>cd    :lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <leader>ct    :lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> <leader>cI    :lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <leader>cD    :lua vim.lsp.buf.references()<CR>
+nnoremap <silent> K             :lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <leader>a     :lua vim.lsp.buf.code_action()<CR>
 
 " Diagnostic configuration
 lua << EOF

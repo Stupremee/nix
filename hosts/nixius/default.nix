@@ -14,6 +14,7 @@
   hardware.steam-hardware.enable = true;
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
 
   users.users.stu = {
     isNormalUser = true;

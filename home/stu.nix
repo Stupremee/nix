@@ -33,7 +33,15 @@
 
   # Alllow unfree packages.
   xdg.configFile."nixpkgs/config.nix".text = ''
-    { allowUnfree = true; }
+    {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+          inherit pkgs;
+        };
+        unstable = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/nixpkgs-unstable.tar.gz") {};
+      };
+    }
   '';
 
   # Install rust overlay

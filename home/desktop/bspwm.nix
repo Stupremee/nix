@@ -119,7 +119,6 @@ in {
     script = ''
       polybar -rq music &
       polybar -rq tray &
-      polybar -rq ws &
     '';
   };
 }

@@ -10,72 +10,45 @@ let
     else
       (import ./lib/parseTOML.nix).fromTOML;
 
-  parseRustChannel = channel:
-    with builtins;
-    if (trace channel channel) == null then
-      null
-    else
-      let
-        # matches toolchain descriptions of type "nightly" or "nightly-2020-01-01"
-        channel_by_name =
-          match "([a-z]+)(-([0-9]{4}-[0-9]{2}-[0-9]{2}))?.*" channel;
-        # matches toolchain descriptions of type "1.34.0" or "1.34.0-2019-04-10"
-        channel_by_version =
-          match "([0-9]+\\.[0-9]+\\.[0-9]+)(-([0-9]{4}-[0-9]{2}-[0-9]{2}))?.*"
-          channel;
-
-      in ((x:
-        if x == null then
-          null
-        else {
-          channel = head x;
-          date = (head (tail (tail x)));
-        }) (if channel_by_name != null then
-          channel_by_name
-        else
-          channel_by_version));
-
   parseRustToolchain = file:
     with builtins;
     if file == null then
       { }
     else
-      let channel = parseRustChannel (readFile file);
-      in if channel != null then
-        channel
-      else
-        let
-          toolchain = (fromTOML (readFile file)).toolchain;
-          channel = parseRustChannel toolchain.channel;
-        in (trace channel channel) // {
-          extensions = toolchain.components or [ ];
-          targets = toolchain.targets or [ ];
-        };
+      let
+        # matches toolchain descriptions of type "nightly" or "nightly-2020-01-01"
+        channel_by_name =
+          match "([a-z]+)(-([0-9]{4}-[0-9]{2}-[0-9]{2}))?.*" (readFile file);
+        # matches toolchain descriptions of type "1.34.0" or "1.34.0-2019-04-10"
+        channel_by_version =
+          match "([0-9]+\\.[0-9]+\\.[0-9]+)(-([0-9]{4}-[0-9]{2}-[0-9]{2}))?.*"
+          (readFile file);
+      in (x: {
+        channel = head x;
+        date = (head (tail (tail x)));
+      })
+      (if channel_by_name != null then channel_by_name else channel_by_version);
 
   # See https://github.com/rust-lang-nursery/rustup.rs/blob/master/src/dist/src/dist.rs
   defaultDistRoot = "https://static.rust-lang.org";
-  manifest_url = { dist_root ? defaultDistRoot + "/dist", date ? null
+  manifest_v1_url = { dist_root ? defaultDistRoot + "/dist", date ? null
     , staging ? false,
     # A channel can be "nightly", "beta", "stable", or "\d{1}\.\d{1,3}\.\d{1,2}".
     channel ? "nightly",
     # A path that points to a rust-toolchain file, typically ./rust-toolchain.
     rustToolchain ? null, ... }:
-    let
-      args = { inherit channel date; } // parseRustToolchain rustToolchain;
+    let args = { inherit channel date; } // parseRustToolchain rustToolchain;
+    in let inherit (args) date channel;
+    in if date == null && staging == false then
+      "${dist_root}/channel-rust-${channel}"
+    else if date != null && staging == false then
+      "${dist_root}/${date}/channel-rust-${channel}"
+    else if date == null && staging == true then
+      "${dist_root}/staging/channel-rust-${channel}"
+    else
+      throw "not a real-world case";
 
-      url = (let inherit (args) date channel;
-      in if date == null && staging == false then
-        "${dist_root}/channel-rust-${channel}.toml"
-      else if date != null && staging == false then
-        "${dist_root}/${date}/channel-rust-${channel}.toml"
-      else if date == null && staging == true then
-        "${dist_root}/staging/channel-rust-${channel}.toml"
-      else
-        throw "not a real-world case");
-    in {
-      inherit url;
-      inherit (args) targets extensions;
-    };
+  manifest_v2_url = args: (manifest_v1_url args) + ".toml";
 
   getComponentsWithFixedPlatform = pkgs: pkgname: stdenv:
     let
@@ -201,11 +174,9 @@ let
           installPhase = ''
             patchShebangs install.sh
             CFG_DISABLE_LDCONFIG=1 ./install.sh --prefix=$out --verbose
-
             setInterpreter() {
               local dir="$1"
               [ -e "$dir" ] || return 0
-
               header "Patching interpreter of ELF executables and libraries in $dir"
               local i
               while IFS= read -r -d $'\0' i; do
@@ -231,7 +202,6 @@ let
                 fi
               done < <(find "$dir" -type f -print0)
             }
-
             setInterpreter $out
           '';
 
@@ -239,7 +209,6 @@ let
             # Function moves well-known files from etc/
             handleEtc() {
               local oldIFS="$IFS"
-
               # Directories we are aware of, given as substitution lists
               for paths in \
                 "etc/bash_completion.d","share/bash_completion/completions","etc/bash_completions.d","share/bash_completions/completions";
@@ -247,20 +216,16 @@ let
                 # Some directoties may be missing in some versions. If so we just skip them.
                 # See https://github.com/mozilla/nixpkgs-mozilla/issues/48 for more infomation.
                 if [ ! -e $paths ]; then continue; fi
-
                 IFS=","
                 set -- $paths
                 IFS="$oldIFS"
-
                 local orig_path="$1"
                 local wanted_path="$2"
-
                 # Rename the files
                 if [ -d ./"$orig_path" ]; then
                   mkdir -p "$(dirname ./"$wanted_path")"
                 fi
                 mv -v ./"$orig_path" ./"$wanted_path"
-
                 # Fail explicitly if etc is not empty so we can add it to the list and/or report it upstream
                 rmdir ./etc || {
                   echo Installer tries to install to /etc:
@@ -269,7 +234,6 @@ let
                 }
               done
             }
-
             if [ -d "$out"/etc ]; then
               pushd "$out"
               handleEtc
@@ -354,43 +318,31 @@ let
 
           meta.platforms = stdenv.lib.platforms.all;
         }) {
-          targets = [ ];
           extensions = [ ];
+          targets = [ ];
           targetExtensions = [ ];
         });
 
   fromManifest = sha256: manifest:
     { stdenv, fetchurl, patchelf }:
     let
-      inherit (super.lib) flip mapAttrs;
-
       manifestFile = if sha256 == null then
-        builtins.fetchurl manifest.url
+        builtins.fetchurl manifest
       else
         fetchurl {
-          url = manifest.url;
+          url = manifest;
           inherit sha256;
         };
-
-      rustChannel = {
-        channel =
-          fromManifestFile manifestFile { inherit stdenv fetchurl patchelf; };
-      };
-
-      realChannel = flip mapAttrs rustChannel (name: value:
-        value // {
-          rust = value.rust.override { inherit (manifest) extensions targets; };
-        });
-    in realChannel.channel;
+    in fromManifestFile manifestFile { inherit stdenv fetchurl patchelf; };
 
 in rec {
   lib = super.lib // {
     inherit fromTOML;
-    rustLib = { inherit fromManifest fromManifestFile manifest_url; };
+    rustLib = { inherit fromManifest fromManifestFile manifest_v2_url; };
   };
 
   rustChannelOf = { sha256 ? null, ... }@manifest_args:
-    fromManifest sha256 (manifest_url manifest_args) {
+    fromManifest sha256 (manifest_v2_url manifest_args) {
       inherit (self) stdenv fetchurl patchelf;
     };
 

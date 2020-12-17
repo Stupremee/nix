@@ -16,6 +16,9 @@ lspconfig.rust_analyzer.setup({ on_attach=on_attach })
 
 -- Terraform
 lspconfig.terraformls.setup({ on_attach=on_attach })
+
+-- Python
+lspconfig.pyls.setup({ on_attach=on_attach })
 EOF
 
 " Run completion on <TAB>
@@ -34,6 +37,7 @@ nnoremap <silent> ]e            :vim.lsp.diagnostic.goto_next()<cr>
 
 nnoremap <silent> <leader>cd    :lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <leader>ct    :lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> <leader>cr    :lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> <leader>cI    :lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <leader>cD    :lua vim.lsp.buf.references()<CR>
 nnoremap <silent> K             :lua vim.lsp.buf.hover()<CR>

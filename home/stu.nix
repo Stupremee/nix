@@ -14,6 +14,7 @@
   home.packages = with pkgs; [
     unstable.discord-canary
     spotify
+    xclip
 
     # TODO: Add desktop entries
     zathura
@@ -39,7 +40,7 @@
         nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
           inherit pkgs;
         };
-        unstable = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/nixpkgs-unstable.tar.gz") {};
+        unstable = import (builtins.fetchTarball "https://github.com/nixos/nixpkgs/archive/nixos-unstable.tar.gz") {};
       };
     }
   '';

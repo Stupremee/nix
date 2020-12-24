@@ -8,7 +8,7 @@ let
       owner = "neovim";
       repo = "neovim";
       rev = "nightly";
-      sha256 = "sha256-NwPf19cCVJVcP3QBp0h0aOtHbdW/7HmFGFEyBB3BBrM=";
+      sha256 = "sha256-mpeNUoDFA+U9bjmeyYVzTOitoUkTE6JA9csmhIDkzPc=";
     };
     nativeBuildInputs = oldAttrs.nativeBuildInputs
       ++ [ pkgs.utf8proc pkgs.unstable.tree-sitter ];
@@ -26,25 +26,32 @@ in {
 
     withPython = false;
 
-    plugins = with pkgs.vimPlugins;
-      [
-        nord-vim
-        vim-sneak
-        vim-rooter
-        nerdcommenter
-        vim-polyglot
-        fzf-vim
-        vim-crates
-        neoformat
+    plugins = with pkgs.unstable.vimPlugins; [
+      # Color theme
+      nord-vim
 
-      ] ++ (with pkgs.unstable.vimPlugins; [
-        # Language server client
-        nvim-lspconfig
-        lsp_extensions-nvim
-        completion-nvim
-      ]);
+      # Various Utilities
+      vim-sneak
+      vim-rooter
+      nerdcommenter
+      neoformat
+      vim-crates
 
-    extraConfig = (readFile ./init.vim) + (readFile ./lsp.vim);
+      # Universal syntax highlighting
+      nvim-treesitter
+
+      # Language Server Plugins
+      deoplete-lsp
+      deoplete-nvim
+      nvim-lspconfig
+
+      # Fuzzy finding
+      fzf-vim
+      telescope-nvim
+    ];
+
+    extraConfig = (readFile ./init.lua);
+    #extraConfig = (readFile ./init.vim) + (readFile ./lsp.vim);
   };
 
   home.sessionVariables.MANPAGER = "nvim +Man!";

@@ -49,6 +49,7 @@ in {
           state = "floating";
           center = true;
         };
+        "Zathura" = { state = "tiled"; };
       };
     };
   };

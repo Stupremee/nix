@@ -15,10 +15,17 @@
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+  boot.kernelModules = [ "usbmon" "uvcvideo" ];
+
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.unstable.wireshark;
+  };
 
   users.users.stu = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "docker" "disk" "networkmanager" ];
+    extraGroups =
+      [ "wheel" "audio" "docker" "disk" "networkmanager" "wireshark" ];
     shell = pkgs.zsh;
   };
   nix.trustedUsers = [ "root" "stu" ];

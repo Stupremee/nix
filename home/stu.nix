@@ -24,6 +24,7 @@
     # Gaming 
     steam
     lutris
+    unstable.multimc
 
     # Man pages
     man-db

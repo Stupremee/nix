@@ -50,8 +50,8 @@ in {
       telescope-nvim
     ];
 
-    extraConfig = (readFile ./init.lua);
-    #extraConfig = (readFile ./init.vim) + (readFile ./lsp.vim);
+    # extraConfig = (readFile ./init.lua);
+    # extraConfig = (readFile ./init.vim) + (readFile ./lsp.vim);
   };
 
   home.sessionVariables.MANPAGER = "nvim +Man!";

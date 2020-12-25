@@ -4,6 +4,7 @@
 
     ../../hardware/nvidia.nix
     ../../hardware/yubico.nix
+    ../../hardware/wacom.nix
     ../../desktop
     ../../system
   ];

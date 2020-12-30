@@ -18,6 +18,22 @@
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
   boot.kernelModules = [ "usbmon" "uvcvideo" ];
 
+  # Increase the locked memory limit
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      item = "memlock";
+      type = "hard";
+      value = 512;
+    }
+    {
+      domain = "*";
+      item = "memlock";
+      type = "soft";
+      value = 512;
+    }
+  ];
+
   programs.wireshark = {
     enable = true;
     package = pkgs.unstable.wireshark;

@@ -94,15 +94,9 @@ in {
       # Cancel preselection
       "super + ctrl + space" = "bspc node -p cancel";
       # Resize windows in a smart way
-      "super + alt + {h,j,k,l}" = ''
-        n=10; \
-        { d1=left;   d2=right;  dx=-$n; dy=0;   \
-        , d1=bottom; d2=top;    dx=0;   dy=$n;  \
-        , d1=top;    d2=bottom; dx=0;   dy=-$n; \
-        , d1=right;  d2=left;   dx=$n;  dy=0;   \
-        } \
-        bspc node --resize $d1 $dx $dy || bspc node --resize $d2 $dx $dy
-      '';
+      "super + ctrl + alt + {h,j,k,l}" = ''
+        n=10; { d1=left; d2=right; dx=-$n; dy=0; , d1=bottom; d2=top; dx=0; dy=$n; , d1=top; d2=bottom; dx=0; dy=-$n; , d1=right; d2=left; dx=$n; dy=0; } bspc node --resize $d1 $dx $dy || bspc node --resize $d2 $dx $dy
+                      '';
     };
   };
 

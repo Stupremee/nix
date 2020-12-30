@@ -24,53 +24,55 @@ cmd 'autocmd BufRead Cargo.toml call crates#toggle()'
 --------------------------------------
 -- Set vim options
 --------------------------------------
-vim.o.statusline = '%=%m %c %P %f'
+local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
-vim.o.encoding = 'utf-8'
-vim.o.ttimeoutlen = 50
-vim.o.backspace = 'indent,eol,start'
-vim.o.wrap = false
+local function opt(scope, key, value)
+  scopes[scope][key] = value
+  if scope ~= 'o' then scopes['o'][key] = value end
+end
 
-vim.o.number = true
-vim.o.relativenumber = true
+opt('o', 'statusline', '%=%m %c %P %f')
 
-vim.o.cursorline = true
-vim.o.autoindent = true
+local indent = 2
 
-vim.o.incsearch = true
-vim.o.ignorecase = true
-vim.o.smartcase = true
+opt('o', 'hidden', true)
+opt('o', 'ignorecase', true)
+opt('o', 'joinspaces', false)
+opt('o', 'scrolloff', 4)
+opt('o', 'shiftround', true)
+opt('o', 'sidescrolloff', 8)
+opt('o', 'smartcase', true) 
+opt('o', 'splitbelow', true)
+opt('o', 'splitright', true)
+opt('o', 'wildmode', 'longest:full,full')
+opt('o', 'cmdheight', 2)
 
-vim.o.cmdheight = 2
-vim.o.signcolumn = 'yes'
+opt('o', 'undodir', '/home/stu/.cache/vimdid')
+cmd 'set undofile'
 
--- Indentation size
-local indent = 4
-vim.o.shiftwidth = indent
-vim.o.tabstop = indent
+opt('b', 'expandtab', true)
+opt('b', 'shiftwidth', indent)
+opt('b', 'smartindent', true)
+opt('b', 'tabstop', indent)
 
-vim.o.smarttab = true
-vim.o.expandtab = true
-
--- Undo settings
-vim.o.undodir = '~/.cache/vimdid'
-vim.o.undofile = true
+opt('w', 'cursorline', true)
+opt('w', 'number', true)
+opt('w', 'relativenumber', true)
+opt('w', 'wrap', false)
+opt('w', 'signcolumn', 'yes')
 
 --------------------------------------
 -- Treesitter configuration
 --------------------------------------
---require'nvim-treesitter.configs'.setup {
-  --ensure_installed = "maintained",
-  --highlight = {
-    --enable = true,
-  --},
-  --indent = {
-    --enable = true
-  --}
---}
-
---vim.o.foldmethod = 'expr'
---vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  highlight = {
+    enable = true,
+  },
+  indent = {
+    enable = true
+  }
+}
 
 --------------------------------------
 -- Language Server Configuration
@@ -92,9 +94,6 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
     update_in_insert = false,
   }
 )
-
--- These things can get really anoying
--- cmd 'autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostic()'
 
 -- Inlay hints
 cmd "autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = 'Comment' }"
@@ -130,6 +129,7 @@ map('n', '<leader>lI', '<cmd>lua vim.lsp.buf.implementation()<CR>')
 map('n', '<leader>lD', '<cmd>lua vim.lsp.buf.references()<CR>')
 map('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>')
 map('n', '<leader>lK', '<cmd>lua vim.lsp.buf.hover()<CR>')
+map('n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>')
 
 --------------------------------------
 -- Some more stuff
@@ -140,3 +140,7 @@ cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
 
 -- Auto format on save
 cmd 'au BufWritePre * Neoformat'
+
+-- Manually set some filetypes
+cmd 'au BufRead,BufNewFile *.tf set ft=terraform'
+cmd 'au BufRead,BufNewFile *.nix set ft=nix'

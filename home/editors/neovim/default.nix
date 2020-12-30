@@ -35,10 +35,10 @@ in {
       nerdcommenter
       neoformat
       vim-crates
+      vim-eunuch
 
       # Universal syntax highlighting
-      vim-polyglot
-      # nvim-treesitter
+      nvim-treesitter
 
       # Language Server Plugins
       nvim-lspconfig
@@ -50,6 +50,9 @@ in {
       telescope-nvim
     ];
 
+    extraConfig = ''
+      luafile ~/.config/nvim/init.lua
+    '';
     # extraConfig = (readFile ./init.vim) + (readFile ./lsp.vim);
   };
 

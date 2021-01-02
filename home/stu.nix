@@ -13,6 +13,7 @@
   home.enableDebugInfo = true;
   home.packages = with pkgs; [
     unstable.discord-canary
+    zulip
     spotify
 
     # TODO: Add desktop entries
@@ -48,6 +49,13 @@
   # Install rust overlay
   xdg.configFile."nixpkgs/overlays/rust-overlay.nix".source =
     ../overlays/rust-overlay.nix;
+
+  # Install rust analyzer overlay
+  xdg.configFile."nixpkgs/overlays/rust-analyzer.nix".text = ''
+    import (builtins.fetchTarball {
+      url = https://github.com/Stupremee/rust-analyzer-overlay/archive/main.tar.gz;
+    })
+  '';
 
   home.stateVersion = "20.09";
 }

@@ -13,7 +13,8 @@ let
     nativeBuildInputs = oldAttrs.nativeBuildInputs
       ++ [ pkgs.utf8proc pkgs.unstable.tree-sitter ];
   });
-in {
+in
+{
   programs.neovim = {
     enable = true;
     package = neovim-nightly;

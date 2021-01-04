@@ -16,7 +16,10 @@
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
-  boot.kernelModules = [ "usbmon" "uvcvideo" ];
+  boot.kernelModules = [ "usbmon" "uvcvideo" "xt_nat" ];
+
+  # Enable docker
+  virtualisation.docker = { enable = true; };
 
   # Increase the locked memory limit
   security.pam.loginLimits = [

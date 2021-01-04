@@ -47,8 +47,11 @@
   '';
 
   # Install rust overlay
-  xdg.configFile."nixpkgs/overlays/rust-overlay.nix".source =
-    ../overlays/rust-overlay.nix;
+  xdg.configFile."nixpkgs/overlays/rust.nix".text = ''
+    import (builtins.fetchTarball {
+      url = https://github.com/oxalica/rust-overlay/archive/master.tar.gz;
+    })
+  '';
 
   # Install rust analyzer overlay
   xdg.configFile."nixpkgs/overlays/rust-analyzer.nix".text = ''

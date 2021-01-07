@@ -1,3 +1,2 @@
+.direnv
 result
-.pre-commit-config.yaml
-secrets.nix

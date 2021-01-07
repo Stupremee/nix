@@ -1,85 +1,48 @@
 {
-  description = "My NixOS system configurations";
+  description = "Configuration for my NixOS systems.";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/20.09";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    stable.url = "github:NixOS/nixpkgs/release-20.09";
+
     flake-utils.url = "github:numtide/flake-utils";
-    nur.url = "github:nix-community/NUR/master";
+    devshell.url = "github:numtide/devshell";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs";
+    home = {
+      url = "github:nix-community/home-manager/release-20.09";
+      inputs.nixpkgs.follows = "unstable";
     };
 
-    pre-commit-hooks = {
-      url =
-        "github:Myhlamaeus/pre-commit-hooks.nix/8d48a4cd434a6a6cc8f2603b50d2c0b2981a7c55";
-      inputs.nixpkgs.follows = "nixpkgs";
+    neovim.url = "github:neovim/neovim/nightly?dir=contrib";
+
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "unstable";
     };
 
-    mozpkgs = {
-      url = "github:mozilla/nixpkgs-mozilla";
-      flake = false;
+    rust-analyzer-overlay = {
+      url = "github:Stupremee/rust-analyzer-overlay";
+      inputs.nixpkgs.follows = "unstable";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, flake-utils
-    , pre-commit-hooks, mozpkgs, nur }:
+  outputs = inputs@{ self, home, stable, unstable, flake-utils, ... }:
     let
+      inherit (stable) lib;
+      inherit (utils) pkgSet overlayPaths;
+
       system = "x86_64-linux";
 
-      systemModule = hostName:
-        ({ pkgs, ... }: {
-          # Set the hostname
-          networking.hostName = hostName;
+      utils = import ./lib/utils.nix { inherit lib; };
 
-          # Set system revision to flake's revision
-          system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+      extraModules = [ home.nixosModules.home-manager ];
+      extraOverlays = with inputs; [
+        devshell.overlay
+        nur.overlay
+        rust-overlay.overlay
+        rust-analyzer-overlay.overlay
+      ];
 
-          # Redirect global nixpkgs to nixpkgs flage defined here
-          nix.registry.nixpkgs.flake = nixpkgs;
-
-          # Import the modules
-          imports = [
-            (./hosts + "/${hostName}")
-            home-manager.nixosModules.home-manager
-          ];
-        });
-    in rec {
-      overlays = {
-        mozila = final: prev: { mozilla = mozpkgs; };
-        nur = nur.overlay;
-        unstable = final: prev: {
-          unstable = import nixpkgs-unstable {
-            inherit system;
-            config.allowUnfree = true;
-          };
-        };
-      };
-
-      # My workstation at home.
-      nixosConfigurations.nixius = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          (systemModule "nixius")
-          { nixpkgs.overlays = (builtins.attrValues overlays); }
-        ];
-      };
-
-      templates = import ./templates { };
-    } // flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        pre-commit-check = pre-commit-hooks.defaultPackage.${system} {
-          src = ./.;
-          hooks = { nixfmt.enable = true; };
-        };
-      in {
-        devShell = pkgs.mkShell {
-          inherit (pre-commit-check) shellHook;
-          buildInputs = [ pkgs.nixfmt ];
-          runScript = "zsh";
-        };
-      });
+      pkgset = pkgSet { inherit stable unstable system; };
+    in { };
 }

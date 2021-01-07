@@ -7,6 +7,8 @@ let
       inherit system overlays;
       config.allowUnfree = true;
     };
+
+  genAttrs' = values: f: listToAttrs (map f values);
 in {
   pkgSet = { stable, unstable, overlays, system }: {
     stable = pkgImport {
@@ -24,4 +26,9 @@ in {
     overlayDir = ../overlays;
     fullPath = name: overlayDir + "/${name}";
   in map fullPath (attrNames (readDir overlayDir));
+
+  modules = let
+    cachix = import ../cachix.nix;
+    modules = import ../modules/list.nix;
+  in [ ];
 }

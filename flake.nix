@@ -29,7 +29,8 @@
   outputs = inputs@{ self, home, stable, unstable, flake-utils, ... }:
     let
       inherit (stable) lib;
-      inherit (utils) pkgSet overlayPaths;
+      inherit (lib) recursiveUpdate;
+      inherit (utils) pkgSet overlayPaths importPaths modules;
 
       system = "x86_64-linux";
 
@@ -43,6 +44,19 @@
         rust-analyzer-overlay.overlay
       ];
 
-      pkgset = pkgSet { inherit stable unstable system; };
-    in { };
+      outputs = let
+        overlays = extraOverlays ++ self.overlays ++ [ self.overlay ];
+        pkgset = pkgSet { inherit stable unstable system overlays; };
+      in {
+        nixosConfigurations = import ./hosts
+          (recursiveUpdate inputs { inherit lib utils extraModules system; });
+
+        overlay = import ./pkgs;
+
+        overlays = importPaths overlayPaths;
+
+        nixosModules = modules;
+      };
+
+    in outputs;
 }

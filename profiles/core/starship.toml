@@ -1,0 +1,94 @@
+add_newline = true
+prompt_order = [
+    "nix_shell",
+    "directory",
+    "kubernetes",
+    "git_branch",
+    "git_commit",
+    "git_state",
+    "package",
+    "dotnet",
+    "golang",
+    "java",
+    "nodejs",
+    "php",
+    "python",
+    "ruby",
+    "rust",
+    "terraform",
+    "conda",
+    "memory_usage",
+    "aws",
+    "env_var",
+    "cmd_duration",
+    "line_break",
+    "jobs",
+    "time",
+    "battery",
+    "character",
+]
+
+[character]
+symbol = "λ ›"
+vicmd_symbol = "λ ·"
+
+[git_status]
+disabled = true
+
+[nix_shell]
+disabled = false
+use_name = true
+symbol = "❄️"
+impure_msg = "impure"
+pure_msg = "pure"
+style = "bold red"
+
+[cmd_duration]
+disabled = true
+
+[aws]
+symbol = " "
+
+[battery]
+full_symbol = ""
+charging_symbol = ""
+discharging_symbol = ""
+disabled = true
+
+[conda]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[golang]
+symbol = " "
+
+[hg_branch]
+symbol = " "
+
+[java]
+symbol = " "
+
+[memory_usage]
+symbol = " "
+disabled = true
+
+[nodejs]
+symbol = " "
+
+[package]
+symbol = " "
+disabled = true
+
+[php]
+symbol = " "
+
+[python]
+symbol = " "
+
+[ruby]
+symbol = " "
+
+[rust]
+symbol = " "

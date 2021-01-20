@@ -2,7 +2,11 @@
 # and contains common configuration for fonts,
 # zsh, and some more stuff.
 
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  starshipConfig =
+    pkgs.writeText "starship.toml" (builtins.readFile ./starship.toml);
+in {
   # Configure global settings related the NixOs and Nix.
   nix = {
     package = pkgs.nixFlakes;
@@ -63,9 +67,7 @@
     '';
 
     shellInit = ''
-      export STARSHIP_CONFIG=${
-        pkgs.writeText "starship.toml" (fileContents ./starship.toml)
-      }
+      export STARSHIP_CONFIG=${starshipConfig}
     '';
 
     interactiveShellInit = ''

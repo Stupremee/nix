@@ -44,8 +44,9 @@
       ];
 
       outputs = let
+        override = import ./pkgs/override.nix;
         overlays = (attrValues self.overlays) ++ extraOverlays
-          ++ [ self.overlay ];
+          ++ [ self.overlay (override unstablePkgs) ];
 
         osPkgs = importPkgs nixos overlays system;
         unstablePkgs = importPkgs unstablePkgs [ ] system;

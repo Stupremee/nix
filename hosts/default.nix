@@ -1,4 +1,4 @@
-{ self, utils, lib, system, home, extraModules, stable, unstable, ... }:
+{ self, utils, lib, system, home, extraModules, osPkgs, unstablePkgs, ... }:
 let
   inherit (builtins) attrValues;
   inherit (utils) recImports recImport;
@@ -17,17 +17,17 @@ let
           networking.hostName = hostName;
           nix.nixPath = let path = toString ../.;
           in [
-            "nixos-unstable=${unstable}"
-            "nixpkgs=${stable}"
+            "nixos-unstable=${unstablePkgs}"
+            "nixpkgs=${osPkgs}"
             "nixpkgs-overlays=${path}/overlays"
             "home-manager=${home}"
           ];
 
-          nixpkgs.pkgs = stable;
+          nixpkgs.pkgs = osPkgs;
 
           nix.registry = {
-            unstable.flake = unstable;
-            nixpkgs.flake = stable;
+            unstable.flake = unstablePkgs;
+            nixpkgs.flake = osPkgs;
             home-manager.flake = home;
           };
 

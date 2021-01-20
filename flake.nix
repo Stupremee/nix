@@ -2,35 +2,35 @@
   description = "Configuration for my NixOS systems.";
 
   inputs = {
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    stable.url = "github:NixOS/nixpkgs/release-20.09";
+    unstablePkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos.url = "github:NixOS/nixpkgs/release-20.09";
 
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
 
     home = {
       url = "github:nix-community/home-manager/release-20.09";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstablePkgs";
     };
 
     neovim.url = "github:neovim/neovim/nightly?dir=contrib";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstablePkgs";
     };
 
     rust-analyzer-overlay = {
       url = "github:Stupremee/rust-analyzer-overlay";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "unstablePkgs";
     };
   };
 
-  outputs = inputs@{ self, home, stable, unstable, flake-utils, ... }:
+  outputs = inputs@{ self, home, nixos, unstablePkgs, flake-utils, ... }:
     let
-      inherit (stable) lib;
-      inherit (lib) recursiveUpdate;
-      inherit (utils) pkgSet overlayPaths importPaths modules;
+      inherit (nixos) lib;
+      inherit (lib) recursiveUpdate attrValues;
+      inherit (utils) importPkgs overlayPaths importPaths modules;
 
       system = "x86_64-linux";
 
@@ -39,17 +39,20 @@
       extraModules = [ home.nixosModules.home-manager ];
       extraOverlays = with inputs; [
         devshell.overlay
-        nur.overlay
         rust-overlay.overlay
         rust-analyzer-overlay.overlay
       ];
 
       outputs = let
-        overlays = extraOverlays ++ self.overlays ++ [ self.overlay ];
-        pkgset = pkgSet { inherit stable unstable system overlays; };
+        overlays = (attrValues self.overlays) ++ extraOverlays
+          ++ [ self.overlay ];
+
+        osPkgs = importPkgs nixos overlays system;
+        unstablePkgs = importPkgs unstablePkgs [ ] system;
       in {
-        nixosConfigurations = import ./hosts
-          (recursiveUpdate inputs { inherit lib utils extraModules system; });
+        nixosConfigurations = import ./hosts (recursiveUpdate inputs {
+          inherit lib utils extraModules system osPkgs unstablePkgs;
+        });
 
         overlay = import ./pkgs;
 

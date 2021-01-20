@@ -7,7 +7,7 @@ let
 
   mapFilterAttrs = seive: f: attrs: filterAttrs seive (mapAttrs' f attrs);
 
-  importPkgs = { pkgs, system, overlays }:
+  importPkgs = pkgs: overlays: system:
     import pkgs {
       inherit system overlays;
       config.allowUnfree = true;
@@ -27,19 +27,7 @@ let
       value = import path;
     });
 in {
-  inherit importPaths;
-
-  pkgSet = { stable, unstable, overlays, system }: {
-    stable = importPkgs {
-      inherit system overlays;
-      pkgs = stable;
-    };
-
-    unstable = importPkgs {
-      inherit system overlays;
-      pkgs = unstable;
-    };
-  };
+  inherit importPaths importPkgs;
 
   overlayPaths = let
     overlayDir = ../overlays;

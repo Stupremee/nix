@@ -2,7 +2,7 @@
   description = "Configuration for my NixOS systems.";
 
   inputs = {
-    unstablePkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos.url = "github:NixOS/nixpkgs/release-20.09";
 
     flake-utils.url = "github:numtide/flake-utils";
@@ -10,23 +10,23 @@
 
     home = {
       url = "github:nix-community/home-manager/release-20.09";
-      inputs.nixpkgs.follows = "unstablePkgs";
+      inputs.nixpkgs.follows = "unstable";
     };
 
     neovim.url = "github:neovim/neovim/nightly?dir=contrib";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "unstablePkgs";
+      inputs.nixpkgs.follows = "unstable";
     };
 
     rust-analyzer-overlay = {
       url = "github:Stupremee/rust-analyzer-overlay";
-      inputs.nixpkgs.follows = "unstablePkgs";
+      inputs.nixpkgs.follows = "unstable";
     };
   };
 
-  outputs = inputs@{ self, home, nixos, unstablePkgs, flake-utils, ... }:
+  outputs = inputs@{ self, home, nixos, unstable, flake-utils, ... }:
     let
       inherit (nixos) lib;
       inherit (lib) recursiveUpdate attrValues;
@@ -43,13 +43,18 @@
         rust-analyzer-overlay.overlay
       ];
 
-      outputs = let
-        override = import ./pkgs/override.nix;
-        overlays = (attrValues self.overlays) ++ extraOverlays
-          ++ [ self.overlay (override unstablePkgs) ];
+      pkgs' = unstable:
+        let
+          override = import ./pkgs/override.nix;
+          overlays = (attrValues self.overlays) ++ extraOverlays
+            ++ [ self.overlay (override unstable) ];
+        in importPkgs nixos overlays system;
 
-        osPkgs = importPkgs nixos overlays system;
-        unstablePkgs = importPkgs unstablePkgs [ ] system;
+      unstablePkgs = importPkgs unstablePkgs [ ] system;
+
+      outputs = let
+        unstablePkgs = importPkgs unstable [ ] system;
+        osPkgs = pkgs' unstablePkgs;
       in {
         nixosConfigurations = import ./hosts (recursiveUpdate inputs {
           inherit lib utils extraModules system osPkgs unstablePkgs;

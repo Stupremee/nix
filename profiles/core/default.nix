@@ -22,7 +22,7 @@ in {
     autoOptimiseStore = true;
     optimise = {
       automatic = true;
-      dates = "11:00";
+      dates = [ "11:00" ];
     };
 
     gc = {
@@ -39,13 +39,16 @@ in {
   # Install all fonts and set the default fonts
   fonts = {
     fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" "Noto" ]; })
+      # TODO: Add Noto Nerd Font here once GitHub can download faster
+      # than 30KB/s
+      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      noto-fonts
       noto-fonts-emoji
     ];
 
     fontconfig.defaultFonts = {
-      serif = [ "Noto Serif Nerd Font" ];
-      sansSerif = [ "Noto Sans Nerd Font" ];
+      serif = [ "Noto Serif" "Noto Serif Nerd Font" ];
+      sansSerif = [ "Noto Sans" "Noto Sans Nerd Font" ];
       monospace = [ "FiraCode Nerd Font" ];
       emoji = [ "Noto Color Emoji" ];
     };

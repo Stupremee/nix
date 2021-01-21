@@ -44,6 +44,10 @@
 
   # Hardware configuration
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-  hardware.video.hidpi.enable = lib.mkDefault true;
-  hardware.cpu.intel.updateMicrocode = true;
+  hardware = {
+    video.hidpi.enable = lib.mkDefault true;
+    cpu.intel.updateMicrocode = true;
+    # Required to make the WIFI card work
+    enableRedistributableFirmware = true;
+  };
 }

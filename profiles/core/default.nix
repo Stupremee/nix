@@ -42,7 +42,7 @@ in {
       # TODO: Add Noto Nerd Fonts here once GitHub can download faster
       # than 30KB/s
       #(nerdfonts.override { fonts = [ "FiraCode" ]; })
-      powerline-fonts
+      fira-code-symbols
       noto-fonts
       noto-fonts-emoji
     ];
@@ -50,7 +50,7 @@ in {
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Noto Serif Nerd Font" ];
       sansSerif = [ "Noto Sans" "Noto Sans Nerd Font" ];
-      monospace = [ "FiraCode Mono for Powerline" ];
+      monospace = [ "FiraCode Font" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };

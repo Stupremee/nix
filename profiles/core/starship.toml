@@ -1,32 +1,4 @@
 add_newline = true
-prompt_order = [
-    "nix_shell",
-    "directory",
-    "kubernetes",
-    "git_branch",
-    "git_commit",
-    "git_state",
-    "package",
-    "dotnet",
-    "golang",
-    "java",
-    "nodejs",
-    "php",
-    "python",
-    "ruby",
-    "rust",
-    "terraform",
-    "conda",
-    "memory_usage",
-    "aws",
-    "env_var",
-    "cmd_duration",
-    "line_break",
-    "jobs",
-    "time",
-    "battery",
-    "character",
-]
 
 [character]
 symbol = "λ ›"

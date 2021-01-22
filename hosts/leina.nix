@@ -1,5 +1,9 @@
 # My Thinkpad Laptop.
-{ lib, ... }: {
+{ lib, modulesPath, ... }: {
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ../profiles/network/networkmanager.nix
+  ];
 
   # Limit max jobs to 4, because the PC only has 4 CPUs
   nix.maxJobs = lib.mkDefault 4;

@@ -1,1 +1,1 @@
-[ ./core ]
+[ ./core ./network/networkmanager.nix ]

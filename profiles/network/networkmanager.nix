@@ -1,7 +1,5 @@
 # Configure the NetworkManager
-{ lib, settings, ... }:
-let inherit (settings) users;
-in {
+{ lib, ... }: {
   networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
@@ -24,6 +22,4 @@ in {
       DNSOverTLS=yes
     '';
   };
-
-  users.users."${users.interactive}".extraGroups = [ "networkmanager" ];
 }

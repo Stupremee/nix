@@ -4,6 +4,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/network/networkmanager.nix
     ../profiles/laptop.nix
+    ../profiles/sshd.nix
     ../users/stu.nix
   ];
 

@@ -18,7 +18,7 @@
     # each interface individually
     useDHCP = false;
     interfaces.enp0s31f6.useDHCP = true;
-    interfaces.wlp4s0.useDHCP = true;
+    interfaces.wlan0.useDHCP = true;
   };
 
   # Kernel and boot configuration

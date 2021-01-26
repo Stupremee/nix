@@ -3,6 +3,8 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/network/networkmanager.nix
+    ../profiles/laptop.nix
+    ../users/stu.nix
   ];
 
   # Limit max jobs to 4, because the PC only has 4 CPUs
@@ -51,7 +53,5 @@
   hardware = {
     video.hidpi.enable = lib.mkDefault true;
     cpu.intel.updateMicrocode = true;
-    # Required to make the WIFI card work
-    enableRedistributableFirmware = true;
   };
 }

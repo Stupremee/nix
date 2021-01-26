@@ -48,4 +48,10 @@ in {
         let name = removeSuffix ".nix" n; in nameValuePair (name) (_import name)
       else
         nameValuePair ("") (null)) (readDir dir);
+
+  keysFromGithub = { pkgs, username, sha256 ? lib.fakeSha256 }:
+    (lib.splitString "\n" (builtins.readFile (pkgs.fetchurl {
+      url = "https://github.com/${username}.keys";
+      inherit sha256;
+    })));
 }

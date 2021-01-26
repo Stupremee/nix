@@ -1,6 +1,6 @@
 # Various configurations that can mostly be applied
 # to every laptop device.
-{ ... }: {
+{ pkgs, lib, config, ... }: {
   environment.systemPackages = with pkgs; [ acpi lm_sensors pciutils usbutils ];
 
   hardware.bluetooth.enable = true;

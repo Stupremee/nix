@@ -2,8 +2,8 @@
   description = "Configuration for my NixOS systems.";
 
   inputs = {
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos.url = "github:NixOS/nixpkgs/release-20.09";
+    unstable.url = "github:NixOS/nixpkgs/master";
+    nixos.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
@@ -24,6 +24,8 @@
       url = "github:Stupremee/rust-analyzer-overlay";
       inputs.nixpkgs.follows = "unstable";
     };
+
+    nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
   };
 
   outputs = inputs@{ self, home, nixos, unstable, flake-utils, ... }:
@@ -41,6 +43,7 @@
         devshell.overlay
         rust-overlay.overlay
         rust-analyzer-overlay.overlay
+        inputs.nixpkgs-wayland.overlay
       ];
 
       pkgs' = unstable:

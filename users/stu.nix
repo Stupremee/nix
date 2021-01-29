@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let utils = import ../lib/utils.nix { inherit lib; };
 in {
-  home-manager.users.stu = { imports = [ ]; };
+  home-manager.users.stu = { imports = [ ./profiles/graphical/sway ]; };
 
   users.users.stu = {
     uid = 1000;

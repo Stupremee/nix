@@ -9,7 +9,7 @@ let
 in {
   # Configure global settings related the NixOs and Nix.
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixUnstable;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
@@ -27,8 +27,9 @@ in {
 
     gc = {
       automatic = true;
-      dates = "11:00";
-      options = "--delete-ollder-than 30d";
+      # Run garbage collector every sunday at 1PM
+      dates = "Sun 13:00";
+      options = "--delete-older-than 30d";
     };
   };
 
@@ -98,6 +99,12 @@ in {
       jq
       manix
       git
+      git-crypt
+
+      man-db
+      man-pages
+      posix_man_pages
+      stdmanpages
     ];
 
     shellAliases = {

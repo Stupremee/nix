@@ -1,1 +1,8 @@
-[ ./core ./network/networkmanager.nix ./laptop.nix ./virt.nix ./sshd.nix ]
+[
+  ./core
+  ./graphical
+  ./network/networkmanager.nix
+  ./laptop.nix
+  ./virt.nix
+  ./sshd.nix
+]

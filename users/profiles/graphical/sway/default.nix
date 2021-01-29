@@ -1,6 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   inherit (builtins) map;
+  inherit (lib.lists) fold;
 
   modifier = "Mod4";
 
@@ -25,12 +26,12 @@ let
 
   workspaces = [ 1 2 3 4 5 6 7 8 9 ];
 
-  workspaceKeybinds1 = map (ws: {
-    "${modifier}+${ws}" = "workspace number ${ws}";
-    "${modifier}+Shift+${ws}" = "move container to workspace number ${ws}";
-  }) workspaces;
-
-  workspaceKeybinds = (builtins.trace workspaceKeybinds1 workspaceKeybinds1);
+  workspaceKeybinds = let
+    keybinds = map (ws: {
+      "${modifier}+${ws}" = "workspace number ${ws}";
+      "${modifier}+Shift+${ws}" = "move container to workspace number ${ws}";
+    }) workspaces;
+  in fold (a: b: a // b) { } keybinds;
 in {
   home.packages = with pkgs; [ grim slurp wl-clipboard ];
 

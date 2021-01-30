@@ -1,12 +1,14 @@
 { pkgs, lib, ... }:
 let utils = import ../lib/utils.nix { inherit lib; };
 in {
-  home-manager.users.stu = { imports = [ ./profiles/graphical/sway ]; };
+  home-manager.users.stu = {
+    imports = [ ./profiles/graphical/sway ./profiles/zsh.nix ];
+  };
 
   users.users.stu = {
     uid = 1000;
     isNormalUser = true;
-    extraGroups = [ "wheel" "sway" "networkmanager" ];
+    extraGroups = [ "wheel" "sway" "networkmanager" "input" ];
     openssh.authorizedKeys.keys = utils.keysFromGithub {
       inherit pkgs;
       username = "Stupremee";

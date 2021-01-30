@@ -14,12 +14,6 @@
     };
 
     neovim.url = "github:neovim/neovim/nightly?dir=contrib";
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "unstable";
-    };
-
     rust-analyzer-overlay = {
       url = "github:Stupremee/rust-analyzer-overlay";
       inputs.nixpkgs.follows = "unstable";

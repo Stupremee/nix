@@ -33,7 +33,9 @@ let
     }) workspaces;
   in fold (a: b: a // b) { } keybinds;
 
-  profileExtra = ''
+  startSway = pkgs.writeScriptBin "startsway" ''
+    #!${pkgs.bash}/bin/bash
+
     [[ "$TTY" == /dev/tty* ]] || return 0
 
     systemctl --user import-environment
@@ -43,6 +45,10 @@ let
       systemctl --user stop sway-session.target
       systemctl --user unset-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
     fi
+  '';
+
+  profileExtra = ''
+    ${startSway}/bin/startsway
   '';
 in {
   home.packages = with pkgs; [ grim slurp wl-clipboard wofi swaylock swayidle ];

@@ -1,6 +1,6 @@
 [
   ./core
-  ./graphical
+  ./graphical/x11.nix
   ./graphical/sway.nix
   ./network/networkmanager.nix
   ./laptop.nix

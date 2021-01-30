@@ -51,9 +51,7 @@ in {
         (keybind "Key0" "Control" "ResetFontSize")
 
         (keybind "Equals" "Control" "IncreaseFontSize")
-        (keybind "Add" "Control" "IncreaseFontSize")
-
-        (keybind "Subtract" "Control" "DecreaseFontSize")
+        (keybind "Plus" "Control" "IncreaseFontSize")
         (keybind "Minus" "Control" "DecreaseFontSize")
 
         # Vi Mode

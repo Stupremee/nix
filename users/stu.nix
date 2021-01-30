@@ -5,7 +5,7 @@ in {
     imports = [
       ./profiles/graphical/sway
       ./profiles/graphical/alacritty
-      ./profiles/zsh.nix
+      ./profiles/zsh
     ];
   };
 

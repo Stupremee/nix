@@ -10,6 +10,8 @@ in {
       ./profiles/zsh
       ./profiles/git.nix
       ./profiles/pgp.nix
+
+      ./profiles/editors/nvim
     ];
   };
 

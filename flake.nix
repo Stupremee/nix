@@ -14,11 +14,6 @@
     };
 
     neovim.url = "github:neovim/neovim/nightly?dir=contrib";
-    rust-analyzer-overlay = {
-      url = "github:Stupremee/rust-analyzer-overlay";
-      inputs.nixpkgs.follows = "unstable";
-    };
-
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
   };
 
@@ -35,8 +30,8 @@
       extraModules = [ home.nixosModules.home-manager ];
       extraOverlays = with inputs; [
         devshell.overlay
-        rust-analyzer-overlay.overlay
-        inputs.nixpkgs-wayland.overlay
+        nixpkgs-wayland.overlay
+        neovim.overlay
       ];
 
       pkgs' = unstable:

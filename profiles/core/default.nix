@@ -101,8 +101,10 @@
       ps = "procs";
       g = "git";
 
+      nsh = "nix-shell";
+
       opt = ''
-        manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
+        manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix {}" | xargs manix
       '';
     };
   };

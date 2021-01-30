@@ -95,7 +95,8 @@ in {
       pulsemixer
       procs
       tokei
-      licensor
+      # Currently broken idk
+      # licensor
       jq
       manix
       git

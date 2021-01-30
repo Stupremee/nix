@@ -1,6 +1,6 @@
 { pkgs, lib, ... }:
 let
-  inherit (builtins) map;
+  inherit (builtins) map toString;
   inherit (lib.lists) fold;
 
   modifier = "Mod4";
@@ -24,7 +24,7 @@ let
     base0F = "#B48EAD";
   };
 
-  workspaces = [ 1 2 3 4 5 6 7 8 9 ];
+  workspaces = map toString [ 1 2 3 4 5 6 7 8 9 ];
 
   workspaceKeybinds = let
     keybinds = map (ws: {
@@ -33,10 +33,11 @@ let
     }) workspaces;
   in fold (a: b: a // b) { } keybinds;
 in {
-  home.packages = with pkgs; [ grim slurp wl-clipboard ];
+  home.packages = with pkgs; [ grim slurp wl-clipboard wofi ];
 
   wayland.windowManager.sway = {
     enable = true;
+    systemdIntegration = true;
 
     config = {
       inherit modifier;
@@ -94,7 +95,7 @@ in {
 
       fonts = [ "monospace 8" ];
       gaps = {
-        smartBorders = true;
+        smartBorders = "on";
         smartGaps = true;
       };
 

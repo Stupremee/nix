@@ -1,6 +1,7 @@
 [
   ./core
   ./graphical
+  ./graphical/sway.nix
   ./network/networkmanager.nix
   ./laptop.nix
   ./virt.nix

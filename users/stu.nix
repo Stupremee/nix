@@ -6,7 +6,7 @@ in {
   users.users.stu = {
     uid = 1000;
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "sway" "networkmanager" ];
     openssh.authorizedKeys.keys = utils.keysFromGithub {
       inherit pkgs;
       username = "Stupremee";

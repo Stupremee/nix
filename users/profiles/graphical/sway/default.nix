@@ -32,8 +32,20 @@ let
       "${modifier}+Shift+${ws}" = "move container to workspace number ${ws}";
     }) workspaces;
   in fold (a: b: a // b) { } keybinds;
+
+  profileExtra = ''
+    [[ "$TTY" == /dev/tty* ]] || return 0
+
+    systemctl --user import-environment
+
+    if [[ -z $DISPLAY && "$TTY" == "/dev/tty1" ]]; then
+      systemd-cat -t sway sway
+      systemctl --user stop sway-session.target
+      systemctl --user unset-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+    fi
+  '';
 in {
-  home.packages = with pkgs; [ grim slurp wl-clipboard wofi ];
+  home.packages = with pkgs; [ grim slurp wl-clipboard wofi swaylock swayidle ];
 
   wayland.windowManager.sway = {
     enable = true;
@@ -139,4 +151,7 @@ in {
 
     wrapperFeatures = { gtk = true; };
   };
+
+  programs.zsh.profileExtra = profileExtra;
+  programs.bash.profileExtra = profileExtra;
 }

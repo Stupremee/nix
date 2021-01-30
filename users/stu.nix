@@ -5,6 +5,7 @@ in {
     imports = [
       ./profiles/graphical/sway
       ./profiles/graphical/alacritty
+      ./profiles/graphical/browsers/firefox.nix
       ./profiles/graphical/gtk.nix
 
       ./profiles/zsh
@@ -13,6 +14,8 @@ in {
 
       ./profiles/editors/nvim
     ];
+
+    home.packages = with pkgs; [ spotify libreoffice ];
   };
 
   users.users.stu = {

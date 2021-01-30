@@ -1,7 +1,11 @@
 { pkgs, ... }: {
-  hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
-  hardware.pulseaudio.enable = true;
+
+  sound.enable = true;
+  hardware = {
+    opengl.enable = true;
+    opengl.driSupport = true;
+    pulseaudio.enable = true;
+  };
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

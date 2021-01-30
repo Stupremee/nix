@@ -5,7 +5,11 @@ in {
     imports = [
       ./profiles/graphical/sway
       ./profiles/graphical/alacritty
+      ./profiles/graphical/gtk.nix
+
       ./profiles/zsh
+      ./profiles/git.nix
+      ./profiles/pgp.nix
     ];
   };
 

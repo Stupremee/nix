@@ -34,16 +34,12 @@ let
   in fold (a: b: a // b) { } keybinds;
 
   startSway = pkgs.writeScriptBin "startsway" ''
-    #!${pkgs.bash}/bin/bash
-
+    #!${pkgs.zsh}/bin/zsh
     [[ "$TTY" == /dev/tty* ]] || return 0
 
     systemctl --user import-environment
-
     if [[ -z $DISPLAY && "$TTY" == "/dev/tty1" ]]; then
-      systemd-cat -t sway sway
-      systemctl --user stop sway-session.target
-      systemctl --user unset-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+      exec systemd-cat -t sway sway
     fi
   '';
 
@@ -153,6 +149,16 @@ in {
       } // workspaceKeybinds;
 
       output."*".bg = "${../../../../background-image.png} fill";
+
+      extraSessionCommands = ''
+        export SDL_VIDEODRIVER=wayland
+        # needs qt5.qtwayland in systemPackages
+        export QT_QPA_PLATFORM=wayland
+        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+        # Fix for some Java AWT applications (e.g. Android Studio),
+        # use this if they aren't displayed properly:
+        export _JAVA_AWT_WM_NONREPARENTING=1
+      '';
     };
 
     wrapperFeatures = { gtk = true; };

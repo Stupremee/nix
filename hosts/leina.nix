@@ -5,6 +5,7 @@
     ../profiles/network/networkmanager.nix
     ../profiles/laptop.nix
     ../profiles/sshd.nix
+    ../profiles/graphical
     ../profiles/graphical/sway.nix
     ../users/stu.nix
   ];

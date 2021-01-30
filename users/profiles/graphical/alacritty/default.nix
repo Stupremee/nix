@@ -4,7 +4,7 @@ let
 
   yamlToJson = path:
     pkgs.runCommand "yaml2json" { nativeBuildInputs = [ pkgs.yq-go ]; }
-    "${pkgs.yq-go}/bin/yq r -j ${path} > $out";
+    "${pkgs.yq-go}/bin/yq e -j ${path} > $out";
 
   theme = builtins.fromJSON (builtins.readFile (loadYaml ./nord-theme.yml));
 

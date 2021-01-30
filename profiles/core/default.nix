@@ -2,11 +2,7 @@
 # and contains common configuration for fonts,
 # zsh, and some more stuff.
 
-{ pkgs, ... }:
-let
-  starshipConfig =
-    pkgs.writeText "starship.toml" (builtins.readFile ./starship.toml);
-in {
+{ pkgs, ... }: {
   # Configure global settings related the NixOs and Nix.
   nix = {
     package = pkgs.nixUnstable;
@@ -63,21 +59,6 @@ in {
     enableBashCompletion = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-
-    histFile = "$HOME/.config/zsh/zsh_history";
-    histSize = 10000;
-
-    promptInit = ''
-      eval "$(${pkgs.starship}/bin/starship init zsh)"
-    '';
-
-    shellInit = ''
-      export STARSHIP_CONFIG=${starshipConfig}
-    '';
-
-    interactiveShellInit = ''
-      eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
-    '';
   };
 
   # Shell aliases and core packages

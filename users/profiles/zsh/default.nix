@@ -80,6 +80,12 @@ in {
     FZF_DEFAULT_COMMAND = "${fd}/bin/fd --type f";
   };
 
+  programs.starship = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = builtins.fromTOML (builtins.readFile ./starship.toml);
+  };
+
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;

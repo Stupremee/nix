@@ -1,0 +1,6 @@
+add_newline = true
+
+[character]
+success_symbol = "λ ›(green)"
+error_symbol = "λ ›(green)"
+vicmd_symbol = "λ ·"

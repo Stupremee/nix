@@ -106,7 +106,7 @@ in {
 
       keybindings = {
         "${modifier}+Return" = "exec alacritty";
-        "${modifier}+p" = "exec wofi run";
+        "${modifier}+p" = "exec wofi --show run";
         "${modifier}+Print" = ''grim -g "$(slurp)" - | wl-copy'';
 
         "${modifier}+q" = "kill";

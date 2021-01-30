@@ -22,7 +22,7 @@ in {
       colors = theme.colors;
 
       font = {
-        size = 12;
+        size = 8;
         normal.family = "monospace";
         bold = {
           family = "monospace";

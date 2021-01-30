@@ -7,4 +7,5 @@
   ./laptop.nix
   ./virt.nix
   ./sshd.nix
+  ./yubikey.nix
 ]

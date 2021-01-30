@@ -4,6 +4,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/network/networkmanager.nix
     ../profiles/laptop.nix
+    ../profiles/yubikey.nix
     ../profiles/sshd.nix
     ../profiles/graphical
     ../profiles/graphical/sway.nix

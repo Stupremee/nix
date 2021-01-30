@@ -1,1 +1,3 @@
-final: prev: { }
+final: prev: {
+  starship = prev.callPackage ./starship.nix { };
+}

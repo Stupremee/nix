@@ -2,7 +2,11 @@
 let utils = import ../lib/utils.nix { inherit lib; };
 in {
   home-manager.users.stu = {
-    imports = [ ./profiles/graphical/sway ./profiles/zsh.nix ];
+    imports = [
+      ./profiles/graphical/sway
+      ./profiles/graphical/alacritty
+      ./profiles/zsh.nix
+    ];
   };
 
   users.users.stu = {

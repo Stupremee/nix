@@ -35,7 +35,6 @@
       extraModules = [ home.nixosModules.home-manager ];
       extraOverlays = with inputs; [
         devshell.overlay
-        rust-overlay.overlay
         rust-analyzer-overlay.overlay
         inputs.nixpkgs-wayland.overlay
       ];

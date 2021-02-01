@@ -19,11 +19,10 @@
 
   outputs = inputs@{ self, home, nixos, unstable, flake-utils, ... }:
     let
+      inherit (flake-utils.lib) eachDefaultSystem;
       inherit (nixos) lib;
       inherit (lib) recursiveUpdate attrValues;
       inherit (utils) importPkgs overlayPaths importPaths modules;
-
-      system = "x86_64-linux";
 
       utils = import ./lib/utils.nix { inherit lib; };
 
@@ -34,21 +33,12 @@
         neovim.overlay
       ];
 
-      pkgs' = unstable:
-        let
-          override = import ./pkgs/override.nix;
-          overlays = (attrValues self.overlays) ++ extraOverlays
-            ++ [ self.overlay (override unstable) ];
-        in importPkgs nixos overlays system;
-
-      unstablePkgs = importPkgs unstablePkgs [ ] system;
-
       outputs = let
-        unstablePkgs = importPkgs unstable [ ] system;
-        osPkgs = pkgs' unstablePkgs;
+        system = "x86_64-linux";
+        pkgs = self.legacyPackages."${system}";
       in {
         nixosConfigurations = import ./hosts (recursiveUpdate inputs {
-          inherit lib utils extraModules system osPkgs unstablePkgs;
+          inherit lib utils extraModules system pkgs;
         });
 
         overlay = import ./pkgs;
@@ -58,5 +48,17 @@
         nixosModules = modules;
       };
 
-    in outputs;
+    in recursiveUpdate (eachDefaultSystem (system:
+      let
+        unstablePkgs = importPkgs unstable [ ] system;
+        pkgs = let
+          override = import ./pkgs/override.nix;
+          overlays = [ (override unstablePkgs) self.overlay ]
+            ++ (attrValues self.overlays) ++ extraOverlays;
+        in importPkgs nixos overlays system;
+      in {
+        legacyPackages = pkgs;
+
+        devShell = import ./shell { inherit pkgs nixos; };
+      })) outputs;
 }

@@ -2,7 +2,7 @@
   programs.neovim = {
     enable = true;
     package = pkgs.neovim;
-    extraPackages = with pkgs; [ gcc nixfmt curl rust-analyzer ];
+    extraPackages = with pkgs; [ gcc nixpkgs-fmt curl rust-analyzer ];
 
     viAlias = true;
     vimAlias = true;

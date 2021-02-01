@@ -20,7 +20,10 @@
 
     lfs.enable = true;
 
-    extraConfig.pull.rebase = true;
+    extraConfig = {
+      pull.rebase = true;
+      init.defaultBranch = "main";
+    };
   };
 
   home.packages = with pkgs; [ gh ];

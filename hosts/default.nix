@@ -1,5 +1,4 @@
-{ self, utils, lib, system, home, extraModules, osPkgs, unstablePkgs, nixos
-, unstable, ... }:
+{ self, utils, lib, system, home, extraModules, pkgs, unstable, nixos, ... }:
 let
   inherit (builtins) attrValues;
   inherit (utils) recImports recImport;
@@ -24,7 +23,7 @@ let
             "home-manager=${home}"
           ];
 
-          nixpkgs.pkgs = osPkgs;
+          nixpkgs.pkgs = pkgs;
 
           nix.registry = {
             unstable.flake = unstable;

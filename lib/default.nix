@@ -26,28 +26,35 @@ let
       name = removeSuffix ".nix" (baseNameOf path);
       value = import path;
     });
-in {
+in
+{
   inherit importPaths importPkgs;
 
-  overlayPaths = let
-    overlayDir = ../overlays;
-    fullPath = name: overlayDir + "/${name}";
-  in map fullPath (attrNames (readDir overlayDir));
+  overlayPaths =
+    let
+      overlayDir = ../overlays;
+      fullPath = name: overlayDir + "/${name}";
+    in
+    map fullPath (attrNames (readDir overlayDir));
 
-  modules = let
-    cachix = import ../cachix.nix;
+  nixosModules =
+    let
+      cachix = import ../cachix.nix;
 
-    modules = importPaths (import ../modules/list.nix);
+      modules = importPaths (import ../modules/list.nix);
 
-    profiles = importPaths (import ../profiles/list.nix);
-  in recursiveUpdate modules { inherit profiles cachix; };
+      profiles = importPaths (import ../profiles/list.nix);
+    in
+    recursiveUpdate modules { inherit profiles cachix; };
 
   recImport = { dir, _import ? base: import "${dir}/${base}.nix" }:
-    mapFilterAttrs (_: v: v != null) (n: v:
-      if n != "default.nix" && hasSuffix ".nix" n && v == "regular" then
-        let name = removeSuffix ".nix" n; in nameValuePair (name) (_import name)
-      else
-        nameValuePair ("") (null)) (readDir dir);
+    mapFilterAttrs (_: v: v != null)
+      (n: v:
+        if n != "default.nix" && hasSuffix ".nix" n && v == "regular" then
+          let name = removeSuffix ".nix" n; in nameValuePair (name) (_import name)
+        else
+          nameValuePair ("") (null))
+      (readDir dir);
 
   keysFromGithub = { pkgs, username, sha256 ? lib.fakeSha256 }:
     (lib.splitString "\n" (builtins.readFile (pkgs.fetchurl {

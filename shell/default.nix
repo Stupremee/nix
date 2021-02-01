@@ -1,41 +1,46 @@
-{ pkgs, ... }:
-pkgs.devshell.mkShell { }
+{ pkgs, nixos, ... }:
+pkgs.devshell.mkShell {
+  name = "flk";
 
-# { pkgs, nixos, ... }:
-# pkgs.devshell.mkShell rec {
-#name = "flk";
+  packages = with pkgs; [ git-crypt pre-commit ];
 
-#packages = with pkgs; [ git-crypt pre-commit ];
+  git.hooks = with pkgs; {
+    enable = true;
+    pre-commit.text = ''
+      if ${git}/bin/git rev-parse --verify HEAD > /dev/null 2>&1
+      then
+        target=HEAD
+      else
+        # There is no commit in this repository yet,
+        # so check against the empty tree.
+        target="$(${git}/bin/git hash-object -t tree /dev/null)"
+      fi
 
-#git.hooks = with pkgs; {
-#enable = true;
-#pre-commit.text = ''
-#exec ${./pre-commit.sh}
-#'';
-#};
+      exec 1>&2
 
-#commands = with pkgs;
-#(let grip = python38Packages.grip;
-#in [
-#{
-#name = nixpkgs-fmt.pname;
-#package = nixpkgs-fmt;
-#help = nixpkgs-fmt.meta.description;
-#}
-#{
-#name = grip.pname;
-#package = grip;
-#help = grip.meta.description;
-#}
-#{
-#name = git.pname;
-#package = git;
-#help = git.meta.description;
-#}
-#{
-#name = "nix";
-#package = nixUnstable;
-#help = nixUnstable.meta.description;
-#}
-#]);
-#}
+      exec ${nixpkgs-fmt}/bin/nixpkgs-fmt \
+          $(${git}/bin/git diff-index --name-only --cached $target \
+          | ${ripgrep}/bin/rg '\.nix$' \
+          | ${findutils}/bin/xargs -i sh -c 'test -f {} && echo {}')
+    '';
+  };
+
+  commands = with pkgs; [
+    {
+      name = "nixpkgs-fmt";
+      package = nixpkgs-fmt;
+    }
+    {
+      name = "grip";
+      package = python38Packages.grip;
+    }
+    {
+      name = "git";
+      package = git;
+    }
+    {
+      name = "nix";
+      package = nixUnstable;
+    }
+  ];
+}

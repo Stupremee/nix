@@ -1,5 +1,12 @@
-{ lib, stdenv, fetchFromGitHub, rustPlatform, pkg-config, openssl
-, installShellFiles, libiconv, dbus }:
+{ lib
+, fetchFromGitHub
+, rustPlatform
+, pkg-config
+, openssl
+, installShellFiles
+, libiconv
+, dbus
+}:
 
 rustPlatform.buildRustPackage rec {
   pname = "starship";
@@ -12,10 +19,9 @@ rustPlatform.buildRustPackage rec {
     sha256 = "sha256-/JVuPXgNze9N9TW/tqazcaQXr9EpSaYMQePwDGmXkFU=";
   };
 
-  nativeBuildInputs = [ installShellFiles ]
-    ++ lib.optionals stdenv.isLinux [ pkg-config ];
+  nativeBuildInputs = [ installShellFiles pkg-config ];
 
-  buildInputs = lib.optionals stdenv.isLinux [ openssl dbus ];
+  buildInputs = [ openssl dbus ];
 
   postInstall = ''
     for shell in bash fish zsh; do

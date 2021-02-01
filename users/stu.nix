@@ -1,6 +1,4 @@
-{ pkgs, lib, ... }:
-let utils = import ../lib/utils.nix { inherit lib; };
-in {
+{ pkgs, ... }: {
   home-manager.users.stu = {
     imports = [
       ./profiles/graphical/sway
@@ -22,7 +20,7 @@ in {
     uid = 1000;
     isNormalUser = true;
     extraGroups = [ "wheel" "sway" "networkmanager" "input" ];
-    openssh.authorizedKeys.keys = utils.keysFromGithub {
+    openssh.authorizedKeys.keys = pkgs.lib.flk.keysFromGithub {
       inherit pkgs;
       username = "Stupremee";
       sha256 = "sha256-QXJfmJjokI1rTHD7xK5Q+vQ6IeWZ9SrjM7uTnMoe/Iw=";

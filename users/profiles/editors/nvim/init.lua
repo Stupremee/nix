@@ -46,6 +46,7 @@ opt('o', 'splitbelow', true)
 opt('o', 'splitright', true)
 opt('o', 'wildmode', 'longest:full,full')
 opt('o', 'cmdheight', 2)
+opt('o', 'termguicolors', true)
 
 opt('o', 'undodir', '/home/stu/.cache/vimdid')
 cmd 'set undofile'

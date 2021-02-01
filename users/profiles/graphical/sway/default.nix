@@ -65,7 +65,7 @@ in {
           background = base0D;
           text = base00;
           indicator = base0D;
-          childBorder = base0C;
+          childBorder = base08;
         };
         focusedInactive = with colors; {
           border = base01;
@@ -111,6 +111,9 @@ in {
       gaps = {
         smartBorders = "on";
         smartGaps = true;
+
+        inner = 10;
+        outer = 10;
       };
 
       input."*" = {
@@ -121,7 +124,7 @@ in {
       keybindings = {
         "${modifier}+Return" = "exec alacritty";
         "${modifier}+p" = "exec wofi --show run";
-        "${modifier}+Print" = ''grim -g "$(slurp)" - | wl-copy'';
+        "${modifier}+Print" = ''exec grim -g "$(slurp)" - | wl-copy'';
 
         "${modifier}+q" = "kill";
         "${modifier}+f" = "fullscreen toggle";

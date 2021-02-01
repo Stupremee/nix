@@ -20,9 +20,9 @@
       neoformat
       vim-crates
       vim-eunuch
+      vim-hexokinase
 
       vim-terraform
-
       nvim-treesitter
 
       nvim-lspconfig

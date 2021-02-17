@@ -1,6 +1,3 @@
 { pkgs, ... }: {
-  programs.firefox = {
-    enable = false;
-    package = pkgs.firefox-wayland;
-  };
+  home.packages = [ pkgs.firefox-wayland ];
 }

@@ -26,12 +26,16 @@ let
 
   workspaces = map toString [ 1 2 3 4 5 6 7 8 9 ];
 
-  workspaceKeybinds = let
-    keybinds = map (ws: {
-      "${modifier}+${ws}" = "workspace number ${ws}";
-      "${modifier}+Shift+${ws}" = "move container to workspace number ${ws}";
-    }) workspaces;
-  in fold (a: b: a // b) { } keybinds;
+  workspaceKeybinds =
+    let
+      keybinds = map
+        (ws: {
+          "${modifier}+${ws}" = "workspace number ${ws}";
+          "${modifier}+Shift+${ws}" = "move container to workspace number ${ws}";
+        })
+        workspaces;
+    in
+    fold (a: b: a // b) { } keybinds;
 
   startSway = pkgs.writeScriptBin "startsway" ''
     #!${pkgs.zsh}/bin/zsh
@@ -46,7 +50,8 @@ let
   profileExtra = ''
     ${startSway}/bin/startsway
   '';
-in {
+in
+{
   home.packages = with pkgs; [ grim slurp wl-clipboard wofi swaylock swayidle ];
 
   wayland.windowManager.sway = {
@@ -152,6 +157,8 @@ in {
       } // workspaceKeybinds;
 
       output."*".bg = "${../../../../background-image.png} fill";
+
+      output."eDP-1".scale = "1.5";
     };
 
     extraSessionCommands = ''

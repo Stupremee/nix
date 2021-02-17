@@ -4,7 +4,7 @@ let
 
   yamlToJson = path:
     pkgs.runCommand "yaml2json" { nativeBuildInputs = [ pkgs.yq-go ]; }
-    "${pkgs.yq-go}/bin/yq e -j ${path} > $out";
+      "${pkgs.yq-go}/bin/yq e -j ${path} > $out";
 
   theme = builtins.fromJSON (builtins.readFile (loadYaml ./nord-theme.yml));
 
@@ -13,7 +13,8 @@ let
     inherit key mods action;
     mode = "Vi";
   };
-in {
+in
+{
   home.sessionVariables = { TERMINAL = "alacritty"; };
 
   programs.alacritty = {
@@ -41,8 +42,6 @@ in {
       live_config_reload = true;
 
       shell.program = "/run/current-system/sw/bin/zsh";
-
-      mouse.url.launcher.program = "xdg-open";
 
       key_bindings = [
         (keybind "V" "Alt" "Paste")

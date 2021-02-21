@@ -1,9 +1,11 @@
 { pkgs, lib, ... }:
 let
-  inherit (builtins) map toString;
+  inherit (builtins) readFile map toString;
   inherit (lib.lists) fold;
 
   modifier = "Mod4";
+
+  style = readFile ./style.css;
 
   colors = {
     base00 = "#2E3440";
@@ -48,7 +50,7 @@ let
   '';
 
   profileExtra = ''
-    ${startSway}/bin/startsway
+    exec ${startSway}/bin/startsway
   '';
 in
 {
@@ -61,7 +63,9 @@ in
     config = {
       inherit modifier;
 
-      bars = [ ]; # TODO
+      bars = [{
+        command = "${pkgs.waybar}/bin/waybar";
+      }];
 
       colors = {
         background = colors.base07;
@@ -129,7 +133,7 @@ in
       keybindings = {
         "${modifier}+Return" = "exec alacritty";
         "${modifier}+p" = "exec wofi --show run";
-        "${modifier}+Print" = ''exec grim -g "$(slurp)" - | wl-copy'';
+        "${modifier}+Print" = ''exec grim -g "$(slurp)" - | wl-copy -t image/png'';
 
         "${modifier}+q" = "kill";
         "${modifier}+f" = "fullscreen toggle";
@@ -172,6 +176,106 @@ in
     '';
 
     wrapperFeatures = { gtk = true; };
+  };
+
+  programs.waybar = {
+    enable = true;
+
+    inherit style;
+
+    settings = [{
+      layer = "top";
+      position = "top";
+      height = 30;
+      output = [ "eDP-1" ];
+
+      modules-left = [ "sway/workspaces" ];
+      modules-center = [ "wlr/taskbar" ];
+      modules-right = [ "pulseaudio" "disk" "memory" "cpu" "network" "battery" "clock" ];
+
+      modules = {
+        "sway/workspaces" = {
+          disable-scroll = true;
+          all-outputs = true;
+        };
+
+        "clock" = {
+          format = "{:%I:%M %p}";
+          tooltip = false;
+        };
+
+        "battery" = {
+          bat = "BAT0";
+          states = {
+            good = 95;
+            warning = 30;
+            critical = 10;
+          };
+
+          format = "{capacity}%  {icon}";
+          format-charging = "{capacity}% ";
+          format-plugged = "{capacity}% ﮣ";
+          format-icons = [ "" "" "" "" "" ];
+        };
+
+        "disk" = {
+          interval = 30;
+          format = "{free}";
+          path = "/";
+        };
+
+        "network" = {
+          format-wifi = "  connected";
+          format-ethernet = "{ifname}: {ipaddr} ";
+          format-linked = "{ifname} (no IP) ";
+          format-disconnected = " Disconnected ";
+          format-alt = "{ifname}: {ipaddr}";
+          interval = 60;
+        };
+
+        "memory" = {
+          format = "{} ";
+        };
+
+        "cpu" = {
+          format = "{} ";
+        };
+
+        "pulseaudio" = {
+          scroll-step = 1;
+          format = "{icon}";
+          format-bluetooth = "{volume}% {icon} {format_source}";
+          format-bluetooth-muted = "ﱝ {icon} {format_source}";
+          format-muted = "ﱝ {format_source}";
+
+          format-source = "{volume}% ";
+          format-source-muted = "";
+
+          format-icons = {
+            headphone = "";
+            hands-free = "";
+            headset = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [ "" "  -" "  --" "  ---" "  ----" "  -----" "  ------" "  -------" "  --------" "  ---------" "  ----------" ];
+          };
+
+          # TODO: Open mixer in a floating terminal
+          # on-click = "pulsemixer";
+        };
+
+        "wlr/taskbar" = {
+          all-outputs = false;
+          format = "{icon}";
+          max-length = 10;
+          icon-theme = "Papirus";
+          icon-size = 15;
+          on-click = "activate";
+          on-click-middle = "close";
+        };
+      };
+    }];
   };
 
   programs.zsh.profileExtra = profileExtra;

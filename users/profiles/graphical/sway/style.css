@@ -1,0 +1,193 @@
+/* Nord color pallette */
+
+@define-color base00 #2e3440;
+@define-color base01 #3b4252;
+@define-color base02 #434c5e;
+@define-color base03 #4c566a;
+@define-color base04 #d8dee9;
+@define-color base05 #e5e9f0;
+@define-color base06 #eceff4;
+@define-color base07 #8fbcbb;
+@define-color base08 #88c0d0;
+@define-color base09 #81a1c1;
+@define-color base0A #5e81ac;
+@define-color base0B #bf616a;
+@define-color base0C #d08770;
+@define-color base0D #ebcb8b;
+@define-color base0E #a3be8c;
+@define-color base0F #b48ead;
+
+* {
+	border: none;
+	font-size: 12px;
+	margin: 2px;
+	font-family: Noto Sans Nerd Font;
+}
+
+window#waybar {
+  animation-name: fadeIn;
+  animation-duration: 1s;
+	background-color: @base01;
+	color: @base04;
+  border-bottom: 2px solid @base02;
+}
+
+window#waybar.empty {
+}
+
+#workspaces, #tags {
+	background-color: @base00;
+	padding: 0px;
+	font-size: 15px;
+  margin-right: 10px;
+	border-radius: 10px;
+}
+
+#workspaces button, #tags button {
+	font-size: 13px;
+	border-radius: 8px;
+  font-weight:bold;
+  margin: 0px;
+	padding: 2px 6px 2px 6px;
+	color: @base03;
+}
+
+#window {
+	color: @base06;
+	border-radius: 10px;
+	padding: 0px 8px 0px 8px;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button:hover, #tags button:hover {
+	background-color: @base00;
+	box-shadow: inherit;
+	color: @base0D;
+}
+
+#workspaces button.focused, #tags button.focused {
+	/* background-color: ; */
+  font-weight:bold;
+	color: @base0E;
+}
+
+#tags button.focused {
+  font-weight: 600;
+}
+
+#workspaces button.urgent {
+	color:  @base0B;
+  font-weight:bold;
+}
+
+#tags button {
+  font-weight: 600;
+}
+
+/* TASKBAR */
+#taskbar {
+  /* margin: 0px; */
+}
+
+#taskbar button {
+	border-radius: 10px;
+	padding: 0px 2px 0px 2px;
+}
+
+#taskbar button.active {
+	background-color: @base00;
+}
+
+#taskbar button.minimized {
+	/* color: @base0D; */
+}
+
+#taskbar button:hover {
+	box-shadow: inherit;
+}
+
+
+#cpu, #clock, #custom-pacman, #battery, #memory, #backlight, #disk, #network, #pulseaudio, #temperature {
+	background-color: @base00;
+	padding: 0px 10px 0px 10px;
+	margin: 2px 0px 2px 0px;
+}
+
+#disk {
+	color: @base0F;
+}
+
+#memory {
+	color: @base0C;
+}
+
+#cpu {
+	color: @base0B;
+}
+
+#network {
+	color: @base0E;
+}
+
+#clock {
+	border-radius: 0px 10px 10px 0px;
+}
+
+#pulseaudio {
+	color: @base07;
+	border-radius: 10px 0px 0px 10px;
+}
+
+#pulseaudio.muted {
+	color: @base03;
+}
+
+#battery {
+	color: @base0D;
+	padding: 0px 8px 0px 8px;
+}
+
+#battery.charging {
+	color: @base0D;
+}
+
+@keyframes blink {
+	to {
+		background-color: #eceff4;
+		color: @base00;
+	}
+}
+
+#battery.critical:not(.charging) {
+	background-color: @base0B;
+	color: @base06;
+	animation-name: blink;
+	animation-duration: 0.5s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+}
+
+label:focus {
+	background-color: @base00;
+}
+
+#idle_inhibitor {
+	font-size: 18px;
+	color: @base04;
+}
+
+#idle_inhibitor.activated {
+	color: @base02;
+}
+
+#tray {
+	border-radius: 10px 0px 0px 10px;
+	margin-left: 10px;
+	color: @base07;
+}

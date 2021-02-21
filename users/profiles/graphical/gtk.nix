@@ -5,7 +5,7 @@
     theme.name = "Nordic";
     theme.package = pkgs.nordic;
 
-    iconTheme.name = "Paper";
-    iconTheme.package = pkgs.paper-icon-theme;
+    iconTheme.name = "Papirus";
+    iconTheme.package = pkgs.papirus-icon-theme;
   };
 }

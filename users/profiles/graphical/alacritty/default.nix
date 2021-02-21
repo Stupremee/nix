@@ -24,7 +24,7 @@ in
 
       font = {
         size = 9;
-        normal.family = "monospace";
+        normal.family = "FiraCode Nerd Font";
         bold = {
           family = "monospace";
           style = "Bold";

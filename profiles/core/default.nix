@@ -36,18 +36,14 @@
   # Install all fonts and set the default fonts
   fonts = {
     fonts = with pkgs; [
-      # TODO: Add Noto Nerd Fonts here once GitHub can download faster
-      # than 30KB/s
-      #(nerdfonts.override { fonts = [ "FiraCode" ]; })
-      fira-code-symbols
-      noto-fonts
+      (nerdfonts.override { fonts = [ "FiraCode" "Noto" ]; })
       noto-fonts-emoji
     ];
 
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Noto Serif Nerd Font" ];
       sansSerif = [ "Noto Sans" "Noto Sans Nerd Font" ];
-      monospace = [ "FiraCode Font" ];
+      monospace = [ "FiraCode Font" "FiraCode Nerd Font" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };

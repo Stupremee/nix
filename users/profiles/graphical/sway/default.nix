@@ -63,7 +63,7 @@ let
   '';
 in
 {
-  home.packages = with pkgs; [ grim slurp wl-clipboard wofi swaylock swayidle ];
+  home.packages = with pkgs; [ grim slurp wl-clipboard wofi swaylock swayidle mako ];
 
   wayland.windowManager.sway = {
     enable = true;
@@ -74,6 +74,10 @@ in
 
       bars = [{
         command = "${pkgs.waybar}/bin/waybar";
+      }];
+
+      startup = [{
+        command = "${pkgs.mako}/bin/mako";
       }];
 
       colors = {
@@ -143,6 +147,8 @@ in
         "${modifier}+Return" = "exec alacritty";
         "${modifier}+p" = "exec wofi --show run";
         "${modifier}+Print" = ''exec grim -g "$(slurp)" - | wl-copy -t image/png'';
+
+        "${modifier}+Space" = ''exec makoctl dismiss'';
 
         "${modifier}+q" = "kill";
         "${modifier}+f" = "fullscreen toggle";
@@ -317,6 +323,43 @@ in
     valigh=center
     haligh=center
     orientation=vertical
+  '';
+
+  xdg.configFile."mako/config".text = with colors; ''
+    max-visible=5
+    sort=-time
+
+    layer=top
+    anchor=top-right
+
+    font=Noto Nerd Font 10
+    background-color=${base01}
+    text-color=${base05}
+    width=300
+    height=100
+    margin=10
+    padding=10
+    border-size=2
+    border-color=${base03}
+    border-radius=0
+    progress-color=source ${base09}
+    icons=true
+    max-icon-size=64
+    icon-path=${pkgs.papirus-icon-theme}/share/icons/Papirus-Dark
+    markup=true
+    actions=true
+    format=<b>%s</b>\n%b
+    default-timeout=0
+    ignore-timeout=false
+
+    [urgency=normal]
+    background-color=${base09}
+    border-color=${base0A}
+
+    [urgency=high]
+    ignore-timeout=1
+    background-color=${base0C}
+    border-color=${base0B}
   '';
 
   programs.zsh.profileExtra = profileExtra;

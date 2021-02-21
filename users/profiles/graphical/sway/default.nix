@@ -2,10 +2,16 @@
 let
   inherit (builtins) readFile map toString;
   inherit (lib.lists) fold;
+  inherit (lib) fileContents mapAttrsToList concatStringsSep;
 
   modifier = "Mod4";
 
-  style = readFile ./style.css;
+  waybarStyle = readFile ./waybar.css;
+  wofiStyle = pkgs.writeText "style.css" ''
+    ${cssColors}
+
+    ${fileContents ./wofi.css}
+  '';
 
   colors = {
     base00 = "#2E3440";
@@ -25,6 +31,9 @@ let
     base0E = "#A3BE8C";
     base0F = "#B48EAD";
   };
+
+  cssColors = concatStringsSep "\n"
+    (mapAttrsToList (name: value: "@define-color ${name} ${value};") colors);
 
   workspaces = map toString [ 1 2 3 4 5 6 7 8 9 ];
 
@@ -181,7 +190,11 @@ in
   programs.waybar = {
     enable = true;
 
-    inherit style;
+    style = ''
+      ${cssColors}
+
+      ${waybarStyle}
+    '';
 
     settings = [{
       layer = "top";
@@ -277,6 +290,34 @@ in
       };
     }];
   };
+
+  # home-manager doesn't support wofi
+  xdg.configFile."wofi/config".text = ''
+    stylesheet=${wofiStyle}
+
+    hide_scroll=true
+    show=drun
+    columns=1
+    lines=13
+    width=370
+    term=foot
+    location=center
+    dynamic_lines=true
+    allow_markup=true
+    always_parse_args=true
+    show_all=true
+    print_command=true
+    layer=overlay
+    insensitive=true
+    prompt=
+    image_size=30
+    content_align=center
+    display_generic=true
+    line_wrap=off
+    valigh=center
+    haligh=center
+    orientation=vertical
+  '';
 
   programs.zsh.profileExtra = profileExtra;
   programs.bash.profileExtra = profileExtra;

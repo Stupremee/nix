@@ -1,0 +1,56 @@
+#entry {
+  border-radius: 5px;
+  padding: 5px 2px 5px 2px;
+  margin: 0px 4px 0px 4px;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+#entry:selected {
+  color: @base0E;
+  background-color: @base00;
+  padding: 7px;
+}
+ 
+#text:selected {
+  color: @base0E;
+}
+ 
+#window {
+  animation-name: fadeIn;
+  animation-duration: 0.4s;
+  font-family: Noto Nerd Font;
+}
+
+#input {
+  border: none;
+  background-color: @base00;
+  border-radius: 5px;
+  margin: 4px 4px 8px 4px;
+}
+
+#inner-box {
+  color: @base04;
+  border-radius: 10px;
+}
+
+#outer-box {
+  background-color: @base10;
+  padding: 10px;
+}
+
+#scroll {
+}
+
+#text {
+  color: @base04;
+  background-color: transparent;
+} 
+
+#img {
+  background-color: transparent;
+}
+

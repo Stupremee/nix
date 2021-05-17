@@ -10,7 +10,10 @@ let
   importPkgs = pkgs: overlays: system:
     import pkgs {
       inherit system overlays;
-      config.allowUnfree = true;
+      config = {
+        allowUnfree = false;
+        allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) (import ../pkgs/allowUnfree.nix);
+      };
     };
 
   # Takes a list of values and a function `f`.

@@ -107,7 +107,6 @@
 
   services.earlyoom.enable = true;
   security = {
-    hideProcessInformation = true;
     protectKernelImage = true;
   };
 }

@@ -3,6 +3,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/network/networkmanager.nix
+    ../profiles/zsa.nix
   ];
 
   # Set 16 jobs

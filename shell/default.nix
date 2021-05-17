@@ -1,8 +1,10 @@
 { pkgs, nixos, ... }:
 pkgs.devshell.mkShell {
   name = "flk";
+  imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
 
-  packages = with pkgs; [ git-crypt pre-commit ];
+  packages = with pkgs;
+    [ git-crypt pre-commit ];
 
   git.hooks = with pkgs; {
     enable = true;

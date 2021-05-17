@@ -7,7 +7,7 @@
 
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
-    home.url = "github:nix-community/home-manager/release-20.09";
+    home.url = "github:nix-community/home-manager";
 
     neovim.url = "github:neovim/neovim/nightly?dir=contrib";
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";

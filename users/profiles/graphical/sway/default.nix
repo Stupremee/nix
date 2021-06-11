@@ -129,7 +129,11 @@ in
         mouseWarping = false;
       };
 
-      fonts = [ "monospace 8" ];
+      fonts = {
+        names = [ "monospace" ];
+        size = 8.0;
+      };
+
       gaps = {
         smartBorders = "on";
         smartGaps = true;

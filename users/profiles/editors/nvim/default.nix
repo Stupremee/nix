@@ -8,8 +8,6 @@
     vimAlias = true;
     vimdiffAlias = true;
 
-    withPython = true;
-
     plugins = with pkgs.vimPlugins; [
       # Color theme
       nord-vim

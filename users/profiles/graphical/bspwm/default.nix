@@ -1,12 +1,24 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  inherit (builtins) concatStringsSep concatLists attrValues;
+
+  desktops = {
+    primary = [ "code" "web" "term" "media" "V" "VI" "VII" ];
+    secondary = [ "IIX" "IX" "X" ];
+  };
+
+  desktopStrings = concatStringsSep "," (concatLists (attrValues desktops));
+in
+{
   home.packages = with pkgs; [ playerctl rofi ];
 
+  xsession.enable = true;
   xsession.windowManager.bspwm = {
     enable = true;
 
     monitors = {
-      HDMI-0 = [ "1" "2" "3" "4" "5" ];
-      DP-3 = [ "6" "7" "8" "9" "10" ];
+      HDMI-0 = desktops.primary;
+      DP-1 = desktops.secondary;
     };
 
     settings = {
@@ -47,10 +59,10 @@
       "super + shift + w" = "$BROWSER";
       "super + Print" = "screenshot";
 
-      "XF86AudioMute" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-      "XF86Audio{Raise,Lower}Volume" = "pulsemixer --change-volume {+,-}5";
-      "XF86Audio{Next,Prev}" = "playerctl {next,previous}";
-      "XF86Audio{Play,Stop}" = "playerctl {play-pause,stop}";
+      #"XF86AudioMute" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      #"XF86Audio{Raise,Lower}Volume" = "pulsemixer --change-volume {+,-}5";
+      #"XF86Audio{Next,Prev}" = "playerctl {next,previous}";
+      #"XF86Audio{Play,Stop}" = "playerctl {play-pause,stop}";
 
       # Close or kill application
       "super + {_, shift + }q" = "bspc node -{c,k}";
@@ -70,7 +82,7 @@
       "super + {_,shift +}{h,j,k,l}" =
         "bspc node -{f,s} {west,south,north,east}";
       # Focus workspace or send window to workspace
-      "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} ^{1-9,10}";
+      "super + {_,shift + }{1-9,0}" = "bspc {desktop -f,node -d} {${desktopStrings}}";
       # Preselect ratio of the new windows size
       "super + ctrl + {1-9}" = "bspc node -o .{1-9}";
       # Cancel preselection

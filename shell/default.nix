@@ -4,7 +4,7 @@ pkgs.devshell.mkShell {
   imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
 
   packages = with pkgs;
-    [ git-crypt pre-commit ];
+    [ git-crypt pre-commit binutils ];
 
   git.hooks = with pkgs; {
     enable = true;

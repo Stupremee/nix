@@ -2,7 +2,19 @@
   programs.neovim = {
     enable = true;
     package = pkgs.neovim;
-    extraPackages = with pkgs; [ gcc nixpkgs-fmt curl rust-analyzer tree-sitter ];
+    extraPackages = with pkgs; [
+      nixpkgs-fmt
+      curl
+      rust-analyzer
+
+      # Required for building tree-sitter grammars
+      tree-sitter
+      nodejs
+      python3
+      gnumake
+      gcc
+      binutils
+    ];
 
     viAlias = true;
     vimAlias = true;

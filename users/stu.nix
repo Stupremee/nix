@@ -12,7 +12,7 @@
       ./profiles/editors/nvim
     ];
 
-    # home.packages = with pkgs; [ spotify libreoffice ];
+    home.packages = with pkgs; [ firefox ];
   };
 
   users.users.stu = {

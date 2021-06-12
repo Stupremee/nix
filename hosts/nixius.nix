@@ -5,8 +5,11 @@
     ../profiles/network/networkmanager.nix
     ../profiles/zsa.nix
     ../profiles/yubikey.nix
+
+    ../profiles/graphical
     ../profiles/graphical/x11.nix
     ../profiles/graphical/bspwm.nix
+
     ../users/stu.nix
   ];
 

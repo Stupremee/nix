@@ -8,7 +8,7 @@
     ../profiles/sshd.nix
     ../profiles/graphical
     ../profiles/graphical/sway.nix
-    ../users/stu.nix
+    ../users/stu-laptop.nix
   ];
 
   # Limit max jobs to 4, because the PC only has 4 CPUs

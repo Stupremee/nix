@@ -1,9 +1,10 @@
 { pkgs, ... }: {
   home-manager.users.stu = {
     imports = [
-      ./profiles/graphical/bspwm
+      ./profiles/graphical/sway
       ./profiles/graphical/alacritty
-      # ./profiles/graphical/gtk.nix
+      ./profiles/graphical/browsers/firefox.nix
+      ./profiles/graphical/gtk.nix
 
       ./profiles/zsh
       ./profiles/git.nix
@@ -12,13 +13,13 @@
       ./profiles/editors/nvim
     ];
 
-    # home.packages = with pkgs; [ spotify libreoffice ];
+    home.packages = with pkgs; [ spotify libreoffice ];
   };
 
   users.users.stu = {
     uid = 1000;
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "input" ];
+    extraGroups = [ "wheel" "sway" "networkmanager" "input" ];
     openssh.authorizedKeys.keys = pkgs.lib.flk.keysFromGithub {
       inherit pkgs;
       username = "Stupremee";

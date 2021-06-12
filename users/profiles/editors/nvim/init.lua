@@ -16,7 +16,7 @@ cmd 'syntax on'
 
 -- Set the colorscheme
 vim.o.background = 'dark'
-cmd 'colorscheme nord'
+require('nord').set()
 
 -- Enable vim-crates
 cmd 'autocmd BufRead Cargo.toml call crates#toggle()'
@@ -66,38 +66,22 @@ opt('w', 'signcolumn', 'yes')
 -- Treesitter configuration
 --------------------------------------
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  -- ensure_installed = "maintained",
   highlight = {
     enable = true,
   },
   indent = {
-    enable = true
+    enable = false
   }
 }
 
 --------------------------------------
 -- Language Server Configuration
 --------------------------------------
-local lsp = require 'lspconfig'
-
 -- menuone: popup even when there's only one match
 -- noinsert: Do not insert text until a selection is made
 -- noselect: Do not select, force user to select one from the menu
 vim.o.completeopt = 'menuone,noinsert,noselect'
-
-lsp.rust_analyzer.setup {}
-lsp.terraformls.setup {}
-
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    signs = true,
-    update_in_insert = false,
-  }
-)
-
--- Inlay hints
-cmd "autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost * lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = 'Comment' }"
 
 --------------------------------------
 -- Keybinds
@@ -120,17 +104,6 @@ map('n', '<C-h>', '<cmd>nohlsearch<CR>')
 map('n', '<C-f>', '<cmd>sus<CR>')
 
 -- LSP keybindings
-
-map('n', '[e', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-map('n', ']e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-
-map('n', '<leader>ld', '<cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', '<leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-map('n', '<leader>lI', '<cmd>lua vim.lsp.buf.implementation()<CR>')
-map('n', '<leader>lD', '<cmd>lua vim.lsp.buf.references()<CR>')
-map('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-map('n', '<leader>lK', '<cmd>lua vim.lsp.buf.hover()<CR>')
-map('n', '<leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>')
 
 --------------------------------------
 -- Some more stuff

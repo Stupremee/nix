@@ -29,7 +29,7 @@ in
       theme = import cfg.theme { inherit pkgs; };
     in
     mkIf cfg.enable {
-      home.packages = with pkgs; [ playerctl rofi feh ];
+      home.packages = with pkgs; [ playerctl rofi feh dunst ];
 
       xsession.enable = true;
       xsession.windowManager.bspwm = {
@@ -112,5 +112,9 @@ in
       services.picom = {
         enable = true;
       } // theme.picom;
+
+      services.dunst = {
+        enable = true;
+      } // theme.dunst;
     };
 }

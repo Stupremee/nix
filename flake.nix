@@ -9,7 +9,10 @@
     devshell.url = "github:numtide/devshell";
     home.url = "github:nix-community/home-manager";
 
-    neovim.url = "github:neovim/neovim/nightly?dir=contrib";
+    neovim = {
+      url = "github:neovim/neovim/nightly?dir=contrib";
+      inputs.nixpkgs.follows = "nixos";
+    };
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
   };
 

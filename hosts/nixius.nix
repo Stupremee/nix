@@ -21,6 +21,8 @@
   # Set 16 jobs
   nix.maxJobs = lib.mkDefault 16;
 
+  themes.theme = "HY";
+
   # Hardware configuaration
   hardware = {
     enableAllFirmware = false;
@@ -39,6 +41,7 @@
     tmpOnTmpfs = true;
     kernelPackages = pkgs.linuxPackages_latest;
     loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
 
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     initrd.kernelModules = [ ];

@@ -3,6 +3,8 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/network/networkmanager.nix
+    ../profiles/network/tailscale.nix
+
     ../profiles/zsa.nix
     ../profiles/yubikey.nix
 

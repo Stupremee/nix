@@ -21,8 +21,9 @@ in
       borderless_monocle = true;
       gapless_monocle = true;
 
-      border_width = 3;
-      window_gap = 15;
+      border_width = 0;
+      window_gap = 10;
+      top_padding = 8;
       bottom_padding = 8;
 
       # Nord theme
@@ -40,5 +41,7 @@ in
       "85:class_i ?= 'alacritty'"
     ];
     blur = true;
+
+    shadow = true;
   };
 }

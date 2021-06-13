@@ -19,7 +19,7 @@
       ./profiles/editors/nvim
     ];
 
-    home.packages = with pkgs; [ firefox ];
+    home.packages = with pkgs; [ firefox spotify ];
 
     modules.graphical = {
       bspwm = {

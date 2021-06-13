@@ -2,4 +2,7 @@
 [
   "nvidia-x11"
   "nvidia-settings"
+
+  "spotify"
+  "spotify-unwrapped"
 ]

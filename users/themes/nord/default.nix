@@ -34,8 +34,11 @@ in
   };
 
   picom = {
-    activeOpacity = "0.8";
-    inactiveOpacity = "0.8";
+    # activeOpacity = "0.8";
+    # inactiveOpacity = "0.8";
+    opacityRule = [
+      "85:class_i ?= 'alacritty'"
+    ];
     blur = true;
   };
 }

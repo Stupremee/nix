@@ -30,6 +30,10 @@
         theme = ./themes/nord;
       };
     };
+
+    modules.zsh.enable = true;
+    modules.git.enable = true;
+    modules.pgp.enable = true;
   };
 
   users.users.stu = {

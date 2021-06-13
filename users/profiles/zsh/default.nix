@@ -1,96 +1,110 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
+with lib;
 let
+  cfg = config.modules.zsh;
+
   zshUsersPlugin = src: rec {
     inherit src;
     name = src.pname;
     file = "share/${name}/${name}.zsh";
   };
-in {
-  imports = [ ];
-
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-    defaultOptions = [
-      "--color=fg:#e5e9f0,bg:#3b4251,hl:#81a1c1"
-      "--color=fg+:#e5e9f0,bg+:#3b4251,hl+:#81a1c1"
-      "--color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac"
-      "--color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b"
-    ];
+in
+{
+  options.modules.zsh = {
+    enable = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autocd = true;
-    defaultKeymap = "viins";
-    dotDir = ".config/zsh";
+  config = mkIf cfg.enable {
+    programs.fzf = {
+      enable = true;
+      enableZshIntegration = true;
+      defaultOptions = [
+        "--color=fg:#e5e9f0,bg:#3b4251,hl:#81a1c1"
+        "--color=fg+:#e5e9f0,bg+:#3b4251,hl+:#81a1c1"
+        "--color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac"
+        "--color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b"
+      ];
+    };
 
-    plugins = with pkgs; [
-      (zshUsersPlugin zsh-syntax-highlighting)
-      (zshUsersPlugin zsh-history-substring-search)
-      {
-        name = "first-tab";
-        src = lib.cleanSource ./.;
-        file = "first-tab.zsh";
-      }
-      {
-        name = "fzf-completions";
-        src = fzf;
-        file = "share/fzf/completion.zsh";
-      }
-      {
-        name = "fzf-key-bindings";
-        src = fzf;
-        file = "share/fzf/key-bindings.zsh";
-      }
-    ];
+    programs.zsh = {
+      enable = true;
+      enableCompletion = true;
+      enableAutosuggestions = true;
+      autocd = true;
+      defaultKeymap = "viins";
+      dotDir = ".config/zsh";
 
-    initExtra = ''
-      bindkey -v
+      plugins = with pkgs; [
+        (zshUsersPlugin zsh-syntax-highlighting)
+        (zshUsersPlugin zsh-history-substring-search)
+        {
+          name = "first-tab";
+          src = lib.cleanSource ./.;
+          file = "first-tab.zsh";
+        }
+        {
+          name = "fzf-completions";
+          src = fzf;
+          file = "share/fzf/completion.zsh";
+        }
+        {
+          name = "fzf-key-bindings";
+          src = fzf;
+          file = "share/fzf/key-bindings.zsh";
+        }
+      ];
 
-      autoload -U colors && colors
-      setopt incappendhistory
-      setopt sharehistory 
+      initExtra = ''
+        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
-      autoload -U compinit
-      zstyle ':completion:*' menu select
-      zmodload zsh/complist
-      compinit
+        bindkey -v
 
-      # Include hidden files in completions
-      _comp_options+=(globdots)
+        autoload -U colors && colors
+        setopt incappendhistory
+        setopt sharehistory 
 
-      # Use vi keys in completion menu
-      bindkey -M menuselect 'h' vi-backward-char
-      bindkey -M menuselect 'k' vi-up-line-or-history
-      bindkey -M menuselect 'l' vi-forward-char
-      bindkey -M menuselect 'j' vi-down-line-or-history
+        autoload -U compinit
+        zstyle ':completion:*' menu select
+        zmodload zsh/complist
+        compinit
 
-      bindkey -M vicmd 'k' history-substring-search-up
-      bindkey -M vicmd 'j' history-substring-search-down
+        # Include hidden files in completions
+        _comp_options+=(globdots)
 
-      bindkey '^I' first-tab
+        # Use vi keys in completion menu
+        bindkey -M menuselect 'h' vi-backward-char
+        bindkey -M menuselect 'k' vi-up-line-or-history
+        bindkey -M menuselect 'l' vi-forward-char
+        bindkey -M menuselect 'j' vi-down-line-or-history
 
-      setopt extendedglob
-    '';
+        bindkey -M vicmd 'k' history-substring-search-up
+        bindkey -M vicmd 'j' history-substring-search-down
+
+        bindkey '^I' first-tab
+
+        setopt extendedglob
+      '';
+    };
+
+    home.sessionVariables = with pkgs; {
+      FZF_DEFAULT_COMMAND = "${fd}/bin/fd --type f";
+    };
+
+    programs.starship = {
+      enable = true;
+      enableZshIntegration = true;
+      settings = builtins.fromTOML (builtins.readFile ./starship.toml);
+    };
+
+    programs.direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      enableNixDirenvIntegration = true;
+    };
+
+    services.lorri.enable = true;
   };
-
-  home.sessionVariables = with pkgs; {
-    FZF_DEFAULT_COMMAND = "${fd}/bin/fd --type f";
-  };
-
-  programs.starship = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = builtins.fromTOML (builtins.readFile ./starship.toml);
-  };
-
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    enableNixDirenvIntegration = true;
-  };
-
-  services.lorri.enable = true;
 }

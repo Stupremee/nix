@@ -111,9 +111,6 @@ in
 
       services.picom = {
         enable = true;
-
-        blurExclude = [ ];
-        shadow = false;
       } // theme.picom;
     };
 }

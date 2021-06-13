@@ -125,4 +125,8 @@ in
       timeout = 0;
     };
   };
+
+  tmux = {
+    plugins = [ pkgs.tmuxPlugins.nord ];
+  };
 }

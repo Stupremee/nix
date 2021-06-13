@@ -53,7 +53,7 @@ in
 
           live_config_reload = true;
 
-          shell.program = "/run/current-system/sw/bin/zsh";
+          shell.program = if config.modules.tmux.enable then "tmux" else "zsh";
 
           key_bindings = [
             (keybind "V" "Alt" "Paste")

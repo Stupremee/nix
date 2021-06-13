@@ -21,7 +21,7 @@
   # Set 16 jobs
   nix.maxJobs = lib.mkDefault 16;
 
-  themes.theme = "HY";
+  #modules.themes.theme = "HY";
 
   # Hardware configuaration
   hardware = {

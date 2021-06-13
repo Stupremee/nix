@@ -1,4 +1,9 @@
 { pkgs, ... }: {
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+  };
+
   home-manager.users.stu = {
     imports = [
       ./profiles/graphical/bspwm
@@ -13,6 +18,18 @@
     ];
 
     home.packages = with pkgs; [ firefox ];
+
+    modules.graphical = {
+      bspwm = {
+        enable = true;
+        theme = ./themes/nord;
+      };
+
+      alacritty = {
+        enable = true;
+        theme = ./themes/nord;
+      };
+    };
   };
 
   users.users.stu = {

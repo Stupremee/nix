@@ -86,6 +86,11 @@ in
         bindkey '^I' first-tab
 
         setopt extendedglob
+
+        if command -v tmux &> /dev/null
+        then
+          if [ "$TMUX" = "" ]; then tmux; fi
+        fi
       '';
     };
 

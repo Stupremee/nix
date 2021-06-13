@@ -14,6 +14,7 @@
       ./profiles/shell/git.nix
       ./profiles/shell/pgp.nix
       ./profiles/shell/tmux.nix
+      ./profiles/shell/zellij.nix
 
       ./profiles/editors/nvim
     ];
@@ -36,7 +37,13 @@
     modules.git.enable = true;
     modules.pgp.enable = true;
 
+    # Currently broken
     modules.tmux = {
+      enable = false;
+      theme = ./themes/nord;
+    };
+
+    modules.zellij = {
       enable = true;
       theme = ./themes/nord;
     };

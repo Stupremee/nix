@@ -19,6 +19,7 @@
       ./profiles/editors/nvim
     ];
 
+    # TODO: Move these somewhere else
     home.packages = with pkgs; [ firefox spotify discord ];
 
     modules.graphical = {
@@ -47,6 +48,8 @@
       enable = true;
       theme = ./themes/nord;
     };
+
+    modules.editors.nvim.enable = true;
   };
 
   users.users.stu = {

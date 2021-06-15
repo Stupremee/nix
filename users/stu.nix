@@ -38,14 +38,13 @@
     modules.git.enable = true;
     modules.pgp.enable = true;
 
-    # Currently broken
     modules.tmux = {
-      enable = false;
+      enable = true;
       theme = ./themes/nord;
     };
 
     modules.zellij = {
-      enable = true;
+      enable = false;
       theme = ./themes/nord;
     };
 

@@ -21,6 +21,11 @@ in
     in
     mkIf cfg.enable {
       home.packages = [ pkgs.zellij ];
-      xdg.configFile."zellij/config.yaml".text = theme.zellij.config;
+      xdg.configFile."zellij/config.yaml".text = ''
+        ${theme.zellij.config}
+
+        keybinds:
+          unbind: [ Ctrl: 'o']
+      '';
     };
 }

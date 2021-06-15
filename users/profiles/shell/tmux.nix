@@ -24,8 +24,7 @@ in
         enable = true;
         keyMode = "vi";
         prefix = "C-a";
-        terminal = "screen-256color";
-        #plugins = theme.tmux.plugins ++ [ ];
+        plugins = theme.tmux.plugins ++ [ ];
 
         extraConfig = ''
           # Split panes using | and -
@@ -44,8 +43,9 @@ in
           # Enable mouse control
           set -g mouse on
 
-          # Support 256 colors
-          set -g default-terminal "screen-256color"
+          # Enable true color support
+          set -g default-terminal 'screen-256color'
+          set -ga terminal-overrides ',*256col*:Tc'
         '';
       };
     };

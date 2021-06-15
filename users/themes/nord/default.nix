@@ -39,6 +39,7 @@ in
     # inactiveOpacity = "0.8";
     opacityRule = [
       "85:class_i ?= 'alacritty'"
+      "90:class_i ?= 'discord'"
       "85:class_i ?= 'dunst'"
     ];
     blur = true;

@@ -5,4 +5,6 @@
 
   "spotify"
   "spotify-unwrapped"
+
+  "discord"
 ]

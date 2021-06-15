@@ -67,10 +67,10 @@ in
           "super + shift + w" = "$BROWSER";
           "super + Print" = "screenshot";
 
-          #"XF86AudioMute" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          #"XF86Audio{Raise,Lower}Volume" = "pulsemixer --change-volume {+,-}5";
-          #"XF86Audio{Next,Prev}" = "playerctl {next,previous}";
-          #"XF86Audio{Play,Stop}" = "playerctl {play-pause,stop}";
+          "XF86AudioMute" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          "XF86Audio{Raise,Lower}Volume" = "pulsemixer --change-volume {+,-}5";
+          "XF86Audio{Next,Prev}" = "playerctl {next,previous}";
+          "XF86Audio{Play,Stop}" = "playerctl {play-pause,stop}";
 
           # Close or kill application
           "super + {_, shift + }q" = "bspc node -{c,k}";

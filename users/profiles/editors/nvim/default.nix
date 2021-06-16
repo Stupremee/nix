@@ -33,9 +33,10 @@ in
       vimdiffAlias = true;
 
       plugins = with pkgs.vimPlugins; [
-        # Color theme
+        # Styling
         nord-nvim
 
+        # Utilities
         vim-sneak
         vim-rooter
         nerdcommenter
@@ -43,13 +44,15 @@ in
         vim-eunuch
         vim-hexokinase
 
-        vim-terraform
+        # Syntax highlighting
         nvim-treesitter
 
+        # Fuzzy searching
         plenary-nvim
         popup-nvim
         telescope-nvim
 
+        # Language support
         ale
       ];
 

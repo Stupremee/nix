@@ -46,6 +46,9 @@ in
           # Enable true color support
           set -g default-terminal 'screen-256color'
           set -ga terminal-overrides ',*256col*:Tc'
+
+          # Disable ESC key timeout
+          set -s escape-time 0
         '';
       };
     };

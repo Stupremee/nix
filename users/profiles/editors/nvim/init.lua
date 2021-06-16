@@ -31,7 +31,7 @@ local function opt(scope, key, value)
   if scope ~= 'o' then scopes['o'][key] = value end
 end
 
-opt('o', 'statusline', '%=%m %c %P %f')
+opt('o', 'statusline', '%=%m %l:%c %p%% %f')
 
 local indent = 2
 

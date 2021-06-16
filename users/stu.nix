@@ -17,6 +17,7 @@
       ./profiles/shell/zellij.nix
 
       ./profiles/editors/nvim
+      ./profiles/editors/kakoune
     ];
 
     # TODO: Move these somewhere else
@@ -49,6 +50,7 @@
     };
 
     modules.editors.nvim.enable = true;
+    modules.editors.kakoune.enable = true;
   };
 
   users.users.stu = {

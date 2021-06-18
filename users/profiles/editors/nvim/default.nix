@@ -19,6 +19,9 @@ in
         nixpkgs-fmt
         curl
 
+        # Language servers
+        rust-analyzer
+
         # Required for building tree-sitter grammars
         tree-sitter
         nodejs
@@ -54,6 +57,10 @@ in
 
         # Language support
         ale
+
+        # Language server support
+        nvim-compe
+        nvim-lspconfig
       ];
 
       extraConfig = ''

@@ -6,9 +6,9 @@
       ./profiles/graphical/browsers/firefox.nix
       ./profiles/graphical/gtk.nix
 
-      ./profiles/zsh
-      ./profiles/git.nix
-      ./profiles/pgp.nix
+      ./profiles/shell/zsh
+      ./profiles/shell/git.nix
+      ./profiles/shell/pgp.nix
 
       ./profiles/editors/nvim
     ];

@@ -18,9 +18,6 @@ cmd 'syntax on'
 vim.o.background = 'dark'
 require('nord').set()
 
--- Enable vim-crates
-cmd 'autocmd BufRead Cargo.toml call crates#toggle()'
-
 --------------------------------------
 -- Set vim options
 --------------------------------------
@@ -78,10 +75,35 @@ require'nvim-treesitter.configs'.setup {
 --------------------------------------
 -- Language Server Configuration
 --------------------------------------
+
 -- menuone: popup even when there's only one match
--- noinsert: Do not insert text until a selection is made
 -- noselect: Do not select, force user to select one from the menu
-vim.o.completeopt = 'menuone,noinsert,noselect'
+vim.o.completeopt = 'menuone,noselect'
+
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  resolve_timeout = 800;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+  };
+}
+
+-- Activate language servers
+require'lspconfig'.rust_analyzer.setup{}
 
 --------------------------------------
 -- Keybinds
@@ -91,6 +113,17 @@ local function map(mode, lhs, rhs, opts)
   if opts then options = vim.tbl_extend('force', options, opts) end
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
+
+local function map_expr(mode, lhs, rhs, opts)
+  local options = {noremap = true, expr = true}
+  if opts then options = vim.tbl_extend('force', options, opts) end
+  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
+
+-- nvim-compe binds
+map_expr('i', '<C-Space>', 'compe#complete()')
+map_expr('i', '<CR>', 'compe#confirm(\'<CR>\')')
+map_expr('i', '<C-e>', 'compe#close(\'<C-e>\')')
 
 -- Fuzzy finding keybinds
 map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')

@@ -65,7 +65,7 @@ in
           "super + Return" = "alacritty";
           "super + p" = "rofi -show combi";
           "super + shift + w" = "$BROWSER";
-          "super + Print" = "screenshot";
+          "super + shift + s" = "${pkgs.maim}/bin/maim -s | ${pkgs.xclip}/bin/xclip -sel c -t image/png";
 
           "XF86AudioMute" = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
           "XF86Audio{Raise,Lower}Volume" = "pulsemixer --change-volume {+,-}5";

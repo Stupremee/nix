@@ -10,6 +10,9 @@ local g = vim.g
 -- Set leader key
 g.mapleader = ' '
 
+-- Set ripgrep for vimgrep search
+g.grepprg = 'rg --vimgrep'
+
 -- Configure filetype
 cmd 'filetype plugin indent on'
 cmd 'syntax on'
@@ -103,7 +106,27 @@ require'compe'.setup {
 }
 
 -- Activate language servers
-require'lspconfig'.rust_analyzer.setup{}
+require'lspconfig'.rust_analyzer.setup{
+  settings = {
+    ["rust-analyzer"] = {
+      checkOnSave = {
+        overrideCommand = {"./x.py", "check", "--json-output"};
+      };
+
+      rustfmt = {
+        overrideCommand = {"./build/x86_64-unknown-linux-gnu/stage0/bin/rustfmt"};
+      };
+
+      cargo = {
+        runBuildScripts = false;
+      };
+
+      procMacro = {
+        enable = false;
+      };
+    }
+  }
+}
 
 --------------------------------------
 -- Keybinds
@@ -126,9 +149,16 @@ map_expr('i', '<CR>', 'compe#confirm(\'<CR>\')')
 map_expr('i', '<C-e>', 'compe#close(\'<C-e>\')')
 
 -- Fuzzy finding keybinds
+--local snap = require'snap'
+--snap.maps {
+  --{"<Leader>ff", snap.config.file {producer = "ripgrep.file"}},
+  --{"<Leader>fb", snap.config.file {producer = "vim.buffer"}},
+  --{"<Leader>fs", snap.config.vimgrep {}},
+--}
 map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>fs', '<cmd>Telescope live_grep<CR>')
+
 
 -- C-h stops the search
 map('n', '<C-h>', '<cmd>nohlsearch<CR>')

@@ -36,10 +36,10 @@ in
       vimdiffAlias = true;
 
       plugins = with pkgs.vimPlugins; [
-        # Styling
+        ### Styling
         nord-nvim
 
-        # Utilities
+        ### Utilities
         vim-sneak
         vim-rooter
         nerdcommenter
@@ -47,18 +47,19 @@ in
         vim-eunuch
         vim-hexokinase
 
-        # Syntax highlighting
+        ### Syntax highlighting
         nvim-treesitter
 
-        # Fuzzy searching
+        ### Fuzzy searching
         plenary-nvim
         popup-nvim
         telescope-nvim
+        # snap
 
-        # Language support
-        ale
+        ### Language support
+        # ale
 
-        # Language server support
+        ### Language server support
         nvim-compe
         nvim-lspconfig
       ];

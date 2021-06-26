@@ -11,4 +11,14 @@ with vimUtils;
       sha256 = "sha256-KIaKdThTkj0vyUSw3lmYETbHHuSCDH7i1ZnvvSsXsEg=";
     };
   };
+
+  snap = buildVimPlugin {
+    name = "snap";
+    src = fetchFromGitHub {
+      owner = "camspiers";
+      repo = "snap";
+      rev = "2e65f787e45c525e330c6b8d091164b5ed1fc4f8";
+      sha256 = "sha256-xwePCzG9s+HOF+QyIKaLfui7Uz780EzTZ1F8U6c3AdE=";
+    };
+  };
 }

@@ -76,6 +76,16 @@ require'nvim-treesitter.configs'.setup {
 }
 
 --------------------------------------
+-- presence.nvim configuration
+--------------------------------------
+
+require("presence"):setup({
+    -- General options
+    auto_update         = true,
+    neovim_image_text   = "Neovim",
+})
+
+--------------------------------------
 -- Language Server Configuration
 --------------------------------------
 

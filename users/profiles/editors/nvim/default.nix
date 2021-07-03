@@ -46,6 +46,7 @@ in
         neoformat
         vim-eunuch
         vim-hexokinase
+        presence-nvim
 
         ### Syntax highlighting
         nvim-treesitter

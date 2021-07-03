@@ -44,7 +44,7 @@ in
           set -g mouse on
 
           # Enable true color support
-          set -g default-terminal 'screen-256color'
+          set -g default-terminal 'xterm-256color'
           set -ga terminal-overrides ',*256col*:Tc'
 
           # Disable ESC key timeout

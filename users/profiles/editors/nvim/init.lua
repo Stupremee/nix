@@ -21,6 +21,10 @@ cmd 'syntax on'
 vim.o.background = 'dark'
 require('nord').set()
 
+--require("github-theme").setup({
+  --themeStyle = "light";
+--})
+
 --------------------------------------
 -- Set vim options
 --------------------------------------
@@ -137,6 +141,8 @@ require'lspconfig'.rust_analyzer.setup{
     }
   }
 }
+
+require'lspconfig'.zls.setup{}
 
 --------------------------------------
 -- Keybinds

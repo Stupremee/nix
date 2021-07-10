@@ -14,13 +14,13 @@ in
   config = mkIf cfg.enable {
     programs.neovim = {
       enable = true;
-      package = pkgs.neovim;
       extraPackages = with pkgs; [
         nixpkgs-fmt
         curl
 
         # Language servers
         rust-analyzer
+        zls
 
         # Required for building tree-sitter grammars
         tree-sitter
@@ -38,6 +38,7 @@ in
       plugins = with pkgs.vimPlugins; [
         ### Styling
         nord-nvim
+        github-nvim-theme
 
         ### Utilities
         vim-sneak
@@ -59,6 +60,7 @@ in
 
         ### Language support
         # ale
+        zig-vim
 
         ### Language server support
         nvim-compe

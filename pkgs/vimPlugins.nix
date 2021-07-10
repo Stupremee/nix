@@ -21,4 +21,19 @@ with vimUtils;
       sha256 = "sha256-xwePCzG9s+HOF+QyIKaLfui7Uz780EzTZ1F8U6c3AdE=";
     };
   };
+
+  github-nvim-theme = buildVimPlugin {
+    name = "github-nvim-theme";
+    src = fetchFromGitHub {
+      owner = "projekt0n";
+      repo = "github-nvim-theme";
+      rev = "ca6a37e229b899789418deb3b8435e30661e0ecf";
+      sha256 = "sha256-8JuvYEWlIQ0Cez8ZUjS6sTAzbhJKWjqWguGMksetq9o=";
+    };
+
+    # Dirty hack to stop Nix from executing the Makefile
+    prePatch = ''
+      rm Makefile
+    '';
+  };
 }

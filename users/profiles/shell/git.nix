@@ -37,6 +37,8 @@ in
         pull.rebase = true;
         init.defaultBranch = "main";
       };
+
+      delta.enable = true;
     };
 
     home.packages = with pkgs; [ gh ];

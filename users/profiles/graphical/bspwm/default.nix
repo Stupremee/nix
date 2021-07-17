@@ -9,7 +9,7 @@ let
 
   desktopStrings = concatStringsSep "," (concatLists (attrValues desktops));
 
-  wallpaper = ../../../../wallpapers/nord-mountains.jpq;
+  wallpaper = ../../../../wallpapers/nord-mountains.jpg;
 in
 {
   home.packages = with pkgs; [ playerctl rofi feh dunst ];

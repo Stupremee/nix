@@ -17,6 +17,8 @@
 
       ./profiles/editors/nvim
       ./profiles/editors/kakoune
+
+      ./profiles/udiskie.nix
     ];
 
     # TODO: Move these somewhere else

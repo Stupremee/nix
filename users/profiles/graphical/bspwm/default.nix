@@ -117,9 +117,15 @@ in
     opacityRule = [
       "85:class_i ?= 'alacritty'"
       "90:class_i ?= 'discord'"
-      "85:class_i ?= 'dunst'"
     ];
     blur = true;
+    blurExclude = [
+      "class_i = 'dunst'"
+    ];
+
+    shadowExclude = [
+      "class_i = 'dunst'"
+    ];
 
     shadow = true;
   };
@@ -140,7 +146,7 @@ in
         indicate_hidden = "yes";
         shrink = "no";
 
-        separator_height = "3";
+        separator_height = "1";
         separator_color = "#E5E9F0";
 
         padding = "16";
@@ -148,11 +154,11 @@ in
         frame_width = "0";
         sort = "no";
         idle_threshold = "0";
-        font = "Noto Sans 10";
+        font = "Noto Sans Nerd Font 10";
         line_height = "0";
 
         markup = "full";
-        format = "<b>%a</b>\n%s";
+        format = "<b>%a - %s</b>\\n%b";
 
         alignment = "left";
         vertical_alignment = "center";

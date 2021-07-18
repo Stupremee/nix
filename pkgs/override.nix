@@ -13,5 +13,6 @@ pkgs: final: prev: {
     neovim
     neovim-unwrapped
     direnv
+    dunst
     zls;
 }

@@ -62,7 +62,7 @@ in
     enable = true;
 
     keybindings = {
-      "super + Return" = "alacritty";
+      "super + Return" = "${config.home.sessionVariables.TERMINAL}";
       "super + p" = "rofi -show combi";
       "super + shift + w" = "$BROWSER";
       "super + shift + s" = "${pkgs.maim}/bin/maim -s | ${pkgs.xclip}/bin/xclip -sel c -t image/png";
@@ -115,19 +115,13 @@ in
     # activeOpacity = "0.8";
     # inactiveOpacity = "0.8";
     opacityRule = [
+      "85:class_i ?= 'org.wezfurlong.wezterm'"
       "85:class_i ?= 'alacritty'"
       "90:class_i ?= 'discord'"
     ];
-    blur = true;
-    blurExclude = [
-      "class_i = 'dunst'"
-    ];
 
-    shadowExclude = [
-      "class_i = 'dunst'"
-    ];
-
-    shadow = true;
+    blur = false;
+    shadow = false;
   };
 
   services.dunst = {

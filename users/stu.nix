@@ -7,7 +7,8 @@
   home-manager.users.stu = {
     imports = [
       ./profiles/graphical/bspwm
-      ./profiles/graphical/alacritty
+      # ./profiles/graphical/alacritty
+      ./profiles/graphical/wez
       # ./profiles/graphical/gtk.nix
 
       ./profiles/shell/zsh

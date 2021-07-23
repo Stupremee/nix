@@ -76,7 +76,7 @@ in
 
       setopt extendedglob
 
-      if command -v tmux &> /dev/null
+      if command -v tmux &> /dev/null && [ "$TERMINAL" != "wezterm" ]
       then
         if [ "$TMUX" = "" ]; then tmux; fi
       fi

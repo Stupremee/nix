@@ -85,6 +85,8 @@
       man-pages
       posix_man_pages
       stdmanpages
+
+      agenix
     ];
 
     shellAliases = {

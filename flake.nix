@@ -14,6 +14,8 @@
       inputs.nixpkgs.follows = "nixos";
     };
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
+
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs =
@@ -25,6 +27,7 @@
     , home
     , neovim
     , nixpkgs-wayland
+    , agenix
     }:
     let
       inherit (self.lib) nixosModules importPaths overlayPaths importPkgs;
@@ -32,11 +35,15 @@
       inherit (nixos.lib) recursiveUpdate;
       inherit (builtins) attrValues;
 
-      extraModules = [ home.nixosModules.home-manager ];
+      extraModules = [
+        home.nixosModules.home-manager
+        agenix.nixosModules.age
+      ];
       extraOverlays = [
         devshell.overlay
         nixpkgs-wayland.overlay
         neovim.overlay
+        agenix.overlay
       ];
 
       outputs =

@@ -1,5 +1,23 @@
 {
   "nodes": {
+    "agenix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1626960455,
+        "narHash": "sha256-N3+qOtsADo59UcG8PxqNMhT94wqTQ73k08gpy1dLaWU=",
+        "owner": "ryantm",
+        "repo": "agenix",
+        "rev": "fb00f178b3a49a39cc964049075439b575d36d60",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ryantm",
+        "repo": "agenix",
+        "type": "github"
+      }
+    },
     "cachix": {
       "locked": {
         "lastModified": 1623225763,
@@ -63,7 +81,7 @@
     },
     "home": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1623343236,
@@ -121,10 +139,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1603791972,
-        "narHash": "sha256-nj2SvACFH+NERpye1kudcuygCcvnsZYv26M2+wgM5vE=",
-        "path": "/nix/store/fw277i56nwladrnqzlswf4p4pakl2pmx-source",
-        "rev": "cd63096d6d887d689543a0b97743d28995bc9bc3",
+        "lastModified": 1618628710,
+        "narHash": "sha256-9xIoU+BrCpjs5nfWcd/GlU7XCVdnNKJPffoNTxgGfhs=",
+        "path": "/nix/store/z1rf17q0fxj935cmplzys4gg6nxj1as0-source",
+        "rev": "7919518f0235106d050c77837df5e338fb94de5d",
         "type": "path"
       },
       "original": {
@@ -135,7 +153,7 @@
     "nixpkgs-wayland": {
       "inputs": {
         "cachix": "cachix",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1623403379,
@@ -153,6 +171,19 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1603791972,
+        "narHash": "sha256-nj2SvACFH+NERpye1kudcuygCcvnsZYv26M2+wgM5vE=",
+        "path": "/nix/store/fw277i56nwladrnqzlswf4p4pakl2pmx-source",
+        "rev": "cd63096d6d887d689543a0b97743d28995bc9bc3",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1622966049,
         "narHash": "sha256-6g+28v94ISkVk9TBSsITVOnB2slK8plieWPIF2jo/l0=",
         "owner": "nixos",
@@ -169,6 +200,7 @@
     },
     "root": {
       "inputs": {
+        "agenix": "agenix",
         "devshell": "devshell",
         "flake-utils": "flake-utils",
         "home": "home",

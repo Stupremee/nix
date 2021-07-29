@@ -37,13 +37,15 @@
   fonts = {
     fonts = with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" "Noto" ]; })
+      noto-fonts
       noto-fonts-emoji
+      fira-code
     ];
 
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Noto Serif Nerd Font" ];
-      sansSerif = [ "Noto Sans" "Noto Sans Nerd Font" ];
-      monospace = [ "FiraCode Font" "FiraCode Nerd Font" ];
+      sansSerif = [ "Noto Sans Nerd Font" "Noto Sans" ];
+      monospace = [ "FiraCode Nerd Font" "FiraCode Font" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };

@@ -1,7 +1,11 @@
 local wezterm = require 'wezterm';
 return {
   -- configure font settings
-  font = wezterm.font("FiraCode Nerd Font"),
+  font = wezterm.font_with_fallback({
+    "FiraCode Nerd Font",
+    "FiraCode",
+    "Noto Sans Nerd Font",
+  }),
   font_size = 9.0,
 
   -- colorscheme

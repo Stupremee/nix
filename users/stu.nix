@@ -23,7 +23,7 @@
     ];
 
     # TODO: Move these somewhere else
-    home.packages = with pkgs; [ firefox spotify discord ];
+    home.packages = with pkgs; [ firefox spotify ncspot discord ];
   };
 
   users.users.stu = {

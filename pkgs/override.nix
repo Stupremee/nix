@@ -14,5 +14,6 @@ pkgs: final: prev: {
     neovim-unwrapped
     direnv
     dunst
-    zls;
+    zls
+    ncspot;
 }

@@ -29,7 +29,7 @@
   users.users.stu = {
     uid = 1000;
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "input" ];
+    extraGroups = [ "wheel" "networkmanager" "input" "libvirtd" ];
     openssh.authorizedKeys.keys = pkgs.lib.flk.keysFromGithub {
       inherit pkgs;
       username = "Stupremee";

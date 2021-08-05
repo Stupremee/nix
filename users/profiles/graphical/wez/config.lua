@@ -14,7 +14,7 @@ return {
   -- Disable default keybinds because they heavily overlap with sxhkd
   -- and configure new bindings
   disable_default_key_bindings = true,
-  leader = {key="a", mods="CTRL", timeout_milliseconds=1000},
+  leader = {key="x", mods="CTRL", timeout_milliseconds=1000},
   keys = {
     {mods="ALT", key="c", action=wezterm.action{CopyTo="Clipboard"}},
     {mods="ALT", key="v", action=wezterm.action{PasteFrom="Clipboard"}},
@@ -24,8 +24,8 @@ return {
     {mods="CTRL", key="0", action="ResetFontSize"},
 
     {mods="CTRL", key="f", action=wezterm.action{Search={CaseSensitiveString=""}}},
-    {mods="CTRL", key="x", action="ActivateCopyMode"},
-    {mods="CTRL|SHIFT", key="y", action="Copy"},
+    --{mods="CTRL", key="x", action="ActivateCopyMode"},
+    --{mods="CTRL|SHIFT", key="y", action="Copy"},
 
     {mods="LEADER", key="|", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
     {mods="LEADER", key="-", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},

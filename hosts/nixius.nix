@@ -9,6 +9,7 @@
     ../profiles/zsa.nix
     ../profiles/yubikey.nix
     ../profiles/udiskie.nix
+    ../profiles/virt.nix
 
     ../profiles/graphical
     ../profiles/graphical/x11.nix

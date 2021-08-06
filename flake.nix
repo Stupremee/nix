@@ -15,16 +15,6 @@
     };
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
     agenix.url = "github:ryantm/agenix";
-
-    nixCargoIntegration = {
-      url = "github:yusdacra/nix-cargo-integration";
-      inputs.nixpkgs.follows = "nixos";
-    };
-    veloren = {
-      url = "gitlab:veloren/veloren";
-      inputs.nixpkgs.follows = "nixos";
-      inputs.nixCargoIntegration.follows = "nixCargoIntegration";
-    };
   };
 
   outputs =
@@ -37,8 +27,6 @@
     , neovim
     , nixpkgs-wayland
     , agenix
-    , nixCargoIntegration
-    , veloren
     }:
     let
       inherit (self.lib) nixosModules importPaths overlayPaths importPkgs;
@@ -93,9 +81,6 @@
                   inherit (nixos.lib) nixosSystem;
                   flk = self.lib;
                   utils = flake-utils.lib;
-
-                  # Manual overlay setup for veloren
-                  inherit (veloren.packages."${system}") veloren-voxygen;
                 };
               })
             ]

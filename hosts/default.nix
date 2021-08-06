@@ -1,4 +1,4 @@
-{ self, lib, system, home, extraModules, pkgs, unstable, nixos, veloren, ... }:
+{ self, lib, system, home, extraModules, pkgs, unstable, nixos, ... }:
 let
   inherit (builtins) attrValues;
   inherit (lib.flk) recImports recImport;
@@ -32,7 +32,6 @@ let
               unstable.flake = unstable;
               nixpkgs.flake = nixos;
               home-manager.flake = home;
-              veloren.flake = veloren;
             };
 
             system.configurationRevision = lib.mkIf (self ? rev) self.rev;

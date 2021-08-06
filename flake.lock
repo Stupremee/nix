@@ -49,21 +49,6 @@
         "type": "github"
       }
     },
-    "devshell_2": {
-      "locked": {
-        "lastModified": 1625086391,
-        "narHash": "sha256-IpNPv1v8s4L3CoxhwcgZIitGpcrnNgnj09X7TA0QV3k=",
-        "owner": "numtide",
-        "repo": "devshell",
-        "rev": "4b5ac7cf7d9a1cc60b965bb51b59922f2210cbc7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "devshell",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "locked": {
         "lastModified": 1622445595,
@@ -133,28 +118,6 @@
         "owner": "neovim",
         "ref": "nightly",
         "repo": "neovim",
-        "type": "github"
-      }
-    },
-    "nixCargoIntegration": {
-      "inputs": {
-        "devshell": "devshell_2",
-        "nixpkgs": [
-          "nixos"
-        ],
-        "rustOverlay": "rustOverlay"
-      },
-      "locked": {
-        "lastModified": 1628143752,
-        "narHash": "sha256-ybMZmFI7sk9ubzNy75fOH/PwvtehN8FtQV41tdE9eEQ=",
-        "owner": "yusdacra",
-        "repo": "nix-cargo-integration",
-        "rev": "687cf5768743985bae5c016229e1accef7b64fad",
-        "type": "github"
-      },
-      "original": {
-        "owner": "yusdacra",
-        "repo": "nix-cargo-integration",
         "type": "github"
       }
     },
@@ -242,27 +205,9 @@
         "flake-utils": "flake-utils",
         "home": "home",
         "neovim": "neovim",
-        "nixCargoIntegration": "nixCargoIntegration",
         "nixos": "nixos",
         "nixpkgs-wayland": "nixpkgs-wayland",
-        "unstable": "unstable",
-        "veloren": "veloren"
-      }
-    },
-    "rustOverlay": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1628129596,
-        "narHash": "sha256-b6R5Ea0wAQ9QFurD2GzuQ9jZSPLGH03/0x4Hs2E6aXE=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "c3bf4a6dfd8f7a235beb0fa85d5451db41da0310",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
+        "unstable": "unstable"
       }
     },
     "unstable": {
@@ -279,29 +224,6 @@
         "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
-      }
-    },
-    "veloren": {
-      "inputs": {
-        "nixCargoIntegration": [
-          "nixCargoIntegration"
-        ],
-        "nixpkgs": [
-          "nixos"
-        ]
-      },
-      "locked": {
-        "lastModified": 1628123921,
-        "narHash": "sha256-UwuxXlECTze3XfQvdEtX8uMEe+SWIEBT3olbWaHGnfI=",
-        "owner": "veloren",
-        "repo": "veloren",
-        "rev": "92b32b4c36fdd6da64218f9617cfb076123f5ba0",
-        "type": "gitlab"
-      },
-      "original": {
-        "owner": "veloren",
-        "repo": "veloren",
-        "type": "gitlab"
       }
     }
   },

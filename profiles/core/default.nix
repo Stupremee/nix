@@ -44,8 +44,8 @@
 
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Noto Serif Nerd Font" ];
-      sansSerif = [ "Noto Sans Nerd Font" "Noto Sans" ];
-      monospace = [ "FiraCode Nerd Font" "FiraCode Font" ];
+      sansSerif = [ "NotoSans Nerd Font" "Noto Sans" ];
+      monospace = [ "Fira Code Nerd Font" "Fira Code Font" ];
       emoji = [ "Noto Color Emoji" ];
     };
   };

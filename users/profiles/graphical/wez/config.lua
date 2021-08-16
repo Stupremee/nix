@@ -3,8 +3,8 @@ return {
   -- configure font settings
   font = wezterm.font_with_fallback({
     "FiraCode Nerd Font",
-    "FiraCode",
-    "Noto Sans Nerd Font",
+    "Fira Code",
+    "NotoSans Nerd Font",
   }),
   font_size = 9.0,
 

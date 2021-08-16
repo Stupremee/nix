@@ -179,7 +179,7 @@ in
 
       } // workspaceKeybinds;
 
-      output."*".bg = "${../../../../background-image.png} fill";
+      output."*".bg = "${../../../../wallpapers/nord-mountains.jpg} fill";
 
       output."eDP-1".scale = "1.5";
     };

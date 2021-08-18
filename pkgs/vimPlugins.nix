@@ -36,4 +36,14 @@ with vimUtils;
       rm Makefile
     '';
   };
+
+  project-nvim = buildVimPlugin {
+    name = "project-nvim";
+    src = fetchFromGitHub {
+      owner = "ahmedkhalf";
+      repo = "project.nvim";
+      rev = "daffc391c6787345099278363c2e56b941a902ab";
+      sha256 = "sha256-zxpdiardCX3xR4Zpf68YxSn9Olyj++xFvFU2jhk6pns=";
+    };
+  };
 }

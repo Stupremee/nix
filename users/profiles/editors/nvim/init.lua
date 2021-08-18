@@ -22,7 +22,7 @@ vim.o.background = 'dark'
 require('nord').set()
 
 --require("github-theme").setup({
-  --themeStyle = "light";
+    --themeStyle = "light";
 --})
 
 --------------------------------------
@@ -31,13 +31,13 @@ require('nord').set()
 local scopes = {o = vim.o, b = vim.bo, w = vim.wo}
 
 local function opt(scope, key, value)
-  scopes[scope][key] = value
-  if scope ~= 'o' then scopes['o'][key] = value end
+    scopes[scope][key] = value
+    if scope ~= 'o' then scopes['o'][key] = value end
 end
 
 opt('o', 'statusline', '%=%m %l:%c %p%% %f')
 
-local indent = 2
+local indent = 4
 
 opt('o', 'hidden', true)
 opt('o', 'ignorecase', true)
@@ -67,22 +67,36 @@ opt('w', 'wrap', false)
 opt('w', 'signcolumn', 'yes')
 
 --------------------------------------
--- Treesitter configuration
+-- Plugin configuration
 --------------------------------------
+
+-- Neoterm
+vim.api.nvim_set_var("neoterm_shell", "bash")
+
+-- Treesitter
 require'nvim-treesitter.configs'.setup {
-  -- ensure_installed = "maintained",
-  highlight = {
-    enable = true,
-  },
-  indent = {
-    enable = false
-  }
+    -- ensure_installed = "maintained",
+    highlight = {
+        enable = true,
+    },
+    indent = {
+        enable = false
+    }
 }
 
---------------------------------------
--- presence.nvim configuration
---------------------------------------
+-- gitsigns
+require('gitsigns').setup {
+    -- do not provide any keybinds
+    keymaps = {}
+}
 
+-- project.nvim
+require("project_nvim").setup {
+    silent_chdir = false,
+}
+require('telescope').load_extension('projects')
+
+-- presence.nvim
 require("presence"):setup({
     -- General options
     auto_update         = true,
@@ -97,92 +111,69 @@ require("presence"):setup({
 -- noselect: Do not select, force user to select one from the menu
 vim.o.completeopt = 'menuone,noselect'
 
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  resolve_timeout = 800;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
+local enable_completion = true
 
-  source = {
-    path = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-  };
-}
-
--- Activate language servers
-require'lspconfig'.rust_analyzer.setup{
-  settings = {
-    ["rust-analyzer"] = {
-      checkOnSave = {
-        overrideCommand = {"./x.py", "check", "--json-output"};
-      };
-
-      rustfmt = {
-        overrideCommand = {"./build/x86_64-unknown-linux-gnu/stage0/bin/rustfmt"};
-      };
-
-      cargo = {
-        runBuildScripts = false;
-      };
-
-      procMacro = {
-        enable = false;
-      };
+if enable_completion then
+    require'compe'.setup {
+        enabled = true;
+        autocomplete = true;
+        debug = false;
+        min_length = 1;
+        preselect = 'enable';
+        throttle_time = 80;
+        source_timeout = 200;
+        resolve_timeout = 800;
+        incomplete_delay = 400;
+        max_abbr_width = 100;
+        max_kind_width = 100;
+        max_menu_width = 100;
+        documentation = true;
+        
+        source = {
+            path = true;
+            nvim_lsp = true;
+            nvim_lua = true;
+        };
     }
-  }
-}
 
-require'lspconfig'.zls.setup{}
+    -- Activate language servers
+    require'lspconfig'.rust_analyzer.setup{}
+
+    require'lspconfig'.zls.setup{}
+end
 
 --------------------------------------
 -- Keybinds
 --------------------------------------
 local function map(mode, lhs, rhs, opts)
-  local options = {noremap = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    local options = {noremap = true}
+    if opts then options = vim.tbl_extend('force', options, opts) end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 local function map_expr(mode, lhs, rhs, opts)
-  local options = {noremap = true, expr = true}
-  if opts then options = vim.tbl_extend('force', options, opts) end
-  vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    local options = {noremap = true, expr = true}
+    if opts then options = vim.tbl_extend('force', options, opts) end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
--- nvim-compe binds
+-- language server keybindings
 map_expr('i', '<C-Space>', 'compe#complete()')
 map_expr('i', '<CR>', 'compe#confirm(\'<CR>\')')
 map_expr('i', '<C-e>', 'compe#close(\'<C-e>\')')
 
 -- Fuzzy finding keybinds
---local snap = require'snap'
---snap.maps {
-  --{"<Leader>ff", snap.config.file {producer = "ripgrep.file"}},
-  --{"<Leader>fb", snap.config.file {producer = "vim.buffer"}},
-  --{"<Leader>fs", snap.config.vimgrep {}},
---}
 map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
 map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
 map('n', '<leader>fs', '<cmd>Telescope live_grep<CR>')
-
+map('n', '<leader>fp', '<cmd>Telescope projects<CR>')
+map('n', '<leader>fa', '<cmd>Telescope lsp_code_actions<CR>')
 
 -- C-h stops the search
 map('n', '<C-h>', '<cmd>nohlsearch<CR>')
 
 -- Suspend neovim
 map('n', '<C-f>', '<cmd>sus<CR>')
-
--- LSP keybindings
 
 --------------------------------------
 -- Some more stuff

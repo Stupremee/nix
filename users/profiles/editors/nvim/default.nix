@@ -25,16 +25,17 @@
     plugins = with pkgs.vimPlugins; [
       ### Styling
       nord-nvim
-      github-nvim-theme
 
       ### Utilities
       vim-sneak
-      vim-rooter
       nerdcommenter
       neoformat
       vim-eunuch
-      vim-hexokinase
       presence-nvim
+      neoterm
+      gitsigns-nvim
+      project-nvim
+      editorconfig-vim
 
       ### Syntax highlighting
       nvim-treesitter
@@ -43,10 +44,8 @@
       plenary-nvim
       popup-nvim
       telescope-nvim
-      # snap
 
       ### Language support
-      # ale
       zig-vim
 
       ### Language server support

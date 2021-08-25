@@ -12,12 +12,7 @@
   programs.ssh = {
     enable = true;
     extraConfig = ''
-      Host gh
-          User git
-          HostName github.com
-      Host github
-          User git
-          HostName github.com
+      Include /run/secrets/sshConfig
     '';
   };
 }

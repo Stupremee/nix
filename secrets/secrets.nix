@@ -13,4 +13,5 @@ let
 in
 {
   "tryHackMe.ovpn".publicKeys = systems ++ users;
+  "ssh.config".publicKeys = systems ++ users;
 }

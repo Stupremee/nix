@@ -8,6 +8,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     devshell.url = "github:numtide/devshell";
     home.url = "github:nix-community/home-manager";
+    rust-overlay.url = "github:oxalica/rust-overlay";
 
     neovim = {
       url = "github:neovim/neovim/nightly?dir=contrib";
@@ -27,6 +28,7 @@
     , neovim
     , nixpkgs-wayland
     , agenix
+    , rust-overlay
     }:
     let
       inherit (self.lib) nixosModules importPaths overlayPaths importPkgs;
@@ -43,6 +45,7 @@
         nixpkgs-wayland.overlay
         neovim.overlay
         agenix.overlay
+        rust-overlay.overlay
       ];
 
       outputs =
@@ -84,7 +87,7 @@
                 };
               })
             ]
-            ++ (attrValues self.overlays) ++ extraOverlays;
+            ++ extraOverlays ++ (attrValues self.overlays);
           in
           importPkgs nixos overlays system;
       in

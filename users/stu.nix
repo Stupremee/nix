@@ -1,4 +1,9 @@
 { pkgs, ... }: {
+  age.secrets.sshConfig = {
+    file = ../secrets/ssh.config;
+    owner = "stu";
+  };
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;

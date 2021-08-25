@@ -92,6 +92,7 @@ require('gitsigns').setup {
 
 -- project.nvim
 require("project_nvim").setup {
+    manual_mode = true,
     silent_chdir = false,
 }
 require('telescope').load_extension('projects')
@@ -183,7 +184,8 @@ map('n', '<C-f>', '<cmd>sus<CR>')
 cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
 
 -- Auto format on save
-cmd 'au BufWritePre * Neoformat'
+--cmd 'au BufWritePre * Neoformat'
+cmd 'au BufWritePre * lua vim.lsp.buf.formatting()'
 
 -- Manually set some filetypes
 cmd 'au BufRead,BufNewFile *.tf set ft=terraform'

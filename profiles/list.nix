@@ -6,6 +6,7 @@
   ./graphical/bspwm.nix
   ./network/networkmanager.nix
   ./network/vpn.nix
+  ./network/ipfs.nix
   ./laptop.nix
   ./virt.nix
   ./sshd.nix

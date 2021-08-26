@@ -3,6 +3,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/network/networkmanager.nix
+    ../profiles/network/ipfs.nix
     ../profiles/network/vpn.nix
     ../profiles/sshd.nix
 

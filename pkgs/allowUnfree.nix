@@ -7,4 +7,5 @@
   "spotify-unwrapped"
 
   "discord"
+  "obsidian"
 ]

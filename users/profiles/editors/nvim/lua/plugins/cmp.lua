@@ -1,12 +1,6 @@
 local cmp = require("cmp")
 
 cmp.setup({
-  -- Enable LSP snippets
-  snippet = {
-    expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
   mapping = {
     -- Completion item navigation
     ["<Up>"] = cmp.mapping.select_prev_item(),
@@ -24,7 +18,6 @@ cmp.setup({
   -- Installed sources
   sources = {
     { name = "nvim_lsp" },
-    { name = "vsnip" },
     { name = "path" },
   },
 })

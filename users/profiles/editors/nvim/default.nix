@@ -50,7 +50,6 @@
       nvim-lspconfig
       nvim-cmp
       cmp-nvim-lsp
-      cmp-vsnip
       cmp-path
 
       ## Extra language support

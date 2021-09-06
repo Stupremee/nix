@@ -18,7 +18,6 @@ end
 
 -- Keybinds for telescope.nvim. Common prefix is <leader>f
 M.telescope = function() 
-  print("hi")
   map("n", "<leader>ff", ":Telescope find_files<CR>")
   map("n", "<leader>fb", ":Telescope buffers<CR>")
   map("n", "<leader>fs", ":Telescope live_grep<CR>")

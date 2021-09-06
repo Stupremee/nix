@@ -28,7 +28,7 @@
     ];
 
     # TODO: Move these somewhere else
-    home.packages = with pkgs; [ firefox spotify ncspot discord obsidian ];
+    home.packages = with pkgs; [ firefox spotify discord distant ];
   };
 
   users.users.stu = {

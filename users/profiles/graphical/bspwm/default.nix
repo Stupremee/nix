@@ -112,6 +112,8 @@ in
   services.picom = {
     enable = true;
 
+    backend = "xrender";
+
     # activeOpacity = "0.8";
     # inactiveOpacity = "0.8";
     opacityRule = [

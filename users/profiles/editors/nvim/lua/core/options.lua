@@ -33,3 +33,6 @@ opt("w", "number", true)
 opt("w", "relativenumber", true)
 opt("w", "wrap", false)
 opt("w", "signcolumn", "yes")
+
+-- Used for project local settings
+opt("o", "exrc", true)

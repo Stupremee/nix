@@ -7,7 +7,7 @@ let
   };
 in
 {
-  home.packages = with pkgs; [ nb ];
+  home.packages = with pkgs; [ nb comma ];
 
   programs.fzf = {
     enable = true;
@@ -87,6 +87,11 @@ in
 
   home.sessionVariables = with pkgs; {
     FZF_DEFAULT_COMMAND = "${fd}/bin/fd --type f";
+  };
+
+  programs.nix-index = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.starship = {

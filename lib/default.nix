@@ -13,6 +13,7 @@ let
       config = {
         allowUnfree = false;
         allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) (import ../pkgs/allowUnfree.nix);
+        permittedInsecurePackages = import ../pkgs/allowInsecure.nix;
       };
     };
 

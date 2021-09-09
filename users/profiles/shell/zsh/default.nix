@@ -7,6 +7,8 @@ let
   };
 in
 {
+  home.packages = with pkgs; [ nb ];
+
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;

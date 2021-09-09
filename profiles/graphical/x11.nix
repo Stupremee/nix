@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   services.xserver = {
     enable = true;
-    layout = "us";
+    layout = "eu";
     libinput.enable = true;
   };
 

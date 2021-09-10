@@ -2,7 +2,7 @@
 , lib
 , fetchurl
 , nix-index
-, nix
+, nixUnstable
 , fzf
 , makeWrapper
 , runCommand
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
 
   src = ./.;
 
-  buildInputs = [ nix-index.out nix.out fzf.out ];
+  buildInputs = [ nix-index.out nixUnstable.out fzf.out ];
   nativeBuildInputs = [ makeWrapper ];
 
   installPhase =
@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
       wrapProgram $out/bin/, \
         --set NIX_INDEX_DB ${nixIndexDB.out} \
         --prefix PATH : ${nix-index.out}/bin \
-        --prefix PATH : ${nix.out}/bin \
+        --prefix PATH : ${nixUnstable.out}/bin \
         --prefix PATH : ${fzf.out}/bin
       ln -s $out/bin/, $out/bin/comma
     '';

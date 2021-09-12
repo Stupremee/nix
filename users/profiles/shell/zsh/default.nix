@@ -5,9 +5,18 @@ let
     name = src.pname;
     file = "share/${name}/${name}.zsh";
   };
+
+  zshNoVim = pkgs.symlinkJoin {
+    name = "zsh";
+    paths = [ pkgs.zsh ];
+
+    postBuild = ''
+      ln -s $out/bin/zsh $out/bin/zsh-no-vim
+    '';
+  };
 in
 {
-  home.packages = with pkgs; [ nb comma ];
+  home.packages = with pkgs; [ zshNoVim nb comma ];
 
   programs.fzf = {
     enable = true;
@@ -51,7 +60,9 @@ in
     initExtra = ''
       ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
-      bindkey -v
+      if [ "$0" = "zsh-no-vim" ]; then
+        bindkey -e
+      fi
 
       autoload -U colors && colors
       setopt incappendhistory

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+cache_dir="$HOME/.cache/comma"
+
 if [[ $# -lt 1 ]]; then
   >&2 echo "usage: , <program> [arguments]"
   exit 1
@@ -22,8 +24,8 @@ fi
 
 argv0=$1; shift
 
-if [[ -f "/tmp/comma-cache/${argv0}" && ! -n $search ]]; then
-  attr="$(cat /tmp/comma-cache/${argv0})"
+if [[ -f "${cache_dir}/${argv0}" && ! -n $search ]]; then
+  attr="$(cat ${cache_dir}/${argv0})"
 else
   case "${argv0}" in
     @OVERLAY_PACKAGES@)
@@ -43,9 +45,9 @@ if [[ -z $attr ]]; then
   exit 1
 fi
 
-if [[ ! -f "/tmp/comma-cache/${argv0}" ]]; then
-  mkdir -p /tmp/comma-cache/
-  echo "${attr}" >> "/tmp/comma-cache/${argv0}"
+if [[ ! -f "${cache_dir}/${argv0}" ]]; then
+  mkdir -p "${cache_dir}"
+  echo "${attr}" >> "${cache_dir}/${argv0}"
 fi
 
 if [[ -n $install ]]; then

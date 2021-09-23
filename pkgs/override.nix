@@ -15,5 +15,6 @@ pkgs: final: prev: {
     direnv
     dunst
     zls
-    ncspot;
+    ncspot
+    discord;
 }

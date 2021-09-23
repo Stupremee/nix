@@ -27,8 +27,6 @@
   # Set 16 jobs
   nix.maxJobs = lib.mkDefault 16;
 
-  #modules.themes.theme = "HY";
-
   # Hardware configuaration
   hardware = {
     enableAllFirmware = false;
@@ -42,6 +40,9 @@
   };
   services.fwupd.enable = true;
 
+  # Use localtime to avoid time issues with windows dual boot
+  time.hardwareClockInLocalTime = true;
+
   # Boot configuration
   boot = {
     tmpOnTmpfs = true;
@@ -51,8 +52,12 @@
 
     initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
     initrd.kernelModules = [ ];
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
+
+    kernelModules = [ "kvm-amd" "v4l2loopback" ];
+    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+    extraModprobeConfig = ''
+      otpions v4l2loopback exclusive_caps=1 max_buffers=2
+    '';
   };
 
   # Networking configuration
@@ -94,12 +99,6 @@
   fileSystems."/" =
     {
       device = "/dev/disk/by-uuid/34cf2e1e-cfe8-4529-a6e9-52ccb322a83c";
-      fsType = "ext4";
-    };
-
-  fileSystems."/mnt/hdd1" =
-    {
-      device = "/dev/disk/by-uuid/83d0d963-78af-4668-a4aa-824bffb44e12";
       fsType = "ext4";
     };
 

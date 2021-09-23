@@ -37,6 +37,7 @@
       neoterm
       gitsigns-nvim
       editorconfig-vim
+      nvim-bufdel
 
       ### Syntax highlighting
       nvim-treesitter

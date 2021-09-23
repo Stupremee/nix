@@ -5,4 +5,6 @@ final: prev: {
   distant = prev.callPackage ./distant.nix { };
   nb = prev.callPackage ./nb.nix { };
   comma = prev.callPackage ./comma { };
+
+  personalScripts = prev.callPackage ./scripts { };
 }

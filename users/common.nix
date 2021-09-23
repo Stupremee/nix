@@ -21,6 +21,8 @@
 
       ./profiles/udiskie.nix
     ];
+
+    home.packages = with pkgs; [ personalScripts ];
   };
 
   users.users.stu = {

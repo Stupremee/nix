@@ -8,4 +8,6 @@
 
   "discord"
   "obsidian"
+
+  "teams"
 ]

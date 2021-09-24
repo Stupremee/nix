@@ -6,6 +6,9 @@
     ../profiles/sshd.nix
   ];
 
+  # Make aether available for deployment
+  deploy.enable = true;
+
   # Boot configuration
   boot = {
     initrd.availableKernelModules = [ "ata_piix" "virtio_pci" "virtio_scsi" "xhci_pci" "sd_mod" "sr_mod" ];

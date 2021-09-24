@@ -53,6 +53,7 @@
 
       outputs =
         let
+          inherit (builtins) attrValues mapAttrs filterAttrs;
           system = "x86_64-linux";
           pkgs = self.legacyPackages."${system}";
         in
@@ -72,7 +73,28 @@
 
           # Deploy-rs checks and nodes
           checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-          deploy.nodes = import ./deploy.nix { inherit deploy-rs self; };
+          deploy = {
+            magicRollback = true;
+            autoRollback = true;
+
+            nodes = builtins.mapAttrs
+              (_: nixosConfig: {
+                hostname =
+                  if builtins.isNull nixosConfig.config.deploy.ip
+                  # Connection through Tailscale using MagicDNS
+                  then "${nixosConfig.config.networking.hostName}"
+                  else "${nixosConfig.config.deploy.ip}";
+
+                profiles.system = {
+                  user = "root";
+                  sshUser = "root";
+                  path = deploy-rs.lib.${system}.activate.nixos nixosConfig;
+                };
+              })
+              (nixos.lib.filterAttrs
+                (_: v: v.config.deploy.enable)
+                self.nixosConfigurations);
+          };
         };
 
     in
@@ -101,7 +123,7 @@
       {
         legacyPackages = pkgs;
 
-        devShell = import ./shell { inherit pkgs nixos; };
+        devShell = import ./shell { inherit pkgs nixos deploy-rs system; };
       }))
       outputs;
 }

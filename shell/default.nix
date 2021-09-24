@@ -1,4 +1,4 @@
-{ pkgs, nixos, ... }:
+{ pkgs, nixos, deploy-rs, system, ... }:
 pkgs.devshell.mkShell {
   name = "flk";
   imports = [ (pkgs.devshell.importTOML ./devshell.toml) ];
@@ -43,6 +43,10 @@ pkgs.devshell.mkShell {
     {
       name = "nix";
       package = nixUnstable;
+    }
+    {
+      name = "deploy";
+      package = deploy-rs.packages."${system}".deploy-rs;
     }
   ];
 }

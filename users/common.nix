@@ -29,10 +29,6 @@
     uid = 1000;
     isNormalUser = true;
     extraGroups = [ "wheel" "sway" "networkmanager" "input" "libvirtd" ];
-    openssh.authorizedKeys.keys = pkgs.lib.flk.keysFromGithub {
-      inherit pkgs;
-      username = "Stupremee";
-      sha256 = "sha256-QXJfmJjokI1rTHD7xK5Q+vQ6IeWZ9SrjM7uTnMoe/Iw=";
-    };
+    openssh.authorizedKeys.keys = pkgs.lib.flk.myKeys pkgs;
   };
 }

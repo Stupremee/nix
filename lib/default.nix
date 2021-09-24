@@ -31,7 +31,7 @@ let
       value = import path;
     });
 in
-{
+rec {
   inherit importPaths importPkgs;
 
   overlayPaths =
@@ -65,4 +65,10 @@ in
       url = "https://github.com/${username}.keys";
       inherit sha256;
     })));
+
+  myKeys = pkgs: keysFromGithub {
+    inherit pkgs;
+    username = "Stupremee";
+    sha256 = "sha256-QXJfmJjokI1rTHD7xK5Q+vQ6IeWZ9SrjM7uTnMoe/Iw=";
+  };
 }

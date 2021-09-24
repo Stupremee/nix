@@ -40,6 +40,15 @@
   };
   services.fwupd.enable = true;
 
+  # Enable OpenVPN and add configurations to it
+  age.secrets.tryHackMe.file = ../../secrets/tryHackMe.ovpn;
+  services.openvpn.servers = {
+    tryHackMeVPN = {
+      config = "config ${config.age.secrets.tryHackMe.path}";
+      autoStart = false;
+    };
+  };
+
   # Use localtime to avoid time issues with windows dual boot
   time.hardwareClockInLocalTime = true;
 

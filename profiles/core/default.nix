@@ -57,6 +57,13 @@
     enableBashCompletion = true;
     enableCompletion = true;
     syntaxHighlighting.enable = true;
+    shellInit = ''
+      if [ "$0" = "zsh-no-vim" ]; then
+        bindkey -e
+      else
+        bindkey -v
+      fi
+    '';
   };
 
   # Shell aliases and core packages

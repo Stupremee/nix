@@ -16,6 +16,7 @@
     };
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
     agenix.url = "github:ryantm/agenix";
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs =
@@ -29,6 +30,7 @@
     , nixpkgs-wayland
     , agenix
     , rust-overlay
+    , deploy-rs
     }:
     let
       inherit (self.lib) nixosModules importPaths overlayPaths importPkgs;
@@ -40,6 +42,7 @@
         home.nixosModules.home-manager
         agenix.nixosModules.age
       ];
+
       extraOverlays = [
         devshell.overlay
         nixpkgs-wayland.overlay
@@ -66,6 +69,10 @@
           lib = import ./lib {
             inherit (nixos) lib;
           };
+
+          # Deploy-rs checks and nodes
+          checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+          deploy.nodes = import ./deploy.nix { inherit deploy-rs self; };
         };
 
     in

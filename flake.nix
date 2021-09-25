@@ -10,10 +10,6 @@
     home.url = "github:nix-community/home-manager";
     rust-overlay.url = "github:oxalica/rust-overlay";
 
-    neovim = {
-      url = "github:neovim/neovim/nightly?dir=contrib";
-      inputs.nixpkgs.follows = "nixos";
-    };
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
     agenix.url = "github:ryantm/agenix";
     deploy-rs.url = "github:serokell/deploy-rs";
@@ -26,7 +22,6 @@
     , flake-utils
     , devshell
     , home
-    , neovim
     , nixpkgs-wayland
     , agenix
     , rust-overlay
@@ -46,7 +41,6 @@
       extraOverlays = [
         devshell.overlay
         nixpkgs-wayland.overlay
-        neovim.overlay
         agenix.overlay
         rust-overlay.overlay
       ];

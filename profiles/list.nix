@@ -5,7 +5,7 @@
   ./graphical/sway.nix
   ./graphical/bspwm.nix
   ./network/networkmanager.nix
-  ./network/vpn.nix
+  ./network/tailscale.nix
   ./network/ipfs.nix
   ./laptop.nix
   ./virt.nix

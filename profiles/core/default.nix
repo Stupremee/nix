@@ -86,7 +86,6 @@
       jq
       manix
       git
-      git-crypt
 
       man-db
       man-pages
@@ -94,6 +93,7 @@
       stdmanpages
 
       agenix
+      neovim
     ];
 
     shellAliases = {

@@ -4,7 +4,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ../profiles/network/networkmanager.nix
     ../profiles/network/ipfs.nix
-    ../profiles/network/vpn.nix
+    ../profiles/network/tailscale.nix
     ../profiles/sshd.nix
 
     ../profiles/zsa.nix

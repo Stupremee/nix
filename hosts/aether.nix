@@ -2,7 +2,7 @@
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ../profiles/network/networkmanager.nix
-    ../profiles/network/vpn.nix
+    ../profiles/network/tailscale.nix
     ../profiles/sshd.nix
   ];
 
@@ -25,6 +25,11 @@
   networking = {
     useDHCP = false;
     interfaces.ens3.useDHCP = true;
+
+    # We use our own firewall instead the one provided by hetzner
+    firewall = {
+      enable = true;
+    };
   };
 
   # Mount filesystems

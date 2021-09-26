@@ -5,4 +5,9 @@
 
   # Trust the tailscale0 interface
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
+  # Persist tailscale configuration
+  environment.persist.directories = [
+    "/var/lib/tailscale"
+  ];
 }

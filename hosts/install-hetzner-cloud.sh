@@ -1,41 +1,8 @@
 #! /usr/bin/env bash
 
-# Source: https://github.com/nix-community/nixos-install-scripts/blob/master/hosters/hetzner-cloud/nixos-install-hetzner-cloud.sh
-
 # Script to install NixOS from the Hetzner Cloud NixOS bootable ISO image.
-# (tested with Hetzner's `NixOS 20.03 (amd64/minimal)` ISO image).
 #
-# This script wipes the disk of the server!
-#
-# Instructions:
-#
-# 1. Mount the above mentioned ISO image from the Hetzner Cloud GUI
-#    and reboot the server into it; do not run the default system (e.g. Ubuntu).
-# 2. To be able to SSH straight in (recommended), you must replace hardcoded pubkey
-#    further down in the section labelled "Replace this by your SSH pubkey" by you own,
-#    and host the modified script way under a URL of your choosing
-#    (e.g. gist.github.com with git.io as URL shortener service).
-# 3. Run on the server:
-#
-#       # Replace this URL by your own that has your pubkey in
-#       curl -L https://raw.githubusercontent.com/Stupremee/nix/master/hosts/install-hetzner-cloud.sh | sudo bash
-#
-#    This will install NixOS and power off the server.
-# 4. Unmount the ISO image from the Hetzner Cloud GUI.
-# 5. Turn the server back on from the Hetzner Cloud GUI.
-#
-# To run it from the Hetzner Cloud web terminal without typing it down,
-# you can either select it and then middle-click onto the web terminal, (that pastes
-# to it), or use `xdotool` (you have e.g. 3 seconds to focus the window):
-#
-#     sleep 3 && xdotool type --delay 50 'curl YOUR_URL_HERE | sudo bash'
-#
-# (In the xdotool invocation you may have to replace chars so that
-# the right chars appear on the US-English keyboard.)
-#
-# If you do not replace the pubkey, you'll be running with my pubkey, but you can
-# change it afterwards by logging in via the Hetzner Cloud web terminal as `root`
-# with empty password.
+# curl -L https://raw.githubusercontent.com/Stupremee/nix/master/hosts/install-hetzner-cloud.sh | sudo bash
 
 set -e
 
@@ -47,9 +14,29 @@ sgdisk -d 1 /dev/sda
 sgdisk -N 1 /dev/sda
 partprobe /dev/sda
 
-mkfs.ext4 -F /dev/sda1 # wipes all data!
+# Setup ZFS pools and datasets
+zpool destroy -f rpool || true
+zpool create -f rpool /dev/sda1
 
-mount /dev/sda1 /mnt
+# Dataset for `/`
+zfs create -p -o mountpoint=legacy rpool/local/root
+zfs snapshot rpool/local/root@blank
+mount -t zfs rpool/local/root /mnt
+
+# Dataset for `/nix`
+zfs create -p -o mountpoint=legacy rpool/local/nix
+mkdir /mnt/nix
+mount -t zfs rpool/local/nix /mnt/nix
+
+# Dataset for `/home`
+zfs create -p -o mountpoint=legacy rpool/safe/home
+mkdir /mnt/home
+mount -t zfs rpool/safe/home /mnt/home
+
+# Dataset for persistent state
+zfs create -p -o mountpoint=legacy rpool/safe/persist
+mkdir /mnt/persist
+mount -t zfs rpool/safe/persist /mnt/persist
 
 nixos-generate-config --root /mnt
 
@@ -59,6 +46,10 @@ sed -i -E 's:^\}\s*$::g' /mnt/etc/nixos/configuration.nix
 # Extend/override default `configuration.nix`:
 echo '
   boot.loader.grub.devices = [ "/dev/sda" ];
+  boot.initrd.postDeviceCommands = pkgs.lib.mkAfter '"''
+    zfs rollback -r rpool/local/root@blank
+  ''"';
+
   # Initial empty root password for easy login:
   users.users.root.initialHashedPassword = "";
   services.openssh.permitRootLogin = "prohibit-password";

@@ -9,6 +9,8 @@
   # Make aether available for deployment
   deploy.enable = true;
 
+  # Enable impersistent state (erase your darlings)
+
   # Boot configuration
   boot = {
     initrd.availableKernelModules = [ "ata_piix" "virtio_pci" "virtio_scsi" "xhci_pci" "sd_mod" "sr_mod" ];

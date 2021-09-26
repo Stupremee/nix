@@ -9,6 +9,7 @@
     devshell.url = "github:numtide/devshell";
     home.url = "github:nix-community/home-manager";
     rust-overlay.url = "github:oxalica/rust-overlay";
+    impermanence.url = "github:nix-community/impermanence";
 
     nixpkgs-wayland.url = "github:colemickens/nixpkgs-wayland";
     agenix.url = "github:ryantm/agenix";
@@ -25,6 +26,7 @@
     , nixpkgs-wayland
     , agenix
     , rust-overlay
+    , impermanence
     , deploy-rs
     }:
     let
@@ -36,6 +38,7 @@
       extraModules = [
         home.nixosModules.home-manager
         agenix.nixosModules.age
+        impermanence.nixosModules.impermanence
       ];
 
       extraOverlays = [

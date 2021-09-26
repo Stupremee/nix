@@ -2,4 +2,5 @@
 # in this flake
 [
   ./deploy.nix
+  ./environment/persist.nix
 ]

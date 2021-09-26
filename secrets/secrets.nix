@@ -8,14 +8,16 @@ let
 
   systems = {
     nixius = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO00K3mafb7j76+ZhBVYUHMHiCIKAxW+rvB4Uye97/yx root@nixius";
-    aether = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINreeOCIZIXvUTD7lIDEmQnxmZXpYv1MOFrcT0tjExhN root@nixos";
+    aether = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF532AdmXssn/pqzhHTmmtRlS4nfO+iig3TTFuQNLdsm root@aether";
   };
 
   keysForSystem = system: users ++ [ systems."${system}" ];
+  keysForAll = users ++ (builtins.attrValues systems);
 in
 {
   "tryHackMe.ovpn".publicKeys = keysForSystem "nixius";
   "ssh.config".publicKeys = keysForSystem "nixius";
+  "tailscale.key".publicKeys = keysForAll;
 
   # SSL certificates
   "cert/stu-dev.me.key".publicKeys = keysForSystem "aether";

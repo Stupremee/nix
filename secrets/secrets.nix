@@ -6,12 +6,21 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOvqrTPxGmyNg2lwwJsWVOl+MGwUVQBSiy+XRgqYQo0Q stu@nixius"
   ];
 
-  systems = [
-    # Nixius
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO00K3mafb7j76+ZhBVYUHMHiCIKAxW+rvB4Uye97/yx root@nixius"
-  ];
+  systems = {
+    nixius = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO00K3mafb7j76+ZhBVYUHMHiCIKAxW+rvB4Uye97/yx root@nixius";
+    aether = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINreeOCIZIXvUTD7lIDEmQnxmZXpYv1MOFrcT0tjExhN root@nixos";
+  };
+
+  keysForSystem = system: users ++ [ systems."${system}" ];
 in
 {
-  "tryHackMe.ovpn".publicKeys = systems ++ users;
-  "ssh.config".publicKeys = systems ++ users;
+  "tryHackMe.ovpn".publicKeys = keysForSystem "nixius";
+  "ssh.config".publicKeys = keysForSystem "nixius";
+
+  # SSL certificates
+  "cert/stu-dev.me.key".publicKeys = keysForSystem "aether";
+  "cert/stu-dev.me.pem".publicKeys = keysForSystem "aether";
+
+  "cert/stx.li.key".publicKeys = keysForSystem "aether";
+  "cert/stx.li.pem".publicKeys = keysForSystem "aether";
 }

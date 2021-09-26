@@ -4,6 +4,8 @@
     ../../profiles/network/networkmanager.nix
     ../../profiles/network/tailscale.nix
     ../../profiles/sshd.nix
+
+    ./traefik.nix
   ];
 
   # Make aether available for deployment

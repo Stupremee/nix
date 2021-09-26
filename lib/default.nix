@@ -56,6 +56,8 @@ rec {
       (n: v:
         if n != "default.nix" && hasSuffix ".nix" n && v == "regular" then
           let name = removeSuffix ".nix" n; in nameValuePair (name) (_import name)
+        else if v == "directory" then
+          nameValuePair (n) (_import n)
         else
           nameValuePair ("") (null))
       (readDir dir);

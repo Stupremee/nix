@@ -1,9 +1,9 @@
 { config, lib, pkgs, modulesPath, ... }: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    ../profiles/network/networkmanager.nix
-    ../profiles/network/tailscale.nix
-    ../profiles/sshd.nix
+    ../../profiles/network/networkmanager.nix
+    ../../profiles/network/tailscale.nix
+    ../../profiles/sshd.nix
   ];
 
   # Make aether available for deployment

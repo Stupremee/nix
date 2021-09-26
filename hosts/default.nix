@@ -37,7 +37,15 @@ let
             system.configurationRevision = lib.mkIf (self ? rev) self.rev;
           };
 
-          local = import "${toString ./.}/${hostName}.nix";
+          local =
+            let
+              path = "${toString ./.}/${hostName}";
+              filePath = "${path}.nix";
+            in
+            if lib.pathIsRegularFile filePath then
+              import "${path}.nix"
+            else
+              import "${path}";
 
           flakeModules =
             attrValues (removeAttrs self.nixosModules [ "profiles" ]);

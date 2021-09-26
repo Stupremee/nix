@@ -10,7 +10,8 @@
   deploy.enable = true;
 
   # Enable impersistent state (erase your darlings)
-  networking.hostId = "b13de62d";
+  networking.hostId = "a90f5bee";
+  environment.persist.erase = true;
 
   # Boot configuration
   boot = {
@@ -37,8 +38,29 @@
 
   # Mount filesystems
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/45afa7ac-dbac-4c44-8bd7-00dbd66c9d2b";
-    fsType = "ext4";
+    device = "rpool/local/root";
+    fsType = "zfs";
+  };
+
+  fileSystems."/nix" = {
+    device = "rpool/local/nix";
+    fsType = "zfs";
+  };
+
+  fileSystems."/boot" = {
+    device = "rpool/local/boot";
+    fsType = "zfs";
+  };
+
+  fileSystems."/home" = {
+    device = "rpool/safe/home";
+    fsType = "zfs";
+  };
+
+  fileSystems."/persist" = {
+    device = "rpool/safe/persist";
+    fsType = "zfs";
+    neededForBoot = true;
   };
 
   swapDevices = [ ];

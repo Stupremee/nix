@@ -7,7 +7,6 @@
   ./network/networkmanager.nix
   ./network/tailscale.nix
   ./network/ipfs.nix
-  ./impersistent.nix
   ./laptop.nix
   ./virt.nix
   ./sshd.nix

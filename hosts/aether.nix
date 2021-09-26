@@ -10,6 +10,7 @@
   deploy.enable = true;
 
   # Enable impersistent state (erase your darlings)
+  networking.hostId = "b13de62d";
 
   # Boot configuration
   boot = {

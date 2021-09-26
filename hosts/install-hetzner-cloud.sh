@@ -28,6 +28,11 @@ zfs create -p -o mountpoint=legacy rpool/local/nix
 mkdir /mnt/nix
 mount -t zfs rpool/local/nix /mnt/nix
 
+# Dataset for `/boot`
+zfs create -p -o mountpoint=legacy rpool/local/boot
+mkdir /mnt/boot
+mount -t zfs rpool/local/boot /mnt/boot
+
 # Dataset for `/home`
 zfs create -p -o mountpoint=legacy rpool/safe/home
 mkdir /mnt/home
@@ -43,7 +48,7 @@ nixos-generate-config --root /mnt
 # Delete trailing `}` from `configuration.nix` so that we can append more to it.
 sed -i -E 's:^\}\s*$::g' /mnt/etc/nixos/configuration.nix
 
-host_id="$(head -c4 /dev/urandom | od -A none -t x4)"
+host_id="$(head -c4 /dev/urandom | od -A none -t x4 | tr -d ' ')"
 echo "Using host id: $host_id"
 
 # Extend/override default `configuration.nix`:
@@ -66,5 +71,3 @@ echo '
 ' >> /mnt/etc/nixos/configuration.nix
 
 nixos-install --no-root-passwd
-
-poweroff

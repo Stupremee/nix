@@ -49,7 +49,6 @@ nixos-generate-config --root /mnt
 sed -i -E 's:^\}\s*$::g' /mnt/etc/nixos/configuration.nix
 
 host_id="$(head -c4 /dev/urandom | od -A none -t x4 | tr -d ' ')"
-echo "Using host id: $host_id"
 
 # Extend/override default `configuration.nix`:
 echo '
@@ -71,3 +70,6 @@ echo '
 ' >> /mnt/etc/nixos/configuration.nix
 
 nixos-install --no-root-passwd
+
+echo "Installation finished!"
+echo "networking.hostId: $host_id"

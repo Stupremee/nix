@@ -43,12 +43,17 @@ nixos-generate-config --root /mnt
 # Delete trailing `}` from `configuration.nix` so that we can append more to it.
 sed -i -E 's:^\}\s*$::g' /mnt/etc/nixos/configuration.nix
 
+host_id="$(head -c4 /dev/urandom | od -A none -t x4)"
+echo "Using host id: $host_id"
+
 # Extend/override default `configuration.nix`:
 echo '
   boot.loader.grub.devices = [ "/dev/sda" ];
   boot.initrd.postDeviceCommands = pkgs.lib.mkAfter '"''
     zfs rollback -r rpool/local/root@blank
   ''"';
+
+  networking.hostId = "'"$host_id"'";
 
   # Initial empty root password for easy login:
   users.users.root.initialHashedPassword = "";

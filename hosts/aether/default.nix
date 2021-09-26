@@ -6,15 +6,18 @@
     ../../profiles/sshd.nix
 
     ./traefik.nix
+    ./blocky.nix
   ];
 
   # Make aether available for deployment
   deploy.enable = true;
-  deploy.ip = "23.88.104.63";
 
   # Enable impersistent state (erase your darlings)
   networking.hostId = "95265be9";
   environment.persist.erase = true;
+
+  # Disallow mutation of users at runtime
+  users.mutableUsers = false;
 
   # Boot configuration
   boot = {

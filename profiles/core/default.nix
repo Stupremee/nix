@@ -50,9 +50,6 @@
     };
   };
 
-  # Disallow mutation of users at runtime
-  users.mutableUsers = false;
-
   # Store SSH keys on persistent storage
   environment.persist.files = [
     "/etc/ssh/ssh_host_rsa_key"

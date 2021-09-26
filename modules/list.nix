@@ -3,4 +3,5 @@
 [
   ./deploy.nix
   ./environment/persist.nix
+  ./services/blocky.nix
 ]

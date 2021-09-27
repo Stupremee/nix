@@ -1,27 +1,23 @@
-# Configure the NetworkManager
-{ lib, ... }: {
+{ config, lib, ... }: {
   networking.networkmanager = {
     enable = true;
     wifi.backend = "iwd";
-    dns = lib.mkForce "none";
-    extraConfig = ''
-      [main]
-      systemd-resolved=false
-    '';
   };
 
-  networking.nameservers =
-    [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
-
   networking.wireless.iwd.enable = true;
+
+  # Configure nameservers and search for tailscale magic dns hostnames
+  networking.nameservers =
+    (if config.services.tailscale.enable then [ "100.100.100.100" ] else [ ]) ++ [ "1.1.1.1" "1.0.0.1" ];
+  networking.search =
+    if config.services.tailscale.enable then [
+      "stupremee.github.beta.tailscale.net"
+    ] else [ ];
+
   services.resolved = {
     enable = true;
     dnssec = "true";
-    fallbackDns = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
-    extraConfig = ''
-      DNSOverTLS=yes
-      DNSStubListener=no
-    '';
+    fallbackDns = config.networking.nameservers;
   };
 
   environment.persist.directories = [

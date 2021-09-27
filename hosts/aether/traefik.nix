@@ -18,6 +18,7 @@ in
     enable = true;
 
     staticConfigOptions = {
+      entryPoints.web.address = ":80";
       entryPoints.websecure.address = ":443";
 
       api.dashboard = true;
@@ -26,16 +27,15 @@ in
     dynamicConfigOptions = {
       http.routers = {
         api = {
-          entrypoints = [ "websecure" ];
+          entrypoints = [ "web" ];
           middlewares = [ "privateService" ];
           service = "api@internal";
-          rule = "Host(`traefik.stx.li`)";
-          tls = { };
+          rule = "Path(`/traefik`)";
         };
       };
 
       http.middlewares = {
-        privateService.ipwhitelist.sourcerange = "127.0.0.1/32, 100.125.55.117/32";
+        privateService.ipwhitelist.sourcerange = "127.0.0.1/32, 100.100.241.20/32";
       };
 
       # Use TLS certificates

@@ -5,6 +5,7 @@
     ../profiles/network/networkmanager.nix
     ../profiles/network/ipfs.nix
     ../profiles/network/tailscale.nix
+    ../profiles/network/wireshark.nix
     ../profiles/sshd.nix
 
     ../profiles/zsa.nix

@@ -5,7 +5,7 @@
     ../../profiles/network/tailscale.nix
     ../../profiles/sshd.nix
 
-    ./traefik.nix
+    ./caddy.nix
     ./blocky.nix
   ];
 

@@ -28,7 +28,16 @@
   users.users.stu = {
     uid = 1000;
     isNormalUser = true;
-    extraGroups = [ "wheel" "sway" "networkmanager" "input" "libvirtd" "wireshark" ];
+    extraGroups = [
+      "wheel"
+      "sway"
+      "networkmanager"
+      "input"
+      "libvirtd"
+      "wireshark"
+      "podman"
+      "docker"
+    ];
     openssh.authorizedKeys.keys = pkgs.lib.flk.myKeys pkgs;
   };
 }

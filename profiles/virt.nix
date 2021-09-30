@@ -1,4 +1,3 @@
-# Packages for virtualisation, including podman and qemu + virtmanager
 { pkgs, ... }: {
   virtualisation = {
     libvirtd = {
@@ -8,13 +7,9 @@
     };
 
     containers.enable = true;
-    oci-containers.backend = "podman";
+    oci-containers.backend = "docker";
 
-    podman = {
-      enable = true;
-      dockerCompat = true;
-      dockerSocket.enable = true;
-    };
+    docker.enable = true;
   };
 
   # you'll need to add your user to 'libvirtd' group to use virt-manager

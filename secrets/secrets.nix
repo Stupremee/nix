@@ -21,6 +21,10 @@ in
 
   "vaultwarden.ini".publicKeys = keysForSystem "aether";
 
+  # Backup secrets
+  "restic-important".publicKeys = keysForSystem "aether";
+  "rclone.conf".publicKeys = keysForSystem "aether";
+
   # SSL certificates
   "cert/stu-dev.me.key".publicKeys = keysForSystem "aether";
   "cert/stu-dev.me.pem".publicKeys = keysForSystem "aether";

@@ -8,6 +8,7 @@
     ./caddy.nix
     ./blocky.nix
     ./vaultwarden.nix
+    ./restic.nix
   ];
 
   # Make aether available for deployment

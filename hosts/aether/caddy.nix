@@ -1,6 +1,10 @@
 { config, ... }:
 let
+  inherit (builtins) toString;
+
   cfg = config.services.caddy;
+
+  vaultwarden = config.services.vaultwarden.config;
 
   secret = path: {
     file = path;
@@ -19,7 +23,14 @@ in
   services.caddy = {
     enable = true;
 
-    config = '''';
+    config = ''
+      bw.stu-dev.me {
+        encode gzip zstd
+        log
+        tls ${config.age.secrets."cert/stu-dev.me.pem".path} ${config.age.secrets."cert/stu-dev.me.key".path}
+        reverse_proxy ${vaultwarden.rocketAddress}:${toString vaultwarden.rocketPort}
+      }
+    '';
   };
 
   # Open firewall for Caddy HTTPS port

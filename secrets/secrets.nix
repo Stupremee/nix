@@ -19,6 +19,8 @@ in
   "ssh.config".publicKeys = keysForSystem "nixius";
   "tailscale.key".publicKeys = keysForAll;
 
+  "vaultwarden.ini".publicKeys = keysForSystem "aether";
+
   # SSL certificates
   "cert/stu-dev.me.key".publicKeys = keysForSystem "aether";
   "cert/stu-dev.me.pem".publicKeys = keysForSystem "aether";

@@ -12,6 +12,7 @@
 
   # Make aether available for deployment
   deploy.enable = true;
+  deploy.ip = "23.88.104.63";
 
   # Enable impersistent state (erase your darlings)
   networking.hostId = "95265be9";

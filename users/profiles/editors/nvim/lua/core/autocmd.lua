@@ -2,7 +2,7 @@
 vim.cmd [[ au TextYankPost * lua vim.highlight.on_yank {on_visual = false} ]]
 
 -- Auto format on save
-vim.cmd [[ au BufWritePre * Neoformat ]]
+vim.cmd [[ autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync() ]]
 
 -- Manually set some filetypes
 vim.cmd [[ au BufRead,BufNewFile *.tf set ft=terraform ]]

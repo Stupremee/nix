@@ -7,6 +7,15 @@
       ./profiles/graphical/alacritty
     ];
 
-    home.packages = with pkgs; [ firefox spotify discord distant obsidian teams ];
+    home.packages = with pkgs; [
+      firefox
+      spotify
+      discord
+      distant
+      obsidian
+      teams
+      libreoffice
+      signal-desktop
+    ];
   };
 }

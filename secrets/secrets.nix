@@ -16,9 +16,9 @@ let
 in
 {
   "tryHackMe.ovpn".publicKeys = keysForSystem "nixius";
+
   "ssh.config".publicKeys = keysForSystem "nixius";
   "tailscale.key".publicKeys = keysForAll;
-
   "vaultwarden.ini".publicKeys = keysForSystem "aether";
 
   # Backup secrets

@@ -10,8 +10,6 @@ pkgs: final: prev: {
     tailscale
     zellij
     starship
-    neovim
-    neovim-unwrapped
     direnv
     dunst
     zls

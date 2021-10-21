@@ -20,6 +20,15 @@
 
   # Disallow mutation of users at runtime
   users.mutableUsers = false;
+  users.users.root.hashedPassword = "$6$9wEYzcg7cyqq$fH7mVhB8sbLmjKWl9nAjFYxxv9W2aUQM9/uQU41TpbXI8VF6Q6/hI16qV407NTqz0JTxnCn264OJ3gxKWj7yc.";
+
+  # Enable podman containers backend
+  virtualisation = {
+    containers.enable = true;
+    oci-containers.backend = "podman";
+
+    podman.enable = true;
+  };
 
   # Boot configuration
   boot = {

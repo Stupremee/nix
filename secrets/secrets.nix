@@ -20,6 +20,7 @@ in
   "ssh.config".publicKeys = keysForSystem "nixius";
   "tailscale.key".publicKeys = keysForAll;
   "vaultwarden.ini".publicKeys = keysForSystem "aether";
+  "paperlessPassword".publicKeys = keysForSystem "aether";
 
   # Backup secrets
   "restic-important".publicKeys = keysForSystem "aether";

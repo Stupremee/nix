@@ -24,7 +24,7 @@ in
     };
 
     directories = mkOption {
-      type = with types; listOf str;
+      type = with types; listOf (either str attrs);
       default = [ ];
       example = [
         "/var/log"

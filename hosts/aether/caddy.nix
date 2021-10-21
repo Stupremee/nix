@@ -5,6 +5,7 @@ let
   cfg = config.services.caddy;
 
   vaultwarden = config.services.vaultwarden.config;
+  paperless = config.services.paperless-ng;
 
   secret = path: {
     file = path;
@@ -20,15 +21,30 @@ in
   age.secrets."cert/stx.li.key" = secret ../../secrets/cert/stx.li.key;
   age.secrets."cert/stx.li.pem" = secret ../../secrets/cert/stx.li.pem;
 
-  services.caddy = {
+  services.caddy =
+  let
+    common = ''
+      encode gzip zstd
+      log
+    '';
+
+    tls = url: ''
+      tls ${config.age.secrets."cert/${url}.pem".path} ${config.age.secrets."cert/${url}.key".path}
+    '';
+  in {
     enable = true;
 
     config = ''
       bw.stu-dev.me {
-        encode gzip zstd
-        log
-        tls ${config.age.secrets."cert/stu-dev.me.pem".path} ${config.age.secrets."cert/stu-dev.me.key".path}
+        ${common}
+        ${tls "stu-dev.me"}
         reverse_proxy ${vaultwarden.rocketAddress}:${toString vaultwarden.rocketPort}
+      }
+
+      d.stx.li {
+        ${common}
+        ${tls "stx.li"}
+        reverse_proxy ${paperless.address}:${toString paperless.port}
       }
     '';
   };

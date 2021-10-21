@@ -6,7 +6,6 @@
     ../../profiles/sshd.nix
 
     ./caddy.nix
-    ./blocky.nix
     ./vaultwarden.nix
     ./restic.nix
   ];

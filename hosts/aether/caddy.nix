@@ -22,32 +22,33 @@ in
   age.secrets."cert/stx.li.pem" = secret ../../secrets/cert/stx.li.pem;
 
   services.caddy =
-  let
-    common = ''
-      encode gzip zstd
-      log
-    '';
+    let
+      common = ''
+        encode gzip zstd
+        log
+      '';
 
-    tls = url: ''
-      tls ${config.age.secrets."cert/${url}.pem".path} ${config.age.secrets."cert/${url}.key".path}
-    '';
-  in {
-    enable = true;
+      tls = url: ''
+        tls ${config.age.secrets."cert/${url}.pem".path} ${config.age.secrets."cert/${url}.key".path}
+      '';
+    in
+    {
+      enable = true;
 
-    config = ''
-      bw.stu-dev.me {
-        ${common}
-        ${tls "stu-dev.me"}
-        reverse_proxy ${vaultwarden.rocketAddress}:${toString vaultwarden.rocketPort}
-      }
+      config = ''
+        bw.stu-dev.me {
+          ${common}
+          ${tls "stu-dev.me"}
+          reverse_proxy ${vaultwarden.rocketAddress}:${toString vaultwarden.rocketPort}
+        }
 
-      d.stx.li {
-        ${common}
-        ${tls "stx.li"}
-        reverse_proxy ${paperless.address}:${toString paperless.port}
-      }
-    '';
-  };
+        d.stx.li {
+          ${common}
+          ${tls "stx.li"}
+          reverse_proxy ${paperless.address}:${toString paperless.port}
+        }
+      '';
+    };
 
   # Open firewall for Caddy HTTPS port
   networking.firewall.allowedTCPPorts = [ 443 ];

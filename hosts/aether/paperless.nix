@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let cfg = config.services.paperless-ng;
-in {
+in
+{
   age.secrets.paperlessPassword = {
     file = ../../secrets/paperlessPassword;
     owner = cfg.user;

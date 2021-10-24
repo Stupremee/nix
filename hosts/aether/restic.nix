@@ -13,7 +13,6 @@
 
       paths = [
         "/var/lib/bitwarden_rs"
-        config.services.paperless-ng.dataDir
       ];
 
       # Perform daily backups

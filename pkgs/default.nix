@@ -11,8 +11,6 @@ final: prev: {
 
   comma = prev.callPackage ./comma { };
 
-  paperless-ng = prev.callPackage ./paperless-ng { };
-
   blocky = prev.callPackage ./blocky.nix {
     buildGoModule = prev.buildGoModule.override { go = prev.go_1_17; };
   };

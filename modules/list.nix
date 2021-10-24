@@ -2,6 +2,7 @@
 # in this flake
 [
   ./deploy.nix
+  ./age.nix
   ./environment/persist.nix
   ./services/blocky.nix
 ]

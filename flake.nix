@@ -37,7 +37,7 @@
 
       extraModules = [
         home.nixosModules.home-manager
-        agenix.nixosModules.age
+        # agenix.nixosModules.age
         impermanence.nixosModules.impermanence
       ];
 

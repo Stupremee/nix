@@ -25,9 +25,18 @@
   # Enable podman containers backend
   virtualisation = {
     containers.enable = true;
+    containers.storage.settings.storage = {
+      driver = "zfs";
+      graphroot = "/persist/var/lib/containers/storage";
+      runroot = "/run/containers/storage";
+    };
+
     oci-containers.backend = "podman";
 
-    podman.enable = true;
+    podman = {
+      enable = true;
+      extraPackages = [ pkgs.zfs ];
+    };
   };
 
   # Boot configuration

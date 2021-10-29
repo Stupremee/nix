@@ -47,6 +47,12 @@ in
           ${tls "stx.li"}
           reverse_proxy ${paperless.address}:${toString paperless.port}
         }
+
+        f.stx.li {
+          ${common}
+         ${tls "stx.li"}
+          reverse_proxy 127.0.0.1:8080
+        }
       '';
     };
 

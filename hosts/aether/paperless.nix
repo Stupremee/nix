@@ -25,27 +25,27 @@ in
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
       PAPERLESS_ADMIN_USER = "stu";
 
-      PAPERLESS_TIKA_ENABLED = true;
-      PAPERLESS_TIKA_ENDPOINT = "http://localhost:${tikaPort}";
-      PAPERLESS_TIKA_GOTENBERG_ENDPOINT = "http://localhost:${gotenbergPort}";
+      #PAPERLESS_TIKA_ENABLED = true;
+      #PAPERLESS_TIKA_ENDPOINT = "http://localhost:${tikaPort}";
+      #PAPERLESS_TIKA_GOTENBERG_ENDPOINT = "http://localhost:${gotenbergPort}";
     };
   };
 
-  virtualisation.oci-containers.containers.gotenberg = {
-    user = "gotenberg:gotenberg";
-    image = "thecodingmachine/gotenberg:6";
-    environment.DISABLE_GOOGLE_CHROME = "1";
+  #virtualisation.oci-containers.containers.gotenberg = {
+  #user = "gotenberg:gotenberg";
+  #image = "thecodingmachine/gotenberg:6";
+  #environment.DISABLE_GOOGLE_CHROME = "1";
 
-    ports = [
-      "127.0.0.1:${gotenbergPort}:3000"
-    ];
-  };
+  #ports = [
+  #"127.0.0.1:${gotenbergPort}:3000"
+  #];
+  #};
 
-  virtualisation.oci-containers.containers.tika = {
-    image = "apache/tika:2.1.0";
+  #virtualisation.oci-containers.containers.tika = {
+  #image = "apache/tika:2.1.0";
 
-    ports = [
-      "127.0.0.1:${tikaPort}:9998"
-    ];
-  };
+  #ports = [
+  #"127.0.0.1:${tikaPort}:9998"
+  #];
+  #};
 }

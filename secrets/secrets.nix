@@ -16,11 +16,14 @@ let
 in
 {
   "tryHackMe.ovpn".publicKeys = keysForSystem "nixius";
+  "esyon.ovpn".publicKeys = keysForSystem "nixius";
 
   "ssh.config".publicKeys = keysForSystem "nixius";
   "tailscale.key".publicKeys = keysForAll;
   "vaultwarden.ini".publicKeys = keysForSystem "aether";
   "paperlessPassword".publicKeys = keysForSystem "aether";
+  "initDatabase.sql".publicKeys = keysForSystem "aether";
+  "firefly.env".publicKeys = keysForSystem "aether";
 
   # Backup secrets
   "restic-important".publicKeys = keysForSystem "aether";

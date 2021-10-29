@@ -48,10 +48,12 @@
       telescope-nvim
 
       ## Language server
+      vim-vsnip
       nvim-lspconfig
       nvim-cmp
       cmp-nvim-lsp
       cmp-path
+      cmp-vsnip
 
       ## Extra language support
       rust-tools-nvim

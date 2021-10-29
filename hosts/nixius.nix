@@ -42,9 +42,14 @@
 
   # Enable OpenVPN and add configurations to it
   age.secrets.tryHackMe.file = ../secrets/tryHackMe.ovpn;
+  age.secrets.esyonVpn.file = ../secrets/esyon.ovpn;
   services.openvpn.servers = {
     tryHackMeVPN = {
       config = "config ${config.age.secrets.tryHackMe.path}";
+      autoStart = false;
+    };
+    esyon = {
+      config = "config ${config.age.secrets.esyonVpn.path}";
       autoStart = false;
     };
   };

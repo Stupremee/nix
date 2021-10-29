@@ -7,6 +7,8 @@ final: prev: {
 
   distant = prev.callPackage ./distant.nix { };
 
+  cocogitto = prev.callPackage ./cocogitto.nix { };
+
   nb = prev.callPackage ./nb.nix { };
 
   comma = prev.callPackage ./comma { };

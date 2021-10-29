@@ -28,5 +28,5 @@
     delta.enable = true;
   };
 
-  home.packages = with pkgs; [ gh ];
+  home.packages = with pkgs; [ gh cocogitto ];
 }

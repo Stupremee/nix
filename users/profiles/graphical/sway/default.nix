@@ -59,7 +59,7 @@ let
   '';
 
   profileExtra = ''
-    exec ${startSway}/bin/startsway
+    ${startSway}/bin/startsway
   '';
 in
 {

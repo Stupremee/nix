@@ -1,37 +1,33 @@
-{ config, pkgs, ... }:
-let
-  port = 22002;
-
-  sqlCfg = config.services.mysql;
-in
-{
+{ config, pkgs, ... }: {
   age.secrets.fireflyEnv.file = ../../secrets/firefly.env;
 
   virtualisation.oci-containers.containers.firefly = {
-    image = "fireflyiii/core:latest";
+    image = "fireflyiii/core:version-5.6.2";
     environmentFiles = [ config.age.secrets.fireflyEnv.path ];
     extraOptions = [ "--network" "host" ];
   };
 
   age.secrets.initDatabase = {
     file = ../../secrets/initDatabase.sql;
-    owner = sqlCfg.user;
-    group = sqlCfg.group;
+    owner = "postgres";
+    group = "postgres";
   };
 
-  services.mysql = {
+  services.postgresql = {
     enable = true;
-    package = pkgs.mariadb;
-    bind = "127.0.0.1";
     port = 22002;
-    dataDir = "/persist/var/lib/mysql";
+    enableTCPIP = false;
     initialScript = config.age.secrets.initDatabase.path;
   };
 
-  services.mysqlBackup = {
+  services.postgresqlBackup = {
     enable = true;
-    location = "/persist/var/backup/mysql";
-    calendar = "daily";
+    location = "/persist/var/backup/postgresql";
     databases = [ "firefly" ];
+    startAt = "*-*-* 01:15:00";
   };
+
+  environment.persist.directories = [
+    config.services.postgresql.dataDir
+  ];
 }

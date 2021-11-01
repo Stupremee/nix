@@ -91,7 +91,7 @@ in
 
       if command -v tmux &> /dev/null && [ "$TERMINAL" != "wezterm" ]
       then
-        if [ "$TMUX" = "" ]; then tmux; fi
+        if [[ "$TMUX" = "" && "$SSH_CONNECTION" = "" ]]; then tmux; fi
       fi
     '';
   };

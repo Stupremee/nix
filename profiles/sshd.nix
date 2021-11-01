@@ -5,7 +5,6 @@
     challengeResponseAuthentication = false;
     passwordAuthentication = false;
     forwardX11 = false;
+    permitRootLogin = "no";
   };
-
-  users.users.root.openssh.authorizedKeys.keys = pkgs.lib.flk.myKeys pkgs;
 }

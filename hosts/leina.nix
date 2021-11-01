@@ -15,6 +15,22 @@
   # Limit max jobs to 4, because the PC only has 4 CPUs
   nix.maxJobs = lib.mkDefault 4;
 
+  # Add Nixius workstation as remote builder
+  nix.buildMachines = [{
+    hostName = "nixius";
+    system = "x86_64-linux";
+    maxJobs = 16;
+    speedFactor = 2;
+    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+    mandatoryFeatures = [ ];
+  }];
+  nix.distributedBuilds = true;
+
+  # Optional, useful when the builder has a faster internet connection than yours
+  nix.extraOptions = ''
+    builders-use-substitutes = true
+  '';
+
   # Enable networking
   networking = {
     networkmanager.enable = true;

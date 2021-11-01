@@ -8,6 +8,11 @@
       ./profiles/graphical/gtk.nix
     ];
 
-    home.packages = with pkgs; [ spotify libreoffice firefox-wayland ];
+    home.packages = with pkgs; [
+      spotify
+      libreoffice
+      firefox-wayland
+      distant
+    ];
   };
 }

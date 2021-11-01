@@ -9,7 +9,7 @@
     ./vaultwarden.nix
     ./restic.nix
     ./paperless.nix
-    # ./firefly.nix
+    ./firefly.nix
   ];
 
   # Make aether available for deployment

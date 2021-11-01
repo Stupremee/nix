@@ -10,7 +10,7 @@ in
   virtualisation.oci-containers.containers.firefly = {
     image = "fireflyiii/core:latest";
     environmentFiles = [ config.age.secrets.fireflyEnv.path ];
-    extraOptions = [ "--network=host" ];
+    extraOptions = [ "--network" "host" ];
   };
 
   age.secrets.initDatabase = {

@@ -5,6 +5,8 @@
     imports = [
       ./profiles/graphical/bspwm
       ./profiles/graphical/alacritty
+
+      ./profiles/shell/tmux.nix
     ];
 
     home.packages = with pkgs; [

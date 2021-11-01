@@ -14,7 +14,6 @@
       ./profiles/shell/zsh
       ./profiles/shell/git.nix
       ./profiles/shell/pgp.nix
-      ./profiles/shell/tmux.nix
 
       ./profiles/editors/nvim
       ./profiles/editors/kakoune

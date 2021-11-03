@@ -58,7 +58,7 @@
           inherit nixosModules;
 
           nixosConfigurations = import ./hosts (recursiveUpdate inputs {
-            inherit pkgs extraModules system;
+            inherit pkgs extraModules system rust-overlay;
             inherit (pkgs) lib;
           });
 

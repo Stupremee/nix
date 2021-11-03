@@ -1,4 +1,14 @@
-{ self, lib, system, home, extraModules, pkgs, unstable, nixos, ... }:
+{ self
+, lib
+, system
+, home
+, extraModules
+, pkgs
+, unstable
+, nixos
+, rust-overlay
+, ...
+}:
 let
   inherit (builtins) attrValues;
   inherit (lib.flk) recImports recImport;
@@ -32,6 +42,7 @@ let
               unstable.flake = unstable;
               nixpkgs.flake = nixos;
               home-manager.flake = home;
+              rust.flake = rust-overlay;
             };
 
             system.configurationRevision = lib.mkIf (self ? rev) self.rev;

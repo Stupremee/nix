@@ -10,7 +10,7 @@ let
 
   systems = {
     nixius = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO00K3mafb7j76+ZhBVYUHMHiCIKAxW+rvB4Uye97/yx root@nixius";
-    aether = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF532AdmXssn/pqzhHTmmtRlS4nfO+iig3TTFuQNLdsm root@aether";
+    aether = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINEBk6IgHLPu7ST2HjugGHHFSlJSxUAA/d1AdDNx31lf root@aether";
     leina = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGo71eRsJruqzg2THB/reAql3wpkON0LxrZ43LmVGX root@localhost";
   };
 
@@ -23,7 +23,6 @@ in
   "esyon.ovpn".publicKeys = keysForSystem "nixius";
 
   "ssh.config".publicKeys = keysForSystems [ "nixius" "leina" ];
-  "tailscale.key".publicKeys = keysForAll;
   "vaultwarden.ini".publicKeys = keysForSystem "aether";
   "paperlessPassword".publicKeys = keysForSystem "aether";
   "initDatabase.sql".publicKeys = keysForSystem "aether";

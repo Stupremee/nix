@@ -21,6 +21,4 @@ in
       rocketPort = 9000;
     };
   };
-
-  # Make dataDir persistent
 }

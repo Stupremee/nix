@@ -2,7 +2,7 @@
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../profiles/network/networkmanager.nix
-    #../../profiles/network/tailscale.nix
+    ../../profiles/network/tailscale.nix
     ../../profiles/sshd.nix
 
     #./caddy.nix
@@ -14,8 +14,8 @@
   deploy.enable = true;
 
   # Enable impersistent state (erase your darlings)
-  networking.hostId = "95265be9";
-  environment.persist.erase = true;
+  networking.hostId = "41c80b61";
+  environment.persist.erase = false;
 
   # Disallow mutation of users at runtime
   users.mutableUsers = false;
@@ -26,7 +26,7 @@
     containers.enable = true;
     containers.storage.settings.storage = {
       driver = "zfs";
-      graphroot = "/persist/var/lib/containers/storage";
+      graphroot = "/var/lib/containers/storage";
       runroot = "/run/containers/storage";
     };
 

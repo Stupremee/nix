@@ -2,7 +2,7 @@
 
 # Script to install NixOS from the Hetzner Cloud NixOS bootable ISO image.
 #
-# curl -L https://raw.githubusercontent.com/Stupremee/nix/master/hosts/install-hetzner-cloud.sh | sudo bash <hostname>
+# curl -L https://raw.githubusercontent.com/Stupremee/nix/master/hosts/install-hetzner-cloud.sh | sudo bash -s <hostname>
 
 set -e
 
@@ -53,9 +53,6 @@ host_id="$(head -c4 /dev/urandom | od -A none -t x4 | tr -d ' ')"
 # Extend/override default `configuration.nix`:
 echo '
   boot.loader.grub.devices = [ "/dev/sda" ];
-  boot.initrd.postDeviceCommands = pkgs.lib.mkAfter '"''
-    zfs rollback -r rpool/local/root@blank
-  ''"';
 
   networking.hostId = "'"$host_id"'";
   networking.hostName = "'"$1"'";

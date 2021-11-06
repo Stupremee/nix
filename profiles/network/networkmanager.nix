@@ -22,8 +22,4 @@
       DNSOverTLS=yes
     '';
   };
-
-  environment.persist.directories = [
-    "/etc/NetworkManager/system-connections"
-  ];
 }

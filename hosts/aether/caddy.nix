@@ -5,7 +5,6 @@ let
   cfg = config.services.caddy;
 
   vaultwarden = config.services.vaultwarden.config;
-  paperless = config.services.paperless-ng;
 
   secret = path: {
     file = path;
@@ -41,26 +40,9 @@ in
           ${tls "stu-dev.me"}
           reverse_proxy ${vaultwarden.rocketAddress}:${toString vaultwarden.rocketPort}
         }
-
-        d.stx.li {
-          ${common}
-          ${tls "stx.li"}
-          reverse_proxy ${paperless.address}:${toString paperless.port}
-        }
-
-        f.stx.li {
-          ${common}
-         ${tls "stx.li"}
-          reverse_proxy 127.0.0.1:8080
-        }
       '';
     };
 
   # Open firewall for Caddy HTTPS port
   networking.firewall.allowedTCPPorts = [ 443 ];
-
-  # Make dataDir persistent
-  environment.persist.directories = [
-    cfg.dataDir
-  ];
 }

@@ -23,7 +23,4 @@ in
   };
 
   # Make dataDir persistent
-  environment.persist.directories = [
-    "/var/lib/bitwarden_rs"
-  ];
 }

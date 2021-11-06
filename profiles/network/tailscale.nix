@@ -9,9 +9,9 @@
   networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
 
   # Persist tailscale configuration
-  environment.persist.directories = [
-    "/var/lib/tailscale"
-  ];
+  #environment.persist.directories = [
+  #"/var/lib/tailscale"
+  #];
 
   # Auto connect to tailscale network
   systemd.services.tailscale-autoprovision = {

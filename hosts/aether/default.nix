@@ -2,14 +2,12 @@
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     ../../profiles/network/networkmanager.nix
-    ../../profiles/network/tailscale.nix
+    #../../profiles/network/tailscale.nix
     ../../profiles/sshd.nix
 
-    ./caddy.nix
-    ./vaultwarden.nix
-    ./restic.nix
-    ./paperless.nix
-    ./firefly.nix
+    #./caddy.nix
+    #./vaultwarden.nix
+    #./restic.nix
   ];
 
   # Make aether available for deployment

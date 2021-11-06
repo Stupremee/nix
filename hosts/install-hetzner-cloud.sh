@@ -2,7 +2,7 @@
 
 # Script to install NixOS from the Hetzner Cloud NixOS bootable ISO image.
 #
-# curl -L https://raw.githubusercontent.com/Stupremee/nix/master/hosts/install-hetzner-cloud.sh | sudo bash
+# curl -L https://raw.githubusercontent.com/Stupremee/nix/master/hosts/install-hetzner-cloud.sh | sudo bash <hostname>
 
 set -e
 
@@ -58,6 +58,7 @@ echo '
   ''"';
 
   networking.hostId = "'"$host_id"'";
+  networking.hostName = "'"$1"'";
 
   # Initial empty root password for easy login:
   users.users.root.initialHashedPassword = "";

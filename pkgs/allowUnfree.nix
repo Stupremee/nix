@@ -8,6 +8,9 @@
 
   "discord"
   "obsidian"
-
   "teams"
+
+  "steam"
+  "steam-original"
+  "steam-runtime"
 ]

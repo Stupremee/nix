@@ -18,6 +18,7 @@
       teams
       libreoffice
       signal-desktop
+      multimc
     ];
   };
 }

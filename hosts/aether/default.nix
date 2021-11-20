@@ -5,13 +5,32 @@
     ../../profiles/network/tailscale.nix
     ../../profiles/sshd.nix
 
-    #./caddy.nix
-    #./vaultwarden.nix
-    #./restic.nix
+    ./caddy.nix
+    ./restic.nix
   ];
 
   # Make aether available for deployment
   deploy.enable = true;
+
+  # Enable vaultwarden service
+  age.secrets.vaultwardenEnv = {
+    file = ../../secrets/vaultwarden.ini;
+    owner = "vaultwarden";
+    group = "vaultwarden";
+  };
+
+  services.vaultwarden = {
+    enable = true;
+
+    environmentFile = config.age.secrets.vaultwardenEnv.path;
+    config = {
+      domain = "https://bw.stu-dev.me";
+      signupsAllowed = false;
+
+      rocketAddress = "127.0.0.1";
+      rocketPort = 9000;
+    };
+  };
 
   # Enable impersistent state (erase your darlings)
   networking.hostId = "41c80b61";

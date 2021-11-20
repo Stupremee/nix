@@ -13,8 +13,6 @@
 
       paths = [
         "/var/lib/bitwarden_rs"
-        config.services.paperless-ng.dataDir
-        config.services.mysqlBackup.location
       ];
 
       # Perform daily backups

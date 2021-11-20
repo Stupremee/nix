@@ -27,6 +27,10 @@
   # Set 16 jobs
   nix.maxJobs = lib.mkDefault 16;
 
+  # Enable Steam
+  hardware.steam-hardware.enable = config.programs.steam.enable;
+  programs.steam.enable = true;
+
   # Hardware configuaration
   hardware = {
     enableAllFirmware = false;

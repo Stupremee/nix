@@ -7,6 +7,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
+    sharedModules = [ (import ./modules/programs/helix.nix) ];
   };
 
   home-manager.users.stu = {

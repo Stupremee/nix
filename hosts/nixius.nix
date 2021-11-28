@@ -44,6 +44,9 @@
   };
   services.fwupd.enable = true;
 
+  environment.systemPackages = [ pkgs.wootility-lekker ];
+  services.udev.packages = [ pkgs.wooting-udev-rules ];
+
   # Enable OpenVPN and add configurations to it
   age.secrets.tryHackMe.file = ../secrets/tryHackMe.ovpn;
   age.secrets.esyonVpn.file = ../secrets/esyon.ovpn;

@@ -7,6 +7,7 @@
       ./profiles/graphical/alacritty
 
       ./profiles/shell/tmux.nix
+      ./profiles/editors/helix.nix
     ];
 
     home.packages = with pkgs; [

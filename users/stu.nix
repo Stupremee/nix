@@ -20,6 +20,7 @@
       libreoffice
       signal-desktop
       multimc
+      ghidra
     ];
   };
 }

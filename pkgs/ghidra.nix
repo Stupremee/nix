@@ -3,7 +3,7 @@
 , lib
 , makeWrapper
 , autoPatchelfHook
-, openjdk11
+, adoptopenjdk-hotspot-bin-16
 , pam
 , makeDesktopItem
 , icoutils
@@ -62,6 +62,6 @@ stdenv.mkDerivation rec {
   postFixup = ''
     mkdir -p "$out/bin"
     makeWrapper "${pkg_path}/ghidraRun" "$out/bin/ghidra" \
-      --prefix PATH : ${lib.makeBinPath [ openjdk11 ]}
+      --prefix PATH : ${lib.makeBinPath [ adoptopenjdk-hotspot-bin-16 ]}
   '';
 }

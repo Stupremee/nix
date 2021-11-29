@@ -4,12 +4,9 @@
     extraPackages = with pkgs; [
       curl
 
-      # Formatting tools
-      nixpkgs-fmt
-
       # Language servers
       rust-analyzer
-      zls
+      rnix-lsp
 
       # Required for building tree-sitter grammars
       tree-sitter
@@ -29,11 +26,8 @@
       nord-nvim
 
       ### Utilities
-      vim-sneak
       nerdcommenter
-      neoformat
       vim-eunuch
-      presence-nvim
       neoterm
       gitsigns-nvim
       editorconfig-vim
@@ -60,12 +54,14 @@
     ];
 
     extraConfig = ''
-      lua require("core")
+      lua << EOF
+        ${builtins.readFile ./init.lua}
+      EOF
     '';
   };
 
   # Link lua directory into nvim config directory
-  xdg.configFile."nvim/lua".source = ./lua;
+  # xdg.configFile."nvim/lua".source = ./lua;
 
   home.sessionVariables.EDITOR = "nvim";
   home.sessionVariables.MANPAGER = "nvim +Man!";

@@ -135,7 +135,8 @@ end
 if exists("nvim-treesitter.configs") then
   require("nvim-treesitter.configs").setup {
     highlight = { enable = true },
-    indent = { enable = true }
+    -- treesiter indention is broken af
+    indent = { enable = false }
   }
 end
 

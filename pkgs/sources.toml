@@ -1,1 +1,4 @@
 # nvfetcher.toml
+[neovim]
+src.github_tag = "neovim/neovim"
+fetch.github = "neovim/neovim"

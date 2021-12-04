@@ -110,10 +110,12 @@
           };
           importables = rec {
             profiles = digga.lib.rakeLeaves ./profiles // {
+              nixos-hardware = nixos-hardware.nixosModules;
               users = digga.lib.rakeLeaves ./users;
             };
             suites = with profiles; rec {
-              base = [ core users.nixos users.root ];
+              base = [ core users.nixos users.root network.networkmanager network.tailscale ];
+              server = [ network.ssh ];
             };
           };
         };
@@ -136,7 +138,11 @@
 
         homeConfigurations = digga.lib.mkHomeConfigurations self.nixosConfigurations;
 
-        deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations { };
+        deploy.nodes = digga.lib.mkDeployNodes self.nixosConfigurations {
+          fiber = {
+            sshUser = "root";
+          };
+        };
 
         defaultTemplate = self.templates.bud;
         templates.bud.path = ./.;

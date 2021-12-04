@@ -17,7 +17,7 @@ symbol = " "
 style = "cyan"
 read_only = " 🔒"
 
-[docker]
+[docker_context]
 symbol = " "
 
 [elixir]
@@ -48,9 +48,6 @@ style = "bold bright-white"
 [golang]
 symbol = " "
 
-[haskell]
-symbol = " "
-
 [hg_branch]
 symbol = " "
 
@@ -59,10 +56,6 @@ symbol = " "
 
 [julia]
 symbol = " "
-
-[memory_usage]
-symbol = " "
-disabled = false
 
 [nim]
 symbol = " "

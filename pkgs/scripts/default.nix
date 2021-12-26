@@ -7,6 +7,7 @@
   # canoncam
 , gphoto2
 , ffmpeg
+, coreutils
 }:
 let
   inherit (builtins) filterSource baseNameOf;
@@ -14,7 +15,7 @@ let
 
   # List of dependencie that are availabe
   # in the scripts execution environment
-  deps = [ gphoto2 ffmpeg ];
+  deps = [ gphoto2 ffmpeg coreutils ];
 in
 stdenv.mkDerivation {
   name = "scripts";

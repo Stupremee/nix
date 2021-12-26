@@ -62,6 +62,10 @@
 
   # Link lua directory into nvim config directory
   # xdg.configFile."nvim/lua".source = ./lua;
+  xdg.configFile."nvim/after/ftplugin/nix.vim".text = ''
+    setlocal tabstop=2
+    setlocal shiftwidth=2
+  '';
 
   home.sessionVariables.EDITOR = "nvim";
   home.sessionVariables.MANPAGER = "nvim +Man!";

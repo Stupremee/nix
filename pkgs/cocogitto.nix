@@ -1,15 +1,22 @@
 { lib, rustPlatform, fetchFromGitHub }:
 rustPlatform.buildRustPackage rec {
   pname = "cocogitto";
-  version = "3.0.0";
+  version = "4.0.1";
 
   src = fetchFromGitHub {
     owner = "oknozor";
     repo = "cocogitto";
-    rev = "81ad8446ac018caff94ef4369c8049b30c012b6e";
-    sha256 = "sha256-CVNG/94bLTCVHJF7qjdxrrobZ6fQSyWk+yLKDROp3TI=";
+    rev = "${version}";
+    sha256 = "sha256-uSKzHo1lEBiXsi1rOKvfD2zVlkAUVZ5k0y8iiTXYE2A=";
   };
 
+  postInstall = ''
+    mkdir -p $out/share/zsh/site-functions
+
+    $out/bin/cog generate-completions zsh > $out/share/zsh/site-functions/_cog
+    $out/bin/coco --completion zsh > $out/share/zsh/site-functions/_coco
+  '';
+
   doCheck = false;
-  cargoSha256 = "sha256-L423cgvQd8EMrJCOLG/fnyZQ1+8/n0oXq8so5CT7YsI=";
+  cargoSha256 = "sha256-gss3+XXyM//zER3gnN9qemIWaVDfs/f4gljmukMxoq0=";
 }

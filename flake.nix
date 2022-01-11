@@ -14,6 +14,8 @@
     nixpkgs-wayland.url = "github:nix-community/nixpkgs-wayland";
     agenix.url = "github:ryantm/agenix";
     deploy-rs.url = "github:serokell/deploy-rs";
+
+    mail-server.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
   };
 
   outputs =
@@ -28,6 +30,7 @@
     , rust-overlay
     , impermanence
     , deploy-rs
+    , mail-server
     }:
     let
       inherit (self.lib) nixosModules importPaths overlayPaths importPkgs;
@@ -39,6 +42,7 @@
         home.nixosModules.home-manager
         # agenix.nixosModules.age
         impermanence.nixosModules.impermanence
+        mail-server.nixosModules.mailserver
       ];
 
       extraOverlays = [

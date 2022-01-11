@@ -5,8 +5,9 @@
     ../../profiles/network/tailscale.nix
     ../../profiles/sshd.nix
 
-    ./caddy.nix
+    ./nginx.nix
     ./restic.nix
+    ./mail.nix
   ];
 
   # Make aether available for deployment
@@ -53,6 +54,7 @@
 
     podman = {
       enable = true;
+      dockerSocket.enable = true;
       extraPackages = [ pkgs.zfs ];
     };
   };

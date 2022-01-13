@@ -14,12 +14,9 @@
       firefox-bin
       spotify
       discord
-      distant
-      obsidian
       teams
       libreoffice
       signal-desktop
-      multimc
       ghidra
     ];
   };

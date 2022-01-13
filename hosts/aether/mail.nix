@@ -4,6 +4,7 @@ let
 
   mails = [
     "mail@stu-dev.me"
+    "csgo@stu-dev.me"
   ];
 
   passwordSecrets = listToAttrs (map
@@ -53,14 +54,6 @@ in
   services.roundcube = {
     enable = true;
     hostName = "webmail.stu-dev.me";
-    extraConfig = ''
-      $rcmail_config['default_host'] = 'imap://mail.stu-dev.me';
-      $rcmail_config['default_port'] = 143;
-      $rcmail_config['smtp_server'] = 'ssl://mail.stu-dev.me'; 
-      $rcmail_config['smtp_port'] = 465;
-      $rcmail_config['smtp_user'] = ;
-      $rcmail_config['smtp_pass'] = ;
-    '';
   };
 
   services.nginx.virtualHosts."webmail.stu-dev.me" = {

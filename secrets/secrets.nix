@@ -40,5 +40,6 @@ in
   "cert/stx.li.pem".publicKeys = keysForSystem "aether";
 
   "mails/mail@stu-dev.me".publicKeys = keysForSystem "aether";
+  "mails/csgo@stu-dev.me".publicKeys = keysForSystem "aether";
 }
 

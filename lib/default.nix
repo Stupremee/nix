@@ -71,6 +71,6 @@ rec {
   myKeys = pkgs: keysFromGithub {
     inherit pkgs;
     username = "Stupremee";
-    sha256 = "sha256-QXJfmJjokI1rTHD7xK5Q+vQ6IeWZ9SrjM7uTnMoe/Iw=";
+    sha256 = "sha256-R0RIEflgbw4gDlWE8S+04TaetcMkgLlLvX0cH26LAEU=";
   };
 }

@@ -7,11 +7,12 @@
       # Language servers
       rust-analyzer
       rnix-lsp
+      python310Packages.python-lsp-server
 
       # Required for building tree-sitter grammars
       tree-sitter
       nodejs
-      python3
+      python310
       gnumake
       gcc
       binutils

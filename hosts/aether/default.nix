@@ -7,7 +7,6 @@
 
     ./nginx.nix
     ./restic.nix
-    ./mail.nix
   ];
 
   # Make aether available for deployment
@@ -32,6 +31,35 @@
       rocketPort = 9000;
     };
   };
+
+  # Gitea
+  services.gitea = {
+    enable = true;
+    domain = "g.stx.li";
+    rootUrl = "https://g.stx.li";
+
+    user = "git";
+    database.user = "git";
+
+    ssh.enable = true;
+    lfs.enable = true;
+    dump.enable = true;
+    httpPort = 22001;
+
+    disableRegistration = true;
+    cookieSecure = true;
+    appName = "Stu's private Git";
+  };
+
+  users.users.git = {
+    description = "Gitea Service";
+    home = config.services.gitea.stateDir;
+    useDefaultShell = true;
+    group = "git";
+    isSystemUser = true;
+  };
+
+  users.groups.git = { };
 
   # Enable impersistent state (erase your darlings)
   networking.hostId = "41c80b61";

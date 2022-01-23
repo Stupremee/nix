@@ -69,27 +69,32 @@ in
 
     virtualHosts =
       let
-        base = locations: {
+        base = cert: locations: {
           inherit locations;
 
           onlySSL = true;
 
-          sslCertificate = config.age.secrets."cert/stu-dev.me.pem".path;
-          sslCertificateKey = config.age.secrets."cert/stu-dev.me.key".path;
+          sslCertificate = config.age.secrets."cert/${cert}.pem".path;
+          sslCertificateKey = config.age.secrets."cert/${cert}.key".path;
         };
 
-        proxy = port: base {
+        proxy = cert: port: base cert {
           "/".proxyPass = "http://127.0.0.1:" + toString (port) + "/";
         };
       in
       {
-        "stu-dev.me" = base { } // {
+        "stu-dev.me" = (base "stu-dev.me" { }) // {
           extraConfig = "return 404;";
           default = true;
         };
 
-        "bw.stu-dev.me" = proxy vaultwarden.rocketPort;
-        "t.stu-dev.me" = proxy 22000;
+        "bw.stu-dev.me" = proxy "stu-dev.me" vaultwarden.rocketPort;
+        "t.stu-dev.me" = proxy "stu-dev.me" 22000;
+
+        "stx.li" = (base "stx.li" { }) // {
+          extraConfig = "return 404;";
+        };
+        "g.stx.li" = proxy "stx.li" 22001;
       };
   };
 

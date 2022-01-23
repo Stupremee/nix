@@ -197,4 +197,5 @@ if exists("lspconfig") then
   local nvim_lsp = require("lspconfig")
 
   nvim_lsp.rnix.setup{}
+  nvim_lsp.pylsp.setup{}
 end

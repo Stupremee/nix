@@ -45,28 +45,13 @@
   services.fwupd.enable = true;
 
   environment.systemPackages = [ pkgs.wootility-lekker ];
-  services.udev.packages = [ pkgs.wooting-udev-rules ];
-  services.udev.extraRules = ''
-    # nRF52840 Dongle in bootloader mode
-    ATTRS{idVendor}=="1915", ATTRS{idProduct}=="521f", TAG+="uaccess"
-
-    # nRF52840 Dongle applications
-    ATTRS{idVendor}=="2020", TAG+="uaccess"
-
-    # nRF52840 Development Kit
-    ATTRS{idVendor}=="1366", ENV{ID_MM_DEVICE_IGNORE}="1", TAG+="uaccess"
-  '';
+  services.udev.packages = [ pkgs.custom-udev-rules ];
 
   # Enable OpenVPN and add configurations to it
   age.secrets.tryHackMe.file = ../secrets/tryHackMe.ovpn;
-  age.secrets.esyonVpn.file = ../secrets/esyon.ovpn;
   services.openvpn.servers = {
     tryHackMeVPN = {
       config = "config ${config.age.secrets.tryHackMe.path}";
-      autoStart = false;
-    };
-    esyon = {
-      config = "config ${config.age.secrets.esyonVpn.path}";
       autoStart = false;
     };
   };

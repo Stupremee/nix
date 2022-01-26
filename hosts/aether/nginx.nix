@@ -29,14 +29,6 @@ in
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
-    #virtualHosts."bw.stu-dev.me" = {
-    #onlySSL = true;
-
-    #locations."/" = {
-    #proxyPass = "http://${vaultwarden.rocketAddress}:${toString vaultwarden.rocketPort}";
-    #};
-    #};
-
     sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
 
     commonHttpConfig = ''
@@ -95,6 +87,7 @@ in
           extraConfig = "return 404;";
         };
         "g.stx.li" = proxy "stx.li" 22001;
+        #"a.stx.li" = proxy "stx.li" 8089;
       };
   };
 

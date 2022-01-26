@@ -2,7 +2,7 @@
 { pkgs, ... }: {
   services.openssh = {
     enable = true;
-    challengeResponseAuthentication = false;
+    kbdInteractiveAuthentication = false;
     passwordAuthentication = false;
     forwardX11 = false;
     permitRootLogin = "prohibit-password";

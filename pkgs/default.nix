@@ -1,7 +1,7 @@
 final: prev: {
   vimPlugins = prev.vimPlugins // (prev.recurseIntoAttrs (prev.callPackage ./vimPlugins.nix { }));
 
-  wooting-udev-rules = prev.callPackage ./wooting-udev-rules.nix { };
+  custom-udev-rules = prev.callPackage ./udev-rules { };
 
   wootility-lekker = prev.callPackage ./wootility.nix { };
 

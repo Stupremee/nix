@@ -20,13 +20,10 @@ let
 in
 {
   "tryHackMe.ovpn".publicKeys = keysForSystem "nixius";
-  "esyon.ovpn".publicKeys = keysForSystem "nixius";
 
   "ssh.config".publicKeys = keysForSystems [ "nixius" "leina" ];
   "vaultwarden.ini".publicKeys = keysForSystem "aether";
-  "paperlessPassword".publicKeys = keysForSystem "aether";
-  "initDatabase.sql".publicKeys = keysForSystem "aether";
-  "firefly.env".publicKeys = keysForSystem "aether";
+  "keycloakDatabasePassword".publicKeys = keysForSystem "aether";
 
   # Backup secrets
   "restic-important".publicKeys = keysForSystem "aether";
@@ -38,8 +35,5 @@ in
 
   "cert/stx.li.key".publicKeys = keysForSystem "aether";
   "cert/stx.li.pem".publicKeys = keysForSystem "aether";
-
-  "mails/mail@stu-dev.me".publicKeys = keysForSystem "aether";
-  "mails/csgo@stu-dev.me".publicKeys = keysForSystem "aether";
 }
 

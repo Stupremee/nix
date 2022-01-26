@@ -32,6 +32,40 @@
     };
   };
 
+  # Keycloak
+  #age.secrets.keycloakPassword = {
+  #file = ../../secrets/keycloakDatabasePassword;
+  #owner = "postgres";
+  #group = "keycloak";
+  #};
+
+  #services.keycloak = {
+  #enable = true;
+  #package = (pkgs.keycloak.override {
+  #jre = pkgs.openjdk11;
+  #});
+  #bindAddress = "127.0.0.1";
+  #httpPort = "8089";
+  #forceBackendUrlToFrontendUrl = true;
+  #frontendUrl = "https://a.stx.li/auth";
+  #database.passwordFile = config.age.secrets.keycloakPassword.path;
+  #extraConfig = {
+  #"subsystem=undertow" = {
+  #"server=default-server" = {
+  #"http-listener=default" = {
+  #"proxy-address-forwarding" = true;
+  #};
+  #};
+  #};
+  #};
+  #};
+
+  #users.groups.keycloak = { };
+  #users.users.keycloak = {
+  #isSystemUser = true;
+  #group = "keycloak";
+  #};
+
   # Gitea
   services.gitea = {
     enable = true;
@@ -49,6 +83,8 @@
     disableRegistration = true;
     cookieSecure = true;
     appName = "Stu's private Git";
+
+    settings.server.SSH_DOMAIN = "c.g.stx.li";
   };
 
   users.users.git = {
@@ -139,3 +175,4 @@
 
   swapDevices = [ ];
 }
+

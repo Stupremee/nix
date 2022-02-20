@@ -91,8 +91,11 @@ vim.cmd [[ au TextYankPost * lua vim.highlight.on_yank {on_visual = false} ]]
 -- Auto format on save
 vim.cmd [[ autocmd BufWritePre * lua vim.lsp.buf.formatting_sync() ]]
 
+-- Set zig filetype
+vim.cmd [[ autocmd BufRead,BufNewFile *.zig set filetype=zig ]]
+
 -- Show diagnostic popup on cursor hold
-vim.cmd [[ autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics() ]]
+-- vim.cmd [[ autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics() ]]
 
 --
 -- Keybind mappings

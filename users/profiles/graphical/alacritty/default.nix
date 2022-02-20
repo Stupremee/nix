@@ -36,7 +36,7 @@ in
         };
       };
 
-      background_opacity = 1;
+      window.opacity = 1;
       cursor.style = "Block";
       cursor.vi_mode_style = "Block";
 

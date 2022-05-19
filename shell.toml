@@ -1,0 +1,19 @@
+imports = [
+  "git.hooks"
+]
+
+[devshell]
+packages = [
+  "nixpkgs-fmt"
+]
+
+[[commands]]
+package = "treefmt"
+
+[git.hooks]
+enable = true
+pre-commit.text = """\
+set -euo pipefail
+
+treefmt --fail-on-change
+"""

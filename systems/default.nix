@@ -2,6 +2,7 @@
 let
   coreModules = [
     ../nixos/nix-daemon.nix
+    ../nixos/users.nix
     ../nixos/network/sshd.nix
     ../nixos/network/networkmanager.nix
 

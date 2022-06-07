@@ -6,6 +6,8 @@ let
   ];
 in
 {
+  users.mutableUsers = false;
+
   users.users = {
     stu = {
       isNormalUser = true;
@@ -16,7 +18,9 @@ in
       openssh.authorizedKeys.keys = keys;
     };
 
-    root.openssh.authorizedKeys.keys = keys;
+    root = {
+      openssh.authorizedKeys.keys = keys;
+    };
   };
 
   boot.initrd.network.ssh.authorizedKeys = keys;

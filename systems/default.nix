@@ -5,8 +5,9 @@ let
     ../nixos/users.nix
     ../nixos/network/sshd.nix
     ../nixos/network/networkmanager.nix
+    ../nixos/network/tailscale.nix
 
-    ../nixos/erase-darlings.nix
+    ../nixos/modules/erase-darlings.nix
   ];
 
   mkSystem = { system, modules }: inputs.nixpkgs.lib.nixosSystem {

@@ -9,6 +9,10 @@
 
   modules.deploy.enable = true;
 
+  # Set timezone and locale
+  i18n.defaultLocale = "en_US.UTF-8";
+  time.timeZone = "Europe/Berlin";
+
   # Erase `/` on every boot
   modules.eraseDarlings.enable = true;
   modules.eraseDarlings.machineId = "0976479ac02a6a7e51216d6e347729de";

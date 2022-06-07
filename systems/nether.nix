@@ -7,6 +7,8 @@
   networking.hostName = "nether";
   networking.hostId = "833697eb";
 
+  modules.deploy.enable = true;
+
   # Erase `/` on every boot
   modules.eraseDarlings.enable = true;
   modules.eraseDarlings.machineId = "0976479ac02a6a7e51216d6e347729de";

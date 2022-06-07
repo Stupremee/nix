@@ -5,6 +5,9 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -12,35 +15,14 @@
     , nixpkgs
     , unstable
     , flake-parts
+    , deploy-rs
     }: flake-parts.lib.mkFlake { inherit self; } {
       imports = [
         ./shell.nix
         ./systems
+        ./nixos/deploy.nix
       ];
 
       systems = [ "x86_64-linux" "aarch64-darwin" ];
     };
-  #let
-  #importPkgs = pkgs: overlays: system:
-  #import pkgs {
-  #inherit system overlays;
-
-  #config = {
-  #allowUnfree = false;
-  #allowUnfreePredicate = pkg: builtins.elem (nixos.lib.getName pkg) (import ../pkgs/allowUnfree.nix);
-  #};
-  #};
-  #in
-  #{ } // flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-darwin" ] (system:
-  #let
-  #pkgs = importPkgs unstable [ devshell.overlay ] system;
-  #in
-  #{
-  ## devshell configuration on each system
-  #devShell = pkgs.devshell.mkShell {
-  #name = "flk";
-  #imports = [ (pkgs.devshell.importTOML ./shell.toml) ];
-  #};
-  #}
-  #);
 }

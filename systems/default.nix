@@ -8,6 +8,7 @@ let
     ../nixos/network/tailscale.nix
 
     ../nixos/modules/erase-darlings.nix
+    ../nixos/modules/deploy.nix
   ];
 
   mkSystem = { system, modules }: inputs.nixpkgs.lib.nixosSystem {

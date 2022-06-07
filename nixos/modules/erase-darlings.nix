@@ -57,6 +57,8 @@ in
 
     systemd.tmpfiles.rules = [
       "L+ /etc/nixos - - - - ${toString cfg.persistDir}/etc/nixos"
-    ];
+    ] ++ (lib.lists.optionals config.services.tailscale.enable [
+      "L+ /var/lib/tailscale - - - - ${toString cfg.persistDir}/var/lib/tailscale"
+    ]);
   };
 }

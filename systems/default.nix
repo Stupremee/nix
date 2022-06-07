@@ -30,6 +30,7 @@ in
         ./nether.nix
         ../nixos/paperless.nix
         ../nixos/nginx.nix
+        ../nixos/containers.nix
       ];
     };
   };

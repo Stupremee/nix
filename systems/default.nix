@@ -9,11 +9,17 @@ let
 
     ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix
+
+    inputs.agenix.nixosModule
   ];
 
   mkSystem = { system, modules }: inputs.nixpkgs.lib.nixosSystem {
     inherit system;
-    modules = coreModules ++ modules;
+    modules = [
+      {
+        _module.args.unstable-pkgs = inputs.unstable.legacyPackages."${system}";
+      }
+    ] ++ coreModules ++ modules;
   };
 in
 {
@@ -22,6 +28,8 @@ in
       system = "x86_64-linux";
       modules = [
         ./nether.nix
+        ../nixos/paperless.nix
+        ../nixos/nginx.nix
       ];
     };
   };

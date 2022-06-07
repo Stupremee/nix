@@ -8,6 +8,9 @@
 
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -16,6 +19,7 @@
     , unstable
     , flake-parts
     , deploy-rs
+    , agenix
     }: flake-parts.lib.mkFlake { inherit self; } {
       imports = [
         ./shell.nix

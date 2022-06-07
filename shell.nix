@@ -8,6 +8,8 @@
         nixpkgs-fmt
 
         inputs'.deploy-rs.packages.deploy-rs
+        inputs'.agenix.packages.agenix
+        age-plugin-yubikey
       ];
     };
   };

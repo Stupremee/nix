@@ -60,5 +60,7 @@ in
     ] ++ (lib.lists.optionals config.services.tailscale.enable [
       "L+ /var/lib/tailscale - - - - ${toString cfg.persistDir}/var/lib/tailscale"
     ]);
+
+    services.paperless.dataDir = "${toString cfg.persistDir}/var/lib/paperless";
   };
 }

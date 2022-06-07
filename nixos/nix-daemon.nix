@@ -1,6 +1,10 @@
 # Module for configuring the nix-daemon
 { ... }: {
   nix = {
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+
     allowedUsers = [ "@wheel" ];
     trustedUsers = [ "root" "@wheel" ];
 

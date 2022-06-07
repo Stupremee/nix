@@ -16,6 +16,8 @@ in
   "cert/stu-dev.me.key".publicKeys = keysForSystem "nether";
   "cert/stu-dev.me.pem".publicKeys = keysForSystem "nether";
 
-
   "password/paperless".publicKeys = keysForSystem "nether";
+  "password/restic".publicKeys = keysForSystem "nether";
+
+  "rclone.conf".publicKeys = keysForSystem "nether";
 }

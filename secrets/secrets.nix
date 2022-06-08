@@ -20,4 +20,5 @@ in
   "password/restic".publicKeys = keysForSystem "nether";
 
   "rclone.conf".publicKeys = keysForSystem "nether";
+  "vaultwarden.env".publicKeys = keysForSystem "nether";
 }

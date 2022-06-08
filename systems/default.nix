@@ -10,6 +10,7 @@ let
     ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix
     ../nixos/modules/tailscale.nix
+    ../nixos/modules/vaultwarden.nix
 
     inputs.agenix.nixosModule
   ];
@@ -32,6 +33,8 @@ in
         ../nixos/paperless.nix
         ../nixos/nginx.nix
         ../nixos/containers.nix
+        ../nixos/postgres.nix
+        ../nixos/vaultwarden.nix
       ];
     };
   };

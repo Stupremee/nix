@@ -60,5 +60,6 @@ in
     ];
 
     services.paperless.dataDir = "${toString cfg.persistDir}/var/lib/paperless";
+    modules.vaultwarden.dataDir = "${toString cfg.persistDir}/var/lib/vaultwarden";
   };
 }

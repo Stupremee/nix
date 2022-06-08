@@ -13,7 +13,6 @@ in
       isNormalUser = true;
       home = "/home/stu";
       extraGroups = [ "wheel" ];
-      shell = "/run/current-system/sw/bin/zsh";
       uid = 1000;
       openssh.authorizedKeys.keys = keys;
     };

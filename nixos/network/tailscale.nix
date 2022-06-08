@@ -1,10 +1,10 @@
 { config, ... }: {
   # Enable tailscale VPN
-  services.tailscale.enable = true;
+  modules.tailscale.enable = true;
 
   # Trust the tailscale0 interface
-  networking.firewall.trustedInterfaces = [ config.services.tailscale.interfaceName ];
-  networking.firewall.allowedUDPPorts = [ config.services.tailscale.port ];
+  networking.firewall.trustedInterfaces = [ config.modules.tailscale.interfaceName ];
+  networking.firewall.allowedUDPPorts = [ config.modules.tailscale.port ];
 
   # Required for exit node routing to work
   networking.firewall.checkReversePath = "loose";

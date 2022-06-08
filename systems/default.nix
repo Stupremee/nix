@@ -9,6 +9,7 @@ let
 
     ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix
+    ../nixos/modules/tailscale.nix
 
     inputs.agenix.nixosModule
   ];

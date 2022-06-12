@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 let
   dataDir =
     if config.modules.eraseDarlings.enable
@@ -12,21 +12,44 @@ in
     inherit dataDir;
   };
 
-  systemd.services.postgresql-create-directory = lib.mkIf config.modules.eraseDarlings.enable {
-    description = "PostgreSQL setup for creating it's home directory";
+  systemd.tmpfiles.rules = lib.optionals config.modules.eraseDarlings.enable [
+    "d '${dataDir}' 0750 postgres postgres - -"
+  ];
 
-    before = [ "postgresql.target" ];
-    wantedBy = [ "multi-user.target" "postgresql.target" ];
-    after = [ "network.target" ];
+  modules.backups.postgresql =
+    let
+      inherit (builtins) attrValues;
 
-    environment.PGDATA = dataDir;
+      compressSuffix = ".zstd";
+      compressCmd = "${pkgs.zstd}/bin/zstd -c";
 
-    script = ''
-      mkdir -p ${dataDir}
-      chown postgres:postgres ${dataDir}
-      chmod 0750 ${dataDir}
-    '';
+      baseDir = "/tmp/postgres-backup";
 
-    serviceConfig.Type = "oneshot";
-  };
+      mkSqlPath = prefix: suffix: "/${baseDir}/all${prefix}.sql${suffix}";
+      curFile = mkSqlPath "" compressSuffix;
+      prevFile = mkSqlPath ".prev" compressSuffix;
+      inProgressFile = mkSqlPath ".in-progress" compressSuffix;
+    in
+    {
+      dynamicFilesFrom = ''
+        set -e -o pipefail
+
+        mkdir -p ${baseDir}
+
+        umask 0077 # ensure backup is only readable by postgres user
+
+        if [ -e ${curFile} ]; then
+          rm -f ${prevFile}
+          mv ${curFile} ${prevFile}
+        fi
+
+        ${config.security.sudo.package}/bin/sudo -u postgres ${config.services.postgresql.package}/bin/pg_dumpall \
+          | ${compressCmd} \
+          > ${inProgressFile}
+
+        mv ${inProgressFile} ${curFile}
+
+        echo ${curFile}
+      '';
+    };
 }

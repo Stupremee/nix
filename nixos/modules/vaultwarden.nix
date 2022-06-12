@@ -157,20 +157,9 @@ in
       wantedBy = [ "multi-user.target" ];
     };
 
-    systemd.services.vaultwarden-create-directory = lib.mkIf config.modules.eraseDarlings.enable {
-      description = "Vaultwarden setup for creating it's home directory";
-
-      before = [ "vaultwarden.target" ];
-      wantedBy = [ "multi-user.target" "vaultwarden.target" ];
-
-      script = ''
-        mkdir -p ${cfg.dataDir}
-        chown ${user}:${group} ${cfg.dataDir}
-        chmod 0750 ${cfg.dataDir}
-      '';
-
-      serviceConfig.Type = "oneshot";
-    };
+    systemd.tmpfiles.rules = lib.optionals config.modules.eraseDarlings.enable [
+      "d '${cfg.dataDir}' 0750 ${user} ${group} - -"
+    ];
 
     systemd.services.backup-vaultwarden = mkIf (cfg.backupDir != null) {
       description = "Backup vaultwarden";

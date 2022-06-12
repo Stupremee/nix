@@ -26,8 +26,13 @@ in
     };
   };
 
+  modules.backups.vaultwarden.paths = [
+    config.modules.vaultwarden.dataDir
+    config.age.secrets.vaultwardenEnv.path
+  ];
+
   services.nginx.virtualHosts = {
-    "pw.stu-dev.me" = {
+    "bw.stu-dev.me" = {
       locations."/".proxyPass = "http://127.0.0.1:${builtins.toString cfg.config.rocketPort}";
 
       onlySSL = true;

@@ -5,8 +5,6 @@ let
 in
 {
   age.secrets.paperlessPassword.file = ../secrets/password/paperless;
-  age.secrets.resticPassword.file = ../secrets/password/restic;
-  age.secrets.rcloneConf.file = ../secrets/rclone.conf;
 
   services.paperless = {
     enable = true;
@@ -24,28 +22,15 @@ in
     };
   };
 
-  services.restic.backups.paperless = {
-    repository = "rclone:gdrive:/Backups/paperless";
-    initialize = true;
-
-    passwordFile = config.age.secrets.resticPassword.path;
-    rcloneConfigFile = config.age.secrets.rcloneConf.path;
-
-    dynamicFilesFrom =
-      let
-        path = config.services.paperless.dataDir;
-      in
-      ''
-        mkdir -p ${path}/exported
-        ${path}/paperless-manage document_exporter ${path}/exported
-        echo ${path}/exported/
-      '';
-
-    # Perform daily backups
-    timerConfig = {
-      OnCalendar = "daily";
-    };
-  };
+  modules.backups.paperless.dynamicFilesFrom =
+    let
+      path = config.services.paperless.dataDir;
+    in
+    ''
+      mkdir -p ${path}/exported
+      ${path}/paperless-manage document_exporter ${path}/exported
+      echo ${path}/exported/
+    '';
 
   services.nginx.virtualHosts = {
     "docs.stu-dev.me" = {

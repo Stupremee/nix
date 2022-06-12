@@ -11,6 +11,7 @@ let
     ../nixos/modules/deploy.nix
     ../nixos/modules/tailscale.nix
     ../nixos/modules/vaultwarden.nix
+    ../nixos/modules/backup.nix
 
     inputs.agenix.nixosModule
   ];

@@ -33,7 +33,6 @@
   networking = {
     useDHCP = false;
 
-    useNetworkd = true;
     interfaces.enp1s0 = {
       useDHCP = true;
 
@@ -43,7 +42,10 @@
       }];
     };
 
-    defaultGateway6 = "fe80::1";
+    defaultGateway6 = {
+      address = "fe80::1";
+      interface = "enp1s0";
+    };
 
     # We use our own firewall instead the one provided by hetzner
     firewall = {

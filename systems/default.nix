@@ -4,7 +4,7 @@ let
     ../nixos/nix-daemon.nix
     ../nixos/users.nix
     ../nixos/network/sshd.nix
-    ../nixos/network/networkmanager.nix
+    ../nixos/network/network.nix
     ../nixos/network/tailscale.nix
 
     ../nixos/modules/erase-darlings.nix

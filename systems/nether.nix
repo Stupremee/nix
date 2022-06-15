@@ -42,10 +42,7 @@
       }];
     };
 
-    defaultGateway6 = {
-      address = "fe80::1";
-      interface = "enp1s0";
-    };
+    defaultGateway6 = "fe80::1";
 
     # We use our own firewall instead the one provided by hetzner
     firewall = {

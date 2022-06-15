@@ -46,6 +46,17 @@ in
       # May be unnecessary when CSP is configured properly (see above)
       add_header X-XSS-Protection "1; mode=block";
     '';
+
+    virtualHosts."stu-dev.me" = {
+      default = true;
+
+      locations."/".return = "404";
+
+      onlySSL = true;
+
+      sslCertificate = config.age.secrets."cert/stu-dev.me.pem".path;
+      sslCertificateKey = config.age.secrets."cert/stu-dev.me.key".path;
+    };
   };
 
   # Open firewall for Nginx HTTPS port

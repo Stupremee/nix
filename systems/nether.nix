@@ -34,7 +34,16 @@
     useDHCP = false;
 
     useNetworkd = true;
-    interfaces.enp1s0.useDHCP = true;
+    interfaces.enp1s0 = {
+      useDHCP = true;
+
+      ipv6.addresses = [{
+        address = "2a01:4f8:c012:c395::1";
+        prefixLength = 64;
+      }];
+    };
+
+    defaultGateway6 = "fe80::1";
 
     # We use our own firewall instead the one provided by hetzner
     firewall = {

@@ -32,6 +32,8 @@
   # Networking
   networking = {
     useDHCP = false;
+
+    useNetworkd = true;
     interfaces.enp1s0.useDHCP = true;
 
     # We use our own firewall instead the one provided by hetzner

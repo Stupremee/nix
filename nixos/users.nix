@@ -1,4 +1,4 @@
-{ ... }:
+{ config, lib, ... }:
 let
   # SSH keys for authentication
   keys = [
@@ -13,6 +13,7 @@ in
       isNormalUser = true;
       home = "/home/stu";
       extraGroups = [ "wheel" ];
+      shell = lib.mkIf config.programs.zsh.enable "/run/current-system/sw/bin/zsh";
       uid = 1000;
       openssh.authorizedKeys.keys = keys;
     };

@@ -6,6 +6,7 @@ let
     ../nixos/network/sshd.nix
     ../nixos/network/network.nix
     ../nixos/network/tailscale.nix
+    ../nixos/shell.nix
 
     ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix

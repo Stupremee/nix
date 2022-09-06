@@ -5,7 +5,7 @@
 
   console = {
     font = "Lat2-Terminus16";
-    keyMap = "use";
+    keyMap = "us";
   };
 
   # 16 core machine

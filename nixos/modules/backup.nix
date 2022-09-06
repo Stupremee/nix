@@ -10,6 +10,7 @@ let
 in
 {
   options.modules.backups = mkOption {
+    default = { };
     type = types.attrsOf (types.submodule ({ ... }: {
       options = {
         dynamicFilesFrom = mkOption {

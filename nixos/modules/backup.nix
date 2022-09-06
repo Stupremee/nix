@@ -4,6 +4,7 @@ with lib;
 
 let
   inherit (utils.systemdUtils.unitOptions) unitOption;
+  inherit (builtins) length;
 
   cfg = config.modules.backups;
 in
@@ -62,7 +63,7 @@ in
     }));
   };
 
-  config = {
+  config = mkIf ((length (lib.attrNames cfg)) != 0) {
     age.secrets.resticPassword.file = ../../secrets/password/restic;
     age.secrets.rcloneConf.file = ../../secrets/rclone.conf;
 

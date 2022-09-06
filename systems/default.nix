@@ -39,5 +39,12 @@ in
         ../nixos/vaultwarden.nix
       ];
     };
+
+    nixius = mkSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./nixius.nix
+      ];
+    };
   };
 }

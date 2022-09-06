@@ -31,7 +31,7 @@
     extraModulePackages = [ ];
 
     # Use systemd-boot boot loader
-    loader.system-boot.enable = true;
+    loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
   };
 

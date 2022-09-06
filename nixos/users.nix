@@ -6,8 +6,6 @@ let
   ];
 in
 {
-  users.mutableUsers = false;
-
   users.users = {
     stu = {
       isNormalUser = true;

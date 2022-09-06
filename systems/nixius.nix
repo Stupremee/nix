@@ -14,6 +14,10 @@
   # Set hostname
   networking.hostName = "nixius";
 
+  # Set timezone and locale
+  i18n.defaultLocale = "en_US.UTF-8";
+  time.timeZone = "Europe/Berlin";
+
   # Boot configuration
   boot = {
     tmpOnTmpfs = true;

@@ -9,6 +9,9 @@
 
   modules.deploy.enable = true;
 
+  # Mutable users are not required on this server
+  users.mutableUsers = false;
+
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "Europe/Berlin";

@@ -1,5 +1,7 @@
-{ inputs, ... }:
+{ lib, inputs, ... }:
 let
+  inherit (lib) optionals;
+
   coreModules = [
     ../nixos/nix-daemon.nix
     ../nixos/users.nix
@@ -17,14 +19,33 @@ let
     inputs.agenix.nixosModule
   ];
 
-  mkSystem = { system, modules }: inputs.nixpkgs.lib.nixosSystem {
-    inherit system;
-    modules = [
-      {
-        _module.args.unstable-pkgs = inputs.unstable.legacyPackages."${system}";
-      }
-    ] ++ coreModules ++ modules;
+  mkHomeModule = modules: {
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.extraSpecialArgs = { inherit system inputs; };
+    home-manager.users.stu = { pkgs, ... }: {
+      # Default imports for the user
+      imports = modules;
+      home.stateVersion = "22.05";
+    };
   };
+
+  mkSystem =
+    { system
+    , modules
+    , home ? false
+    , homeModules ? [ ]
+    }: inputs.nixpkgs.lib.nixosSystem {
+      inherit system;
+      modules = [
+        {
+          _module.args.unstable-pkgs = inputs.unstable.legacyPackages."${system}";
+        }
+      ]
+      ++ coreModules
+      ++ modules
+      ++ (optionals home (mkHomeModule homeModules));
+    };
 in
 {
   flake.nixosConfigurations = {
@@ -44,6 +65,10 @@ in
       system = "x86_64-linux";
       modules = [
         ./nixius.nix
+      ];
+      home = true;
+      homeModules = [
+        ../home/git.nix
       ];
     };
   };

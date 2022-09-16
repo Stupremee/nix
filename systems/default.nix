@@ -17,9 +17,10 @@ let
     ../nixos/modules/backup.nix
 
     inputs.agenix.nixosModule
+    inputs.home-manager.nixosModule
   ];
 
-  mkHomeModule = modules: {
+  mkHomeModule = modules: system: {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.extraSpecialArgs = { inherit system inputs; };
@@ -44,7 +45,7 @@ let
       ]
       ++ coreModules
       ++ modules
-      ++ (optionals home (mkHomeModule homeModules));
+      ++ (optionals home [ (mkHomeModule homeModules system) ]);
     };
 in
 {

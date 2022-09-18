@@ -18,15 +18,19 @@ let
 
     inputs.agenix.nixosModule
     inputs.home-manager.nixosModule
+    inputs.hyprland.nixosModules.default
   ];
 
   mkHomeModule = modules: system: {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
-    home-manager.extraSpecialArgs = { inherit system inputs; };
+    home-manager.extraSpecialArgs = { inherit inputs system; };
     home-manager.users.stu = { pkgs, ... }: {
       # Default imports for the user
-      imports = modules;
+      imports = [
+      	inputs.hyprland.homeManagerModules.default
+      ]
+      ++ modules;
       home.stateVersion = "22.05";
     };
   };
@@ -70,10 +74,16 @@ in
       system = "x86_64-linux";
       modules = [
         ./nixius.nix
+	../nixos/fonts.nix
+        ../nixos/yubikey.nix
       ];
       home = true;
       homeModules = [
         ../home/git.nix
+	../home/shell.nix
+	../home/wayland
+	../home/alacritty.nix
+        ../home/pgp.nix
       ];
     };
   };

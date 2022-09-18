@@ -40,8 +40,14 @@
   };
 
   # Hardware and network configuration
-  hardware.cpu.amd.updateMicrocode = true;
   time.hardwareClockInLocalTime = true;
+  # services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware = {
+    opengl.enable = true;
+    cpu.amd.updateMicrocode = true;
+  };
+
   networking = {
     useDHCP = false;
 

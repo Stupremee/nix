@@ -14,6 +14,10 @@
 
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+    # Unstable required because hyprland needs wayland 1.21
+    hyprland.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs =
@@ -24,6 +28,7 @@
     , flake-parts
     , deploy-rs
     , agenix
+    , hyprland
     }: flake-parts.lib.mkFlake { inherit self; } {
       imports = [
         ./shell.nix

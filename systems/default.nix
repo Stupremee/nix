@@ -60,6 +60,10 @@ in
         ../nixos/postgres.nix
         ../nixos/vaultwarden.nix
       ];
+      home = true;
+      homeModules = [
+        ../home/git.nix
+      ];
     };
 
     nixius = mkSystem {

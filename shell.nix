@@ -4,6 +4,8 @@
       name = "flk";
 
       buildInputs = with pkgs; [
+        home-manager
+
         treefmt
         nixpkgs-fmt
 

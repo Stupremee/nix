@@ -18,6 +18,9 @@
     hyprland.url = "github:hyprwm/Hyprland";
     # Unstable required because hyprland needs wayland 1.21
     hyprland.inputs.nixpkgs.follows = "unstable";
+
+    hyprland-contrib.url = "github:hyprwm/contrib";
+    hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -29,6 +32,7 @@
     , deploy-rs
     , agenix
     , hyprland
+    , hyprland-contrib
     }: flake-parts.lib.mkFlake { inherit self; } {
       imports = [
         ./shell.nix

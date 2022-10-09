@@ -28,7 +28,7 @@ let
     home-manager.users.stu = { pkgs, ... }: {
       # Default imports for the user
       imports = [
-      	inputs.hyprland.homeManagerModules.default
+        inputs.hyprland.homeManagerModules.default
       ]
       ++ modules;
       home.stateVersion = "22.05";
@@ -74,16 +74,17 @@ in
       system = "x86_64-linux";
       modules = [
         ./nixius.nix
-	../nixos/fonts.nix
+        ../nixos/fonts.nix
         ../nixos/yubikey.nix
       ];
       home = true;
       homeModules = [
         ../home/git.nix
-	../home/shell.nix
-	../home/wayland
-	../home/alacritty.nix
+        ../home/shell.nix
+        ../home/wayland
+        ../home/alacritty.nix
         ../home/pgp.nix
+        ../home/xdg.nix
       ];
     };
   };

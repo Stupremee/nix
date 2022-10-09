@@ -120,6 +120,26 @@
         "type": "github"
       }
     },
+    "hyprland-contrib": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1664384946,
+        "narHash": "sha256-zqpXujNioqibBBkVT2BQSa/l3GQRGZRZbcY69vpRpVU=",
+        "owner": "hyprwm",
+        "repo": "contrib",
+        "rev": "63ebc34d0c2398e33bc97d065e3790abc5e1f070",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hyprwm",
+        "repo": "contrib",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1661700591,
@@ -143,6 +163,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "hyprland-contrib": "hyprland-contrib",
         "nixpkgs": "nixpkgs",
         "unstable": "unstable"
       }

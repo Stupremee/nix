@@ -1,3 +1,8 @@
 [formatter.nix]
 command = "nixpkgs-fmt"
 includes = ["*.nix"]
+
+[formatter.bash]
+command = "shfmt"
+options = ["-i", "2", "-s", "-w"]
+includes = ["*.sh"]

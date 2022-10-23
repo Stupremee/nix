@@ -21,10 +21,13 @@ let
     inputs.hyprland.nixosModules.default
   ];
 
-  mkHomeModule = modules: system: {
+  mkHomeModule = modules: system: theme: {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
-    home-manager.extraSpecialArgs = { inherit inputs system; };
+    home-manager.extraSpecialArgs = {
+      inherit inputs system;
+      theme = inputs.nix-colors.colorSchemes."${theme}";
+    };
     home-manager.users.stu = { pkgs, ... }: {
       # Default imports for the user
       imports = [
@@ -39,6 +42,7 @@ let
     { system
     , modules
     , home ? false
+    , theme ? ""
     , homeModules ? [ ]
     }: inputs.nixpkgs.lib.nixosSystem {
       inherit system;
@@ -49,7 +53,7 @@ let
       ]
       ++ coreModules
       ++ modules
-      ++ (optionals home [ (mkHomeModule homeModules system) ]);
+      ++ (optionals home [ (mkHomeModule homeModules system theme) ]);
     };
 in
 {
@@ -78,6 +82,7 @@ in
         ../nixos/yubikey.nix
       ];
       home = true;
+      theme = "catppuccin";
       homeModules = [
         ../home/git.nix
         ../home/shell.nix
@@ -85,6 +90,7 @@ in
         ../home/alacritty.nix
         ../home/pgp.nix
         ../home/xdg.nix
+        ../home/dunst.nix
       ];
     };
   };

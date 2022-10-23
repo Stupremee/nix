@@ -8,6 +8,7 @@
 
         treefmt
         nixpkgs-fmt
+        shfmt
 
         inputs'.deploy-rs.packages.deploy-rs
         inputs'.agenix.packages.agenix

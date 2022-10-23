@@ -1,4 +1,4 @@
-{ inputs, system, pkgs, ... }:
+{ inputs, system, pkgs, theme, ... }:
 let
   inherit (builtins) concatStringsSep genList toString;
 
@@ -19,7 +19,6 @@ in
     grim
 
     inputs.hyprland-contrib.packages.${system}.grimblast
-    wofi
     wlr-randr
     wl-clipboard
   ];
@@ -58,6 +57,9 @@ in
         gaps_in=5
         gaps_out=20
         border_size=2
+
+        col.active_border=0xFF${theme.colors.base06}
+        col.inactive_border=0xFF${theme.colors.base02}
       }
 
       decoration {
@@ -80,8 +82,8 @@ in
       bind=SUPER,Return,exec,$TERMINAL
 
       # application launcher
-      bind=SUPER,p,exec,pkill .wofi || wofi -S drun
-      bind=SUPER_SHIFT,p,exec,pkill .wofi || wofi -S run
+      bind=SUPER,p,exec,$HOME/.config/rofi/bin/launcher
+      bind=SUPER_SHIFT,p,exec,pkill .wofi || wofi -S run -I
 
       # compositor commands
       bind=SUPER,q,killactive,
@@ -130,6 +132,7 @@ in
       bind=SUPER,o,exec,alacritty --title PythonScratchpad -e ${pythonScratchpad}
 
       # cycle monitors
+      # , = left | . = right
       bind=SUPER,59,focusmonitor,l
       bind=SUPER,60,focusmonitor,r
     '';

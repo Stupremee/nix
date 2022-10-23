@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, unstable-pkgs, ... }: {
   users.defaultUserShell = pkgs.zsh;
   programs.zsh = {
     enable = true;
@@ -32,7 +32,7 @@
       jq
       manix
       git
-      neovim
+      unstable-pkgs.neovim
 
       man-db
       man-pages

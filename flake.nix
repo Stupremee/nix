@@ -21,6 +21,8 @@
 
     hyprland-contrib.url = "github:hyprwm/contrib";
     hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-colors.url = "github:Misterio77/nix-colors";
   };
 
   outputs =
@@ -33,6 +35,7 @@
     , agenix
     , hyprland
     , hyprland-contrib
+    , nix-colors
     }: flake-parts.lib.mkFlake { inherit self; } {
       imports = [
         ./shell.nix

@@ -2,5 +2,6 @@
   imports = [
     ./hyprland.nix
     ./rofi
+    ./moka.nix
   ];
 }

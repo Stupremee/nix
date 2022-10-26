@@ -26,7 +26,7 @@ let
     home-manager.useUserPackages = true;
     home-manager.extraSpecialArgs = {
       inherit inputs system;
-      theme = inputs.nix-colors.colorSchemes."${theme}";
+      theme = (import ../themes { inherit lib; })."${theme}";
     };
     home-manager.users.stu = { pkgs, ... }: {
       # Default imports for the user
@@ -82,7 +82,7 @@ in
         ../nixos/yubikey.nix
       ];
       home = true;
-      theme = "catppuccin";
+      theme = "frappe";
       homeModules = [
         ../home/git.nix
         ../home/shell.nix
@@ -90,7 +90,6 @@ in
         ../home/alacritty.nix
         ../home/pgp.nix
         ../home/xdg.nix
-        ../home/dunst.nix
       ];
     };
   };

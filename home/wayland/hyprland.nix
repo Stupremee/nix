@@ -1,6 +1,7 @@
-{ inputs, system, pkgs, theme, ... }:
+{ inputs, system, pkgs, theme, lib, ... }:
 let
   inherit (builtins) concatStringsSep genList toString;
+  inherit (lib) removePrefix;
 
   pythonScratchpad = pkgs.writeShellScript "python-scratchpad" ''
     ${pkgs.python3}/bin/python3 -q
@@ -58,8 +59,8 @@ in
         gaps_out=20
         border_size=2
 
-        col.active_border=0xFF${theme.colors.base06}
-        col.inactive_border=0xFF${theme.colors.base02}
+        col.active_border=0x88${removePrefix "#" theme.green}
+        col.inactive_border=0x88${removePrefix "#" theme.overlay0}
       }
 
       decoration {
@@ -82,8 +83,8 @@ in
       bind=SUPER,Return,exec,$TERMINAL
 
       # application launcher
-      bind=SUPER,p,exec,$HOME/.config/rofi/bin/launcher
-      bind=SUPER_SHIFT,p,exec,pkill .wofi || wofi -S run -I
+      bind=SUPER,p,exec,$HOME/.config/rofi/bin/launcher.sh
+      bind=SUPER_SHIFT,p,exec,$HOME/.config/rofi/bin/runner.sh
 
       # compositor commands
       bind=SUPER,q,killactive,
@@ -135,6 +136,10 @@ in
       # , = left | . = right
       bind=SUPER,59,focusmonitor,l
       bind=SUPER,60,focusmonitor,r
+
+      # dismiss notifications
+      bind=CTRL,65,exec,makoctl dismiss
+      bind=CTRL_SHIFT,65,exec,makoctl restore
     '';
   };
 }

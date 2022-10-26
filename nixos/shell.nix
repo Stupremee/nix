@@ -30,6 +30,7 @@
       file
       procs
       jq
+      yq
       manix
       git
       unstable-pkgs.neovim

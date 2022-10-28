@@ -27,6 +27,10 @@ in
         command = "${hyprctl} dispatch dpms off";
         resumeCommand = "${hyprctl} dispatch dpms on";
       }
+      {
+        timeout = 3600;
+        command = "${pkgs.systemd}/bin/systemctl suspend";
+      }
     ];
   };
 

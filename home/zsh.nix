@@ -1,4 +1,4 @@
-{ pkgs, theme, ... }:
+{ pkgs, theme, config, ... }:
 let
   zshPlugin = src: rec {
     inherit src;
@@ -7,6 +7,8 @@ let
   };
 in
 {
+  home.packages = with pkgs; [ comma ];
+
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -20,13 +22,17 @@ in
 
   programs.zsh = {
     enable = true;
+
     enableCompletion = true;
     enableAutosuggestions = true;
+    enableSyntaxHighlighting = true;
+
     autocd = true;
     defaultKeymap = "viins";
     dotDir = ".config/zsh";
 
     history = {
+      path = "${config.xdg.dataHome}/zsh/zshHistory";
       extended = true;
     };
 
@@ -36,9 +42,18 @@ in
     ];
 
     initExtra = ''
+      ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
+
       # Include hidden files in completions
       _comp_options+=(globdots)
     '';
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+
+    nix-direnv.enable = true;
   };
 
   programs.nix-index = {

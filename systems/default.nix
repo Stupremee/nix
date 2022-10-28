@@ -86,7 +86,6 @@ in
       theme = "frappe";
       homeModules = [
         ../home/git.nix
-        ../home/shell.nix
         ../home/wayland
         ../home/alacritty.nix
         ../home/pgp.nix

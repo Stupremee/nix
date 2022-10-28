@@ -1,34 +1,14 @@
 #!/usr/bin/env bash
 rofi_command="rofi -theme $HOME/.config/rofi/config/powermenu.rasi"
 
-uptime=$(uptime -p | sed -e 's/up //g')
+uptime=$(uptime | sed -e 's/up //g')
 
-# Options
-if [[ $DIR == "powermenus" ]]; then
-  shutdown=""
-  reboot=""
-  lock=""
-  suspend=""
-  logout=""
-  ddir="$HOME/.config/rofi/config"
-else
-  # Buttons
-  layout=$(cat $HOME/.config/rofi/config/powermenu.rasi | grep BUTTON | cut -d'=' -f2 | tr -d '[:blank:],*/')
-  if [[ $layout == "TRUE" ]]; then
-    shutdown="襤"
-    reboot="ﰇ"
-    lock=""
-    suspend="鈴"
-    logout=" "
-  else
-    shutdown="襤Shutdown"
-    reboot="ﰇ Restart"
-    lock=" Lock"
-    suspend="鈴Sleep"
-    logout=" Logout"
-  fi
-  ddir="$HOME/.config/rofi/config"
-fi
+ddir="$HOME/.config/rofi/config"
+shutdown="襤"
+reboot="ﰇ"
+lock=""
+suspend="鈴"
+logout=" "
 
 # Ask for confirmation
 rdialog() {
@@ -67,14 +47,10 @@ $reboot)
   fi
   ;;
 $lock)
-  sh $HOME/.local/bin/lock
   ;;
 $suspend)
   ans=$(rdialog &)
   if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
-    mpc -q pause
-    amixer set Master mute
-    sh $HOME/.local/bin/lock
     systemctl suspend
   elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
     exit
@@ -85,7 +61,7 @@ $suspend)
 $logout)
   ans=$(rdialog &)
   if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
-    bspc quit
+    hyprctl kill
   elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
     exit
   else

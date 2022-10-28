@@ -21,6 +21,9 @@
 
     hyprland-contrib.url = "github:hyprwm/contrib";
     hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
+
+    hyprpaper.url = "github:hyprwm/hyprpaper";
+    hyprpaper.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs =
@@ -33,6 +36,7 @@
     , agenix
     , hyprland
     , hyprland-contrib
+    , hyprpaper
     }: flake-parts.lib.mkFlake { inherit self; } {
       imports = [
         ./shell.nix

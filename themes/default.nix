@@ -10,7 +10,7 @@ let
   themes = listToAttrs (map
     (file: rec {
       name = removeSuffix ".json" file;
-      value = fromJSON (readFile "${./.}/${name}.json");
+      value = (fromJSON (readFile "${./.}/${name}.json")) // { wallpaper = ./wall.png; };
     })
     themeFiles);
 in

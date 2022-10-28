@@ -20,8 +20,11 @@ in
     grim
 
     inputs.hyprland-contrib.packages.${system}.grimblast
+    inputs.hyprpaper.packages.${system}.default
     wlr-randr
     wl-clipboard
+    wl-color-picker
+    imv
   ];
 
   programs.zsh.loginExtra = ''
@@ -46,6 +49,8 @@ in
 
       monitor=DP-2,preferred,0x0,1
       workspace=DP-2,10
+
+      exec-once = hyprpaper
 
       input {
         kb_layout eu
@@ -126,8 +131,14 @@ in
       submap=reset
 
       # make screenshot
-      bind=SUPER,s,exec,grimblast copysave area
-      bind=SUPER_SHIFT,s,exec,grimblast copysave output
+      bind=SUPER,s,exec,grimblast --notify copysave area
+      bind=SUPER_SHIFT,s,exec,$HOME/.config/rofi/bin/screenshot.sh
+
+      # color picker
+      bind=SUPER,c,exec,wl-color-picker
+
+      # power menu
+      bind=SUPER,m,exec,$HOME/.config/rofi/bin/powermenu.sh
 
       # open python scratchpad
       bind=SUPER,o,exec,alacritty --title PythonScratchpad -e ${pythonScratchpad}
@@ -142,4 +153,10 @@ in
       bind=CTRL_SHIFT,65,exec,makoctl restore
     '';
   };
+
+  xdg.configFile."hypr/hyprpaper.conf".text = ''
+    preload = ${theme.wallpaper}
+    wallpaper = DP-2,${theme.wallpaper}
+    wallpaper = HDMI-A-1,${theme.wallpaper}
+  ''; 
 }

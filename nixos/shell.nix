@@ -47,7 +47,6 @@
       ll = "exa -lg";
       la = "exa -la";
 
-      cat = "bat";
       sc = "systemctl";
       ps = "procs";
       g = "git";

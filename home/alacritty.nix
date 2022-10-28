@@ -6,6 +6,8 @@
     settings = {
       env.TERM = "xterm-256color";
 
+      window.opacity = 0.9;
+
       font = {
         size = 9;
         normal.family = "FiraCode Nerd Font";

@@ -80,6 +80,7 @@ in
         ./nixius.nix
         ../nixos/fonts.nix
         ../nixos/yubikey.nix
+        ../nixos/graphical.nix
       ];
       home = true;
       theme = "frappe";

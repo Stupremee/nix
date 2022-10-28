@@ -158,5 +158,5 @@ in
     preload = ${theme.wallpaper}
     wallpaper = DP-2,${theme.wallpaper}
     wallpaper = HDMI-A-1,${theme.wallpaper}
-  ''; 
+  '';
 }

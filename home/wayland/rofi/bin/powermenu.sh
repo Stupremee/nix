@@ -47,6 +47,7 @@ $reboot)
   fi
   ;;
 $lock)
+  swaylock
   ;;
 $suspend)
   ans=$(rdialog &)
@@ -61,7 +62,7 @@ $suspend)
 $logout)
   ans=$(rdialog &)
   if [[ $ans == "yes" ]] || [[ $ans == "YES" ]] || [[ $ans == "y" ]]; then
-    hyprctl kill
+    pkill Hyprland
   elif [[ $ans == "no" ]] || [[ $ans == "NO" ]] || [[ $ans == "n" ]]; then
     exit
   else

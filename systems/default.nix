@@ -91,6 +91,7 @@ in
         ../home/alacritty.nix
         ../home/pgp.nix
         ../home/xdg.nix
+        ../home/zsh.nix
       ];
     };
   };

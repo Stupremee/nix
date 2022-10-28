@@ -32,11 +32,11 @@ in
         size = 9;
         normal.family = "FiraCode Nerd Font";
         bold = {
-          family = "monospace";
+          family = "FiraCode Nerd Font";
           style = "Bold";
         };
         italic = {
-          family = "monospace";
+          family = "FiraCode Nerd Font";
           style = "Italic";
         };
       };

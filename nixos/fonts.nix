@@ -5,7 +5,12 @@
       noto-fonts
       noto-fonts-emoji
       fira-code
+
+      material-icons
+      material-design-icons
     ];
+
+    enableDefaultFonts = false;
 
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif Nerd Font" "Noto Serif" ];

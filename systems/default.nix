@@ -92,6 +92,7 @@ in
         ../home/pgp.nix
         ../home/xdg.nix
         ../home/zsh.nix
+        ../home/nix-index.nix
       ];
     };
   };

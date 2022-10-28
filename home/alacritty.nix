@@ -1,4 +1,13 @@
-{ config, theme, ... }: {
+{ config, theme, ... }:
+let
+  keybind = key: mods: action: { inherit key mods action; };
+
+  viKeybind = key: mods: action: {
+    inherit key mods action;
+    mode = "Vi";
+  };
+in
+{
   home.sessionVariables.TERMINAL = "${config.programs.alacritty.package}/bin/alacritty";
   programs.alacritty = {
     enable = true;
@@ -7,6 +16,17 @@
       env.TERM = "xterm-256color";
 
       window.opacity = 0.9;
+
+      cursor.style = "Block";
+      cursor.vi_mode_style = "Block";
+
+      key_bindings = [
+        (keybind "V" "Alt" "Paste")
+        (keybind "C" "Alt" "Copy")
+
+        (viKeybind "V" "Shift|Alt" "ScrollToBottom")
+        (keybind "V" "Shift|Alt" "ToggleViMode")
+      ];
 
       font = {
         size = 9;

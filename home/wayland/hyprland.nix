@@ -114,7 +114,7 @@ in
           ws = if key == 0 then 10 else key;
         in ''
           bind=SUPER,${toString key},workspace,${toString ws}
-          bind=SUPER,${toString key},movetoworkspacesilent,${toString ws}
+          bind=SUPER_SHIFT,${toString key},movetoworkspacesilent,${toString ws}
         ''
       )
       10 )}

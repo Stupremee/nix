@@ -10,7 +10,7 @@
   inherit (pkgs) fetchFromGitHub;
 
   extraPackages = with unstable-pkgs; [
-    clang
+    gcc
     tree-sitter
 
     # formatters

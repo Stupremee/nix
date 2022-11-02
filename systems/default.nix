@@ -27,6 +27,7 @@ let
     home-manager.extraSpecialArgs = {
       inherit inputs system;
       theme = (import ../themes { inherit lib; })."${theme}";
+      unstable-pkgs = inputs.unstable.legacyPackages."${system}";
     };
     home-manager.users.stu = { pkgs, ... }: {
       # Default imports for the user
@@ -92,6 +93,8 @@ in
         ../home/xdg.nix
         ../home/zsh.nix
         ../home/nix-index.nix
+        ../home/editors/nvim
+        ../home/graphical
       ];
     };
   };

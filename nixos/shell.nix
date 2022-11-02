@@ -33,7 +33,6 @@
       yq
       manix
       git
-      unstable-pkgs.neovim
 
       man-db
       man-pages

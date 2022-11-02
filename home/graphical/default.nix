@@ -1,11 +1,15 @@
-{ pkgs, unstable-pkgs, theme, lib, ... }:
-let
+{
+  pkgs,
+  unstable-pkgs,
+  theme,
+  lib,
+  ...
+}: let
   len = builtins.stringLength theme.name;
   first = lib.toUpper (lib.substring 0 1 theme.name);
   last = lib.substring 1 len theme.name;
   upperTheme = "${first}${last}";
-in
-{
+in {
   home.packages = with pkgs; [
     firefox-wayland
   ];
@@ -22,8 +26,8 @@ in
     enable = true;
 
     font = {
-      name = "Roboto";
-      package = pkgs.roboto;
+      name = "Noto";
+      package = pkgs.noto-fonts;
     };
 
     iconTheme = {
@@ -32,7 +36,8 @@ in
     };
 
     theme = {
-      name = "Catppuccin-${upperTheme}"; package = pkgs.catppuccin-gtk.override { size = "compact"; };
+      name = "Catppuccin-${upperTheme}";
+      package = pkgs.catppuccin-gtk.override {size = "compact";};
     };
   };
 }

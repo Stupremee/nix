@@ -1,5 +1,9 @@
-{ pkgs, theme, ... }: {
-  home.packages = [ pkgs.swaylock-effects ];
+{
+  pkgs,
+  theme,
+  ...
+}: {
+  home.packages = [pkgs.swaylock-effects];
 
   xdg.configFile."swaylock/config".text = ''
     clock

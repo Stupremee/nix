@@ -1,13 +1,15 @@
-{ config, theme, ... }:
-let
-  keybind = key: mods: action: { inherit key mods action; };
+{
+  config,
+  theme,
+  ...
+}: let
+  keybind = key: mods: action: {inherit key mods action;};
 
   viKeybind = key: mods: action: {
     inherit key mods action;
     mode = "Vi";
   };
-in
-{
+in {
   home.sessionVariables.TERMINAL = "${config.programs.alacritty.package}/bin/alacritty";
   programs.alacritty = {
     enable = true;
@@ -127,8 +129,14 @@ in
         };
 
         indexed_colors = [
-          { index = 16; color = theme.peach; }
-          { index = 17; color = theme.rosewater; }
+          {
+            index = 16;
+            color = theme.peach;
+          }
+          {
+            index = 17;
+            color = theme.rosewater;
+          }
         ];
       };
     };

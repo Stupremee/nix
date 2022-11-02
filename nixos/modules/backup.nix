@@ -1,17 +1,19 @@
-{ config, lib, pkgs, utils, ... }:
-
-with lib;
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  utils,
+  ...
+}:
+with lib; let
   inherit (utils.systemdUtils.unitOptions) unitOption;
   inherit (builtins) length;
 
   cfg = config.modules.backups;
-in
-{
+in {
   options.modules.backups = mkOption {
-    default = { };
-    type = types.attrsOf (types.submodule ({ ... }: {
+    default = {};
+    type = types.attrsOf (types.submodule ({...}: {
       options = {
         dynamicFilesFrom = mkOption {
           type = types.nullOr types.str;
@@ -68,15 +70,18 @@ in
     age.secrets.resticPassword.file = ../../secrets/password/restic;
     age.secrets.rcloneConf.file = ../../secrets/rclone.conf;
 
-    services.restic.backups = mapAttrs'
-      (name: value: nameValuePair name
+    services.restic.backups =
+      mapAttrs'
+      (name: value:
+        nameValuePair name
         ({
-          repository = "rclone:gdrive:/Backups/${config.system.name}/${name}";
-          initialize = true;
+            repository = "rclone:gdrive:/Backups/${config.system.name}/${name}";
+            initialize = true;
 
-          passwordFile = config.age.secrets.resticPassword.path;
-          rcloneConfigFile = config.age.secrets.rcloneConf.path;
-        } // value))
+            passwordFile = config.age.secrets.resticPassword.path;
+            rcloneConfigFile = config.age.secrets.rcloneConf.path;
+          }
+          // value))
       cfg;
   };
 }

@@ -1,10 +1,30 @@
-{ unstable-pkgs, lib, theme, ... }:
-let
+{
+  unstable-pkgs,
+  lib,
+  theme,
+  ...
+}: let
   pkgs = unstable-pkgs;
+
+  inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
+  inherit (pkgs) fetchFromGitHub;
 
   extraPackages = with unstable-pkgs; [
     clang
     tree-sitter
+
+    # formatters
+    alejandra
+    stylua
+
+    # linters
+    deadnix
+    statix
+
+    # language servers
+    rust-analyzer
+    rnix-lsp
+    sumneko-lua-language-server
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {
@@ -15,7 +35,7 @@ let
     viAlias = true;
     vimAlias = true;
 
-    plugins = map (x: { plugin = x; }) (with pkgs.vimPlugins; [
+    plugins = map (x: {plugin = x;}) (with pkgs.vimPlugins; [
       impatient-nvim
       catppuccin-nvim
 
@@ -71,17 +91,19 @@ let
       :lua require("user.illuminate")
       :lua require("user.indentline")
       :lua require("user.alpha")
+      :lua require("user.lsp")
     '';
   };
 
-  neovim = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped
-    (config // {
-      wrapperArgs = (lib.escapeShellArgs config.wrapperArgs) + " --suffix PATH : \"${lib.makeBinPath extraPackages}\"";
-      wrapRc = false;
-    });
-in
-{
-  home.packages = [ neovim ];
+  neovim =
+    pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped
+    (config
+      // {
+        wrapperArgs = (lib.escapeShellArgs config.wrapperArgs) + " --suffix PATH : \"${lib.makeBinPath extraPackages}\"";
+        wrapRc = false;
+      });
+in {
+  home.packages = [neovim];
   home.sessionVariables.EDITOR = "${neovim}/bin/nvim";
 
   xdg.configFile."nvim/init.vim".text = config.neovimRcContent;

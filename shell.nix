@@ -1,5 +1,9 @@
 {
-  perSystem = { pkgs, inputs', ... }: {
+  perSystem = {
+    pkgs,
+    inputs',
+    ...
+  }: {
     devShells.default = pkgs.mkShellNoCC {
       name = "flk";
 
@@ -7,7 +11,7 @@
         home-manager
 
         treefmt
-        nixpkgs-fmt
+        alejandra
         shfmt
 
         inputs'.deploy-rs.packages.deploy-rs

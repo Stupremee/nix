@@ -1,4 +1,8 @@
-{ config, pkgs, ... }: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   virtualisation = {
     containers.enable = true;
     containers.storage.settings.storage = {
@@ -14,7 +18,7 @@
 
     podman = {
       enable = true;
-      extraPackages = [ pkgs.zfs ];
+      extraPackages = [pkgs.zfs];
     };
   };
 }

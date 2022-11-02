@@ -1,9 +1,11 @@
-{ config, lib, ... }:
-with lib;
-let
-  cfg = config.modules.eraseDarlings;
-in
 {
+  config,
+  lib,
+  ...
+}:
+with lib; let
+  cfg = config.modules.eraseDarlings;
+in {
   options = {
     modules = {
       eraseDarlings = {

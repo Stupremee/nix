@@ -1,5 +1,9 @@
-{ pkgs, lib, theme, ... }:
-let
+{
+  pkgs,
+  lib,
+  theme,
+  ...
+}: let
   inherit (lib) concatMapStringsSep;
 
   themes = [
@@ -13,12 +17,14 @@ let
     }
   ];
 
-  mkPath = { package, name }: "${package}/share/icons/${name}";
+  mkPath = {
+    package,
+    name,
+  }: "${package}/share/icons/${name}";
 
   iconPath = concatMapStringsSep ":" mkPath themes;
-in
-{
-  home.packages = [ pkgs.libnotify ];
+in {
+  home.packages = [pkgs.libnotify];
 
   programs.mako = {
     enable = true;

@@ -1,4 +1,8 @@
-{ pkgs, unstable-pkgs, ... }: {
+{
+  pkgs,
+  unstable-pkgs,
+  ...
+}: {
   users.defaultUserShell = pkgs.zsh;
   programs.zsh = {
     enable = true;

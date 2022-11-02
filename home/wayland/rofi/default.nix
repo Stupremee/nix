@@ -1,5 +1,10 @@
-{ config, pkgs, theme, ... }: {
-  home.packages = [ pkgs.rofi-wayland ];
+{
+  config,
+  pkgs,
+  theme,
+  ...
+}: {
+  home.packages = [pkgs.rofi-wayland];
 
   xdg.configFile."rofi/config/askpass.rasi".source = ./config/askpass.rasi;
   xdg.configFile."rofi/config/confirm.rasi".source = ./config/confirm.rasi;

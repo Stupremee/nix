@@ -1,5 +1,4 @@
-{ config, ... }:
-let
+{config, ...}: let
   inherit (builtins) toString;
 
   cfg = config.services.nginx;
@@ -10,8 +9,7 @@ let
     group = cfg.group;
     mode = "0440";
   };
-in
-{
+in {
   # Import certificates
   age.secrets."cert/stu-dev.me.key" = secret ../secrets/cert/stu-dev.me.key;
   age.secrets."cert/stu-dev.me.pem" = secret ../secrets/cert/stu-dev.me.pem;
@@ -60,5 +58,5 @@ in
   };
 
   # Open firewall for Nginx HTTPS port
-  networking.firewall.allowedTCPPorts = [ 443 ];
+  networking.firewall.allowedTCPPorts = [443];
 }

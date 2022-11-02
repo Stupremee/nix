@@ -1,13 +1,16 @@
-{ pkgs, theme, config, ... }:
-let
+{
+  pkgs,
+  theme,
+  config,
+  ...
+}: let
   zshPlugin = src: rec {
     inherit src;
     name = src.pname;
     file = "share/${name}/${name}.zsh";
   };
-in
-{
-  home.packages = with pkgs; [ comma ];
+in {
+  home.packages = with pkgs; [comma];
 
   programs.fzf = {
     enable = true;

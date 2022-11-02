@@ -1,9 +1,11 @@
-{ config, lib, ... }:
-with lib;
-let
-  cfg = config.modules.deploy;
-in
 {
+  config,
+  lib,
+  ...
+}:
+with lib; let
+  cfg = config.modules.deploy;
+in {
   options = {
     modules.deploy = {
       enable = mkOption {
@@ -19,5 +21,5 @@ in
     };
   };
 
-  config = { };
+  config = {};
 }

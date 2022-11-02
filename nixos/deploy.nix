@@ -1,9 +1,12 @@
-{ inputs, self, lib, ... }:
-let
-  inherit (inputs) deploy-rs;
-in
 {
-  perSystem = { system, ... }: {
+  inputs,
+  self,
+  lib,
+  ...
+}: let
+  inherit (inputs) deploy-rs;
+in {
+  perSystem = {system, ...}: {
     checks = deploy-rs.lib."${system}".deployChecks self.deploy;
   };
 
@@ -12,7 +15,8 @@ in
       magicRollback = true;
       autoRollback = true;
 
-      nodes = builtins.mapAttrs
+      nodes =
+        builtins.mapAttrs
         (_: nixosConfig: {
           hostname =
             if builtins.isNull nixosConfig.config.modules.deploy.ip

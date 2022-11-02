@@ -1,4 +1,4 @@
-{ modulesPath, ... }: {
+{modulesPath, ...}: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
@@ -22,14 +22,14 @@
 
   # Boot configuration
   boot = {
-    initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sd_mod" "sr_mod" ];
-    initrd.kernelModules = [ ];
-    kernelModules = [ ];
-    extraModulePackages = [ ];
+    initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "sd_mod" "sr_mod"];
+    initrd.kernelModules = [];
+    kernelModules = [];
+    extraModulePackages = [];
 
     loader.grub.enable = true;
     loader.grub.version = 2;
-    loader.grub.devices = [ "/dev/sda" ];
+    loader.grub.devices = ["/dev/sda"];
   };
 
   # Networking
@@ -39,10 +39,12 @@
     interfaces.enp1s0 = {
       useDHCP = true;
 
-      ipv6.addresses = [{
-        address = "2a01:4f8:c012:c395::1";
-        prefixLength = 64;
-      }];
+      ipv6.addresses = [
+        {
+          address = "2a01:4f8:c012:c395::1";
+          prefixLength = 64;
+        }
+      ];
     };
 
     defaultGateway6 = "fe80::1";
@@ -80,5 +82,5 @@
     neededForBoot = true;
   };
 
-  swapDevices = [ ];
+  swapDevices = [];
 }

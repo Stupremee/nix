@@ -1,9 +1,12 @@
-{ pkgs, config, lib, ... }:
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
-in
-{
+in {
   services.swayidle = {
     enable = true;
     events = [
@@ -35,11 +38,11 @@ in
   };
 
   systemd.user.services.swayidle = {
-    Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
+    Install.WantedBy = lib.mkForce ["hyprland-session.target"];
 
     # fix that is not backported to home-manager/release-22.05
     Service.Environment = [
-      "PATH=${lib.makeBinPath [ pkgs.bash ]}"
+      "PATH=${lib.makeBinPath [pkgs.bash]}"
     ];
   };
 }

@@ -1,5 +1,8 @@
-{ lib, inputs, ... }:
-let
+{
+  lib,
+  inputs,
+  ...
+}: let
   inherit (lib) optionals;
 
   coreModules = [
@@ -26,38 +29,40 @@ let
     home-manager.useUserPackages = true;
     home-manager.extraSpecialArgs = {
       inherit inputs system;
-      theme = (import ../themes { inherit lib; })."${theme}";
+      theme = (import ../themes {inherit lib;})."${theme}";
       unstable-pkgs = inputs.unstable.legacyPackages."${system}";
     };
-    home-manager.users.stu = { pkgs, ... }: {
+    home-manager.users.stu = {pkgs, ...}: {
       # Default imports for the user
-      imports = [
-        inputs.hyprland.homeManagerModules.default
-      ]
-      ++ modules;
+      imports =
+        [
+          inputs.hyprland.homeManagerModules.default
+        ]
+        ++ modules;
       home.stateVersion = "22.05";
     };
   };
 
-  mkSystem =
-    { system
-    , modules
-    , home ? false
-    , theme ? ""
-    , homeModules ? [ ]
-    }: inputs.nixpkgs.lib.nixosSystem {
+  mkSystem = {
+    system,
+    modules,
+    home ? false,
+    theme ? "",
+    homeModules ? [],
+  }:
+    inputs.nixpkgs.lib.nixosSystem {
       inherit system;
-      modules = [
-        {
-          _module.args.unstable-pkgs = inputs.unstable.legacyPackages."${system}";
-        }
-      ]
-      ++ coreModules
-      ++ modules
-      ++ (optionals home [ (mkHomeModule homeModules system theme) ]);
+      modules =
+        [
+          {
+            _module.args.unstable-pkgs = inputs.unstable.legacyPackages."${system}";
+          }
+        ]
+        ++ coreModules
+        ++ modules
+        ++ (optionals home [(mkHomeModule homeModules system theme)]);
     };
-in
-{
+in {
   flake.nixosConfigurations = {
     nether = mkSystem {
       system = "x86_64-linux";

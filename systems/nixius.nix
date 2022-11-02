@@ -1,4 +1,4 @@
-{ modulesPath, ... }: {
+{modulesPath, ...}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -29,10 +29,10 @@
       "usb_storage"
       "sd_mod"
     ];
-    initrd.kernelModules = [ ];
+    initrd.kernelModules = [];
 
-    kernelModules = [ "kvm-amd" ];
-    extraModulePackages = [ ];
+    kernelModules = ["kvm-amd"];
+    extraModulePackages = [];
 
     # Use systemd-boot boot loader
     loader.systemd-boot.enable = true;
@@ -70,7 +70,9 @@
     fsType = "ext4";
   };
 
-  swapDevices = [{
-    device = "/dev/disk/by-uuid/d7721dea-b634-46f5-82f0-b47d302639d1";
-  }];
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/d7721dea-b634-46f5-82f0-b47d302639d1";
+    }
+  ];
 }

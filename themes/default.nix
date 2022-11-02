@@ -1,5 +1,4 @@
-{ lib, ... }:
-let
+{lib, ...}: let
   inherit (builtins) filter readDir readFile attrNames listToAttrs map fromJSON;
   inherit (lib) hasSuffix removeSuffix;
 
@@ -10,12 +9,13 @@ let
   themes = listToAttrs (map
     (file: rec {
       name = removeSuffix ".json" file;
-      value = (fromJSON (readFile "${./.}/${name}.json")) //
-        {
+      value =
+        (fromJSON (readFile "${./.}/${name}.json"))
+        // {
           inherit name;
           wallpaper = ./wall.png;
         };
     })
     themeFiles);
 in
-themes
+  themes

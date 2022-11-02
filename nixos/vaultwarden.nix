@@ -1,8 +1,6 @@
-{ config, ... }:
-let
+{config, ...}: let
   cfg = config.modules.vaultwarden;
-in
-{
+in {
   age.secrets.vaultwardenEnv = {
     file = ../secrets/vaultwarden.env;
     owner = "vaultwarden";
@@ -42,12 +40,14 @@ in
     };
   };
 
-  services.postgresql.ensureDatabases = [ "vaultwarden" ];
-  services.postgresql.ensureUsers = [{
-    name = "vaultwarden";
-    ensurePermissions = {
-      "DATABASE \"vaultwarden\"" = "ALL PRIVILEGES";
-      "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
-    };
-  }];
+  services.postgresql.ensureDatabases = ["vaultwarden"];
+  services.postgresql.ensureUsers = [
+    {
+      name = "vaultwarden";
+      ensurePermissions = {
+        "DATABASE \"vaultwarden\"" = "ALL PRIVILEGES";
+        "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+      };
+    }
+  ];
 }

@@ -1,17 +1,17 @@
 # Module for configuring the nix-daemon
-{ ... }: {
+{...}: {
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
 
-    allowedUsers = [ "@wheel" ];
-    trustedUsers = [ "root" "@wheel" ];
+    allowedUsers = ["@wheel"];
+    trustedUsers = ["root" "@wheel"];
 
     autoOptimiseStore = true;
     optimise = {
       automatic = true;
-      dates = [ "11:00" ];
+      dates = ["11:00"];
     };
 
     gc = {

@@ -1,9 +1,12 @@
-{ config, pkgs, unstable-pkgs, ... }:
-let
+{
+  config,
+  pkgs,
+  unstable-pkgs,
+  ...
+}: let
   tikaPort = "33001";
   gotenbergPort = "33002";
-in
-{
+in {
   age.secrets.paperlessPassword.file = ../secrets/password/paperless;
 
   services.paperless = {
@@ -22,15 +25,13 @@ in
     };
   };
 
-  modules.backups.paperless.dynamicFilesFrom =
-    let
-      path = config.services.paperless.dataDir;
-    in
-    ''
-      mkdir -p ${path}/exported
-      ${path}/paperless-manage document_exporter ${path}/exported
-      echo ${path}/exported/
-    '';
+  modules.backups.paperless.dynamicFilesFrom = let
+    path = config.services.paperless.dataDir;
+  in ''
+    mkdir -p ${path}/exported
+    ${path}/paperless-manage document_exporter ${path}/exported
+    echo ${path}/exported/
+  '';
 
   services.nginx.virtualHosts = {
     "docs.stu-dev.me" = {

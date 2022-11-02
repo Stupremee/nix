@@ -26,24 +26,18 @@
     hyprpaper.inputs.nixpkgs.follows = "unstable";
   };
 
-  outputs =
-    inputs@{ self
-    , nixpkgs
-    , unstable
-    , home-manager
-    , flake-parts
-    , deploy-rs
-    , agenix
-    , hyprland
-    , hyprland-contrib
-    , hyprpaper
-    }: flake-parts.lib.mkFlake { inherit self; } {
+  outputs = {
+    self,
+    flake-parts,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit self;} {
       imports = [
         ./shell.nix
         ./systems
         ./nixos/deploy.nix
       ];
 
-      systems = [ "x86_64-linux" "aarch64-darwin" ];
+      systems = ["x86_64-linux" "aarch64-darwin"];
     };
 }

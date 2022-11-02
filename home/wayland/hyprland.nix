@@ -1,5 +1,11 @@
-{ inputs, system, pkgs, theme, lib, ... }:
-let
+{
+  inputs,
+  system,
+  pkgs,
+  theme,
+  lib,
+  ...
+}: let
   inherit (builtins) concatStringsSep genList toString;
   inherit (lib) removePrefix;
 
@@ -11,9 +17,7 @@ let
     enableXWayland = true;
     nvidiaPatches = true;
   };
-in
-{
-
+in {
   home.packages = with pkgs; [
     # making screenshots
     slurp
@@ -55,6 +59,7 @@ in
       input {
         kb_layout eu
         follow_mouse=1
+        sensitivity=-0.5
       }
 
       general {
@@ -110,14 +115,17 @@ in
 
       # workspaces
       ${concatStringsSep "\n" (genList (
-        key: let
-          ws = if key == 0 then 10 else key;
-        in ''
-          bind=SUPER,${toString key},workspace,${toString ws}
-          bind=SUPER_SHIFT,${toString key},movetoworkspacesilent,${toString ws}
-        ''
-      )
-      10 )}
+          key: let
+            ws =
+              if key == 0
+              then 10
+              else key;
+          in ''
+            bind=SUPER,${toString key},workspace,${toString ws}
+            bind=SUPER_SHIFT,${toString key},movetoworkspacesilent,${toString ws}
+          ''
+        )
+        10)}
 
       # window resize
       bind=SUPER,r,submap,resize

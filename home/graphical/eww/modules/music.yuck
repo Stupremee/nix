@@ -1,7 +1,7 @@
 (defvar music_reveal false)
 
-(defpoll :interval "3s" music "scripts/music")
-(defpoll :interval "3s" music_cover "scripts/music cover")
+(defpoll music :interval "3s" "scripts/music")
+(defpoll music_cover :interval "3s" "scripts/music cover")
 
 (defwidget music []
   (eventbox

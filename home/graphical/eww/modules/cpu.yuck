@@ -1,0 +1,9 @@
+(defwidget cpu []
+  (circular-progress
+    :value "${EWW_CPU.avg}"
+    :class "cpubar module"
+    :thickness 3
+    (button
+      :tooltip "${round(EWW_CPU.avg,0)}% CPU"
+      ; :onclick "${EWW_CMD} open --toggle system-menu"
+      (label :class "icon-text" :text ""))))

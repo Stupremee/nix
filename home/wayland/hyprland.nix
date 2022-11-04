@@ -55,6 +55,7 @@ in {
       workspace=DP-2,10
 
       exec-once = hyprpaper
+      exec-once = eww open bar
 
       input {
         kb_layout eu
@@ -159,6 +160,16 @@ in {
       # dismiss notifications
       bind=CTRL,65,exec,makoctl dismiss
       bind=CTRL_SHIFT,65,exec,makoctl restore
+
+      # media controls
+      bindl = , XF86AudioPlay, exec, playerctl play-pause
+      bindl = , XF86AudioPrev, exec, playerctl previous
+      bindl = , XF86AudioNext, exec, playerctl next
+      # volume
+      bindle = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+      bindle = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      bindl = , XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
     '';
   };
 

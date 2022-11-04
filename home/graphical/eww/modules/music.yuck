@@ -1,0 +1,26 @@
+(defvar music_reveal false)
+
+(defpoll :interval "3s" music "scripts/music")
+(defpoll :interval "3s" music_cover "scripts/music cover")
+
+(defwidget music []
+  (eventbox
+    :onhover "${EWW_CMD} update music_reveal=true"
+    :onhoverlost "${EWW_CMD} update music_reveal=false"
+    (box :class "module"
+      :space-evenly false
+      (box
+        :class "song-cover-art"
+        :style "background-image: url(\"${music_cover}\")")
+      (button
+        :class "module module-music"
+        :onclick "${EWW_CMD} open --toggle music"
+        "${music.title} - ${music.artist}")
+      (revealer
+        :transition "slideright"
+        :reveal music_reveal
+        :duration "250ms"
+        (box
+          (button :class "song-button" :timeout "2s" :onclick "playerctl previous" "")
+          (button :class "song-button" :timeout "2s" :onclick "playerctl play-pause" {music.status})
+          (button :class "song-button" :timeout "2s" :onclick "playerctl next" ""))))))

@@ -77,7 +77,7 @@ in {
       };
 
       cmd_duration = {
-        show_notifications = true;
+        show_notifications = false;
         min_time = 10000;
         min_time_to_notify = 60000;
       };

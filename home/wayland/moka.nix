@@ -28,6 +28,14 @@ in {
 
   programs.mako = {
     enable = true;
+    package = pkgs.mako.overrideAttrs (_: {
+      src = pkgs.fetchFromGitHub {
+        owner = "emersion";
+        repo = "mako";
+        rev = "5eca7d58bf9eb658ece1b32da586627118f00642";
+        sha256 = "sha256-YRCS+6or/Z6KJ0wRfZDkvwbjAH2FwL5muQfVoFtq/lI=";
+      };
+    });
 
     borderRadius = 4;
     borderSize = 2;
@@ -41,6 +49,7 @@ in {
 
     extraConfig = ''
       max-icon-size=32
+      output=HDMI-A-1
 
       [urgency=low]
       border-color=${theme.lavender}
@@ -50,6 +59,9 @@ in {
 
       [urgency=critical]
       border-color=${theme.red}
+
+      [mode=do-not-disturb]
+      invisible=1
     '';
   };
 }

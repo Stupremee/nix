@@ -10,6 +10,11 @@
   last = lib.substring 1 len theme.name;
   upperTheme = "${first}${last}";
 in {
+  imports = [
+    ./eww
+    ./media.nix
+  ];
+
   home.packages = with pkgs; [
     firefox-wayland
   ];

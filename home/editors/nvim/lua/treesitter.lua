@@ -1,9 +1,9 @@
-local status_ok, treesitter = pcall(require, "nvim-treesitter")
+local status_ok, _ = pcall(require, "nvim-treesitter")
 if not status_ok then
 	return
 end
 
-local status_ok, configs = pcall(require, "nvim-treesitter.configs")
+local _, configs = pcall(require, "nvim-treesitter.configs")
 if not status_ok then
 	return
 end
@@ -19,7 +19,7 @@ configs.setup({
 	ignore_install = { },
 	sync_install = false,
   auto_install = true,
-  
+
   highlight = {
 		enable = true,
 		disable = { },
@@ -29,7 +29,7 @@ configs.setup({
 
 	indent = {
     enable = true,
-    disable = { }
+    disable = { "nix", "yuck" }
   },
 
 	context_commentstring = {

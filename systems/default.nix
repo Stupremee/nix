@@ -18,6 +18,7 @@
     ../nixos/modules/tailscale.nix
     ../nixos/modules/vaultwarden.nix
     ../nixos/modules/backup.nix
+    ../nixos/modules/age.nix
 
     inputs.agenix.nixosModule
     inputs.home-manager.nixosModule
@@ -32,7 +33,7 @@
       theme = (import ../themes {inherit lib;})."${theme}";
       unstable-pkgs = inputs.unstable.legacyPackages."${system}";
     };
-    home-manager.users.stu = {pkgs, ...}: {
+    home-manager.users.stu = {...}: {
       # Default imports for the user
       imports =
         [

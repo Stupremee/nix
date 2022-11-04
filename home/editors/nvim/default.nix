@@ -6,9 +6,6 @@
 }: let
   pkgs = unstable-pkgs;
 
-  inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
-  inherit (pkgs) fetchFromGitHub;
-
   extraPackages = with unstable-pkgs; [
     gcc
     tree-sitter
@@ -19,7 +16,6 @@
 
     # linters
     deadnix
-    statix
 
     # language servers
     rust-analyzer
@@ -55,6 +51,7 @@
 
       nvim-treesitter
       nvim-ts-context-commentstring
+      yuck-vim
 
       nvim-web-devicons
       vim-bbye

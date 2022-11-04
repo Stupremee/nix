@@ -14,6 +14,5 @@ null_ls.setup {
     formatting.stylua,
     formatting.alejandra,
     diagnostics.deadnix,
-    diagnostics.statix,
   },
 }

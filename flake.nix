@@ -24,6 +24,9 @@
 
     hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprpaper.inputs.nixpkgs.follows = "unstable";
+
+    eww.url = "github:elkowar/eww";
+    eww.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs = {

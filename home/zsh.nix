@@ -45,6 +45,10 @@ in {
     ];
 
     initExtra = ''
+      if command -v tmux &> /dev/null && [ "$TMUX" = "" ]; then
+        tmux
+      fi
+
       ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
       # Include hidden files in completions

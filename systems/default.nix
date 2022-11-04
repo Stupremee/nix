@@ -98,6 +98,7 @@ in {
         ../home/pgp.nix
         ../home/xdg.nix
         ../home/zsh.nix
+        ../home/tmux.nix
         ../home/nix-index.nix
         ../home/editors/nvim
         ../home/graphical

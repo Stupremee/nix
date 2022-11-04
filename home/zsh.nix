@@ -45,7 +45,7 @@ in {
     ];
 
     initExtra = ''
-      if command -v tmux &> /dev/null && [ "$TMUX" = "" ]; then
+      if command -v tmux &> /dev/null && [ "$TMUX" = "" ] && [[ "$(tty)" != /dev/tty* ]]; then
         tmux
       fi
 

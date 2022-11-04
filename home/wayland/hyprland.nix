@@ -55,7 +55,7 @@ in {
       workspace=DP-2,10
 
       exec-once = hyprpaper
-      exec-once = eww open bar
+      exec-once = eww open bar'
 
       input {
         kb_layout eu

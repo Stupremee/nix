@@ -8,8 +8,8 @@
   ...
 }: let
   eww = inputs.eww.packages."${system}".eww-wayland;
-
-  deps = with pkgs; [
+in {
+  home.packages = with pkgs; [
     config.wayland.windowManager.hyprland.package
     config.programs.mako.package
     bash
@@ -29,31 +29,15 @@
     pavucontrol
     playerctl
     wget
-    libnotify
+    eww
   ];
-in {
+
   xdg.configFile."eww" = {
     recursive = true;
     source = lib.cleanSourceWith {
       filter = name: _: !(lib.hasSuffix ".nix" name);
       src = lib.cleanSource ./.;
     };
-  };
-
-  home.packages = [eww];
-
-  systemd.user.services.eww = {
-    Unit = {
-      Description = "Eww Daemon";
-      PartOf = ["graphical-session.target"];
-    };
-
-    Service = {
-      Environment = "PATH=/run/wrappers/bin:${lib.makeBinPath deps}";
-      ExecStart = "${eww}/bin/eww daemon --no-daemonize";
-    };
-
-    Install.WantedBy = ["graphical-session.target"];
   };
 
   xdg.configFile."eww/css/_colors.scss".text = ''

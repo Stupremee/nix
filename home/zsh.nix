@@ -1,16 +1,26 @@
-{
-  pkgs,
-  theme,
-  config,
-  ...
-}: let
+{ pkgs
+, theme
+, config
+, ...
+}:
+let
+  inherit (pkgs) fetchFromGitHub;
+
   zshPlugin = src: rec {
     inherit src;
     name = src.pname;
     file = "share/${name}/${name}.zsh";
   };
-in {
-  home.packages = with pkgs; [comma];
+
+  ohmyzsh = fetchFromGitHub {
+    owner = "ohmyzsh";
+    repo = "ohmyzsh";
+    rev = "ac0924930d48217e127523809dc5d386fb3403a4";
+    sha256 = "sha256-j7ppGmNnfgep6JDdv5nn2gUGSOx4iPPc5afL1WDF3ZY=";
+  };
+in
+{
+  home.packages = with pkgs; [ comma ];
 
   programs.fzf = {
     enable = true;
@@ -43,6 +53,15 @@ in {
       (zshPlugin zsh-syntax-highlighting)
       (zshPlugin zsh-history-substring-search)
     ];
+
+    envExtra = ''
+      export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+      mkdir -p $ZSH_CACHE_DIR/completions
+
+      function load_plugin() {
+        source "${ohmyzsh}/plugins/$1/$1.plugin.zsh"
+      }
+    '';
 
     initExtra = ''
       if command -v tmux &> /dev/null && [ "$TMUX" = "" ] && [[ "$(tty)" != /dev/tty* ]]; then

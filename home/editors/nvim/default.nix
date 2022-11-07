@@ -101,7 +101,9 @@
       });
 in {
   home.packages = [neovim pkgs.nvimpager];
+
   home.sessionVariables.EDITOR = "${neovim}/bin/nvim";
+  home.sessionVariables.MANPAGER = "${pkgs.nvimpager}/bin/nvimpager";
   home.sessionVariables.PAGER = "${pkgs.nvimpager}/bin/nvimpager";
 
   xdg.configFile."nvim/init.vim".text = config.neovimRcContent;

@@ -19,6 +19,16 @@
       a = "add";
     };
 
+    includes = [{
+      condition = "gitdir:~/dev/work/";
+      contents = {
+        user = {
+          name = "Justus Kliem";
+          email = "justus.kliem@esyon.de";
+        };
+      };
+    }];
+
     lfs.enable = true;
 
     extraConfig = {

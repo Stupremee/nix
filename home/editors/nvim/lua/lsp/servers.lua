@@ -1,20 +1,8 @@
 local servers = {
   "rust_analyzer",
+  "taplo",
   "sumneko_lua",
   "rnix",
-}
-
-local settings = {
-	ui = {
-		border = "none",
-		icons = {
-			package_installed = "◍",
-			package_pending = "◍",
-			package_uninstalled = "◍",
-		},
-	},
-	log_level = vim.log.levels.INFO,
-	max_concurrent_installers = 4,
 }
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
@@ -37,5 +25,31 @@ for _, server in pairs(servers) do
 		opts = vim.tbl_deep_extend("force", conf_opts, opts)
 	end
 
-	lspconfig[server].setup(opts)
+  if server == "rust_analyzer" then
+    require("rust-tools").setup {
+      tools = {
+        on_initialized = function()
+          vim.cmd [[
+            autocmd BufEnter,CursorHold,InsertLeave,BufWritePost *.rs silent! lua vim.lsp.codelens.refresh()
+          ]]
+        end,
+      },
+      server = {
+        on_attach = require("user.lsp.handlers").on_attach,
+        capabilities = require("user.lsp.handlers").capabilities,
+        settings = {
+          ["rust-analyzer"] = {
+            lens = {
+              enable = true,
+            },
+            checkOnSave = {
+              command = "clippy",
+            },
+          },
+        },
+      },
+    }
+  else
+	  lspconfig[server].setup(opts)
+  end
 end

@@ -21,6 +21,7 @@
     rust-analyzer
     rnix-lsp
     sumneko-lua-language-server
+    taplo-lsp
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {
@@ -45,6 +46,7 @@
       nvim-lspconfig
       null-ls-nvim
       vim-illuminate
+      rust-tools-nvim
 
       luasnip
       friendly-snippets
@@ -107,6 +109,11 @@ in {
   home.sessionVariables.PAGER = "${pkgs.nvimpager}/bin/nvimpager";
 
   xdg.configFile."nvim/init.vim".text = config.neovimRcContent;
+
+  xdg.configFile."nvim/ftplugin" = {
+    recursive = true;
+    source = ./ftplugin;
+  };
 
   xdg.configFile."nvim/lua/user" = {
     recursive = true;

@@ -33,6 +33,7 @@
       yq
       manix
       git
+      pv
 
       man-db
       man-pages

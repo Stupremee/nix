@@ -102,7 +102,7 @@ in {
         ../home/nix-index.nix
         ../home/editors/nvim
         ../home/graphical
-        ../home/dev/k8s.nix
+        ../home/dev
       ];
     };
   };

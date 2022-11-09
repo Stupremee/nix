@@ -3,6 +3,8 @@ local servers = {
   "taplo",
   "sumneko_lua",
   "rnix",
+  "terraformls",
+  "bashls",
 }
 
 local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")

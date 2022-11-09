@@ -1,9 +1,9 @@
-{
-  unstable-pkgs,
-  lib,
-  theme,
-  ...
-}: let
+{ unstable-pkgs
+, lib
+, theme
+, ...
+}:
+let
   pkgs = unstable-pkgs;
 
   extraPackages = with unstable-pkgs; [
@@ -22,6 +22,9 @@
     rnix-lsp
     sumneko-lua-language-server
     taplo-lsp
+    terraform-ls
+    nodePackages.bash-language-server
+    shellcheck
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {
@@ -32,7 +35,7 @@
     viAlias = true;
     vimAlias = true;
 
-    plugins = map (x: {plugin = x;}) (with pkgs.vimPlugins; [
+    plugins = map (x: { plugin = x; }) (with pkgs.vimPlugins; [
       impatient-nvim
       catppuccin-nvim
 
@@ -96,13 +99,14 @@
 
   neovim =
     pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped
-    (config
-      // {
+      (config
+        // {
         wrapperArgs = (lib.escapeShellArgs config.wrapperArgs) + " --suffix PATH : \"${lib.makeBinPath extraPackages}\"";
         wrapRc = false;
       });
-in {
-  home.packages = [neovim pkgs.nvimpager];
+in
+{
+  home.packages = [ neovim pkgs.nvimpager ];
 
   home.sessionVariables.EDITOR = "${neovim}/bin/nvim";
   home.sessionVariables.MANPAGER = "${pkgs.nvimpager}/bin/nvimpager";

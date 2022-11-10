@@ -9,6 +9,19 @@ indent_blankline.setup {
   show_first_indent_level = false,
   use_treesitter = true,
   show_current_context = false,
+
+  char_highlight_list = {
+    "IndentBlanklineChar",
+  },
+  -- char_highlight_list = {
+  --   "IndentBlanklineIndent1",
+  --   "IndentBlanklineIndent2",
+  --   "IndentBlanklineIndent3",
+  --   "IndentBlanklineIndent4",
+  --   "IndentBlanklineIndent5",
+  --   "IndentBlanklineIndent6",
+  -- },
+
   buftype_exclude = { "terminal", "nofile" },
   filetype_exclude = {
     "help",

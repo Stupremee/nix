@@ -77,8 +77,8 @@ let
       :lua require("user.keymaps")
       :lua require("user.autocommands")
 
-      let g:catppuccin_flavor = "${theme.name}"
       :lua require("user.colorscheme")
+      :Catppuccin ${theme.name}
 
       :lua require("user.cmp")
       :lua require("user.telescope")

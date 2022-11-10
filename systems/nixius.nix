@@ -8,6 +8,10 @@
     keyMap = "us";
   };
 
+  # enable docker
+  virtualisation.podman.enable = true;
+  virtualisation.oci-containers.backend = "podman";
+
   # 16 core machine
   nix.maxJobs = 16;
 

@@ -1,10 +1,21 @@
-{ unstable-pkgs
-, lib
-, theme
-, ...
-}:
-let
+{
+  unstable-pkgs,
+  lib,
+  theme,
+  ...
+}: let
   pkgs = unstable-pkgs;
+
+  base64-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "base64-nvim";
+    version = "67fb5f1";
+    src = pkgs.fetchFromGitHub {
+      owner = "moevis";
+      repo = "base64.nvim";
+      rev = "67fb5f12db252b3e2bd190250d3edbed7aa8d3aa";
+      sha256 = "sha256-eByAH1iy7Px/AhtA6FzMPgP56TgaR0p+UumXrHmlbuU=";
+    };
+  };
 
   extraPackages = with unstable-pkgs; [
     gcc
@@ -35,7 +46,7 @@ let
     viAlias = true;
     vimAlias = true;
 
-    plugins = map (x: { plugin = x; }) (with pkgs.vimPlugins; [
+    plugins = map (x: {plugin = x;}) (with pkgs.vimPlugins; [
       impatient-nvim
       catppuccin-nvim
 
@@ -69,6 +80,7 @@ let
       lualine-nvim
       project-nvim
       indent-blankline-nvim
+      base64-nvim
     ]);
 
     customRC = ''
@@ -99,18 +111,16 @@ let
 
   neovim =
     pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped
-      (config
-        // {
+    (config
+      // {
         wrapperArgs = (lib.escapeShellArgs config.wrapperArgs) + " --suffix PATH : \"${lib.makeBinPath extraPackages}\"";
         wrapRc = false;
       });
-in
-{
-  home.packages = [ neovim pkgs.nvimpager ];
+in {
+  home.packages = [neovim pkgs.nvimpager];
 
   home.sessionVariables.EDITOR = "${neovim}/bin/nvim";
   home.sessionVariables.MANPAGER = "${pkgs.nvimpager}/bin/nvimpager";
-  home.sessionVariables.PAGER = "${pkgs.nvimpager}/bin/nvimpager";
 
   xdg.configFile."nvim/init.vim".text = config.neovimRcContent;
 

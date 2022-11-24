@@ -1,7 +1,9 @@
-{pkgs, ...}: {
+{unstable-pkgs, ...}: {
+  home.packages = with unstable-pkgs; [delta];
+
   programs.git = {
     enable = true;
-    package = pkgs.gitAndTools.gitFull;
+    package = unstable-pkgs.gitAndTools.gitFull;
 
     userName = "Justus K";
     userEmail = "justus.k@protonmail.com";
@@ -19,24 +21,29 @@
       a = "add";
     };
 
-    includes = [{
-      condition = "gitdir:~/dev/work/";
-      contents = {
-        user = {
-          name = "Justus Kliem";
-          email = "justus.kliem@esyon.de";
+    includes = [
+      {
+        condition = "gitdir:~/dev/work/";
+        contents = {
+          user = {
+            name = "Justus Kliem";
+            email = "justus.kliem@esyon.de";
+          };
         };
-      };
-    }];
+      }
+    ];
 
     lfs.enable = true;
 
-    extraConfig = {
+    extraConfig = let
+      delta = "${unstable-pkgs.delta}/bin/delta";
+    in {
       pull.rebase = true;
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
-    };
 
-    delta.enable = true;
+      core.pager = delta;
+      interactive.diffFilter = "${delta} --color-only --features=interactive";
+    };
   };
 }

@@ -1,4 +1,8 @@
-{ unstable-pkgs, theme, ... }: {
+{
+  unstable-pkgs,
+  theme,
+  ...
+}: {
   home.packages = with unstable-pkgs; [
     kubectl
     kubernetes-helm

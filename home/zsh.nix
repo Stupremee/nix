@@ -1,9 +1,9 @@
-{ pkgs
-, theme
-, config
-, ...
-}:
-let
+{
+  pkgs,
+  theme,
+  config,
+  ...
+}: let
   inherit (pkgs) fetchFromGitHub;
 
   zshPlugin = src: rec {
@@ -18,9 +18,8 @@ let
     rev = "ac0924930d48217e127523809dc5d386fb3403a4";
     sha256 = "sha256-j7ppGmNnfgep6JDdv5nn2gUGSOx4iPPc5afL1WDF3ZY=";
   };
-in
-{
-  home.packages = with pkgs; [ comma ];
+in {
+  home.packages = with pkgs; [comma];
 
   programs.fzf = {
     enable = true;

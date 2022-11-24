@@ -66,3 +66,10 @@ keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
 -- Comment
 keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
 keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle.linewise(vim.fn.visualmode())<CR>')
+
+-- base64 encode
+keymap("n", "<leader>be", ":Base64Encode<CR>", opts)
+keymap("v", "<leader>be", ":Base64Encode<CR>", opts)
+
+keymap("n", "<leader>bd", ":Base64Decode<CR>", opts)
+keymap("v", "<leader>bd", ":Base64Decode<CR>", opts)

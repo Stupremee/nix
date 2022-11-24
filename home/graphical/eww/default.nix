@@ -50,8 +50,6 @@ in {
       Environment = "PATH=/run/wrappers/bin:${lib.makeBinPath deps}";
       ExecStart = "${eww}/bin/eww daemon --no-daemonize";
     };
-
-    Install.WantedBy = ["multi-user.target"];
   };
 
   xdg.configFile."eww/css/_colors.scss".text = ''

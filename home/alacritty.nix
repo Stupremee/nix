@@ -1,6 +1,7 @@
 {
   config,
   theme,
+  unstable-pkgs,
   ...
 }: let
   keybind = key: mods: action: {inherit key mods action;};
@@ -13,6 +14,7 @@ in {
   home.sessionVariables.TERMINAL = "${config.programs.alacritty.package}/bin/alacritty";
   programs.alacritty = {
     enable = true;
+    package = unstable-pkgs.alacritty;
 
     settings = {
       env.TERM = "xterm-256color";

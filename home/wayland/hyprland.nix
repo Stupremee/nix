@@ -55,7 +55,7 @@ in {
       workspace=DP-2,10
 
       exec-once = hyprpaper
-      exec-once = eww open bar
+      exec-once = systemctl start --user eww.service && eww open bar --no-daemonize
 
       input {
         kb_layout eu

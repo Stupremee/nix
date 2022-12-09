@@ -5,10 +5,12 @@
       experimental-features = nix-command flakes
     '';
 
-    allowedUsers = ["@wheel"];
-    trustedUsers = ["root" "@wheel"];
+    settings = {
+      allowed-users = ["@wheel"];
+      trusted-users = ["root" "@wheel"];
+      auto-optimise-store = true;
+    };
 
-    autoOptimiseStore = true;
     optimise = {
       automatic = true;
       dates = ["11:00"];

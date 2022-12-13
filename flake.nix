@@ -27,6 +27,9 @@
 
     eww.url = "github:elkowar/eww";
     eww.inputs.nixpkgs.follows = "unstable";
+
+    nil.url = "github:oxalica/nil";
+    nil.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs = {

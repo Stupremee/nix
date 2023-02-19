@@ -177,7 +177,6 @@ in {
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
     preload = ${theme.wallpaper}
-    wallpaper = DP-2,${theme.wallpaper}
-    wallpaper = HDMI-A-1,${theme.wallpaper}
+    wallpaper = DP-3,${theme.wallpaper}
   '';
 }

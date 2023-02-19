@@ -31,7 +31,6 @@
     # language servers
     rust-analyzer
     rnix-lsp
-    sumneko-lua-language-server
     taplo-lsp
     terraform-ls
     nodePackages.bash-language-server

@@ -26,4 +26,6 @@
       };
     };
   };
+
+  security.polkit.enable = true;
 }

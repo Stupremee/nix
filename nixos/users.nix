@@ -13,7 +13,7 @@ in {
     stu = {
       isNormalUser = true;
       home = "/home/stu";
-      extraGroups = ["wheel"];
+      extraGroups = ["wheel" "seat"];
       uid = 1000;
       openssh.authorizedKeys.keys = keys;
     };

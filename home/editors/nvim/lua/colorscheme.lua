@@ -3,14 +3,10 @@ if not status_ok then
   return
 end
 
-
 theme.setup({
   transparent_background = true,
   term_colors = true,
-  compile = {
-    enabled = true,
-    path = vim.fn.stdpath("cache") .. "/catppuccin",
-  },
+  compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
   integrations = {
     cmp = true,
     native_lsp = {
@@ -24,6 +20,6 @@ theme.setup({
     indent_blankline = {
       enabled = true,
       colored_indent_levels = false,
-    }
-  }
+    },
+  },
 })

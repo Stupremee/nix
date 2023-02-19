@@ -20,8 +20,8 @@
     ../nixos/modules/backup.nix
     ../nixos/modules/age.nix
 
-    inputs.agenix.nixosModule
-    inputs.home-manager.nixosModule
+    inputs.agenix.nixosModules.default
+    inputs.home-manager.nixosModules.default
     inputs.hyprland.nixosModules.default
   ];
 

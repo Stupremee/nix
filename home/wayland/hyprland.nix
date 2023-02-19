@@ -28,10 +28,17 @@ in {
     wlr-randr
     wl-clipboard
     wl-color-picker
+    pciutils
     imv
   ];
 
   programs.zsh.loginExtra = ''
+    export LIBVA_DRIVER_NAME=nvidia
+    export XDG_SESSION_TYPE=wayland
+    export GBM_BACKEND=nvidia-drm
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export WLR_NO_HARDWARE_CURSORS=1
+
     [ "$(tty)" = "/dev/tty1" ] && exec systemd-cat -t hyprland "${hyprland}/bin/Hyprland"
   '';
 
@@ -48,11 +55,8 @@ in {
 
     extraConfig = ''
       # Monitor configuration
-      monitor=HDMI-A-1,preferred,1920x0,1
-      workspace=HDMI-A-1,1
-
-      monitor=DP-2,preferred,0x0,1
-      workspace=DP-2,10
+      monitor=DP-3,2560x1440@144,0x0,1
+      workspace=DP-3,1
 
       exec-once = hyprpaper
       exec-once = systemctl start --user eww.service && eww open bar --no-daemonize
@@ -64,8 +68,6 @@ in {
       }
 
       general {
-        main_mod=SUPER
-
         gaps_in=5
         gaps_out=20
         border_size=2

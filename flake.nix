@@ -7,7 +7,6 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-    flake-parts.inputs.nixpkgs.follows = "nixpkgs";
 
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,17 +26,14 @@
 
     eww.url = "github:elkowar/eww";
     eww.inputs.nixpkgs.follows = "unstable";
-
-    nil.url = "github:oxalica/nil";
-    nil.inputs.nixpkgs.follows = "unstable";
   };
 
-  outputs = {
+  outputs = inputs @ {
     self,
     flake-parts,
     ...
   }:
-    flake-parts.lib.mkFlake {inherit self;} {
+    flake-parts.lib.mkFlake {inherit self inputs;} {
       imports = [
         ./shell.nix
         ./systems

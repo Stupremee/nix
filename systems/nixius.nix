@@ -13,7 +13,7 @@
   virtualisation.oci-containers.backend = "podman";
 
   # 16 core machine
-  nix.maxJobs = 16;
+  nix.settings.max-jobs = 16;
 
   # Set hostname
   networking.hostName = "nixius";

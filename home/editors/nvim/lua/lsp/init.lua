@@ -27,7 +27,7 @@ local rust_lsp = lsp.build_options("rust_analyzer", {
 require("user.lsp.settings.volar")
 
 lsp.configure("tailwindcss")
-lsp.configure("rnix")
+lsp.configure("nil_ls")
 lsp.configure("taplo")
 lsp.configure("terraformls")
 lsp.configure("eslint")

@@ -3,6 +3,8 @@
   lib,
   theme,
   packages,
+  inputs,
+  system,
   ...
 }: let
   pkgs = unstable-pkgs;
@@ -23,8 +25,8 @@
     packages."@tailwindcss/language-server"
     packages."vscode-langservers-extracted"
     packages."@fsouza/prettierd"
+    inputs.nil.packages."${system}".default
     rust-analyzer
-    rnix-lsp
     taplo-lsp
     terraform-ls
     lua-language-server

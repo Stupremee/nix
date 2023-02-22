@@ -1,5 +1,5 @@
 {unstable-pkgs, ...}: {
-  home.packages = with unstable-pkgs; [delta];
+  home.packages = with unstable-pkgs; [delta gh];
 
   programs.git = {
     enable = true;

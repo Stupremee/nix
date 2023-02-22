@@ -29,6 +29,12 @@
 
     devenv.url = "github:cachix/devenv/latest";
     devenv.inputs.nixpkgs.follows = "unstable";
+
+    nil.url = "github:oxalica/nil";
+    nil.inputs.nixpkgs.follows = "unstable";
+
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {

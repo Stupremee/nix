@@ -101,10 +101,11 @@ in {
         ../home/xdg.nix
         ../home/zsh.nix
         ../home/tmux.nix
-        ../home/nix-index.nix
         ../home/editors/nvim
         ../home/graphical
         ../home/dev
+
+        inputs.nix-index-database.hmModules.nix-index
       ];
     };
   };

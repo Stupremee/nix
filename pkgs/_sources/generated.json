@@ -1,0 +1,78 @@
+{
+    "base64-nvim": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "base64-nvim",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "moevis",
+            "repo": "base64.nvim",
+            "rev": "67fb5f12db252b3e2bd190250d3edbed7aa8d3aa",
+            "sha256": "sha256-eByAH1iy7Px/AhtA6FzMPgP56TgaR0p+UumXrHmlbuU=",
+            "type": "github"
+        },
+        "version": "67fb5f12db252b3e2bd190250d3edbed7aa8d3aa"
+    },
+    "dressing-nvim": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "dressing-nvim",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "stevearc",
+            "repo": "dressing.nvim",
+            "rev": "db716a0f1279f79a886c0e0b6ab3c3d5ffdb42fe",
+            "sha256": "sha256-tBO21/0rpil2lItFl9UzALXNJbvmSfQuW+LOGet9YgI=",
+            "type": "github"
+        },
+        "version": "db716a0f1279f79a886c0e0b6ab3c3d5ffdb42fe"
+    },
+    "lsp-zero-nvim": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "lsp-zero-nvim",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "VonHeikemen",
+            "repo": "lsp-zero.nvim",
+            "rev": "c7bd953f96be9997b7d6ab84ee64324fe3c784e8",
+            "sha256": "sha256-v+8Ax/hzIj2naZUHwopAiMsRP1wav5QX2Yl2RgOL30o=",
+            "type": "github"
+        },
+        "version": "c7bd953f96be9997b7d6ab84ee64324fe3c784e8"
+    },
+    "vue-language-server": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "vue-language-server",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "vuejs",
+            "repo": "language-tools",
+            "rev": "v1.1.7",
+            "sha256": "sha256-PmO/PX1vT7UU0Yz4MuouDhCHnzwU8BuFbGf46YzfSgo=",
+            "type": "github"
+        },
+        "version": "v1.1.7"
+    }
+}

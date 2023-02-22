@@ -1,0 +1,11 @@
+[base64-nvim]
+src.git = "https://github.com/moevis/base64.nvim"
+fetch.github = "moevis/base64.nvim"
+
+[dressing-nvim]
+src.git = "https://github.com/stevearc/dressing.nvim"
+fetch.github = "stevearc/dressing.nvim"
+
+[lsp-zero-nvim]
+src.git = "https://github.com/VonHeikemen/lsp-zero.nvim"
+fetch.github = "VonHeikemen/lsp-zero.nvim"

@@ -2,22 +2,12 @@
   unstable-pkgs,
   lib,
   theme,
+  packages,
   ...
 }: let
   pkgs = unstable-pkgs;
 
-  base64-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "base64-nvim";
-    version = "67fb5f1";
-    src = pkgs.fetchFromGitHub {
-      owner = "moevis";
-      repo = "base64.nvim";
-      rev = "67fb5f12db252b3e2bd190250d3edbed7aa8d3aa";
-      sha256 = "sha256-eByAH1iy7Px/AhtA6FzMPgP56TgaR0p+UumXrHmlbuU=";
-    };
-  };
-
-  extraPackages = with unstable-pkgs; [
+  extraPackages = with pkgs; [
     gcc
     tree-sitter
 
@@ -29,12 +19,12 @@
     deadnix
 
     # language servers
+    packages."@volar/vue-language-server"
+    packages."@tailwindcss/language-server"
     rust-analyzer
     rnix-lsp
     taplo-lsp
     terraform-ls
-    nodePackages.bash-language-server
-    shellcheck
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {
@@ -49,6 +39,9 @@
       impatient-nvim
       catppuccin-nvim
 
+      nvim-lspconfig
+      packages.lsp-zero-nvim
+
       nvim-cmp
       cmp-path
       cmp-buffer
@@ -56,13 +49,12 @@
       cmp-nvim-lsp
       cmp_luasnip
 
-      nvim-lspconfig
+      luasnip
+      friendly-snippets
+
       null-ls-nvim
       vim-illuminate
       rust-tools-nvim
-
-      luasnip
-      friendly-snippets
 
       nvim-treesitter
       nvim-ts-context-commentstring
@@ -79,10 +71,13 @@
       lualine-nvim
       project-nvim
       indent-blankline-nvim
-      base64-nvim
+      packages.base64-nvim
+      packages.dressing-nvim
     ]);
 
     customRC = ''
+      let g:typescript_server_path = "${pkgs.nodePackages.typescript}/lib/node_modules/typescript/lib"
+
       :lua require("user.impatient")
       :lua require("user.options")
       :lua require("user.keymaps")
@@ -91,7 +86,6 @@
       :lua require("user.colorscheme")
       :Catppuccin ${theme.name}
 
-      :lua require("user.cmp")
       :lua require("user.telescope")
       :lua require("user.gitsigns")
       :lua require("user.treesitter")
@@ -104,6 +98,7 @@
       :lua require("user.illuminate")
       :lua require("user.indentline")
       :lua require("user.alpha")
+      :lua require("user.dressing")
       :lua require("user.lsp")
     '';
   };

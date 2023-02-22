@@ -13,6 +13,7 @@
         treefmt
         alejandra
         shfmt
+        stylua
         nvfetcher
 
         inputs'.deploy-rs.packages.deploy-rs

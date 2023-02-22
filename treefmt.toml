@@ -6,3 +6,7 @@ includes = ["*.nix"]
 command = "shfmt"
 options = ["-i", "2", "-s", "-w"]
 includes = ["*.sh"]
+
+[formatter.lua]
+command = "stylua"
+includes = ["*.lua"]

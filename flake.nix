@@ -26,6 +26,9 @@
 
     eww.url = "github:elkowar/eww";
     eww.inputs.nixpkgs.follows = "unstable";
+
+    devenv.url = "github:cachix/devenv/latest";
+    devenv.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs = inputs @ {
@@ -37,6 +40,7 @@
       imports = [
         ./shell.nix
         ./systems
+        ./pkgs
         ./nixos/deploy.nix
       ];
 

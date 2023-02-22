@@ -8,29 +8,29 @@ if not status_ok then
 	return
 end
 
-local dir = vim.fn.stdpath("cache").. "/treesitter"
+local dir = vim.fn.stdpath("cache") .. "/treesitter"
 
 vim.opt.runtimepath:append(dir)
 
 configs.setup({
-  parser_install_dir = dir,
+	parser_install_dir = dir,
 
-  ensure_installed = { "rust", "nix", "lua" },
-	ignore_install = { },
+	ensure_installed = { "rust", "nix", "lua" },
+	ignore_install = {},
 	sync_install = false,
-  auto_install = true,
+	auto_install = true,
 
-  highlight = {
+	highlight = {
 		enable = true,
-		disable = { },
+		disable = {},
 	},
 
-	autopairs = { enable = true, },
+	autopairs = { enable = true },
 
 	indent = {
-    enable = true,
-    disable = { "nix", "yuck" }
-  },
+		enable = true,
+		disable = { "nix", "yuck" },
+	},
 
 	context_commentstring = {
 		enable = true,

@@ -1,6 +1,7 @@
 {
   lib,
   inputs,
+  self,
   ...
 }: let
   inherit (lib) optionals;
@@ -32,6 +33,7 @@
       inherit inputs system;
       theme = (import ../themes {inherit lib;})."${theme}";
       unstable-pkgs = inputs.unstable.legacyPackages."${system}";
+      packages = self.packages."${system}";
     };
     home-manager.users.stu = {...}: {
       # Default imports for the user

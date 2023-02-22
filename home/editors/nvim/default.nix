@@ -21,10 +21,13 @@
     # language servers
     packages."@volar/vue-language-server"
     packages."@tailwindcss/language-server"
+    packages."vscode-langservers-extracted"
+    packages."@fsouza/prettierd"
     rust-analyzer
     rnix-lsp
     taplo-lsp
     terraform-ls
+    lua-language-server
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {
@@ -58,6 +61,7 @@
 
       nvim-treesitter
       nvim-ts-context-commentstring
+      nvim-ts-autotag
       yuck-vim
 
       nvim-web-devicons

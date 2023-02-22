@@ -23,7 +23,16 @@ local rust_lsp = lsp.build_options("rust_analyzer", {
 	},
 })
 
+-- Load all servers
 require("user.lsp.settings.volar")
+
+lsp.configure("tailwindcss")
+lsp.configure("rnix")
+lsp.configure("taplo")
+lsp.configure("terraformls")
+lsp.configure("eslint")
+lsp.configure("jsonls")
+lsp.configure("lua_ls")
 
 lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = bufnr })
@@ -66,9 +75,9 @@ null_ls.setup({
 	sources = {
 		formatting.alejandra,
 		formatting.stylua,
+		formatting.prettierd,
 
 		diagnostics.deadnix,
-		diagnostics.eslint,
 	},
 	on_attach = function(client, bufnr)
 		null_opts.on_attach(client, bufnr)

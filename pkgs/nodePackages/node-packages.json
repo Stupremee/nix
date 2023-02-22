@@ -1,4 +1,6 @@
 [
   "@volar/vue-language-server",
-  "@tailwindcss/language-server"
+  "@tailwindcss/language-server",
+  "vscode-langservers-extracted",
+  "@fsouza/prettierd"
 ]

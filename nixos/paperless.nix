@@ -7,7 +7,11 @@
   tikaPort = "33001";
   gotenbergPort = "33002";
 in {
-  age.secrets.paperlessPassword.file = ../secrets/password/paperless;
+  age.secrets.paperlessPassword = {
+    file = ../secrets/password/paperless;
+    owner = "paperless";
+    group = "paperless";
+  };
 
   services.paperless = {
     enable = true;

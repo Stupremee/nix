@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  unstable-pkgs,
   ...
 }: let
   tikaPort = "33001";
@@ -13,9 +12,8 @@ in {
     group = "paperless";
   };
 
-  modules.services.paperless = {
+  services.paperless = {
     enable = true;
-    package = unstable-pkgs.paperless-ngx;
     passwordFile = builtins.toString config.age.secrets.paperlessPassword.path;
 
     extraConfig = {
@@ -30,7 +28,7 @@ in {
   };
 
   modules.backups.paperless.dynamicFilesFrom = let
-    path = config.modules.services.paperless.dataDir;
+    path = config.services.paperless.dataDir;
   in ''
     mkdir -p ${path}/exported
     ${path}/paperless-manage document_exporter ${path}/exported
@@ -39,7 +37,7 @@ in {
 
   services.nginx.virtualHosts = {
     "docs.stu-dev.me" = {
-      locations."/".proxyPass = "http://127.0.0.1:${builtins.toString config.modules.services.paperless.port}";
+      locations."/".proxyPass = "http://127.0.0.1:${builtins.toString config.services.paperless.port}";
 
       onlySSL = true;
 

@@ -61,7 +61,7 @@ in {
       "L+ /etc/nixos - - - - ${toString cfg.persistDir}/etc/nixos"
     ];
 
-    modules.services.paperless.dataDir = "${toString cfg.persistDir}/var/lib/paperless";
+    services.paperless.dataDir = "${toString cfg.persistDir}/var/lib/paperless";
     modules.vaultwarden.dataDir = "${toString cfg.persistDir}/var/lib/vaultwarden";
   };
 }

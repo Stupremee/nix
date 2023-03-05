@@ -37,7 +37,14 @@ in {
 
   services.nginx.virtualHosts = {
     "docs.stu-dev.me" = {
-      locations."/".proxyPass = "http://127.0.0.1:${builtins.toString config.services.paperless.port}";
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${builtins.toString config.services.paperless.port}";
+
+        extraConfig = ''
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $connection_upgrade;
+        '';
+      };
 
       onlySSL = true;
 

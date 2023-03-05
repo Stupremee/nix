@@ -13,7 +13,7 @@ in {
     group = "paperless";
   };
 
-  services.paperless = {
+  modules.services.paperless = {
     enable = true;
     package = unstable-pkgs.paperless-ngx;
     passwordFile = builtins.toString config.age.secrets.paperlessPassword.path;
@@ -30,7 +30,7 @@ in {
   };
 
   modules.backups.paperless.dynamicFilesFrom = let
-    path = config.services.paperless.dataDir;
+    path = config.modules.services.paperless.dataDir;
   in ''
     mkdir -p ${path}/exported
     ${path}/paperless-manage document_exporter ${path}/exported
@@ -39,7 +39,7 @@ in {
 
   services.nginx.virtualHosts = {
     "docs.stu-dev.me" = {
-      locations."/".proxyPass = "http://127.0.0.1:${builtins.toString config.services.paperless.port}";
+      locations."/".proxyPass = "http://127.0.0.1:${builtins.toString config.modules.services.paperless.port}";
 
       onlySSL = true;
 

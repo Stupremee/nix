@@ -20,6 +20,7 @@
     ../nixos/modules/vaultwarden.nix
     ../nixos/modules/backup.nix
     ../nixos/modules/age.nix
+    ../nixos/modules/paperless.nix
 
     inputs.agenix.nixosModules.default
     inputs.home-manager.nixosModules.default

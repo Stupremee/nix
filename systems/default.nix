@@ -83,6 +83,17 @@ in {
       ];
     };
 
+    ironite = mkSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./ironite.nix
+      ];
+      home = true;
+      homeModules = [
+        ../home/git.nix
+      ];
+    };
+
     nixius = mkSystem {
       system = "x86_64-linux";
       modules = [

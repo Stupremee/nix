@@ -20,6 +20,7 @@
       automatic = true;
       # Run garbage collector every sunday at 1PM
       dates = "Sun 13:00";
+      options = "--delete-older-than 7d";
     };
   };
 

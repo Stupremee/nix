@@ -1,4 +1,4 @@
-{lib, ...}: {
+{...}: {
   # Use networkd
   systemd.network.enable = true;
   networking.useNetworkd = true;

@@ -7,6 +7,7 @@ let
   systems = {
     nether = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBne4vK09XX3lP/aA//9N0CMj9Qvw2pV0TiB1q9yWEsV root@nether";
     nixius = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFefmq/NK8J6q0Mf/6Gka3QeVOvAyljGlHLtC62WV81d root@nixius";
+    ironite = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDo+vwZL8/jfJpRzTjhBKwHC7HfKJLP5ffXiOse5HOAo root@ironite";
   };
 
   keysForSystem = system: users ++ [systems."${system}"];
@@ -25,4 +26,6 @@ in {
 
   "spotify".publicKeys = keysForSystem "nixius";
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
+
+  "argotunnel.json".publicKeys = keysForSystem "ironite";
 }

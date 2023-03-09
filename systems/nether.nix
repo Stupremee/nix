@@ -1,4 +1,9 @@
-{modulesPath, ...}: {
+{
+  pkgs,
+  config,
+  modulesPath,
+  ...
+}: {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
   ];
@@ -30,6 +35,19 @@
     loader.grub.enable = true;
     loader.grub.version = 2;
     loader.grub.devices = ["/dev/sda"];
+  };
+
+  virtualisation.containers.storage.settings.storage = {
+    driver = "zfs";
+    graphroot =
+      if config.modules.eraseDarlings.enable
+      then "/persist/var/lib/containers/storage"
+      else "/var/lib/containers/storage";
+    runroot = "/run/containers/storage";
+  };
+
+  virtualisation.podman = {
+    extraPackages = [pkgs.zfs];
   };
 
   # Networking

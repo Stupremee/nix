@@ -12,7 +12,7 @@
     ../nixos/network/sshd.nix
     ../nixos/network/network.nix
     ../nixos/network/tailscale.nix
-    ../nixos/shell.nix
+    ../nixos/zsh.nix
 
     ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix
@@ -87,6 +87,9 @@ in {
       system = "x86_64-linux";
       modules = [
         ./ironite.nix
+        ../nixos/server.nix
+        ../nixos/containers.nix
+        ../nixos/argo-tunnel.nix
       ];
       home = true;
       homeModules = [

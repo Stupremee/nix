@@ -24,4 +24,5 @@ in {
   "vaultwarden.env".publicKeys = keysForSystem "nether";
 
   "spotify".publicKeys = keysForSystem "nixius";
+  "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
 }

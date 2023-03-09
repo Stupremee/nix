@@ -1,4 +1,8 @@
-{modulesPath, ...}: {
+{
+  modulesPath,
+  config,
+  ...
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -21,6 +25,15 @@
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "Europe/Berlin";
+
+  # OpenVPN
+  age.secrets.esyvpn.file = ../secrets/esyvpn.ovpn;
+
+  services.openvpn.servers = {
+    esy = {
+      config = ''config ${config.age.secrets.esyvpn.path} '';
+    };
+  };
 
   # Boot configuration
   boot = {

@@ -11,6 +11,7 @@
 
   # Hostname and HostId
   networking.hostName = "ironite";
+  networking.hostId = "03259b66";
 
   modules.deploy.enable = true;
 

@@ -20,7 +20,7 @@
   # Erase `/` on every boot
   modules.eraseDarlings.enable = true;
   modules.eraseDarlings.machineId = "03259b66332b4f0eaef821867120f952";
-  modules.eraseDarlings.rootSnapshopt = "rpool/root@blank";
+  modules.eraseDarlings.rootSnapshot = "rpool/root@blank";
 
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";

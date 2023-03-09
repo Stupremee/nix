@@ -14,7 +14,7 @@
 
   modules.deploy.enable = true;
 
-  nix.maxJobs = 16;
+  nix.settings.max-jobs = 16;
 
   # Mutable users are not required on this server
   users.mutableUsers = false;

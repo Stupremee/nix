@@ -11,17 +11,13 @@
 
   # Hostname and HostId
   networking.hostName = "ironite";
-  networking.hostId = "03259b66";
 
   modules.deploy.enable = true;
 
+  nix.maxJobs = 16;
+
   # Mutable users are not required on this server
   users.mutableUsers = false;
-
-  # Erase `/` on every boot
-  modules.eraseDarlings.enable = true;
-  modules.eraseDarlings.machineId = "03259b66332b4f0eaef821867120f952";
-  modules.eraseDarlings.rootSnapshot = "rpool/root@blank";
 
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";
@@ -77,33 +73,8 @@
   };
 
   fileSystems."/" = {
-    device = "rpool/root";
-    fsType = "zfs";
-  };
-
-  fileSystems."/nix" = {
-    device = "rpool/nix";
-    fsType = "zfs";
-  };
-
-  fileSystems."/boot" = {
-    device = "rpool/boot";
-    fsType = "zfs";
-  };
-
-  fileSystems."/home" = {
-    device = "rpool/home";
-    fsType = "zfs";
-  };
-
-  fileSystems."/persist" = {
-    device = "rpool/persist";
-    fsType = "zfs";
-  };
-
-  fileSystems."/persist/var/lib/postgres" = {
-    device = "rpool/postgres";
-    fsType = "zfs";
+    device = "/dev/disk/by-uuid/35c74bb8-230b-42b5-9331-6d6fffec3fb8";
+    fsType = "ext4";
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

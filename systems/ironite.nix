@@ -29,7 +29,6 @@
     initrd.kernelModules = ["dm-snapshot"];
     kernelModules = ["kvm-amd"];
     extraModulePackages = [];
-    supportedFilesystems = ["zfs"];
 
     kernelPackages = pkgs.linuxPackages_hardened;
 

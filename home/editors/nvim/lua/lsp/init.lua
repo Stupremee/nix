@@ -76,8 +76,10 @@ null_ls.setup({
 		formatting.alejandra,
 		formatting.stylua,
 		formatting.prettierd,
+		formatting.black,
 
 		diagnostics.deadnix,
+		diagnostics.flake8,
 	},
 	on_attach = function(client, bufnr)
 		null_opts.on_attach(client, bufnr)

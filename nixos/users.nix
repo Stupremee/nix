@@ -9,7 +9,7 @@ in {
     stu = {
       isNormalUser = true;
       home = "/home/stu";
-      extraGroups = ["wheel" "seat"];
+      extraGroups = ["wheel" "dialout"];
       uid = 1000;
       openssh.authorizedKeys.keys = keys;
     };

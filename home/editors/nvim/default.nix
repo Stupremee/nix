@@ -30,6 +30,8 @@
     taplo-lsp
     terraform-ls
     lua-language-server
+    python310Packages.flake8
+    python310Packages.black
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {

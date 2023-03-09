@@ -16,7 +16,7 @@ in {
 
         rootSnapshot = mkOption {
           type = types.str;
-          default = "rpool/local/root@blank";
+          default = "rpool/root@blank";
         };
 
         persistDir = mkOption {

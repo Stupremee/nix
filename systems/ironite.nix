@@ -13,10 +13,14 @@
   networking.hostName = "ironite";
 
   modules.deploy.enable = true;
-  modules.deploy.ip = "94.130.88.190";
 
   # Mutable users are not required on this server
   users.mutableUsers = false;
+
+  # Erase `/` on every boot
+  modules.eraseDarlings.enable = true;
+  modules.eraseDarlings.machineId = "03259b66332b4f0eaef821867120f952";
+  modules.eraseDarlings.rootSnapshopt = "rpool/root@blank";
 
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";
@@ -28,6 +32,7 @@
     initrd.kernelModules = ["dm-snapshot"];
     kernelModules = ["kvm-amd"];
     extraModulePackages = [];
+    supportedFilesystems = ["zfs"];
 
     kernelPackages = pkgs.linuxPackages_hardened;
 
@@ -37,13 +42,7 @@
       efiSupport = false;
       devices = ["/dev/sda" "/dev/sdb"];
     };
-
-    initrd.services.swraid.mdadmConf = config.environment.etc."mdadm.conf".text;
   };
-
-  environment.etc."mdadm.conf".text = ''
-    HOMEHOST <ignore>
-  '';
 
   # Networking
   networking = {
@@ -77,8 +76,33 @@
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/5d619fdb-390b-4999-9b31-4c1bb3d66235";
-    fsType = "ext4";
+    device = "rpool/root";
+    fsType = "zfs";
+  };
+
+  fileSystems."/nix" = {
+    device = "rpool/nix";
+    fsType = "zfs";
+  };
+
+  fileSystems."/boot" = {
+    device = "rpool/boot";
+    fsType = "zfs";
+  };
+
+  fileSystems."/home" = {
+    device = "rpool/home";
+    fsType = "zfs";
+  };
+
+  fileSystems."/persist" = {
+    device = "rpool/persist";
+    fsType = "zfs";
+  };
+
+  fileSystems."/persist/var/lib/postgres" = {
+    device = "rpool/postgres";
+    fsType = "zfs";
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

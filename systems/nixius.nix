@@ -69,6 +69,10 @@
     useDHCP = false;
 
     interfaces.enp24s0.useDHCP = true;
+
+    extraHosts = ''
+      192.168.17.65 usnconeboxax1aos.cloud.onebox.dynamics.com
+    '';
   };
 
   # File systems

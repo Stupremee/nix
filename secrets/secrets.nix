@@ -21,7 +21,7 @@ in {
   "password/keycloakDatabase".publicKeys = keysForSystem "ironite";
 
   "rclone.conf".publicKeys = keysForSystems ["nether" "ironite"];
-  "vaultwarden.env".publicKeys = keysForSystem "nether";
+  "vaultwarden.env".publicKeys = keysForSystems ["nether" "ironite"];
 
   "spotify".publicKeys = keysForSystem "nixius";
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";

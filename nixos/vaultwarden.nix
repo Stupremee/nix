@@ -1,20 +1,23 @@
-{config, ...}: let
-  cfg = config.modules.vaultwarden;
-in {
+{
+  config,
+  unstable-pkgs,
+  ...
+}: {
   age.secrets.vaultwardenEnv = {
     file = ../secrets/vaultwarden.env;
     owner = "vaultwarden";
     group = "vaultwarden";
   };
 
-  modules.vaultwarden = {
+  services.vaultwarden = {
     enable = true;
+    package = unstable-pkgs.vaultwarden;
 
     environmentFile = config.age.secrets.vaultwardenEnv.path;
     dbBackend = "postgresql";
 
     config = {
-      domain = "https://pw.stu-dev.me";
+      domain = "https://bw.stu-dev.me";
       signupsAllowed = false;
 
       rocketAddress = "127.0.0.1";
@@ -25,20 +28,11 @@ in {
   };
 
   modules.backups.vaultwarden.paths = [
-    config.modules.vaultwarden.dataDir
+    "/var/lib/bitwarden_rs"
     config.age.secrets.vaultwardenEnv.path
   ];
 
-  services.nginx.virtualHosts = {
-    "bw.stu-dev.me" = {
-      locations."/".proxyPass = "http://127.0.0.1:${builtins.toString cfg.config.rocketPort}";
-
-      onlySSL = true;
-
-      sslCertificate = config.age.secrets."cert/stu-dev.me.pem".path;
-      sslCertificateKey = config.age.secrets."cert/stu-dev.me.key".path;
-    };
-  };
+  modules.argo.route."bw.stu-dev.me".toPort = config.services.vaultwarden.config.rocketPort;
 
   services.postgresql.ensureDatabases = ["vaultwarden"];
   services.postgresql.ensureUsers = [

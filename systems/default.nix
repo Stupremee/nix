@@ -22,7 +22,6 @@
     ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix
     ../nixos/modules/tailscale.nix
-    ../nixos/modules/vaultwarden.nix
     ../nixos/modules/backup.nix
     ../nixos/modules/age.nix
     ../nixos/modules/argo.nix
@@ -103,6 +102,7 @@ in {
         ../nixos/containers.nix
         ../nixos/postgres.nix
         ../nixos/paperless.nix
+        ../nixos/vaultwarden.nix
         # ../nixos/keycloak.nix
       ];
       home = true;

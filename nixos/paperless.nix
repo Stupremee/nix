@@ -12,7 +12,7 @@ in {
     group = "paperless";
   };
 
-  modules.argo.route."iron.stu-dev.me".to = "http://localhost:${builtins.toString config.services.paperless.port}";
+  modules.argo.route."docs.stu-dev.me".toPort = config.services.paperless.port;
 
   services.paperless = {
     enable = true;
@@ -20,7 +20,7 @@ in {
     passwordFile = builtins.toString config.age.secrets.paperlessPassword.path;
 
     extraConfig = {
-      PAPERLESS_URL = "https://iron.stu-dev.me";
+      PAPERLESS_URL = "https://docs.stu-dev.me";
 
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
       PAPERLESS_TASK_WORKERS = 2;

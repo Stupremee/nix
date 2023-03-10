@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  inherit (builtins) concatStringsSep;
+  inherit (builtins) concatStringsSep toString;
   inherit (lib) mkOption types mkIf mapAttrsToList;
 
   cfg = config.modules.argo;
@@ -15,13 +15,22 @@
       to = mkOption {
         type = types.str;
       };
+
+      toPort = mkOption {
+        type = types.int;
+      };
     };
   };
 
   ingressRules =
-    mapAttrsToList (name: route: ''
+    mapAttrsToList (name: route: let
+      addr =
+        if route.toPort != null
+        then "http://localhost:${toString route.toPort}"
+        else route.to;
+    in ''
       - hostname: ${name}
-        service: ${route.to}
+        service: ${addr}
     '')
     cfg.route;
 

@@ -30,6 +30,7 @@
       file
       procs
       jq
+      dogdns
       yq
       manix
       git

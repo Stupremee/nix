@@ -103,7 +103,6 @@ in {
         ../nixos/postgres.nix
         ../nixos/paperless.nix
         ../nixos/vaultwarden.nix
-        # ../nixos/keycloak.nix
       ];
       home = true;
       homeModules = [

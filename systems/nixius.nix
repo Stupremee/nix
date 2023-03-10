@@ -72,6 +72,7 @@
 
     extraHosts = ''
       192.168.17.65 usnconeboxax1aos.cloud.onebox.dynamics.com
+      127.0.0.1 example.local
     '';
   };
 

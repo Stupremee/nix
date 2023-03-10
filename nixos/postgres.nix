@@ -20,8 +20,6 @@ in {
   ];
 
   modules.backups.postgresql = let
-    inherit (builtins) attrValues;
-
     compressSuffix = ".zstd";
     compressCmd = "${pkgs.zstd}/bin/zstd -c";
 

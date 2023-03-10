@@ -23,6 +23,10 @@
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "Europe/Berlin";
 
+  # Enable Argo tunnel
+  modules.argo.enable = true;
+  modules.argo.tunnel.name = "ironite";
+
   # Boot and Software RAID configuration
   boot = {
     initrd.availableKernelModules = ["ahci" "sd_mod"];

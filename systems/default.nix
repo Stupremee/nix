@@ -4,7 +4,12 @@
   self,
   ...
 }: let
-  inherit (lib) optionals;
+  inherit (builtins) map;
+  inherit (lib) optionals flatten;
+
+  overrideModules = [
+    "services/misc/paperless"
+  ];
 
   coreModules = [
     ../nixos/nix-daemon.nix
@@ -20,6 +25,7 @@
     ../nixos/modules/vaultwarden.nix
     ../nixos/modules/backup.nix
     ../nixos/modules/age.nix
+    ../nixos/modules/argo.nix
 
     inputs.agenix.nixosModules.default
     inputs.home-manager.nixosModules.default
@@ -59,8 +65,14 @@
         [
           {
             _module.args.unstable-pkgs = inputs.unstable.legacyPackages."${system}";
+            _module.args.packages = self.packages."${system}";
           }
         ]
+        ++ (flatten (map (mod: [
+            {disabledModules = ["${mod}.nix"];}
+            "${inputs.unstable}/nixos/modules/${mod}.nix"
+          ])
+          overrideModules))
         ++ coreModules
         ++ modules
         ++ (optionals home [(mkHomeModule homeModules system theme)]);
@@ -89,7 +101,9 @@ in {
         ./ironite.nix
         ../nixos/server.nix
         ../nixos/containers.nix
-        ../nixos/argo-tunnel.nix
+        ../nixos/postgres.nix
+        ../nixos/paperless.nix
+        # ../nixos/keycloak.nix
       ];
       home = true;
       homeModules = [

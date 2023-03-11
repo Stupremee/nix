@@ -9,7 +9,3 @@ fetch.github = "stevearc/dressing.nvim"
 [lsp-zero-nvim]
 src.git = "https://github.com/VonHeikemen/lsp-zero.nvim"
 fetch.github = "VonHeikemen/lsp-zero.nvim"
-
-[authelia]
-src.github = "authelia/authelia"
-fetch.github = "authelia/authelia"

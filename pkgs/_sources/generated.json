@@ -1,23 +1,4 @@
 {
-    "authelia": {
-        "cargoLocks": null,
-        "extract": null,
-        "name": "authelia",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "authelia",
-            "repo": "authelia",
-            "rev": "v4.37.5",
-            "sha256": "sha256-xsdBnyPHFIimhp2rcudWqvVR36WN4vBXbxRmvgqMcDw=",
-            "type": "github"
-        },
-        "version": "v4.37.5"
-    },
     "base64-nvim": {
         "cargoLocks": null,
         "extract": null,

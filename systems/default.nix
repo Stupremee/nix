@@ -103,6 +103,7 @@ in {
         ../nixos/postgres.nix
         ../nixos/paperless.nix
         ../nixos/vaultwarden.nix
+        # ../nixos/authelia.nix
       ];
       home = true;
       homeModules = [

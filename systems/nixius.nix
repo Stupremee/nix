@@ -31,13 +31,15 @@
 
   services.openvpn.servers = {
     esy = {
+      autoStart = false;
       config = ''config ${config.age.secrets.esyvpn.path} '';
     };
   };
 
   # Boot configuration
   boot = {
-    tmpOnTmpfs = true;
+    tmpOnTmpfs = false;
+    tmpOnTmpfsSize = "75%";
 
     initrd.availableKernelModules = [
       "xhci_pci"

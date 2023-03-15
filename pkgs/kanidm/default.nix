@@ -2,8 +2,6 @@
   stdenv,
   lib,
   formats,
-  nixosTests,
-  fetchFromGitHub,
   installShellFiles,
   pkg-config,
   udev,
@@ -29,7 +27,7 @@ in
     inherit (source) pname version src;
 
     # cargoLock = source.cargoLock."Cargo.lock";
-    cargoSha256 = "sha256-8OwL1cnBkFRX4E5Vxy4NJiSunu3vvzSlswJVzAPUxe4=";
+    cargoSha256 = "sha256-qTkpkXaufPJFuvpBJ+IoRXhSOdWKqa1M5sTF6HH91fk=";
 
     KANIDM_BUILD_PROFILE = "release_nixos_${arch}";
 

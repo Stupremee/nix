@@ -23,6 +23,17 @@
       sha256 = "sha256-89HwP+zxMN5CPPN3dd3yMfCB07mtBhv6lcWuEWnedfw=";
     });
   };
+  kanidm = {
+    pname = "kanidm";
+    version = "v1.1.0-alpha.11";
+    src = fetchFromGitHub ({
+      owner = "kanidm";
+      repo = "kanidm";
+      rev = "v1.1.0-alpha.11";
+      fetchSubmodules = false;
+      sha256 = "sha256-TVGLL1Ir/Nld0kdhWmcYYmChrW42ctJPY/U7wtuEwCo=";
+    });
+  };
   lsp-zero-nvim = {
     pname = "lsp-zero-nvim";
     version = "07e43a593241bce72c0854398b16f51e0b46486e";

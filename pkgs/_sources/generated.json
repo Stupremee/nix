@@ -37,6 +37,25 @@
         },
         "version": "5f44f829481640be0f96759c965ae22a3bcaf7ce"
     },
+    "kanidm": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "kanidm",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "kanidm",
+            "repo": "kanidm",
+            "rev": "v1.1.0-alpha.11",
+            "sha256": "sha256-TVGLL1Ir/Nld0kdhWmcYYmChrW42ctJPY/U7wtuEwCo=",
+            "type": "github"
+        },
+        "version": "v1.1.0-alpha.11"
+    },
     "lsp-zero-nvim": {
         "cargoLocks": null,
         "extract": null,

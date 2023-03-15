@@ -17,6 +17,9 @@ in {
   "cert/stu-dev.me.key".publicKeys = keysForSystems ["nether" "ironite"];
   "cert/stu-dev.me.pem".publicKeys = keysForSystems ["nether" "ironite"];
 
+  "cert/localhost.key".publicKeys = keysForSystems ["ironite"];
+  "cert/localhost.pem".publicKeys = keysForSystems ["ironite"];
+
   "password/paperless".publicKeys = keysForSystems ["nether" "ironite"];
   "password/restic".publicKeys = keysForSystems ["nether" "ironite"];
 

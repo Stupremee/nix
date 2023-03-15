@@ -1,5 +1,10 @@
-{...}: {
-  perSystem = {pkgs, ...}: let
+{inputs, ...}: {
+  perSystem = {
+    pkgs,
+    system,
+    inputs',
+    ...
+  }: let
     mapPackages = f:
       with builtins;
         listToAttrs (map
@@ -16,6 +21,11 @@
 
     nodePackages = import ./nodePackages {inherit pkgs;};
   in {
+    _module.args.pkgs = import inputs.nixpkgs {
+      inherit system;
+      overlays = [inputs.rust-overlay.overlays.default];
+    };
+
     packages =
       (mapPackages (
         name: let

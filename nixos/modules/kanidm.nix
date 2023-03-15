@@ -3,6 +3,7 @@
   lib,
   options,
   pkgs,
+  packages,
   ...
 }: let
   cfg = config.modules.kanidm;
@@ -217,7 +218,7 @@ in {
       }
     ];
 
-    environment.systemPackages = lib.mkIf cfg.enableClient [pkgs.kanidm];
+    environment.systemPackages = lib.mkIf cfg.enableClient [packages.kanidm];
 
     systemd.services.kanidm = lib.mkIf cfg.enableServer {
       description = "kanidm identity management daemon";
@@ -228,7 +229,7 @@ in {
         // {
           StateDirectory = "kanidm";
           StateDirectoryMode = "0700";
-          ExecStart = "${pkgs.kanidm}/bin/kanidmd server -c ${serverConfigFile}";
+          ExecStart = "${packages.kanidm}/bin/kanidmd server -c ${serverConfigFile}";
           User = "kanidm";
           Group = "kanidm";
 
@@ -255,7 +256,7 @@ in {
           CacheDirectory = "kanidm-unixd";
           CacheDirectoryMode = "0700";
           RuntimeDirectory = "kanidm-unixd";
-          ExecStart = "${pkgs.kanidm}/bin/kanidm_unixd";
+          ExecStart = "${packages.kanidm}/bin/kanidm_unixd";
           User = "kanidm-unixd";
           Group = "kanidm-unixd";
 
@@ -289,7 +290,7 @@ in {
       partOf = ["kanidm-unixd.service"];
       restartTriggers = [unixConfigFile clientConfigFile];
       serviceConfig = {
-        ExecStart = "${pkgs.kanidm}/bin/kanidm_unixd_tasks";
+        ExecStart = "${packages.kanidm}/bin/kanidm_unixd_tasks";
 
         BindReadOnlyPaths = [
           "/nix/store"
@@ -329,7 +330,7 @@ in {
       })
     ];
 
-    system.nssModules = lib.mkIf cfg.enablePam [pkgs.kanidm];
+    system.nssModules = lib.mkIf cfg.enablePam [packages.kanidm];
 
     system.nssDatabases.group = lib.optional cfg.enablePam "kanidm";
     system.nssDatabases.passwd = lib.optional cfg.enablePam "kanidm";
@@ -348,7 +349,7 @@ in {
           description = "Kanidm server";
           isSystemUser = true;
           group = "kanidm";
-          packages = with pkgs; [kanidm];
+          packages = with packages; [kanidm];
         };
       })
       (lib.mkIf cfg.enablePam {

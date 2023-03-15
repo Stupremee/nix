@@ -13,11 +13,18 @@
   routeOpts = {...}: {
     options = {
       to = mkOption {
-        type = types.str;
+        type = types.nullOr types.str;
+        default = null;
       };
 
       toPort = mkOption {
-        type = types.int;
+        type = types.nullOr types.int;
+        default = null;
+      };
+
+      tlsVerify = mkOption {
+        type = types.bool;
+        default = true;
       };
     };
   };
@@ -28,9 +35,16 @@
         if route.toPort != null
         then "http://localhost:${toString route.toPort}"
         else route.to;
+
+      noTlsVerify =
+        if route.tlsVerify
+        then "false"
+        else "true";
     in ''
       - hostname: ${name}
         service: ${addr}
+        originRequest:
+          noTLSVerify: ${noTlsVerify}
     '')
     cfg.route;
 

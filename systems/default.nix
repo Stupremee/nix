@@ -25,6 +25,7 @@
     ../nixos/modules/backup.nix
     ../nixos/modules/age.nix
     ../nixos/modules/argo.nix
+    ../nixos/modules/kanidm.nix
 
     inputs.agenix.nixosModules.default
     inputs.home-manager.nixosModules.default
@@ -103,7 +104,7 @@ in {
         ../nixos/postgres.nix
         ../nixos/paperless.nix
         ../nixos/vaultwarden.nix
-        # ../nixos/authelia.nix
+        ../nixos/kanidm-server.nix
       ];
       home = true;
       homeModules = [
@@ -118,6 +119,7 @@ in {
         ../nixos/fonts.nix
         ../nixos/yubikey.nix
         ../nixos/graphical.nix
+        ../nixos/kanidm-client.nix
       ];
       home = true;
       theme = "frappe";

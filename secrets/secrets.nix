@@ -1,6 +1,7 @@
 let
   users = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMyNWZe1K8/5yebGKey+yjJcASH7qZg6E24OPTj8veLN stu@nixius"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJqATr5SfHhUcyMfqrBBCrLM33Ax2u4FiQMiUPi37jkP stu@Stus-MacBook-3.local"
   ];
 
   systems = {
@@ -13,8 +14,8 @@ let
   keysForSystems = list: users ++ (builtins.map (s: systems."${s}") list);
 in {
   # SSL certificates
-  "cert/stu-dev.me.key".publicKeys = keysForSystem "nether";
-  "cert/stu-dev.me.pem".publicKeys = keysForSystem "nether";
+  "cert/stu-dev.me.key".publicKeys = keysForSystems ["nether" "ironite"];
+  "cert/stu-dev.me.pem".publicKeys = keysForSystems ["nether" "ironite"];
 
   "password/paperless".publicKeys = keysForSystems ["nether" "ironite"];
   "password/restic".publicKeys = keysForSystems ["nether" "ironite"];

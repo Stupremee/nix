@@ -23,6 +23,7 @@
           package = import ./${name};
 
           args = builtins.intersectAttrs (builtins.functionArgs package) {
+            inherit sources;
             source = sources."${name}";
           };
         in

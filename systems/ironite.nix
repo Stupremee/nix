@@ -26,6 +26,7 @@
   # Enable Argo tunnel
   modules.argo.enable = true;
   modules.argo.tunnel.name = "ironite";
+  modules.argo.route."esy.stu-dev.me".toPort = 3131;
 
   # Boot and Software RAID configuration
   boot = {

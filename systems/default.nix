@@ -107,8 +107,10 @@ in {
         ../nixos/kanidm-server.nix
       ];
       home = true;
+      theme = "frappe";
       homeModules = [
         ../home/git.nix
+        ../home/editors/nvim
       ];
     };
 

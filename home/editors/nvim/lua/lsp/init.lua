@@ -33,6 +33,7 @@ lsp.configure("terraformls")
 lsp.configure("eslint")
 lsp.configure("jsonls")
 lsp.configure("lua_ls")
+lsp.configure("tsserver")
 
 lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = bufnr })

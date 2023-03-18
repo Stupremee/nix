@@ -12,6 +12,7 @@
   extraPackages = with pkgs; [
     gcc
     tree-sitter
+    ripgrep
 
     # formatters
     alejandra
@@ -26,6 +27,7 @@
     packages."vscode-langservers-extracted"
     packages."@fsouza/prettierd"
     inputs.nil.packages."${system}".default
+    nodePackages.typescript-language-server
     rust-analyzer
     taplo-lsp
     terraform-ls
@@ -66,6 +68,7 @@
       nvim-treesitter
       nvim-ts-context-commentstring
       nvim-ts-autotag
+      todo-comments-nvim
       yuck-vim
 
       nvim-web-devicons
@@ -97,6 +100,7 @@
       :lua require("user.telescope")
       :lua require("user.gitsigns")
       :lua require("user.treesitter")
+      :lua require("user.todo-comments")
       :lua require("user.autopairs")
       :lua require("user.comment")
       :lua require("user.nvimtree")

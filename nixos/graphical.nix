@@ -27,5 +27,7 @@
     };
   };
 
+  environment.systemPackages = [pkgs.xdg-utils];
+
   security.polkit.enable = true;
 }

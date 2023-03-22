@@ -69,10 +69,29 @@
             "name": null,
             "owner": "VonHeikemen",
             "repo": "lsp-zero.nvim",
-            "rev": "07e43a593241bce72c0854398b16f51e0b46486e",
-            "sha256": "sha256-M/vRqwEbhnTiEtJRPKvB2D49Z+FtbUbcVII3FNdoYsw=",
+            "rev": "5b68fbdc91102de41fb53da79f52752370d71a7e",
+            "sha256": "sha256-OCnwzEIdzSkwITiD3NqF+CgKKt7wOHrIu4Hx06ag218=",
             "type": "github"
         },
-        "version": "07e43a593241bce72c0854398b16f51e0b46486e"
+        "version": "5b68fbdc91102de41fb53da79f52752370d71a7e"
+    },
+    "tabnine-nvim": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "tabnine-nvim",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": true,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "codota",
+            "repo": "tabnine-nvim",
+            "rev": "0816b5f06755927f4af8391b2957488153a70796",
+            "sha256": "sha256-jpVAE4Yc6VYMrmDTgagQ157exb/T+ouBxMevTDZnvxo=",
+            "type": "github"
+        },
+        "version": "0816b5f06755927f4af8391b2957488153a70796"
     }
 }

@@ -18,6 +18,7 @@
     ../nixos/network/network.nix
     ../nixos/network/tailscale.nix
     ../nixos/zsh.nix
+    ../nixos/cachix.nix
 
     ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix

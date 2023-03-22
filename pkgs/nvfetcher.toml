@@ -10,6 +10,11 @@ fetch.github = "stevearc/dressing.nvim"
 src.git = "https://github.com/VonHeikemen/lsp-zero.nvim"
 fetch.github = "VonHeikemen/lsp-zero.nvim"
 
+[tabnine-nvim]
+src.git = "https://github.com/codota/tabnine-nvim"
+fetch.github = "codota/tabnine-nvim"
+git.fetchSubmodules = true
+
 [kanidm]
 src.github = "kanidm/kanidm"
 fetch.github = "kanidm/kanidm"

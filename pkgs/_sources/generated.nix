@@ -36,13 +36,24 @@
   };
   lsp-zero-nvim = {
     pname = "lsp-zero-nvim";
-    version = "07e43a593241bce72c0854398b16f51e0b46486e";
+    version = "5b68fbdc91102de41fb53da79f52752370d71a7e";
     src = fetchFromGitHub ({
       owner = "VonHeikemen";
       repo = "lsp-zero.nvim";
-      rev = "07e43a593241bce72c0854398b16f51e0b46486e";
+      rev = "5b68fbdc91102de41fb53da79f52752370d71a7e";
       fetchSubmodules = false;
-      sha256 = "sha256-M/vRqwEbhnTiEtJRPKvB2D49Z+FtbUbcVII3FNdoYsw=";
+      sha256 = "sha256-OCnwzEIdzSkwITiD3NqF+CgKKt7wOHrIu4Hx06ag218=";
+    });
+  };
+  tabnine-nvim = {
+    pname = "tabnine-nvim";
+    version = "0816b5f06755927f4af8391b2957488153a70796";
+    src = fetchFromGitHub ({
+      owner = "codota";
+      repo = "tabnine-nvim";
+      rev = "0816b5f06755927f4af8391b2957488153a70796";
+      fetchSubmodules = true;
+      sha256 = "sha256-jpVAE4Yc6VYMrmDTgagQ157exb/T+ouBxMevTDZnvxo=";
     });
   };
 }

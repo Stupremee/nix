@@ -25,15 +25,16 @@ local rust_lsp = lsp.build_options("rust_analyzer", {
 
 -- Load all servers
 require("user.lsp.settings.volar")
+require("user.lsp.settings.tailwindcss")
 
-lsp.configure("tailwindcss")
 lsp.configure("nil_ls")
 lsp.configure("taplo")
 lsp.configure("terraformls")
-lsp.configure("eslint")
+-- lsp.configure("eslint")
 lsp.configure("jsonls")
 lsp.configure("lua_ls")
 lsp.configure("tsserver")
+lsp.configure("prismals")
 
 lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = bufnr })
@@ -56,7 +57,7 @@ end)
 
 lsp.setup()
 
-local status_ok, rust_tools = pcall(require, "lsp-zero")
+local status_ok, rust_tools = pcall(require, "rust-tools")
 if status_ok then
 	rust_tools.setup({
 		inlay_hints = {
@@ -81,6 +82,7 @@ null_ls.setup({
 
 		diagnostics.deadnix,
 		diagnostics.flake8,
+		diagnostics.eslint_d,
 	},
 	on_attach = function(client, bufnr)
 		null_opts.on_attach(client, bufnr)

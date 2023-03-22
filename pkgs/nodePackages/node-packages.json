@@ -2,5 +2,6 @@
   "@volar/vue-language-server",
   "@tailwindcss/language-server",
   "vscode-langservers-extracted",
-  "@fsouza/prettierd"
+  "@fsouza/prettierd",
+  "@prisma/language-server"
 ]

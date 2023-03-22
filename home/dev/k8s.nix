@@ -12,7 +12,6 @@
   ];
 
   programs.zsh.initExtra = ''
-    load_plugin kubectl
   '';
 
   xdg.configFile."k9s/skin.yml".text = ''

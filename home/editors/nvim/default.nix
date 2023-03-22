@@ -26,8 +26,10 @@
     packages."@tailwindcss/language-server"
     packages."vscode-langservers-extracted"
     packages."@fsouza/prettierd"
+    packages."@prisma/language-server"
     inputs.nil.packages."${system}".default
     nodePackages.typescript-language-server
+    nodePackages.eslint_d
     rust-analyzer
     taplo-lsp
     terraform-ls
@@ -50,6 +52,8 @@
 
       nvim-lspconfig
       packages.lsp-zero-nvim
+      packages.tabnine-nvim
+      copilot-vim
 
       nvim-cmp
       cmp-path
@@ -112,6 +116,7 @@
       :lua require("user.alpha")
       :lua require("user.dressing")
       :lua require("user.lsp")
+      :lua require("user.copilot")
     '';
   };
 

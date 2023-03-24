@@ -11,5 +11,6 @@
     inputs.devenv.packages."${system}".devenv
     ghidra-bin
     remmina
+    httpie
   ];
 }

@@ -62,7 +62,7 @@ in {
       exec-once = systemctl start --user eww.service && eww open bar --no-daemonize
 
       input {
-        kb_layout eu
+        kb_layout=eu
         follow_mouse=1
         sensitivity=-0.5
       }

@@ -80,22 +80,6 @@
     };
 in {
   flake.nixosConfigurations = {
-    nether = mkSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./nether.nix
-        ../nixos/paperless.nix
-        ../nixos/nginx.nix
-        ../nixos/containers.nix
-        ../nixos/postgres.nix
-        ../nixos/vaultwarden.nix
-      ];
-      home = true;
-      homeModules = [
-        ../home/git.nix
-      ];
-    };
-
     ironite = mkSystem {
       system = "x86_64-linux";
       modules = [
@@ -108,10 +92,8 @@ in {
         ../nixos/kanidm-server.nix
       ];
       home = true;
-      theme = "frappe";
       homeModules = [
         ../home/git.nix
-        ../home/editors/nvim
       ];
     };
 

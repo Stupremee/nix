@@ -26,6 +26,7 @@ local rust_lsp = lsp.build_options("rust_analyzer", {
 -- Load all servers
 require("user.lsp.settings.volar")
 require("user.lsp.settings.tailwindcss")
+require("user.lsp.settings.tsserver")
 
 lsp.configure("nil_ls")
 lsp.configure("taplo")
@@ -33,7 +34,6 @@ lsp.configure("terraformls")
 -- lsp.configure("eslint")
 lsp.configure("jsonls")
 lsp.configure("lua_ls")
-lsp.configure("tsserver")
 lsp.configure("prismals")
 
 lsp.on_attach(function(client, bufnr)

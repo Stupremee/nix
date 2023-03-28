@@ -38,6 +38,9 @@
 
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "unstable";
+
+    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-22.11";
+    nixos-mailserver.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs = inputs @ {

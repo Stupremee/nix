@@ -1,4 +1,5 @@
 {
+  unstable-pkgs,
   modulesPath,
   config,
   ...
@@ -28,6 +29,12 @@
 
   # OpenVPN
   age.secrets.esyvpn.file = ../secrets/esyvpn.ovpn;
+
+  # Enable wireshark
+  programs.wireshark = {
+    enable = true;
+    package = unstable-pkgs.wireshark;
+  };
 
   services.openvpn.servers = {
     esy = {

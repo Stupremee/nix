@@ -31,6 +31,7 @@
     inputs.agenix.nixosModules.default
     inputs.home-manager.nixosModules.default
     inputs.hyprland.nixosModules.default
+    inputs.nixos-mailserver.nixosModules.mailserver
   ];
 
   mkHomeModule = modules: system: theme: {
@@ -90,6 +91,7 @@ in {
         ../nixos/paperless.nix
         ../nixos/vaultwarden.nix
         ../nixos/kanidm-server.nix
+        ../nixos/mail.nix
       ];
       home = true;
       homeModules = [
@@ -105,6 +107,7 @@ in {
         ../nixos/yubikey.nix
         ../nixos/graphical.nix
         ../nixos/kanidm-client.nix
+        ../nixos/containers.nix
       ];
       home = true;
       theme = "frappe";

@@ -17,6 +17,7 @@ in {
 
   home.packages = with pkgs; [
     firefox-wayland
+    ungoogled-chromium
   ];
 
   home.pointerCursor = {

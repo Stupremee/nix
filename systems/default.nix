@@ -104,10 +104,11 @@ in {
       modules = [
         ./nixius.nix
         ../nixos/fonts.nix
-        ../nixos/yubikey.nix
         ../nixos/graphical.nix
         ../nixos/kanidm-client.nix
         ../nixos/containers.nix
+        ../nixos/hardware/yubikey.nix
+        ../nixos/hardware/logitech.nix
       ];
       home = true;
       theme = "frappe";

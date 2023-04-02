@@ -36,29 +36,29 @@ lsp.configure("jsonls")
 lsp.configure("lua_ls")
 lsp.configure("prismals")
 
-lsp.on_attach(function(client, bufnr)
-	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = bufnr })
-	vim.keymap.set("n", "gR", vim.lsp.buf.rename, { buffer = bufnr })
+lsp.on_attach(function(_, bufnr)
+	local opts = { buffer = bufnr }
 
-	if client.supports_method("textDocument/formatting") then
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			desc = "Auto format before save",
-			pattern = "<buffer>",
-			callback = function()
-				if vim.fn.exists(":NullFormat") > 0 then
-					vim.cmd(":NullFormat")
-				else
-					vim.cmd(":LspZeroFormat")
-				end
-			end,
-		})
-	end
+	vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
+	vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
+
+	vim.keymap.set({ "n", "x" }, "gq", function()
+		vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+	end, opts)
+
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		desc = "Auto format before save",
+		pattern = "<buffer>",
+		callback = function()
+			vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+		end,
+	})
 end)
 
 lsp.setup()
 
-local status_ok, rust_tools = pcall(require, "rust-tools")
-if status_ok then
+local status_ok2, rust_tools = pcall(require, "rust-tools")
+if status_ok2 then
 	rust_tools.setup({
 		inlay_hints = {
 			auto = false,
@@ -79,6 +79,7 @@ null_ls.setup({
 		formatting.stylua,
 		formatting.prettierd,
 		formatting.black,
+		formatting.xmllint,
 
 		diagnostics.deadnix,
 		diagnostics.flake8,
@@ -86,19 +87,5 @@ null_ls.setup({
 	},
 	on_attach = function(client, bufnr)
 		null_opts.on_attach(client, bufnr)
-
-		local format_cmd = function(input)
-			vim.lsp.buf.format({
-				id = client.id,
-				timeout_ms = 5000,
-				async = input.bang,
-			})
-		end
-
-		vim.api.nvim_buf_create_user_command(bufnr, "NullFormat", format_cmd, {
-			bang = true,
-			range = true,
-			desc = "Format of current buffer",
-		})
 	end,
 })

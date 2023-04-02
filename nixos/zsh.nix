@@ -35,6 +35,7 @@
       manix
       git
       pv
+      sd
 
       man-db
       man-pages

@@ -15,7 +15,7 @@ in {
     ./media.nix
   ];
 
-  home.packages = with pkgs; [
+  home.packages = with unstable-pkgs; [
     firefox-wayland
     ungoogled-chromium
   ];

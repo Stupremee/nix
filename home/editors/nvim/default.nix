@@ -36,6 +36,7 @@
     lua-language-server
     python310Packages.flake8
     python310Packages.black
+    libxml2 # for xmllint
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {

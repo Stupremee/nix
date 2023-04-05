@@ -22,6 +22,7 @@ in {
     # making screenshots
     slurp
     grim
+    wf-recorder
 
     inputs.hyprland-contrib.packages.${system}.grimblast
     inputs.hyprpaper.packages.${system}.default

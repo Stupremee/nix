@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
 rofi_command="rofi -theme $HOME/.config/rofi/config/screenshot.rasi"
 
+pid=$(pidof wf-recorder)
+if [ -n "$pid" ]; then
+  kill -INT $pid
+  notify-send -t 5000 -u normal -i simplescreenrecorder-paused "Screen recording stopped"
+  exit 0
+fi
+
 # Buttons
 screen=" Capture Desktop"
 area=" Capture Area"
 window="缾 Capture Window"
 inthree="靖 Take in 3s"
+record=" Record area"
 
 # countdown
 countdown() {
@@ -36,8 +44,19 @@ shotarea() {
   grimblast --notify copy area
 }
 
+record() {
+  time=$(date +%F%T)
+
+  mkdir -p ~/Videos/screen-recordings
+  geom=$(slurp)
+
+  wf-recorder -g "$geom" -f ~/Videos/screen-recordings/$time.mp4 &
+
+  notify-send -t 5000 -u normal -i simplescreenrecorder-recording "Screen recording started"
+}
+
 # Variable passed to rofi
-options="$area\n$screen\n$window\n$inthree"
+options="$area\n$screen\n$window\n$inthree\n$record"
 
 chosen="$(echo -e "$options" | $rofi_command -p 'Take A Shot' -dmenu -selected-row 0)"
 case $chosen in
@@ -52,5 +71,8 @@ $window)
   ;;
 $inthree)
   shot3
+  ;;
+$record)
+  record
   ;;
 esac

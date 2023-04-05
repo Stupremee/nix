@@ -1,4 +1,36 @@
 {
+    "authelia": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "authelia",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "authelia",
+            "repo": "authelia",
+            "rev": "v4.37.5",
+            "sha256": "sha256-xsdBnyPHFIimhp2rcudWqvVR36WN4vBXbxRmvgqMcDw=",
+            "type": "github"
+        },
+        "version": "v4.37.5"
+    },
+    "authelia-web": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "authelia-web",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "sha256": "1sq90s0f5l7l0675jyaa6xm6kx0likdz0cc13kz86726sdq7vhhv",
+            "type": "tarball",
+            "url": "https://github.com/authelia/authelia/releases/download/v4.37.5/authelia-v4.37.5-public_html.tar.gz"
+        },
+        "version": "v4.37.5"
+    },
     "base64-nvim": {
         "cargoLocks": null,
         "extract": null,

@@ -18,3 +18,11 @@ git.fetchSubmodules = true
 [kanidm]
 src.github = "kanidm/kanidm"
 fetch.github = "kanidm/kanidm"
+
+[authelia]
+src.github = "authelia/authelia"
+fetch.github = "authelia/authelia"
+
+[authelia-web]
+src.github = "authelia/authelia"
+fetch.tarball = "https://github.com/authelia/authelia/releases/download/$ver/authelia-$ver-public_html.tar.gz"

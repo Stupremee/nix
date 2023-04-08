@@ -46,13 +46,14 @@ lsp.on_attach(function(_, bufnr)
     vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
   end, opts)
 
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    desc = "Auto format before save",
-    pattern = "<buffer>",
-    callback = function()
-      vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-    end,
-  })
+  lsp.buffer_autoformat()
+  -- vim.api.nvim_create_autocmd("BufWritePre", {
+  --   desc = "Auto format before save",
+  --   pattern = "<buffer>",
+  --   callback = function()
+  --     vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+  --   end,
+  -- })
 end)
 
 lsp.setup()
@@ -82,7 +83,7 @@ null_ls.setup({
     formatting.xmllint,
 
     diagnostics.deadnix,
-    diagnostics.flake8,
+    diagnostics.ruff,
     diagnostics.eslint_d,
   },
   on_attach = function(client, bufnr)

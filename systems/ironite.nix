@@ -76,9 +76,6 @@
     };
   };
 
-  allowedTCPPorts = [27015];
-  allowedUDPPorts = [27015 27020];
-
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/35c74bb8-230b-42b5-9331-6d6fffec3fb8";
     fsType = "ext4";

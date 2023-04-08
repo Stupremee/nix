@@ -9,7 +9,7 @@
 }: let
   pkgs = unstable-pkgs;
 
-  extraPackages = with pkgs; [
+  extraPackages = with unstable-pkgs; [
     gcc
     tree-sitter
     ripgrep
@@ -34,7 +34,7 @@
     taplo-lsp
     terraform-ls
     lua-language-server
-    python310Packages.flake8
+    ruff
     python310Packages.black
     libxml2 # for xmllint
   ];

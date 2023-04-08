@@ -63,11 +63,11 @@
             "name": null,
             "owner": "stevearc",
             "repo": "dressing.nvim",
-            "rev": "5f44f829481640be0f96759c965ae22a3bcaf7ce",
-            "sha256": "sha256-89HwP+zxMN5CPPN3dd3yMfCB07mtBhv6lcWuEWnedfw=",
+            "rev": "91b9ba8a9474d2c4156dc2f3e858e07ae8faecf0",
+            "sha256": "sha256-yrkkcSUCxZY1kYeF9lkFqNc9h0NiGl8q7kwx5nZ5nCU=",
             "type": "github"
         },
-        "version": "5f44f829481640be0f96759c965ae22a3bcaf7ce"
+        "version": "91b9ba8a9474d2c4156dc2f3e858e07ae8faecf0"
     },
     "kanidm": {
         "cargoLocks": null,
@@ -101,11 +101,11 @@
             "name": null,
             "owner": "VonHeikemen",
             "repo": "lsp-zero.nvim",
-            "rev": "5b68fbdc91102de41fb53da79f52752370d71a7e",
-            "sha256": "sha256-OCnwzEIdzSkwITiD3NqF+CgKKt7wOHrIu4Hx06ag218=",
+            "rev": "87f25b378ab5f7da19c6dd38d9c415750334b338",
+            "sha256": "sha256-Q6dkeSP3ESsmvbPtIo2XU964NDy3QJlSVjscCi1/hH8=",
             "type": "github"
         },
-        "version": "5b68fbdc91102de41fb53da79f52752370d71a7e"
+        "version": "87f25b378ab5f7da19c6dd38d9c415750334b338"
     },
     "tabnine-nvim": {
         "cargoLocks": null,
@@ -120,10 +120,10 @@
             "name": null,
             "owner": "codota",
             "repo": "tabnine-nvim",
-            "rev": "0816b5f06755927f4af8391b2957488153a70796",
-            "sha256": "sha256-jpVAE4Yc6VYMrmDTgagQ157exb/T+ouBxMevTDZnvxo=",
+            "rev": "0532226a2c3900d4952cfadb824deec2215aea7e",
+            "sha256": "sha256-rNFwAAt7VdgGE1D0QNUtW7K2vZUHvvC3jPFCeADJZ1E=",
             "type": "github"
         },
-        "version": "0816b5f06755927f4af8391b2957488153a70796"
+        "version": "0532226a2c3900d4952cfadb824deec2215aea7e"
     }
 }

@@ -76,6 +76,7 @@
       todo-comments-nvim
       yuck-vim
 
+      harpoon
       nvim-web-devicons
       vim-bbye
       telescope-nvim
@@ -118,6 +119,7 @@
       :lua require("user.dressing")
       :lua require("user.lsp")
       :lua require("user.copilot")
+      :lua require("user.harpoon")
     '';
   };
 

@@ -3,5 +3,6 @@
   "@tailwindcss/language-server",
   "vscode-langservers-extracted",
   "@fsouza/prettierd",
-  "@prisma/language-server"
+  "@prisma/language-server",
+  "graphql-language-service-cli"
 ]

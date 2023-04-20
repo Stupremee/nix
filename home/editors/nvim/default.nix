@@ -27,6 +27,7 @@
     packages."vscode-langservers-extracted"
     packages."@fsouza/prettierd"
     packages."@prisma/language-server"
+    packages."graphql-language-service-cli"
     inputs.nil.packages."${system}".default
     nodePackages.typescript-language-server
     nodePackages.eslint_d

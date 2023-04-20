@@ -35,6 +35,7 @@ lsp.configure("terraformls")
 lsp.configure("jsonls")
 lsp.configure("lua_ls")
 lsp.configure("prismals")
+lsp.configure("graphql")
 
 lsp.on_attach(function(_, bufnr)
   local opts = { buffer = bufnr }

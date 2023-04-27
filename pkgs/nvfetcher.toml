@@ -1,20 +1,3 @@
-[base64-nvim]
-src.git = "https://github.com/moevis/base64.nvim"
-fetch.github = "moevis/base64.nvim"
-
-[dressing-nvim]
-src.git = "https://github.com/stevearc/dressing.nvim"
-fetch.github = "stevearc/dressing.nvim"
-
-[lsp-zero-nvim]
-src.git = "https://github.com/VonHeikemen/lsp-zero.nvim"
-fetch.github = "VonHeikemen/lsp-zero.nvim"
-
-[tabnine-nvim]
-src.git = "https://github.com/codota/tabnine-nvim"
-fetch.github = "codota/tabnine-nvim"
-git.fetchSubmodules = true
-
 [kanidm]
 src.github = "kanidm/kanidm"
 fetch.github = "kanidm/kanidm"
@@ -22,6 +5,10 @@ fetch.github = "kanidm/kanidm"
 [authelia]
 src.github = "authelia/authelia"
 fetch.github = "authelia/authelia"
+
+[nvimpager]
+src.git = "https://github.com/lucc/nvimpager"
+fetch.github = "lucc/nvimpager"
 
 [authelia-web]
 src.github = "authelia/authelia"

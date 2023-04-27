@@ -2,7 +2,6 @@
   perSystem = {
     pkgs,
     system,
-    inputs',
     ...
   }: let
     mapPackages = f:
@@ -14,12 +13,15 @@
           })
           (filter (v: v != null) (attrValues (mapAttrs
             (k: v:
-              if v == "directory" && k != "_sources" && k != "nodePackages"
+              if v == "directory" && k != "_sources" && k != "nodePackages" && k != "vimPlugins"
               then k
               else null)
             (readDir ./.)))));
 
     nodePackages = import ./nodePackages {inherit pkgs;};
+    vimPlugins = pkgs.callPackage ./vimPlugins {
+      inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
+    };
   in {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
@@ -39,6 +41,7 @@
         in
           pkgs.callPackage package args
       ))
-      // nodePackages;
+      // nodePackages
+      // vimPlugins;
   };
 }

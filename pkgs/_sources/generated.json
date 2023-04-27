@@ -31,44 +31,6 @@
         },
         "version": "v4.37.5"
     },
-    "base64-nvim": {
-        "cargoLocks": null,
-        "extract": null,
-        "name": "base64-nvim",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "moevis",
-            "repo": "base64.nvim",
-            "rev": "67fb5f12db252b3e2bd190250d3edbed7aa8d3aa",
-            "sha256": "sha256-eByAH1iy7Px/AhtA6FzMPgP56TgaR0p+UumXrHmlbuU=",
-            "type": "github"
-        },
-        "version": "67fb5f12db252b3e2bd190250d3edbed7aa8d3aa"
-    },
-    "dressing-nvim": {
-        "cargoLocks": null,
-        "extract": null,
-        "name": "dressing-nvim",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "stevearc",
-            "repo": "dressing.nvim",
-            "rev": "5f44f829481640be0f96759c965ae22a3bcaf7ce",
-            "sha256": "sha256-89HwP+zxMN5CPPN3dd3yMfCB07mtBhv6lcWuEWnedfw=",
-            "type": "github"
-        },
-        "version": "5f44f829481640be0f96759c965ae22a3bcaf7ce"
-    },
     "kanidm": {
         "cargoLocks": null,
         "extract": null,
@@ -88,10 +50,10 @@
         },
         "version": "v1.1.0-alpha.11"
     },
-    "lsp-zero-nvim": {
+    "nvimpager": {
         "cargoLocks": null,
         "extract": null,
-        "name": "lsp-zero-nvim",
+        "name": "nvimpager",
         "passthru": null,
         "pinned": false,
         "src": {
@@ -99,31 +61,12 @@
             "fetchSubmodules": false,
             "leaveDotGit": false,
             "name": null,
-            "owner": "VonHeikemen",
-            "repo": "lsp-zero.nvim",
-            "rev": "5b68fbdc91102de41fb53da79f52752370d71a7e",
-            "sha256": "sha256-OCnwzEIdzSkwITiD3NqF+CgKKt7wOHrIu4Hx06ag218=",
+            "owner": "lucc",
+            "repo": "nvimpager",
+            "rev": "a558ec1e0a1c83503f4ab5230938b9a103d9a190",
+            "sha256": "sha256-nKq9Prr8tg39t1W3xShuWUnkZI+PAvfR/+Gler82e1o=",
             "type": "github"
         },
-        "version": "5b68fbdc91102de41fb53da79f52752370d71a7e"
-    },
-    "tabnine-nvim": {
-        "cargoLocks": null,
-        "extract": null,
-        "name": "tabnine-nvim",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": true,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "codota",
-            "repo": "tabnine-nvim",
-            "rev": "0816b5f06755927f4af8391b2957488153a70796",
-            "sha256": "sha256-jpVAE4Yc6VYMrmDTgagQ157exb/T+ouBxMevTDZnvxo=",
-            "type": "github"
-        },
-        "version": "0816b5f06755927f4af8391b2957488153a70796"
+        "version": "a558ec1e0a1c83503f4ab5230938b9a103d9a190"
     }
 }

@@ -25,7 +25,7 @@
     hyprpaper.inputs.nixpkgs.follows = "unstable";
 
     eww.url = "github:elkowar/eww";
-    eww.inputs.nixpkgs.follows = "unstable";
+    eww.inputs.nixpkgs.follows = "nixpkgs";
 
     devenv.url = "github:cachix/devenv/latest";
     devenv.inputs.nixpkgs.follows = "unstable";
@@ -37,10 +37,14 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     rust-overlay.url = "github:oxalica/rust-overlay";
-    rust-overlay.inputs.nixpkgs.follows = "unstable";
+    rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-22.11";
     nixos-mailserver.inputs.nixpkgs.follows = "unstable";
+
+    vinix.url = "github:Stupremee/vinix";
+    vinix.inputs.nixpkgs.follows = "nixpkgs";
+    vinix.inputs.rust-overlay.follows = "rust-overlay";
   };
 
   outputs = inputs @ {

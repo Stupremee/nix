@@ -6,8 +6,33 @@ end
 lsp.preset({
   name = "recommended",
   set_lsp_keymaps = { omit = { "<F2>", "<F4>" } },
+  cmp_opts = {
+    sources = {
+      { name = "copilot" },
+    },
+  },
 })
-lsp.nvim_workspace()
+
+lsp.on_attach(function(_, bufnr)
+  lsp.default_keymaps({ buffer = bufnr })
+
+  local opts = { buffer = bufnr }
+
+  vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
+
+  vim.keymap.set({ "n", "x" }, "gq", function()
+    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+  end, opts)
+
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    desc = "Auto format before save",
+    pattern = "<buffer>",
+    callback = function()
+      vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+    end,
+  })
+end)
 
 lsp.skip_server_setup({ "rust-analyzer" })
 local rust_lsp = lsp.build_options("rust_analyzer", {
@@ -27,34 +52,16 @@ local rust_lsp = lsp.build_options("rust_analyzer", {
 require("user.lsp.settings.volar")
 require("user.lsp.settings.tailwindcss")
 require("user.lsp.settings.tsserver")
+require("user.lsp.settings.lua_ls")
 
-lsp.configure("nil_ls")
-lsp.configure("taplo")
-lsp.configure("terraformls")
--- lsp.configure("eslint")
-lsp.configure("jsonls")
-lsp.configure("lua_ls")
-lsp.configure("prismals")
-lsp.configure("graphql")
-
-lsp.on_attach(function(_, bufnr)
-  local opts = { buffer = bufnr }
-
-  vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
-  vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
-
-  vim.keymap.set({ "n", "x" }, "gq", function()
-    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-  end, opts)
-
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    desc = "Auto format before save",
-    pattern = "<buffer>",
-    callback = function()
-      vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-    end,
-  })
-end)
+lsp.configure({
+  "nil_ls",
+  "taplo",
+  "terraformls",
+  "jsonls",
+  "prismals",
+  "graphql",
+})
 
 lsp.setup()
 
@@ -89,4 +96,26 @@ null_ls.setup({
   on_attach = function(client, bufnr)
     null_opts.on_attach(client, bufnr)
   end,
+})
+
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+    return false
+  end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+
+local cmp = require("cmp")
+cmp.setup({
+  mapping = {
+    ["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+    ["<Tab>"] = vim.schedule_wrap(function(fallback)
+      if cmp.visible() and has_words_before() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+      else
+        fallback()
+      end
+    end),
+  },
 })

@@ -48,24 +48,23 @@
     viAlias = true;
     vimAlias = true;
 
-    plugins = map (x: {plugin = x;}) (with pkgs.vimPlugins; [
+    plugins = map (x: {plugin = x;}) (with packages; [
+      plenary-nvim
       impatient-nvim
       catppuccin-nvim
 
       nvim-lspconfig
-      packages.lsp-zero-nvim
-      packages.tabnine-nvim
-      copilot-vim
+      lsp-zero-nvim
 
       nvim-cmp
       cmp-path
       cmp-buffer
       cmp-nvim-lua
+      cmp-luasnip
       cmp-nvim-lsp
-      cmp_luasnip
+      lua-snip
 
-      luasnip
-      friendly-snippets
+      copilot-lua
 
       null-ls-nvim
       vim-illuminate
@@ -75,21 +74,20 @@
       nvim-ts-context-commentstring
       nvim-ts-autotag
       todo-comments-nvim
-      yuck-vim
 
+      nvim-tree-lua
       nvim-web-devicons
+
       vim-bbye
       telescope-nvim
       gitsigns-nvim
       nvim-autopairs
       comment-nvim
-      nvim-tree-lua
       bufferline-nvim
       lualine-nvim
-      project-nvim
       indent-blankline-nvim
-      packages.base64-nvim
-      packages.dressing-nvim
+      base64-nvim
+      dressing-nvim
     ]);
 
     customRC = ''
@@ -112,7 +110,6 @@
       :lua require("user.nvimtree")
       :lua require("user.bufferline")
       :lua require("user.lualine")
-      :lua require("user.project")
       :lua require("user.illuminate")
       :lua require("user.indentline")
       :lua require("user.alpha")
@@ -130,10 +127,13 @@
         wrapRc = false;
       });
 in {
-  home.packages = [neovim pkgs.nvimpager];
+  home.packages = [neovim packages.nvimpager];
 
-  home.sessionVariables.EDITOR = "${neovim}/bin/nvim";
-  home.sessionVariables.MANPAGER = "${pkgs.nvimpager}/bin/nvimpager";
+  home.sessionVariables = {
+    EDITOR = "${neovim}/bin/nvim";
+    MANPAGER = "${packages.nvimpager}/bin/nvimpager";
+    PAGER = "${packages.nvimpager}/bin/nvimpager";
+  };
 
   xdg.configFile."nvim/init.vim".text = config.neovimRcContent;
 

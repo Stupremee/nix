@@ -12,5 +12,10 @@
     ghidra-bin
     remmina
     httpie
+    sccache
   ];
+
+  home.sessionVariables = {
+    SCCACHE_DIR = "/mnt/hdd/.sccache/";
+  };
 }

@@ -36,6 +36,7 @@
       git
       pv
       sd
+      du-dust
 
       man-db
       man-pages

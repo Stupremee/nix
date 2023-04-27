@@ -1,4 +1,5 @@
 {
+  pkgs,
   unstable-pkgs,
   modulesPath,
   config,
@@ -13,9 +14,17 @@
     keyMap = "us";
   };
 
-  # enable docker
-  virtualisation.podman.enable = true;
-  virtualisation.oci-containers.backend = "podman";
+  # enable podman
+  virtualisation = {
+    oci-containers.backend = "podman";
+
+    podman = {
+      enable = true;
+      dockerSocket.enable = true;
+    };
+  };
+
+  environment.systemPackages = with pkgs; [podman-compose];
 
   # 16 core machine
   nix.settings.max-jobs = 16;

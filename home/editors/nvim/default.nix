@@ -127,12 +127,11 @@
         wrapRc = false;
       });
 in {
-  home.packages = [neovim packages.nvimpager];
+  home.packages = [neovim];
 
   home.sessionVariables = {
     EDITOR = "${neovim}/bin/nvim";
-    MANPAGER = "${packages.nvimpager}/bin/nvimpager";
-    PAGER = "${packages.nvimpager}/bin/nvimpager";
+    MANPAGER = "${neovim}/bin/nvim +Man!";
   };
 
   xdg.configFile."nvim/init.vim".text = config.neovimRcContent;

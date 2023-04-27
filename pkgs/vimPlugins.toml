@@ -104,3 +104,9 @@ repo = "rcarriga/nvim-notify"
 
 [move-nvim]
 repo = "fedepujol/move.nvim"
+
+[nui-nvim]
+repo = "MunifTanjim/nui.nvim"
+
+[noice-nvim]
+repo = "folke/noice.nvim"

@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 theme.setup({
-  transparent_background = true,
+  transparent_background = false,
   term_colors = true,
   compile_path = vim.fn.stdpath("cache") .. "/catppuccin",
   integrations = {
@@ -17,6 +17,8 @@ theme.setup({
     illuminate = true,
     treesitter = true,
     telescope = true,
+    notify = true,
+    noice = true,
     indent_blankline = {
       enabled = true,
       colored_indent_levels = false,

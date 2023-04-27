@@ -13,7 +13,7 @@ lsp.preset({
   },
 })
 
-lsp.on_attach(function(_, bufnr)
+lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
 
   local opts = { buffer = bufnr }
@@ -21,17 +21,19 @@ lsp.on_attach(function(_, bufnr)
   vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
 
-  vim.keymap.set({ "n", "x" }, "gq", function()
-    vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-  end, opts)
-
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    desc = "Auto format before save",
-    pattern = "<buffer>",
-    callback = function()
+  if client.supports_method("textDocument/formatting") then
+    vim.keymap.set({ "n", "x" }, "gq", function()
       vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
-    end,
-  })
+    end, opts)
+
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      desc = "Auto format before save",
+      pattern = "<buffer>",
+      callback = function()
+        vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
+      end,
+    })
+  end
 end)
 
 lsp.skip_server_setup({ "rust-analyzer" })

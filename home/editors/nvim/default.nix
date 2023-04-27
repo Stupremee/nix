@@ -90,6 +90,8 @@
       dressing-nvim
       nvim-notify
       move-nvim
+      nui-nvim
+      noice-nvim
     ]);
 
     customRC = ''
@@ -120,6 +122,7 @@
       :lua require("user.copilot")
       :lua require("user.notify")
       :lua require("user.move")
+      :lua require("user.noice")
     '';
   };
 

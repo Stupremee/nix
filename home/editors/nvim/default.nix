@@ -88,6 +88,8 @@
       indent-blankline-nvim
       base64-nvim
       dressing-nvim
+      nvim-notify
+      move-nvim
     ]);
 
     customRC = ''
@@ -116,6 +118,8 @@
       :lua require("user.dressing")
       :lua require("user.lsp")
       :lua require("user.copilot")
+      :lua require("user.notify")
+      :lua require("user.move")
     '';
   };
 

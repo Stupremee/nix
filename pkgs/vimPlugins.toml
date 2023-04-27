@@ -98,3 +98,9 @@ repo = "L3MON4D3/LuaSnip"
 
 [cmp-luasnip]
 repo = "saadparwaiz1/cmp_luasnip"
+
+[nvim-notify]
+repo = "rcarriga/nvim-notify"
+
+[move-nvim]
+repo = "fedepujol/move.nvim"

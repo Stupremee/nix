@@ -88,7 +88,7 @@
       indent-blankline-nvim
       base64-nvim
       dressing-nvim
-      nvim-notify
+      # nvim-notify
       move-nvim
       nui-nvim
       noice-nvim

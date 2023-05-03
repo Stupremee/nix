@@ -1,10 +1,11 @@
+local lspconfig = require("lspconfig")
 local util = require("lspconfig.util")
 
 local function is_vue_project(startpath)
   return util.root_pattern("nuxt.config.ts", "app.vue")(startpath)
 end
 
-require("lsp-zero").configure("tsserver", {
+lspconfig.tsserver.setup({
   filetypes = {
     "javascript",
     "javascriptreact",

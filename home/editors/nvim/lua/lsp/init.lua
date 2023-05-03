@@ -3,6 +3,8 @@ if not status_ok then
   return
 end
 
+local lspconfig = require("lspconfig")
+
 lsp.preset({
   name = "recommended",
   set_lsp_keymaps = { omit = { "<F2>", "<F4>" } },
@@ -56,7 +58,7 @@ require("user.lsp.settings.tailwindcss")
 require("user.lsp.settings.tsserver")
 require("user.lsp.settings.lua_ls")
 
-lsp.configure({
+lsp.setup_servers({
   "nil_ls",
   "taplo",
   "terraformls",

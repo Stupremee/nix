@@ -66,6 +66,8 @@ lsp.setup_servers({
   "prismals",
   "graphql",
   "svelte",
+  "smarty_ls",
+  "phpactor",
 })
 
 lsp.setup()
@@ -93,6 +95,7 @@ null_ls.setup({
     formatting.prettierd,
     formatting.black,
     formatting.xmllint,
+    formatting.phpcsfixer,
 
     diagnostics.deadnix,
     diagnostics.flake8,

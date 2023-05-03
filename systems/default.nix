@@ -108,6 +108,7 @@ in {
         ../nixos/kanidm-client.nix
         ../nixos/hardware/yubikey.nix
         ../nixos/hardware/logitech.nix
+        ../nixos/containers.nix
       ];
       home = true;
       theme = "frappe";

@@ -4,5 +4,6 @@
   "vscode-langservers-extracted",
   "@fsouza/prettierd",
   "@prisma/language-server",
-  "graphql-language-service-cli"
+  "graphql-language-service-cli",
+  "vscode-smarty-langserver-extracted"
 ]

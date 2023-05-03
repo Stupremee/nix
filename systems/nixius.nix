@@ -1,5 +1,4 @@
 {
-  pkgs,
   unstable-pkgs,
   modulesPath,
   config,
@@ -14,23 +13,20 @@
     keyMap = "us";
   };
 
-  # enable podman
-  virtualisation = {
-    oci-containers.backend = "podman";
-
-    podman = {
-      enable = true;
-      dockerSocket.enable = true;
-    };
-  };
-
-  environment.systemPackages = with pkgs; [podman-compose];
-
   # 16 core machine
   nix.settings.max-jobs = 16;
 
   # Set hostname
   networking.hostName = "nixius";
+  networking.hosts."127.0.0.1" = [
+    "drrisch.localhost.local"
+    "mailhog.localhost.local"
+    "portainer.localhost.local"
+    "phpmyadmin.localhost.local"
+    "adminer.localhost.local"
+    "traefik.localhost.local"
+    "swaggerui.localhost.local"
+  ];
 
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";

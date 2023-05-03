@@ -28,6 +28,7 @@
     packages."@fsouza/prettierd"
     packages."@prisma/language-server"
     packages."graphql-language-service-cli"
+    packages."vscode-smarty-langserver-extracted"
     inputs.nil.packages."${system}".default
     nodePackages.typescript-language-server
     nodePackages.svelte-language-server
@@ -39,6 +40,8 @@
     python310Packages.flake8
     python310Packages.black
     libxml2 # for xmllint
+    phpactor
+    php80Packages.php-cs-fixer
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {

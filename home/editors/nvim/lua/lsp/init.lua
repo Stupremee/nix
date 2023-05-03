@@ -63,6 +63,7 @@ lsp.configure({
   "jsonls",
   "prismals",
   "graphql",
+  "svelte",
 })
 
 lsp.setup()

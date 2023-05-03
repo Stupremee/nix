@@ -76,11 +76,14 @@
 
   # Hardware and network configuration
   time.hardwareClockInLocalTime = true;
-  # services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
 
   hardware = {
     opengl.enable = true;
     cpu.amd.updateMicrocode = true;
+
+    nvidia.modesetting.enable = true;
+    nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   services.udev.extraRules = ''

@@ -34,12 +34,6 @@ in {
   ];
 
   programs.zsh.loginExtra = ''
-    export LIBVA_DRIVER_NAME=nvidia
-    export XDG_SESSION_TYPE=wayland
-    export GBM_BACKEND=nvidia-drm
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export WLR_NO_HARDWARE_CURSORS=1
-
     [ "$(tty)" = "/dev/tty1" ] && exec systemd-cat -t hyprland "${hyprland}/bin/Hyprland"
   '';
 
@@ -55,6 +49,12 @@ in {
     recommendedEnvironment = true;
 
     extraConfig = ''
+      env = LIBVA_DRIVER_NAME,nvidia
+      env = XDG_SESSION_TYPE,wayland
+      env = GBM_BACKEND,nvidia-drm
+      env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+      env = WLR_NO_HARDWARE_CURSORS,1
+
       # Monitor configuration
       monitor=DP-3,2560x1440@144,0x0,1
       workspace=DP-3,1
@@ -178,6 +178,6 @@ in {
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
     preload = ${theme.wallpaper}
-    wallpaper = DP-3,${theme.wallpaper}
+    wallpaper = DP-2,${theme.wallpaper}
   '';
 }

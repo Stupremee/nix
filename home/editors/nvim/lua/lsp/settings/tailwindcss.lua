@@ -58,5 +58,5 @@ require("lsp-zero").configure("tailwindcss", {
     -- rust
     "rust",
   },
-  root_dir = util.root_pattern("tailwind.config.js", "nuxt.config.ts"),
+  root_dir = util.root_pattern("tailwind.config.js", "nuxt.config.ts", "tailwind.config.cjs"),
 })

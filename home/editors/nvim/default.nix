@@ -30,6 +30,7 @@
     packages."graphql-language-service-cli"
     inputs.nil.packages."${system}".default
     nodePackages.typescript-language-server
+    nodePackages.svelte-language-server
     nodePackages.eslint_d
     rust-analyzer
     taplo-lsp

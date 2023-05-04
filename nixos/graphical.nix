@@ -1,4 +1,15 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  system,
+  ...
+}: let
+  hyprland = inputs.hyprland.packages."${system}".default.override {
+    enableXWayland = true;
+    nvidiaPatches = true;
+    hidpiXWayland = true;
+  };
+in {
   programs.dconf.enable = true;
 
   services.geoclue2.enable = true;
@@ -25,6 +36,11 @@
         chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
       };
     };
+  };
+
+  programs.hyprland = {
+    enable = true;
+    package = hyprland;
   };
 
   environment.systemPackages = [pkgs.xdg-utils];

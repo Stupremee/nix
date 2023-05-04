@@ -3,8 +3,6 @@ if not status_ok then
   return
 end
 
-local lspconfig = require("lspconfig")
-
 lsp.preset({
   name = "recommended",
   set_lsp_keymaps = { omit = { "<F2>", "<F4>" } },
@@ -100,6 +98,7 @@ null_ls.setup({
     diagnostics.deadnix,
     diagnostics.flake8,
     diagnostics.eslint_d,
+    -- diagnostics.phpcs,
   },
   on_attach = function(client, bufnr)
     null_opts.on_attach(client, bufnr)

@@ -50,7 +50,7 @@
 
   # Boot configuration
   boot = {
-    tmpOnTmpfs = false;
+    tmpOnTmpfs = true;
     tmpOnTmpfsSize = "75%";
 
     initrd.availableKernelModules = [

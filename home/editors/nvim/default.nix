@@ -42,6 +42,7 @@
     libxml2 # for xmllint
     phpactor
     php80Packages.php-cs-fixer
+    php80Packages.phpcs
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {

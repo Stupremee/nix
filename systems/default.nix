@@ -68,6 +68,8 @@
           {
             _module.args.unstable-pkgs = inputs.unstable.legacyPackages."${system}";
             _module.args.packages = self.packages."${system}";
+            _module.args.inputs = inputs;
+            _module.args.system = system;
           }
         ]
         ++ (flatten (map (mod: [

@@ -16,6 +16,7 @@
   hyprland = inputs.hyprland.packages."${system}".default.override {
     enableXWayland = true;
     nvidiaPatches = true;
+    hidpiXWayland = true;
   };
 in {
   home.packages = with pkgs; [
@@ -28,9 +29,10 @@ in {
     inputs.hyprpaper.packages.${system}.default
     wlr-randr
     wl-clipboard
-    wl-color-picker
     pciutils
     imv
+
+    libsForQt5.polkit-kde-agent
   ];
 
   programs.zsh.loginExtra = ''
@@ -43,9 +45,6 @@ in {
 
     systemdIntegration = true;
 
-    xwayland.enable = true;
-    xwayland.hidpi = true;
-
     recommendedEnvironment = true;
 
     extraConfig = ''
@@ -56,16 +55,17 @@ in {
       env = WLR_NO_HARDWARE_CURSORS,1
 
       # Monitor configuration
-      monitor=DP-3,2560x1440@144,0x0,1
-      workspace=DP-3,1
+      monitor=DP-2,2560x1440@144,0x0,1
+      workspace=DP-2,1
 
       exec-once = hyprpaper
       exec-once = systemctl start --user eww.service && eww open bar --no-daemonize
+      exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
       input {
         kb_layout=eu
         follow_mouse=1
-        sensitivity=-0.1
+        sensitivity=1.0
       }
 
       general {
@@ -145,9 +145,6 @@ in {
       # make screenshot
       bind=SUPER,s,exec,grimblast --notify copysave area
       bind=SUPER_SHIFT,s,exec,$HOME/.config/rofi/bin/screenshot.sh
-
-      # color picker
-      bind=SUPER,c,exec,wl-color-picker
 
       # power menu
       bind=SUPER,m,exec,$HOME/.config/rofi/bin/powermenu.sh

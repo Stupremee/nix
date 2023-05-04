@@ -73,10 +73,10 @@
     # We use our own firewall instead the one provided by hetzner
     firewall = {
       enable = true;
-    };
 
-    allowedTCPPorts = [27015];
-    allowedUDPPorts = [27015 27020];
+      allowedTCPPorts = [27015];
+      allowedUDPPorts = [27015 27020];
+    };
   };
 
   fileSystems."/" = {

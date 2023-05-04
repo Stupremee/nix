@@ -19,8 +19,9 @@
             (readDir ./.)))));
 
     nodePackages = import ./nodePackages {inherit pkgs;};
-    vimPlugins = pkgs.callPackage ./vimPlugins {
+    vimPlugins = import ./vimPlugins {
       inherit (pkgs.vimUtils) buildVimPluginFrom2Nix;
+      inherit (pkgs) fetchurl;
     };
   in {
     _module.args.pkgs = import inputs.nixpkgs {

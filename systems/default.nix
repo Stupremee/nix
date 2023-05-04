@@ -90,7 +90,6 @@ in {
         ../nixos/postgres.nix
         ../nixos/paperless.nix
         ../nixos/vaultwarden.nix
-        ../nixos/kanidm-server.nix
         ../nixos/mail.nix
       ];
       home = true;
@@ -105,7 +104,6 @@ in {
         ./nixius.nix
         ../nixos/fonts.nix
         ../nixos/graphical.nix
-        ../nixos/kanidm-client.nix
         ../nixos/hardware/yubikey.nix
         ../nixos/hardware/logitech.nix
         ../nixos/containers.nix

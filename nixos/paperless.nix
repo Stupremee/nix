@@ -31,6 +31,8 @@ in {
       PAPERLESS_TIKA_ENABLED = true;
       PAPERLESS_TIKA_ENDPOINT = "http://127.0.0.1:${tikaPort}";
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT = "http://127.0.0.1:${gotenbergPort}";
+
+      PAPERLESS_EMAIL_TASK_CRON = "*/5 * * * *";
     };
   };
 

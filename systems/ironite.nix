@@ -47,6 +47,12 @@
   };
 
   # Networking
+  modules.tailscale = {
+    useRoutingFeatures = "server";
+    nginxAuth = true;
+    permitCertUid = builtins.toString config.users.users."${config.services.caddy.user}".uid;
+  };
+
   networking = {
     useDHCP = false;
 

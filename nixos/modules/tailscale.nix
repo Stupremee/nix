@@ -6,86 +6,76 @@
 }:
 with lib; let
   cfg = config.modules.tailscale;
-  firewallOn = config.networking.firewall.enable;
-  rpfMode = config.networking.firewall.checkReversePath;
-  rpfIsStrict = rpfMode == true || rpfMode == "strict";
+  isNetworkd = config.networking.useNetworkd;
 in {
+  meta.maintainers = with maintainers; [danderson mbaillie twitchyliquid64];
+
   options.modules.tailscale = {
-    enable = mkEnableOption "Tailscale client daemon";
+    enable = mkEnableOption (lib.mdDoc "Tailscale client daemon");
 
     port = mkOption {
       type = types.port;
       default = 41641;
-      description = "The port to listen on for tunnel traffic (0=autoselect).";
+      description = lib.mdDoc "The port to listen on for tunnel traffic (0=autoselect).";
+    };
+
+    nginxAuth = mkOption {
+      type = types.bool;
+      default = false;
     };
 
     interfaceName = mkOption {
       type = types.str;
       default = "tailscale0";
-      description = ''The interface name for tunnel traffic. Use "userspace-networking" (beta) to not use TUN.'';
+      description = lib.mdDoc ''The interface name for tunnel traffic. Use "userspace-networking" (beta) to not use TUN.'';
     };
 
     permitCertUid = mkOption {
       type = types.nullOr types.nonEmptyStr;
       default = null;
-      description = "Username or user ID of the user allowed to to fetch Tailscale TLS certificates for the node.";
+      description = lib.mdDoc "Username or user ID of the user allowed to to fetch Tailscale TLS certificates for the node.";
     };
 
     package = mkOption {
       type = types.package;
       default = pkgs.tailscale;
       defaultText = literalExpression "pkgs.tailscale";
-      description = "The package to use for tailscale";
+      description = lib.mdDoc "The package to use for tailscale";
+    };
+
+    useRoutingFeatures = mkOption {
+      type = types.enum ["none" "client" "server" "both"];
+      default = "none";
+      example = "server";
+      description = lib.mdDoc ''
+        Enables settings required for Tailscale's routing features like subnet routers and exit nodes.
+
+        To use these these features, you will still need to call `sudo tailscale up` with the relevant flags like `--advertise-exit-node` and `--exit-node`.
+
+        When set to `client` or `both`, reverse path filtering will be set to loose instead of strict.
+        When set to `server` or `both`, IP forwarding will be enabled.
+      '';
     };
   };
 
   config = mkIf cfg.enable {
-    warnings = optional (firewallOn && rpfIsStrict) "Strict reverse path filtering breaks Tailscale exit node use and some subnet routing setups. Consider setting `networking.firewall.checkReversePath` = 'loose'";
-
     environment.systemPackages = [cfg.package]; # for the CLI
-
-    systemd.services.tailscaled = let
-      stateDir =
-        if config.modules.eraseDarlings.enable
-        then "/persist/var/lib/tailscale"
-        else "/var/lib/tailscale";
-    in {
-      description = "Tailscale node agent";
-
+    systemd.packages = [cfg.package];
+    systemd.services.tailscaled = {
       wantedBy = ["multi-user.target"];
-      wants = ["network-pre.target"];
-      after = [
-        "network-pre.target"
-        "NetworkManager.target"
-        "systemd-resolved.target"
-      ];
-
       path = [
-        pkgs.openresolv # for configuring DNS in some configs
+        config.networking.resolvconf.package # for configuring DNS in some configs
         pkgs.procps # for collecting running services (opt-in feature)
         pkgs.glibc # for `getent` to look up user shells
       ];
-
-      serviceConfig = {
-        Environment = lib.optionals (cfg.permitCertUid != null) [
+      serviceConfig.Environment =
+        [
+          "PORT=${toString cfg.port}"
+          ''"FLAGS=--tun ${lib.escapeShellArg cfg.interfaceName}"''
+        ]
+        ++ (lib.optionals (cfg.permitCertUid != null) [
           "TS_PERMIT_CERT_UID=${cfg.permitCertUid}"
-        ];
-
-        ExecStartPre = "${cfg.package}/bin/tailscaled --cleanup";
-        ExecStart = "${cfg.package}/bin/tailscaled --state ${stateDir}/tailscaled.state --statedir ${stateDir} --socket=/run/tailscale/tailscaled.sock --port ${toString cfg.port} --tun ${lib.escapeShellArg cfg.interfaceName}";
-        ExecStopPost = "${cfg.package}/bin/tailscaled --cleanup";
-
-        Restart = "on-failure";
-
-        RuntimeDirectory = "tailscale";
-        RuntimeDirectoryMode = 0755;
-
-        CacheDirectory = "tailscale";
-        CacheDirectoryMode = 0750;
-
-        Type = "notify";
-      };
-
+        ]);
       # Restart tailscaled with a single `systemctl restart` at the
       # end of activation, rather than a `stop` followed by a later
       # `start`. Activation over Tailscale can hang for tens of
@@ -98,6 +88,45 @@ in {
       # version mismatches on restart for compatibility with other
       # linux distros.
       stopIfChanged = false;
+    };
+
+    boot.kernel.sysctl = mkIf (cfg.useRoutingFeatures == "server" || cfg.useRoutingFeatures == "both") {
+      "net.ipv4.conf.all.forwarding" = mkOverride 97 true;
+      "net.ipv6.conf.all.forwarding" = mkOverride 97 true;
+    };
+
+    networking.firewall.checkReversePath = mkIf (cfg.useRoutingFeatures == "client" || cfg.useRoutingFeatures == "both") "loose";
+
+    networking.dhcpcd.denyInterfaces = [cfg.interfaceName];
+
+    systemd.network.networks."50-tailscale" = mkIf isNetworkd {
+      matchConfig = {
+        Name = cfg.interfaceName;
+      };
+      linkConfig = {
+        Unmanaged = true;
+        ActivationPolicy = "manual";
+      };
+    };
+
+    systemd.services.tailscale-nginx-auth = mkIf cfg.nginxAuth {
+      description = "Tailscale NGINX Authentication service";
+      wantedBy = ["caddy.service" "nginx.service"];
+
+      serviceConfig = {
+        ExecStart = "${cfg.package}/bin/tailscale-nginx-auth";
+        DynamicUser = "yes";
+      };
+    };
+
+    systemd.sockets.tailscale-nginx-auth = mkIf cfg.nginxAuth {
+      description = "Tailscale NGINX Authentication socket";
+      partOf = ["tailscale-nginx-auth.service"];
+      wantedBy = ["sockets.target"];
+
+      socketConfig = {
+        ListenStream = "/run/tailscale/nginx-auth.sock";
+      };
     };
   };
 }

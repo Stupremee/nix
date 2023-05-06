@@ -42,4 +42,15 @@
       sha256 = "sha256-nKq9Prr8tg39t1W3xShuWUnkZI+PAvfR/+Gler82e1o=";
     });
   };
+  tailscale = {
+    pname = "tailscale";
+    version = "v1.40.0";
+    src = fetchFromGitHub ({
+      owner = "tailscale";
+      repo = "tailscale";
+      rev = "v1.40.0";
+      fetchSubmodules = false;
+      sha256 = "sha256-iPf3ams613VHPesbxoBaaw9eav5p781+wEmbJ+15yfY=";
+    });
+  };
 }

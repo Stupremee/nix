@@ -94,6 +94,7 @@ in {
         ../nixos/paperless.nix
         ../nixos/vaultwarden.nix
         ../nixos/mail.nix
+        ../nixos/foldingathome.nix
       ];
       home = true;
       homeModules = [

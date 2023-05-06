@@ -68,5 +68,24 @@
             "type": "github"
         },
         "version": "a558ec1e0a1c83503f4ab5230938b9a103d9a190"
+    },
+    "tailscale": {
+        "cargoLocks": null,
+        "extract": null,
+        "name": "tailscale",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "tailscale",
+            "repo": "tailscale",
+            "rev": "v1.40.0",
+            "sha256": "sha256-iPf3ams613VHPesbxoBaaw9eav5p781+wEmbJ+15yfY=",
+            "type": "github"
+        },
+        "version": "v1.40.0"
     }
 }

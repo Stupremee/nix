@@ -12,7 +12,9 @@ in {
     group = "paperless";
   };
 
-  modules.argo.route."docs.stu-dev.me".toPort = config.services.paperless.port;
+  services.caddy.virtualHosts."docs.stu-dev.me".extraConfig = ''
+    reverse_proxy :${builtins.toString config.services.paperless.port}
+  '';
 
   services.paperless = {
     enable = true;
@@ -23,8 +25,8 @@ in {
       PAPERLESS_URL = "https://docs.stu-dev.me";
 
       PAPERLESS_OCR_LANGUAGE = "deu+eng";
-      PAPERLESS_TASK_WORKERS = 2;
-      PAPERLESS_THREADS_PER_WORKER = 4;
+      PAPERLESS_TASK_WORKERS = 4;
+      PAPERLESS_THREADS_PER_WORKER = 8;
 
       PAPERLESS_TIKA_ENABLED = true;
       PAPERLESS_TIKA_ENDPOINT = "http://127.0.0.1:${tikaPort}";

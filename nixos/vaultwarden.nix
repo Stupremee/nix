@@ -32,7 +32,9 @@
     config.age.secrets.vaultwardenEnv.path
   ];
 
-  modules.argo.route."bw.stu-dev.me".toPort = config.services.vaultwarden.config.rocketPort;
+  services.caddy.virtualHosts."bw.stu-dev.me".extraConfig = ''
+    reverse_proxy :${builtins.toString config.services.vaultwarden.config.rocketPort}
+  '';
 
   services.postgresql.ensureDatabases = ["vaultwarden"];
   services.postgresql.ensureUsers = [

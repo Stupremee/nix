@@ -23,10 +23,11 @@
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "Europe/Berlin";
 
-  # Enable Argo tunnel
-  modules.argo.enable = true;
-  modules.argo.tunnel.name = "ironite";
-  modules.argo.route."esy.stu-dev.me".toPort = 3131;
+  # Enable caddy web server
+  services.caddy = {
+    enable = true;
+    email = "justus.k@protonmail.com";
+  };
 
   # Boot and Software RAID configuration
   boot = {
@@ -70,12 +71,10 @@
     defaultGateway = "94.130.88.129";
     defaultGateway6 = "fe80::1";
 
-    # We use our own firewall instead the one provided by hetzner
+    # We use hetzner robot firewall
     firewall = {
-      enable = true;
-
-      allowedTCPPorts = [27015];
-      allowedUDPPorts = [27015 27020];
+      enable = false;
+      allowedTCPPorts = [443 80];
     };
   };
 

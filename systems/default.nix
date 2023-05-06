@@ -27,6 +27,7 @@
     ../nixos/modules/age.nix
     ../nixos/modules/argo.nix
     ../nixos/modules/kanidm.nix
+    ../nixos/modules/roundcube
 
     inputs.agenix.nixosModules.default
     inputs.home-manager.nixosModules.default

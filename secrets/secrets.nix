@@ -29,6 +29,4 @@ in {
 
   "spotify".publicKeys = keysForSystem "nixius";
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
-
-  "argotunnel.json".publicKeys = keysForSystem "ironite";
 }

@@ -23,12 +23,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "Europe/Berlin";
 
-  # Enable caddy web server
-  services.caddy = {
-    enable = true;
-    email = "justus.k@protonmail.com";
-  };
-
   # Boot and Software RAID configuration
   boot = {
     initrd.availableKernelModules = ["ahci" "sd_mod"];

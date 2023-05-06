@@ -90,6 +90,7 @@ in {
         ./ironite.nix
         ../nixos/server.nix
         ../nixos/containers.nix
+        ../nixos/caddy.nix
         ../nixos/postgres.nix
         ../nixos/paperless.nix
         ../nixos/vaultwarden.nix

@@ -13,6 +13,7 @@
 
     shellInit = ''
       bindkey -v
+      setopt globdots
     '';
   };
 

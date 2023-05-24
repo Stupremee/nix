@@ -1,4 +1,5 @@
 {
+  pkgs,
   unstable-pkgs,
   modulesPath,
   config,
@@ -72,15 +73,7 @@
 
   # Hardware and network configuration
   time.hardwareClockInLocalTime = true;
-  services.xserver.videoDrivers = ["nvidia"];
-
-  hardware = {
-    opengl.enable = true;
-    cpu.amd.updateMicrocode = true;
-
-    nvidia.modesetting.enable = true;
-    nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
+  hardware.cpu.amd.updateMicrocode = true;
 
   services.udev.extraRules = ''
     KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{serial}=="*vial:f64c2b3c*", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"

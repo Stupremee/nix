@@ -41,7 +41,10 @@
     home-manager.extraSpecialArgs = {
       inherit inputs system;
       theme = (import ../themes {inherit lib;})."${theme}";
-      unstable-pkgs = inputs.unstable.legacyPackages."${system}";
+      unstable-pkgs = import inputs.unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
       packages = self.packages."${system}";
     };
     home-manager.users.stu = {...}: {
@@ -61,16 +64,21 @@
     home ? false,
     theme ? "",
     homeModules ? [],
+    flakePath ? "",
   }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
       modules =
         [
           {
-            _module.args.unstable-pkgs = inputs.unstable.legacyPackages."${system}";
+            _module.args.unstable-pkgs = import inputs.unstable {
+              inherit system;
+              config.allowUnfree = true;
+            };
             _module.args.packages = self.packages."${system}";
             _module.args.inputs = inputs;
             _module.args.system = system;
+            _module.args.flakePath = flakePath;
           }
         ]
         ++ (flatten (map (mod: [
@@ -111,10 +119,12 @@ in {
         ../nixos/graphical.nix
         ../nixos/hardware/yubikey.nix
         ../nixos/hardware/logitech.nix
+        ../nixos/hardware/nvidia.nix
         ../nixos/containers.nix
       ];
       home = true;
       theme = "frappe";
+      flakePath = "/home/stu/dev/nix/nix";
       homeModules = [
         ../home/git.nix
         ../home/wayland

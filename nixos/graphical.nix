@@ -27,15 +27,9 @@ in {
     pulse.enable = true;
   };
 
+  # Onl yxdg portal because extraPortals will be added by the hyprland module
   xdg.portal = {
     enable = true;
-    wlr = {
-      enable = true;
-      settings.screencast = {
-        chooster_type = "simple";
-        chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
-      };
-    };
   };
 
   programs.hyprland = {

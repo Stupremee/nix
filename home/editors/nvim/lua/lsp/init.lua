@@ -21,6 +21,7 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("n", "ga", vim.lsp.buf.code_action, opts)
   vim.keymap.set("n", "gR", vim.lsp.buf.rename, opts)
 
+  -- Enable formatting on save, if language server supports it
   if client.supports_method("textDocument/formatting") then
     vim.keymap.set({ "n", "x" }, "gq", function()
       vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
@@ -34,6 +35,16 @@ lsp.on_attach(function(client, bufnr)
       end,
     })
   end
+
+  -- Fix for https://github.com/sveltejs/language-tools/issues/2008
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = { "*.js", "*.ts" },
+    callback = function(ctx)
+      if client.name == "svelte" then
+        client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
+      end
+    end,
+  })
 end)
 
 lsp.skip_server_setup({ "rust-analyzer" })
@@ -66,6 +77,7 @@ lsp.setup_servers({
   "svelte",
   "smarty_ls",
   "phpactor",
+  "eslint",
 })
 
 lsp.setup()
@@ -97,7 +109,7 @@ null_ls.setup({
 
     diagnostics.deadnix,
     diagnostics.flake8,
-    diagnostics.eslint_d,
+    -- diagnostics.eslint_d,
     -- diagnostics.phpcs,
   },
   on_attach = function(client, bufnr)

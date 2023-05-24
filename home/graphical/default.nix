@@ -18,7 +18,7 @@ in {
   home.packages = with unstable-pkgs; [
     firefox-wayland
     ungoogled-chromium
-    pkgs.discord
+    webcord
   ];
 
   home.pointerCursor = {

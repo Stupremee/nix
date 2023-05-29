@@ -26,7 +26,7 @@
 in {
   home.packages = [pkgs.libnotify];
 
-  programs.mako = {
+  services.mako = {
     enable = true;
     package = pkgs.mako.overrideAttrs (_: {
       src = pkgs.fetchFromGitHub {

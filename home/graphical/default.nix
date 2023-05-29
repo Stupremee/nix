@@ -29,6 +29,8 @@ in {
     x11.enable = false;
   };
 
+  fonts.fontconfig.enable = true;
+
   gtk = {
     enable = true;
 

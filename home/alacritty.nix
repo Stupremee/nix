@@ -34,13 +34,13 @@ in {
 
       font = {
         size = 9;
-        normal.family = "FiraCode Nerd Font";
+        normal.family = "monospace";
         bold = {
-          family = "FiraCode Nerd Font";
+          family = "monospace";
           style = "Bold";
         };
         italic = {
-          family = "FiraCode Nerd Font";
+          family = "monospace";
           style = "Italic";
         };
       };

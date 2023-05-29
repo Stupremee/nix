@@ -1,9 +1,12 @@
 {...}: {
   services.openssh = {
     enable = true;
-    kbdInteractiveAuthentication = false;
-    passwordAuthentication = false;
-    forwardX11 = false;
-    permitRootLogin = "prohibit-password";
+
+    settings = {
+      X11Forwarding = false;
+      PermitRootLogin = "prohibit-password";
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
   };
 }

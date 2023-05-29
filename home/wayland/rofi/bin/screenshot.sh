@@ -9,10 +9,10 @@ if [ -n "$pid" ]; then
 fi
 
 # Buttons
-screen=" Capture Desktop"
-area=" Capture Area"
-window="缾 Capture Window"
-inthree="靖 Take in 3s"
+screen="󰍹 Capture Desktop"
+area="󰆞 Capture Area"
+window="󰖲 Capture Window"
+inthree="󰔝 Take in 3s"
 record=" Record area"
 
 # countdown

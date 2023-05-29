@@ -13,10 +13,10 @@
     enableDefaultFonts = false;
 
     fontconfig.defaultFonts = {
-      serif = ["Noto Serif Nerd Font" "Noto Serif"];
+      serif = ["NotoSerif Nerd Font" "Noto Serif"];
       sansSerif = ["NotoSans Nerd Font" "Noto Sans"];
-      monospace = ["Fira Code Nerd Font" "Fira Code Font"];
-      emoji = ["Noto  Color Emoji"];
+      monospace = ["FiraCode Nerd Font" "Fira Code"];
+      emoji = ["Noto Color Emoji"];
     };
   };
 }

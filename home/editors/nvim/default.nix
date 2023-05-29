@@ -3,8 +3,6 @@
   lib,
   theme,
   packages,
-  inputs,
-  system,
   ...
 }: let
   pkgs = unstable-pkgs;
@@ -29,9 +27,8 @@
     packages."@prisma/language-server"
     packages."graphql-language-service-cli"
     packages."vscode-smarty-langserver-extracted"
-    inputs.nil.packages."${system}".default
+    packages."svelte-language-server"
     nodePackages.typescript-language-server
-    nodePackages.svelte-language-server
     nodePackages.eslint_d
     rust-analyzer
     taplo-lsp
@@ -41,8 +38,8 @@
     python310Packages.black
     libxml2 # for xmllint
     phpactor
-    php80Packages.php-cs-fixer
-    php80Packages.phpcs
+    php82Packages.php-cs-fixer
+    php82Packages.phpcs
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {

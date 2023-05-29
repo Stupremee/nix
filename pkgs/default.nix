@@ -32,7 +32,7 @@
     packages =
       (mapPackages (
         name: let
-          sources = (import ./_sources/generated.nix) {inherit (pkgs) fetchurl fetchgit fetchFromGitHub;};
+          sources = (import ./_sources/generated.nix) {inherit (pkgs) fetchurl fetchgit fetchFromGitHub dockerTools;};
           package = import ./${name};
 
           args = builtins.intersectAttrs (builtins.functionArgs package) {

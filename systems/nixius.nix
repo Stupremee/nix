@@ -51,8 +51,10 @@
 
   # Boot configuration
   boot = {
-    tmpOnTmpfs = true;
-    tmpOnTmpfsSize = "75%";
+    tmp = {
+      useTmpfs = true;
+      tmpfsSize = "75%";
+    };
 
     initrd.availableKernelModules = [
       "xhci_pci"

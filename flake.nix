@@ -1,9 +1,9 @@
 {
   inputs = {
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
 
-    home-manager.url = "github:nix-community/home-manager/release-22.11";
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -14,24 +14,22 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    # Unstable required because hyprland needs wayland 1.21
+    hyprland.url = "github:hyprwm/Hyprland/v0.25.0";
+    # Unstable required because hyprland needs wayland 1.22
     hyprland.inputs.nixpkgs.follows = "unstable";
 
-    hyprland-contrib.url = "github:hyprwm/contrib";
-    hyprland-contrib.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland-contrib.url = "github:hyprwm/contrib/v0.1";
+    hyprland-contrib.inputs.nixpkgs.follows = "unstable";
 
     hyprpaper.url = "github:hyprwm/hyprpaper";
     hyprpaper.inputs.nixpkgs.follows = "unstable";
 
     eww.url = "github:elkowar/eww";
-    eww.inputs.nixpkgs.follows = "nixpkgs";
+    eww.inputs.nixpkgs.follows = "unstable";
+    eww.inputs.rust-overlay.follows = "rust-overlay";
 
     devenv.url = "github:cachix/devenv/latest";
     devenv.inputs.nixpkgs.follows = "unstable";
-
-    nil.url = "github:oxalica/nil";
-    nil.inputs.nixpkgs.follows = "unstable";
 
     nix-index-database.url = "github:Mic92/nix-index-database";
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
@@ -39,7 +37,7 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-22.11";
+    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     nixos-mailserver.inputs.nixpkgs.follows = "unstable";
 
     vinix.url = "github:Stupremee/vinix";

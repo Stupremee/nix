@@ -1,6 +1,7 @@
 {
     "authelia": {
         "cargoLocks": null,
+        "date": null,
         "extract": null,
         "name": "authelia",
         "passthru": null,
@@ -20,6 +21,7 @@
     },
     "authelia-web": {
         "cargoLocks": null,
+        "date": null,
         "extract": null,
         "name": "authelia-web",
         "passthru": null,
@@ -33,6 +35,7 @@
     },
     "kanidm": {
         "cargoLocks": null,
+        "date": null,
         "extract": null,
         "name": "kanidm",
         "passthru": null,
@@ -44,14 +47,15 @@
             "name": null,
             "owner": "kanidm",
             "repo": "kanidm",
-            "rev": "v1.1.0-alpha.11",
-            "sha256": "sha256-TVGLL1Ir/Nld0kdhWmcYYmChrW42ctJPY/U7wtuEwCo=",
+            "rev": "v1.1.0-alpha.12",
+            "sha256": "sha256-ZlUn7m5xgMWWIr9y/dkM/yZ2KF2LdkaxqtHsMcxAT/M=",
             "type": "github"
         },
-        "version": "v1.1.0-alpha.11"
+        "version": "v1.1.0-alpha.12"
     },
     "nvimpager": {
         "cargoLocks": null,
+        "date": "2023-05-10",
         "extract": null,
         "name": "nvimpager",
         "passthru": null,
@@ -63,14 +67,15 @@
             "name": null,
             "owner": "lucc",
             "repo": "nvimpager",
-            "rev": "a558ec1e0a1c83503f4ab5230938b9a103d9a190",
-            "sha256": "sha256-nKq9Prr8tg39t1W3xShuWUnkZI+PAvfR/+Gler82e1o=",
+            "rev": "72639e94e739c7c0948043ec8f8bf38ea222d0a9",
+            "sha256": "sha256-RmpPWS9gnBnR+Atw6uzBmeDSgoTOFSdKzHoJ84O+gyA=",
             "type": "github"
         },
-        "version": "a558ec1e0a1c83503f4ab5230938b9a103d9a190"
+        "version": "72639e94e739c7c0948043ec8f8bf38ea222d0a9"
     },
     "tailscale": {
         "cargoLocks": null,
+        "date": null,
         "extract": null,
         "name": "tailscale",
         "passthru": null,
@@ -82,10 +87,10 @@
             "name": null,
             "owner": "tailscale",
             "repo": "tailscale",
-            "rev": "v1.40.0",
-            "sha256": "sha256-iPf3ams613VHPesbxoBaaw9eav5p781+wEmbJ+15yfY=",
+            "rev": "v1.42.0",
+            "sha256": "sha256-J7seajRoUOG/nm5iYuiv3lcS5vTT1XxZTxiSmf/TjGI=",
             "type": "github"
         },
-        "version": "v1.40.0"
+        "version": "v1.42.0"
     }
 }

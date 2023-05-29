@@ -11,7 +11,7 @@
 
   deps = with pkgs; [
     config.wayland.windowManager.hyprland.package
-    config.programs.mako.package
+    config.services.mako.package
     bash
     gojq
     gnused

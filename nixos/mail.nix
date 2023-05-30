@@ -28,7 +28,7 @@
       };
     };
 
-    certificateScheme = 1;
+    certificateScheme = "manual";
     certificateFile = certOrKey "crt";
     keyFile = certOrKey "key";
   };

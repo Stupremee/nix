@@ -9,7 +9,7 @@ with lib; let
   fpm = config.services.phpfpm.pools.roundcube;
   localDB = cfg.database.host == "localhost";
   user = cfg.database.username;
-  phpWithPspell = pkgs.php80.withExtensions ({
+  phpWithPspell = pkgs.php82.withExtensions ({
     enabled,
     all,
   }:

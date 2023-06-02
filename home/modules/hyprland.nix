@@ -28,6 +28,21 @@
         };
       };
     };
+
+  deviceOpts = {...}:
+    with lib; {
+      options = {
+        kbOptions = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+        };
+
+        sensitivity = mkOption {
+          type = types.nullOr types.str;
+          default = null;
+        };
+      };
+    };
 in {
   options.modules.hyprland = with lib; {
     enable = mkOption {
@@ -35,9 +50,19 @@ in {
       default = false;
     };
 
+    devices = mkOption {
+      type = types.attrsOf (types.submodule deviceOpts);
+      default = [];
+    };
+
     monitors = mkOption {
       type = types.attrsOf (types.submodule monitorOpts);
       default = [];
+    };
+
+    sensitivity = mkOption {
+      type = types.str;
+      default = "1.0";
     };
   };
 
@@ -94,6 +119,27 @@ in {
             cfg.monitors;
 
           monitorsConfig = builtins.concatStringsSep "" monitorList;
+
+          devicesList =
+            mapAttrsToList (name: opts: let
+              kbOptions =
+                if opts.kbOptions != null
+                then "kb_options=${opts.kbOptions}"
+                else "";
+
+              sensitivity =
+                if opts.sensitivity != null
+                then "sensitivity=${opts.sensitivity}"
+                else "";
+            in ''
+              device:${name} {
+                ${kbOptions}
+                ${sensitivity}
+              }
+            '')
+            cfg.devices;
+
+          devicesConfig = builtins.concatStringsSep "" devicesList;
         in ''
           env = XDG_SESSION_TYPE,wayland
           env = WLR_NO_HARDWARE_CURSORS,1
@@ -105,18 +151,12 @@ in {
           exec-once = systemctl start --user eww.service && eww open bar --no-daemonize
           exec-once = dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
-          device:at-translated-set-2-keyboard {
-            kb_options=caps:swapescape
-          }
-
-          device:elan-touchpad {
-            sensitivity=1.0
-          }
+          ${devicesConfig}
 
           input {
             kb_layout=eu
             follow_mouse=1
-            sensitivity=-0.8
+            sensitivity=${cfg.sensitivity}
           }
 
           general {

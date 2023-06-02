@@ -68,7 +68,7 @@ require("user.lsp.settings.tsserver")
 require("user.lsp.settings.lua_ls")
 
 lsp.setup_servers({
-  "taplo",
+  -- "taplo",
   "terraformls",
   "jsonls",
   "prismals",

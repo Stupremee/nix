@@ -14,8 +14,7 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland.url = "github:hyprwm/Hyprland/v0.25.0";
-    # Unstable required because hyprland needs wayland 1.22
+    hyprland.url = "github:hyprwm/Hyprland/v0.26.0";
     hyprland.inputs.nixpkgs.follows = "unstable";
 
     hyprland-contrib.url = "github:hyprwm/contrib/v0.1";

@@ -9,7 +9,7 @@ in {
     stu = {
       isNormalUser = true;
       home = "/home/stu";
-      extraGroups = ["wheel" "dialout" "docker" "wireshark" "podman"];
+      extraGroups = ["wheel" "dialout" "docker" "wireshark" "podman" "networkmanager" "video"];
       uid = 1000;
       openssh.authorizedKeys.keys = keys;
     };

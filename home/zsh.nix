@@ -6,6 +6,23 @@
 }: let
   inherit (pkgs) fetchFromGitHub;
 
+  procWatch = pkgs.writeShellScriptBin "proc-watch" ''
+    cmd="$1"
+    shift
+
+    $cmd $@ &
+    pid="$!"
+
+
+    while read line; do
+      kill -SIGINT $pid
+      wait $pid
+
+      $cmd $@ &
+      pid="$!"
+    done
+  '';
+
   zshPlugin = src: rec {
     inherit src;
     name = src.pname;
@@ -19,7 +36,7 @@
     sha256 = "sha256-j7ppGmNnfgep6JDdv5nn2gUGSOx4iPPc5afL1WDF3ZY=";
   };
 in {
-  home.packages = with pkgs; [comma];
+  home.packages = with pkgs; [comma procWatch];
 
   programs.fzf = {
     enable = true;

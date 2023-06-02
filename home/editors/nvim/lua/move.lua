@@ -1,4 +1,4 @@
-local opts = { noremap = true }
+local opts = { noremap = true, silent = true }
 
 -- Normal-mode commands
 vim.keymap.set("n", "<M-j>", ":MoveLine(1)<CR>", opts)

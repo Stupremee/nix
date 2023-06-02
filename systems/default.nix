@@ -16,7 +16,6 @@
     ../nixos/users.nix
     ../nixos/network/sshd.nix
     ../nixos/network/network.nix
-    ../nixos/network/tailscale.nix
     ../nixos/zsh.nix
     ../nixos/cachix.nix
 
@@ -51,6 +50,8 @@
       # Default imports for the user
       imports =
         [
+          ../home/modules/hyprland.nix
+
           inputs.hyprland.homeManagerModules.default
         ]
         ++ modules;
@@ -104,10 +105,41 @@ in {
         ../nixos/vaultwarden.nix
         ../nixos/mail.nix
         ../nixos/foldingathome.nix
+        ../nixos/network/tailscale.nix
       ];
       home = true;
       homeModules = [
         ../home/git.nix
+      ];
+    };
+
+    aerial = mkSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./aerial.nix
+        ../nixos/fonts.nix
+        ../nixos/graphical.nix
+        ../nixos/containers.nix
+        ../nixos/network/wifi.nix
+        ../nixos/hardware/laptop.nix
+      ];
+      home = true;
+      theme = "frappe";
+      flakePath = "/home/stu/dev/nix/nix";
+      homeModules = [
+        ./home/aerial.nix
+        ../home/git.nix
+        ../home/wayland
+        ../home/alacritty.nix
+        ../home/pgp.nix
+        ../home/xdg.nix
+        ../home/zsh.nix
+        ../home/tmux.nix
+        ../home/editors/nvim
+        ../home/graphical
+        ../home/dev
+
+        inputs.nix-index-database.hmModules.nix-index
       ];
     };
 
@@ -121,6 +153,7 @@ in {
         ../nixos/hardware/logitech.nix
         ../nixos/hardware/nvidia.nix
         ../nixos/containers.nix
+        ../nixos/network/tailscale.nix
       ];
       home = true;
       theme = "frappe";

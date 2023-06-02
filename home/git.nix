@@ -27,8 +27,10 @@
         contents = {
           user = {
             name = "Justus Kliem";
-            email = "justus.kliem@esyon.de";
+            email = "justus.kliem@ekd-solar.de";
           };
+
+          signing.key = "31AC6529";
         };
       }
     ];

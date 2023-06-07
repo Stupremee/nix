@@ -189,6 +189,7 @@ in {
       theme = "frappe";
       flakePath = "/home/stu/dev/nix/nix";
       homeModules = [
+        ./home/nixius.nix
         ../home/git.nix
         ../home/wayland
         ../home/alacritty.nix

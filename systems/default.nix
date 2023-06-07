@@ -151,6 +151,7 @@ in {
         ../nixos/graphical.nix
         ../nixos/containers.nix
         ../nixos/printing.nix
+        ../nixos/keyring.nix
       ];
       home = true;
       theme = "frappe";

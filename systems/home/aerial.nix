@@ -2,7 +2,7 @@
   modules.hyprland = {
     enable = true;
 
-    sensitivity = "-0.8";
+    sensitivity = "-1.0";
 
     devices."elan-touchpad" = {
       sensitivity = "1.0";

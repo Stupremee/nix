@@ -143,6 +143,34 @@ in {
       ];
     };
 
+    baldon = mkSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./baldon.nix
+        ../nixos/fonts.nix
+        ../nixos/graphical.nix
+        ../nixos/containers.nix
+      ];
+      home = true;
+      theme = "frappe";
+      flakePath = "/home/stu/dev/nix/nix";
+      homeModules = [
+        ./home/baldon.nix
+        ../home/git.nix
+        ../home/wayland
+        ../home/alacritty.nix
+        ../home/pgp.nix
+        ../home/xdg.nix
+        ../home/zsh.nix
+        ../home/tmux.nix
+        ../home/editors/nvim
+        ../home/graphical
+        ../home/dev
+
+        inputs.nix-index-database.hmModules.nix-index
+      ];
+    };
+
     nixius = mkSystem {
       system = "x86_64-linux";
       modules = [

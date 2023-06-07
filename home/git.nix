@@ -1,14 +1,20 @@
-{unstable-pkgs, ...}: {
+{
+  unstable-pkgs,
+  lib,
+  ...
+}: let
+  inherit (lib) mkDefault;
+in {
   home.packages = with unstable-pkgs; [delta gh];
 
   programs.git = {
     enable = true;
     package = unstable-pkgs.gitAndTools.gitFull;
 
-    userName = "Justus K";
-    userEmail = "justus.k@protonmail.com";
+    userName = mkDefault "Justus K";
+    userEmail = mkDefault "justus.k@protonmail.com";
 
-    signing.key = "D54A1CD51376F46C";
+    signing.key = mkDefault "D54A1CD51376F46C";
     signing.signByDefault = true;
 
     aliases = {
@@ -20,20 +26,6 @@
       c = "commit";
       a = "add";
     };
-
-    includes = [
-      {
-        condition = "gitdir:~/dev/work/";
-        contents = {
-          user = {
-            name = "Justus Kliem";
-            email = "justus.kliem@ekd-solar.de";
-          };
-
-          signing.key = "31AC6529";
-        };
-      }
-    ];
 
     lfs.enable = true;
 

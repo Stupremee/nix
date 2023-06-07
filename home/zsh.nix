@@ -14,9 +14,9 @@
     pid="$!"
 
 
-    while read line; do
-      kill -SIGINT $pid
-      wait $pid
+    while read; do
+      kill -SIGINT $pid || true
+      wait $pid || true
 
       $cmd $@ &
       pid="$!"

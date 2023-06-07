@@ -52,12 +52,12 @@ in {
 
     devices = mkOption {
       type = types.attrsOf (types.submodule deviceOpts);
-      default = [];
+      default = {};
     };
 
     monitors = mkOption {
       type = types.attrsOf (types.submodule monitorOpts);
-      default = [];
+      default = {};
     };
 
     sensitivity = mkOption {

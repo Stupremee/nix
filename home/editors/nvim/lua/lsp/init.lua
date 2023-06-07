@@ -77,6 +77,7 @@ lsp.setup_servers({
   "smarty_ls",
   "phpactor",
   "eslint",
+  "html",
 })
 
 lsp.setup()

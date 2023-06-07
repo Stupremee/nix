@@ -1,10 +1,8 @@
 {
   pkgs,
-  config,
   lib,
   ...
 }: let
-  hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
 in {
   services.swayidle = {
@@ -24,11 +22,6 @@ in {
       {
         timeout = 300;
         command = "${swaylock} -f";
-      }
-      {
-        timeout = 600;
-        command = "${hyprctl} dispatch dpms off";
-        resumeCommand = "${hyprctl} dispatch dpms on";
       }
     ];
   };

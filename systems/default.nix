@@ -150,6 +150,7 @@ in {
         ../nixos/fonts.nix
         ../nixos/graphical.nix
         ../nixos/containers.nix
+        ../nixos/printing.nix
       ];
       home = true;
       theme = "frappe";

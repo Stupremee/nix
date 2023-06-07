@@ -8,6 +8,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  networking.firewall.enable = false;
+
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "Europe/Berlin";

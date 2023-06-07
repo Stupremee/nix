@@ -1,6 +1,6 @@
 {
   pkgs,
-  theme,
+  unstable-pkgs,
   config,
   ...
 }: let
@@ -38,15 +38,15 @@
 in {
   home.packages = with pkgs; [comma procWatch];
 
-  programs.fzf = {
+  programs.atuin = {
     enable = true;
     enableZshIntegration = true;
 
-    defaultOptions = with theme; [
-      "--color=bg+:${surface0},bg:${base},spinner:${rosewater},hl:${red}"
-      "--color=fg:${text},header:${red},info:${mauve},pointer:${rosewater}"
-      "--color=marker:${rosewater},fg+:${text},prompt:${mauve},hl+:${red}"
-    ];
+    package = unstable-pkgs.atuin;
+
+    settings = {
+      auto_sync = false;
+    };
   };
 
   programs.zsh = {

@@ -42,6 +42,9 @@
     vinix.url = "github:Stupremee/vinix";
     vinix.inputs.nixpkgs.follows = "nixpkgs";
     vinix.inputs.rust-overlay.follows = "rust-overlay";
+
+    nixd.url = "github:nix-community/nixd";
+    nixd.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs = inputs @ {

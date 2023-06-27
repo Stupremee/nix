@@ -43,6 +43,12 @@
       unstable-pkgs = import inputs.unstable {
         inherit system;
         config.allowUnfree = true;
+
+        overlays = [
+          (_: _: {
+            nixd = inputs.nixd.packages."${system}".nixd;
+          })
+        ];
       };
       packages = self.packages."${system}";
     };
@@ -75,6 +81,12 @@
             _module.args.unstable-pkgs = import inputs.unstable {
               inherit system;
               config.allowUnfree = true;
+
+              overlays = [
+                (_: _: {
+                  nixd = inputs.nixd.packages."${system}".nixd;
+                })
+              ];
             };
             _module.args.packages = self.packages."${system}";
             _module.args.inputs = inputs;
@@ -152,6 +164,7 @@ in {
         ../nixos/containers.nix
         ../nixos/printing.nix
         ../nixos/keyring.nix
+        ../nixos/binfmt.nix
       ];
       home = true;
       theme = "frappe";

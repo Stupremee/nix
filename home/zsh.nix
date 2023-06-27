@@ -13,6 +13,14 @@
     $cmd $@ &
     pid="$!"
 
+    trap_ctrlc() {
+      kill -SIGINT $pid || true
+      wait $pid || true
+
+      exit
+    }
+
+    trap trap_ctrlc SIGHUP SIGINT SIGTERM
 
     while read; do
       kill -SIGINT $pid || true

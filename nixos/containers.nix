@@ -13,4 +13,15 @@
   };
 
   environment.systemPackages = with pkgs; [docker-compose];
+
+  systemd.services."docker-binfmt-setup" = {
+    wantedBy = ["multi-user.target"];
+
+    script = "${pkgs.docker}/bin/docker run --rm --privileged multiarch/qemu-user-static --reset -p yes";
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+  };
 }

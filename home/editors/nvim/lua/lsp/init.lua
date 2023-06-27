@@ -78,6 +78,8 @@ lsp.setup_servers({
   "phpactor",
   "eslint",
   "html",
+  "gopls",
+  "nixd",
 })
 
 lsp.setup()

@@ -18,6 +18,7 @@ in {
         "networkmanager"
         "video"
         "lp"
+        "scanner"
       ];
       uid = 1000;
       openssh.authorizedKeys.keys = keys;

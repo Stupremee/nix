@@ -134,6 +134,7 @@ in {
         ../nixos/containers.nix
         ../nixos/network/wifi.nix
         ../nixos/hardware/laptop.nix
+        ../nixos/printing.nix
       ];
       home = true;
       theme = "frappe";

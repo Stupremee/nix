@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   modulesPath,
   config,
@@ -7,6 +8,34 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
+
+  environment.etc."ppp/options".text = "ipcp-accept-remote";
+
+  environment.systemPackages = with pkgs; [
+    networkmanager-fortisslvpn
+    # (openfortivpn.overrideAttrs (_: rec {
+    #   version = "1.20.5";
+    #
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "adrienverge";
+    #     repo = "openfortivpn";
+    #     rev = "v${version}";
+    #     hash = "sha256-jbgxhCQWDw1ZUOAeLhOG+b6JYgvpr5TnNDIO/4k+e7k=";
+    #   };
+    # }))
+    openfortivpn
+  ];
+
+  networking.hosts."10.100.4.16" = [
+    "mainframe.lan"
+    "git.mainframe.lan"
+    "ci.mainframe.lan"
+    "cache.mainframe.lan"
+    "ca.mainframe.lan"
+    "docs.mainframe.lan"
+  ];
+
+  networking.firewall.enable = false;
 
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";

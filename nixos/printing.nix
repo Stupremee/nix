@@ -25,6 +25,7 @@
     enable = true;
     extraBackends = with pkgs; [
       sane-airscan
+      sane-backends
     ];
   };
 }

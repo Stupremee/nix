@@ -211,6 +211,7 @@ in {
         ../home/xdg.nix
         ../home/zsh.nix
         ../home/tmux.nix
+        ../home/graphical/spotify.nix
         ../home/editors/nvim
         ../home/graphical
         ../home/dev

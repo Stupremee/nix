@@ -3,6 +3,7 @@
   modulesPath,
   config,
   pkgs,
+  unstable-pkgs,
   ...
 }: {
   imports = [

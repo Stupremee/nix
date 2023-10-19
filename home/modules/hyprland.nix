@@ -157,6 +157,7 @@ in {
             kb_layout=eu
             follow_mouse=1
             sensitivity=${cfg.sensitivity}
+            force_no_accel
           }
 
           general {

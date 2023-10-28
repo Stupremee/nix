@@ -79,7 +79,6 @@ lsp.setup_servers({
   "eslint",
   "html",
   "gopls",
-  "nixd",
 })
 
 lsp.setup()

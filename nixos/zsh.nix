@@ -1,15 +1,9 @@
-{pkgs, ...}: {
-  users.defaultUserShell = pkgs.zsh;
+{pkgs, lib, ...}: {
   programs.zsh = {
     enable = true;
 
-    histSize = 10000;
+    # histSize = 10000;
     enableCompletion = true;
-
-    autosuggestions.enable = true;
-    autosuggestions.async = true;
-
-    syntaxHighlighting.enable = true;
 
     shellInit = ''
       bindkey -v

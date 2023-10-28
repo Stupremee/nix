@@ -34,7 +34,7 @@
     inputs.nixos-mailserver.nixosModules.mailserver
   ];
 
-  mkHomeModule = modules: system: theme: {
+  mkHomeModule = modules: system: theme: user: {
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
     home-manager.extraSpecialArgs = {
@@ -43,20 +43,15 @@
       unstable-pkgs = import inputs.unstable {
         inherit system;
         config.allowUnfree = true;
-
-        overlays = [
-          (_: _: {
-            nixd = inputs.nixd.packages."${system}".nixd;
-          })
-        ];
       };
       packages = self.packages."${system}";
     };
-    home-manager.users.stu = {...}: {
+    home-manager.users."${user}" = {...}: {
       # Default imports for the user
       imports =
         [
           ../home/modules/hyprland.nix
+          ../home/modules/gpg-agent.nix
 
           inputs.hyprland.homeManagerModules.default
         ]
@@ -65,6 +60,24 @@
     };
   };
 
+  mkDarwinSystem = {
+    system,
+    modules,
+    theme,
+    homeModules,
+    user,
+  }:
+    inputs.darwin.lib.darwinSystem {
+      inherit system;
+
+      modules =
+        modules
+        ++ [
+          inputs.home-manager.darwinModules.home-manager
+          (mkHomeModule homeModules system theme user)
+        ];
+    };
+
   mkSystem = {
     system,
     modules,
@@ -72,6 +85,7 @@
     theme ? "",
     homeModules ? [],
     flakePath ? "",
+    user ? "stu",
   }:
     inputs.nixpkgs.lib.nixosSystem {
       inherit system;
@@ -81,12 +95,6 @@
             _module.args.unstable-pkgs = import inputs.unstable {
               inherit system;
               config.allowUnfree = true;
-
-              overlays = [
-                (_: _: {
-                  nixd = inputs.nixd.packages."${system}".nixd;
-                })
-              ];
             };
             _module.args.packages = self.packages."${system}";
             _module.args.inputs = inputs;
@@ -101,123 +109,146 @@
           overrideModules))
         ++ coreModules
         ++ modules
-        ++ (optionals home [(mkHomeModule homeModules system theme)]);
+        ++ (optionals home [(mkHomeModule homeModules system theme user)]);
     };
 in {
-  flake.nixosConfigurations = {
-    ironite = mkSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./ironite.nix
-        ../nixos/server.nix
-        ../nixos/containers.nix
-        ../nixos/caddy.nix
-        ../nixos/postgres.nix
-        ../nixos/paperless.nix
-        ../nixos/vaultwarden.nix
-        ../nixos/mail.nix
-        ../nixos/foldingathome.nix
-        ../nixos/network/tailscale.nix
-      ];
-      home = true;
-      homeModules = [
-        ../home/git.nix
-      ];
+  flake = {
+    darwinConfigurations = {
+      "MacBook-Pro-von-Energiekonzepte" = mkDarwinSystem {
+        system = "aarch64-darwin";
+        user = "ekd";
+        modules = [
+          ./ekd-macbook.nix
+          ../nixos/nix-daemon.nix
+          ../nixos/cachix.nix
+          ../nixos/zsh.nix
+        ];
+        theme = "latte";
+        homeModules = [
+          ../home/git
+          ../home/zsh.nix
+          ../home/editors/nvim
+          ../home/dev
+          ../home/pgp.nix
+
+          inputs.nix-index-database.hmModules.nix-index
+        ];
+      };
     };
 
-    aerial = mkSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./aerial.nix
-        ../nixos/fonts.nix
-        ../nixos/graphical.nix
-        ../nixos/containers.nix
-        ../nixos/network/wifi.nix
-        ../nixos/hardware/laptop.nix
-        ../nixos/printing.nix
-      ];
-      home = true;
-      theme = "frappe";
-      flakePath = "/home/stu/dev/nix/nix";
-      homeModules = [
-        ./home/aerial.nix
-        ../home/git.nix
-        ../home/wayland
-        ../home/alacritty.nix
-        ../home/pgp.nix
-        ../home/xdg.nix
-        ../home/zsh.nix
-        ../home/tmux.nix
-        ../home/editors/nvim
-        ../home/graphical
-        ../home/dev
+    nixosConfigurations = {
+      ironite = mkSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./ironite.nix
+          ../nixos/server.nix
+          ../nixos/containers.nix
+          ../nixos/caddy.nix
+          ../nixos/postgres.nix
+          ../nixos/paperless.nix
+          ../nixos/vaultwarden.nix
+          ../nixos/mail.nix
+          ../nixos/foldingathome.nix
+          ../nixos/network/tailscale.nix
+        ];
+        home = true;
+        homeModules = [
+          ../home/git
+        ];
+      };
 
-        inputs.nix-index-database.hmModules.nix-index
-      ];
-    };
+      aerial = mkSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./aerial.nix
+          ../nixos/fonts.nix
+          ../nixos/graphical.nix
+          ../nixos/containers.nix
+          ../nixos/network/wifi.nix
+          ../nixos/hardware/laptop.nix
+          ../nixos/printing.nix
+        ];
+        home = true;
+        theme = "frappe";
+        flakePath = "/home/stu/dev/nix/nix";
+        homeModules = [
+          ./home/aerial.nix
+          ../home/git
+          ../home/wayland
+          ../home/alacritty.nix
+          ../home/pgp.nix
+          ../home/xdg.nix
+          ../home/zsh.nix
+          ../home/tmux.nix
+          ../home/editors/nvim
+          ../home/graphical
+          ../home/dev
 
-    baldon = mkSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./baldon.nix
-        ../nixos/fonts.nix
-        ../nixos/graphical.nix
-        ../nixos/containers.nix
-        ../nixos/printing.nix
-        ../nixos/keyring.nix
-        ../nixos/binfmt.nix
-      ];
-      home = true;
-      theme = "frappe";
-      flakePath = "/home/stu/dev/nix/nix";
-      homeModules = [
-        ./home/baldon.nix
-        ../home/git.nix
-        ../home/wayland
-        ../home/alacritty.nix
-        ../home/pgp.nix
-        ../home/xdg.nix
-        ../home/zsh.nix
-        ../home/tmux.nix
-        ../home/editors/nvim
-        ../home/graphical
-        ../home/dev
+          inputs.nix-index-database.hmModules.nix-index
+        ];
+      };
 
-        inputs.nix-index-database.hmModules.nix-index
-      ];
-    };
+      baldon = mkSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./baldon.nix
+          ../nixos/fonts.nix
+          ../nixos/graphical.nix
+          ../nixos/containers.nix
+          ../nixos/printing.nix
+          ../nixos/keyring.nix
+          ../nixos/binfmt.nix
+        ];
+        home = true;
+        theme = "frappe";
+        flakePath = "/home/stu/dev/nix/nix";
+        homeModules = [
+          ./home/baldon.nix
+          ../home/git
+          ../home/wayland
+          ../home/alacritty.nix
+          ../home/pgp.nix
+          ../home/xdg.nix
+          ../home/zsh.nix
+          ../home/tmux.nix
+          ../home/editors/nvim
+          ../home/graphical
+          ../home/dev
+        ];
+      };
 
-    nixius = mkSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./nixius.nix
-        ../nixos/fonts.nix
-        ../nixos/graphical.nix
-        ../nixos/hardware/yubikey.nix
-        ../nixos/hardware/logitech.nix
-        ../nixos/hardware/nvidia.nix
-        ../nixos/containers.nix
-        ../nixos/network/tailscale.nix
-      ];
-      home = true;
-      theme = "frappe";
-      flakePath = "/home/stu/dev/nix/nix";
-      homeModules = [
-        ./home/nixius.nix
-        ../home/git.nix
-        ../home/wayland
-        ../home/alacritty.nix
-        ../home/pgp.nix
-        ../home/xdg.nix
-        ../home/zsh.nix
-        ../home/tmux.nix
-        ../home/graphical/spotify.nix
-        ../home/editors/nvim
-        ../home/graphical
-        ../home/dev
+      nixius = mkSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./nixius.nix
+          ../nixos/fonts.nix
+          ../nixos/graphical.nix
+          ../nixos/hardware/yubikey.nix
+          ../nixos/hardware/logitech.nix
+          ../nixos/hardware/nvidia.nix
+          ../nixos/containers.nix
+          ../nixos/network/tailscale.nix
+        ];
+        home = true;
+        theme = "frappe";
+        flakePath = "/home/stu/dev/nix/nix";
+        homeModules = [
+          ./home/nixius.nix
+          ../home/git
+          ../home/wayland
+          ../home/alacritty.nix
+          ../home/pgp.nix
+          ../home/xdg.nix
+          ../home/zsh.nix
+          ../home/tmux.nix
+          ../home/graphical/spotify.nix
+          ../home/editors/nvim
+          ../home/graphical
+          ../home/dev
 
-        inputs.nix-index-database.hmModules.nix-index
-      ];
+          inputs.nix-index-database.hmModules.nix-index
+        ];
+      };
     };
   };
 }

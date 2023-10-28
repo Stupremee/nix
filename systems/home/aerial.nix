@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   modules.hyprland = {
     enable = true;
 

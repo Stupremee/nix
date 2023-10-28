@@ -1,5 +1,5 @@
 # Module for configuring the nix-daemon
-{...}: {
+{lib, ...}: {
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -7,24 +7,12 @@
 
     settings = {
       allowed-users = ["@wheel"];
-      trusted-users = ["root" "@wheel"];
+      trusted-users = ["root" "@wheel" "ekd"];
       auto-optimise-store = true;
-    };
-
-    optimise = {
-      automatic = true;
-      dates = ["11:00"];
-    };
-
-    gc = {
-      automatic = true;
-      # Run garbage collector every sunday at 1PM
-      dates = "Sun 13:00";
-      options = "--delete-older-than 7d";
     };
   };
 
   nixpkgs.config.allowUnfree = true;
 
-  system.stateVersion = "22.11";
+  system.stateVersion = lib.mkDefault "22.11";
 }

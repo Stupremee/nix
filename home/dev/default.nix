@@ -9,10 +9,7 @@
   home.packages = with pkgs; [
     dbeaver
     inputs.devenv.packages."${system}".devenv
-    ghidra-bin
-    remmina
     httpie
-    sccache
   ];
 
   home.sessionVariables = {

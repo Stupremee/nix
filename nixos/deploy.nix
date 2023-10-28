@@ -6,8 +6,8 @@
 }: let
   inherit (inputs) deploy-rs;
 in {
-  perSystem = {system, ...}: {
-    checks = deploy-rs.lib."${system}".deployChecks self.deploy;
+  perSystem = {system, pkgs, ...}: {
+    checks = lib.mkIf pkgs.stdenv.isLinux (deploy-rs.lib."${system}".deployChecks self.deploy);
   };
 
   flake = {

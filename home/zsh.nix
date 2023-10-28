@@ -2,6 +2,7 @@
   pkgs,
   unstable-pkgs,
   config,
+  lib,
   ...
 }: let
   inherit (pkgs) fetchFromGitHub;
@@ -79,7 +80,7 @@ in {
     ];
 
     envExtra = ''
-      export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
+      export ZSH_CACHE_DIR="''${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
       mkdir -p $ZSH_CACHE_DIR/completions
 
       function load_plugin() {
@@ -87,8 +88,10 @@ in {
       }
     '';
 
-    initExtra = ''
-      if command -v tmux &> /dev/null && [ "$TMUX" = "" ] && [[ "$(tty)" != /dev/tty* ]]; then
+    initExtra = let
+      tty = lib.optionalString pkgs.stdenv.isLinux " && [[ \"$(tty)\" != /dev/tty* ]]";
+    in ''
+      if command -v tmux &> /dev/null && [ "$TMUX" = "" ]${tty}; then
         tmux
       fi
 

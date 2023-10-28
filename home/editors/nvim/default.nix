@@ -31,7 +31,6 @@
     nodePackages.typescript-language-server
     nodePackages.eslint_d
     rust-analyzer
-    nixd
     gopls
     taplo-lsp
     terraform-ls

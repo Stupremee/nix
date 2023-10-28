@@ -3,6 +3,10 @@
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
 
+    nixpkgs-darwin.url = "github:nixos/nixpkgs/nixpkgs-23.05-darwin";
+    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.inputs.nixpkgs.follows = "nixpkgs-darwin";
+
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -42,9 +46,6 @@
     vinix.url = "github:Stupremee/vinix";
     vinix.inputs.nixpkgs.follows = "nixpkgs";
     vinix.inputs.rust-overlay.follows = "rust-overlay";
-
-    nixd.url = "github:nix-community/nixd";
-    nixd.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs = inputs @ {

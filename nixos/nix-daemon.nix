@@ -8,7 +8,7 @@
     settings = {
       allowed-users = ["@wheel"];
       trusted-users = ["root" "@wheel" "ekd"];
-      auto-optimise-store = true;
+      auto-optimise-store = lib.mkDefault true;
     };
   };
 

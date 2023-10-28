@@ -22,5 +22,9 @@
     };
   };
 
+  # Disable this on MacOS, as this seems to cause some issues
+  # https://github.com/NixOS/nix/issues/7273
+  nix.settings. auto-optimise-store = false;
+
   system.stateVersion = lib.mkForce 4;
 }

@@ -6,7 +6,6 @@
   home.packages = with unstable-pkgs; [
     kubectl
     kubernetes-helm
-    azure-cli
     k9s
     kubelogin
     kubent

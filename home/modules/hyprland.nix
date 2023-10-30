@@ -76,8 +76,7 @@ in {
 
     hyprland = inputs.hyprland.packages."${system}".default.override {
       enableXWayland = true;
-      nvidiaPatches = true;
-      hidpiXWayland = true;
+      enableNvidiaPatches = true;
     };
   in
     lib.mkIf cfg.enable {

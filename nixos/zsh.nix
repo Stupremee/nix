@@ -1,4 +1,4 @@
-{pkgs, lib, ...}: {
+{pkgs, ...}: {
   programs.zsh = {
     enable = true;
 
@@ -10,6 +10,8 @@
       setopt globdots
     '';
   };
+
+  users.defaultUserShell = pkgs.zsh;
 
   # core packages for shell usage
   environment = {

@@ -29,6 +29,8 @@ in {
     };
   };
 
+  users.defaultUserShell = pkgs.zsh;
+
   boot.initrd.network.ssh.authorizedKeys = keys;
 
   security.sudo.wheelNeedsPassword = false;

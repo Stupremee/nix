@@ -11,8 +11,6 @@
     '';
   };
 
-  users.defaultUserShell = pkgs.zsh;
-
   # core packages for shell usage
   environment = {
     systemPackages = with pkgs; [

@@ -54,6 +54,9 @@ local rust_lsp = lsp.build_options("rust_analyzer", {
       lens = {
         enabled = true,
       },
+      files = {
+        excludeDirs = { ".git", ".direnv" },
+      },
       checkOnSave = {
         command = "clippy",
       },

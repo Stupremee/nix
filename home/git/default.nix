@@ -26,7 +26,6 @@ in {
 
       options = {
         features = "interactive";
-        syntax-theme = "OneHalfLight";
       };
     };
 

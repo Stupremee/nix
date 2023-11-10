@@ -1,4 +1,5 @@
 {
+  pkgs,
   unstable-pkgs,
   theme,
   ...
@@ -9,6 +10,9 @@
     k9s
     kubelogin
     kubent
+    argo
+    pkgs.azure-cli
+    pkgs.azure-storage-azcopy
   ];
 
   programs.zsh.initExtra = ''

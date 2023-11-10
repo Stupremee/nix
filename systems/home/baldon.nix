@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   modules.hyprland = {
     enable = true;
 
@@ -24,5 +28,16 @@
     userEmail = lib.mkForce "justus.kliem@ekd-solar.de";
 
     signing.key = lib.mkForce "31AC6529";
+  };
+
+  programs.gpg = {
+    enable = true;
+  };
+
+  home.packages = with pkgs; [pinentry-qt];
+
+  services.gpg-agent = {
+    enable = true;
+    pinentryFlavor = "qt";
   };
 }

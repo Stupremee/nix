@@ -4,13 +4,13 @@
   authelia = {
     pname = "authelia";
     version = "v4.37.5";
-    src = fetchFromGitHub ({
+    src = fetchFromGitHub {
       owner = "authelia";
       repo = "authelia";
       rev = "v4.37.5";
       fetchSubmodules = false;
       sha256 = "sha256-xsdBnyPHFIimhp2rcudWqvVR36WN4vBXbxRmvgqMcDw=";
-    });
+    };
   };
   authelia-web = {
     pname = "authelia-web";
@@ -22,36 +22,24 @@
   };
   kanidm = {
     pname = "kanidm";
-    version = "v1.1.0-alpha.12";
-    src = fetchFromGitHub ({
+    version = "v1.1.0-rc.15";
+    src = fetchFromGitHub {
       owner = "kanidm";
       repo = "kanidm";
-      rev = "v1.1.0-alpha.12";
+      rev = "v1.1.0-rc.15";
       fetchSubmodules = false;
-      sha256 = "sha256-ZlUn7m5xgMWWIr9y/dkM/yZ2KF2LdkaxqtHsMcxAT/M=";
-    });
-  };
-  nvimpager = {
-    pname = "nvimpager";
-    version = "72639e94e739c7c0948043ec8f8bf38ea222d0a9";
-    src = fetchFromGitHub ({
-      owner = "lucc";
-      repo = "nvimpager";
-      rev = "72639e94e739c7c0948043ec8f8bf38ea222d0a9";
-      fetchSubmodules = false;
-      sha256 = "sha256-RmpPWS9gnBnR+Atw6uzBmeDSgoTOFSdKzHoJ84O+gyA=";
-    });
-    date = "2023-05-10";
+      sha256 = "sha256-0y8juXS61Z9zxOdsWAQ6lJurP+n855Nela6egYRecok=";
+    };
   };
   tailscale = {
     pname = "tailscale";
-    version = "v1.46.1";
-    src = fetchFromGitHub ({
+    version = "v1.52.1";
+    src = fetchFromGitHub {
       owner = "tailscale";
       repo = "tailscale";
-      rev = "v1.46.1";
+      rev = "v1.52.1";
       fetchSubmodules = false;
-      sha256 = "sha256-aweJys46MMnkSKJoLUFCzc6sWUP+Cv5+IFVVe9iEPGI=";
-    });
+      sha256 = "sha256-hscKV4jhJ+tqgTFuOEThABpu8iqK3+av7+DcuSmZwQ4=";
+    };
   };
 }

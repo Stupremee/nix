@@ -110,6 +110,16 @@
         sha256 = "0c24yfw31lbdw95hfc4aacp3m9a7872fv2svw718m2lghppnmdp2";
       };
     };
+
+    arm = {
+      magic = ''\x7fELF\x01\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x28\x00'';
+      mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
+
+      qemu = {
+        name = "qemu-arm-static";
+        sha256 = "1m86vm08ya1q9gjfr4amdhas7vmdhawxrj600h50ndw1rdbsfjh1";
+      };
+    };
   };
 in {
   boot.binfmt.registrations = mapAttrs' (name: value:

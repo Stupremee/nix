@@ -32,6 +32,7 @@
       pv
       sd
       du-dust
+      ouch
 
       man-db
       man-pages

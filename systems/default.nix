@@ -198,6 +198,8 @@ in {
           ../nixos/printing.nix
           ../nixos/keyring.nix
           ../nixos/binfmt.nix
+          ../nixos/hardware/yubikey.nix
+          ../nixos/network/tailscale.nix
         ];
         home = true;
         theme = "frappe";

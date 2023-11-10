@@ -9,9 +9,12 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  networking.wireguard.enable = true;
+  networking.enableIPv6 = false;
   networking.firewall.enable = false;
   networking.hosts = {
     "10.100.4.16" = ["mainframe.lan" "git.mainframe.lan" "ci.mainframe.lan" "cache.mainframe.lan" "ca.mainframe.lan" "docs.mainframe.lan"];
+    "10.5.4.4" = ["ekd-dev-k8s-mbi44zdo.privatelink.westeurope.azmk8s.io"];
   };
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
@@ -37,11 +40,20 @@
     ''
   ];
 
+  programs.ssh.startAgent = true;
+
   # Enable wireshark
   programs.wireshark = {
     enable = true;
     package = pkgs.wireshark;
   };
+
+  environment.systemPackages = with pkgs; [
+    bmap-tools
+    mitmproxy
+    nmap
+    minicom
+  ];
 
   # Set timezone and locale
   i18n.defaultLocale = "en_US.UTF-8";
@@ -74,7 +86,16 @@
   ];
 
   networking.useDHCP = lib.mkDefault false;
-  networking.interfaces.eno1.useDHCP = lib.mkDefault true;
+  networking.interfaces = {
+    eno1.useDHCP = lib.mkDefault true;
+
+    enp0s20f0u6u2.ipv4.addresses = [
+      {
+        address = "10.100.4.19";
+        prefixLength = 24;
+      }
+    ];
+  };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = "performance";

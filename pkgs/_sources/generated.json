@@ -47,31 +47,11 @@
             "name": null,
             "owner": "kanidm",
             "repo": "kanidm",
-            "rev": "v1.1.0-alpha.12",
-            "sha256": "sha256-ZlUn7m5xgMWWIr9y/dkM/yZ2KF2LdkaxqtHsMcxAT/M=",
+            "rev": "v1.1.0-rc.15",
+            "sha256": "sha256-0y8juXS61Z9zxOdsWAQ6lJurP+n855Nela6egYRecok=",
             "type": "github"
         },
-        "version": "v1.1.0-alpha.12"
-    },
-    "nvimpager": {
-        "cargoLocks": null,
-        "date": "2023-05-10",
-        "extract": null,
-        "name": "nvimpager",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "lucc",
-            "repo": "nvimpager",
-            "rev": "72639e94e739c7c0948043ec8f8bf38ea222d0a9",
-            "sha256": "sha256-RmpPWS9gnBnR+Atw6uzBmeDSgoTOFSdKzHoJ84O+gyA=",
-            "type": "github"
-        },
-        "version": "72639e94e739c7c0948043ec8f8bf38ea222d0a9"
+        "version": "v1.1.0-rc.15"
     },
     "tailscale": {
         "cargoLocks": null,
@@ -87,10 +67,10 @@
             "name": null,
             "owner": "tailscale",
             "repo": "tailscale",
-            "rev": "v1.46.1",
-            "sha256": "sha256-aweJys46MMnkSKJoLUFCzc6sWUP+Cv5+IFVVe9iEPGI=",
+            "rev": "v1.52.1",
+            "sha256": "sha256-hscKV4jhJ+tqgTFuOEThABpu8iqK3+av7+DcuSmZwQ4=",
             "type": "github"
         },
-        "version": "v1.46.1"
+        "version": "v1.52.1"
     }
 }

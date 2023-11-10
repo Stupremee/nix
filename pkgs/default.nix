@@ -2,6 +2,7 @@
   perSystem = {
     pkgs,
     system,
+    inputs',
     ...
   }: let
     mapPackages = f:
@@ -38,6 +39,7 @@
           args = builtins.intersectAttrs (builtins.functionArgs package) {
             inherit sources;
             source = sources."${name}";
+            unstable = inputs'.unstable.legacyPackages;
           };
         in
           pkgs.callPackage package args

@@ -14,7 +14,7 @@
         alejandra
         shfmt
         stylua
-        nvfetcher
+        inputs'.unstable.legacyPackages.nvfetcher
 
         inputs'.deploy-rs.packages.deploy-rs
         inputs'.agenix.packages.agenix

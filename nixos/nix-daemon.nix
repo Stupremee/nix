@@ -9,6 +9,7 @@
       allowed-users = ["@wheel"];
       trusted-users = ["root" "@wheel" "ekd"];
       auto-optimise-store = lib.mkDefault true;
+      log-lines = 50;
     };
   };
 

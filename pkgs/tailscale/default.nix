@@ -2,7 +2,7 @@
   source,
   lib,
   stdenv,
-  buildGo120Module,
+  unstable,
   makeWrapper,
   iptables,
   iproute2,
@@ -10,9 +10,9 @@
   shadow,
   getent,
 }:
-buildGo120Module rec {
+unstable.buildGo121Module rec {
   inherit (source) pname version src;
-  vendorHash = "sha256-oELDIt+mRiBGAdoEUkSAs2SM6urkHm1aAtJnev8jDYM=";
+  vendorHash = "sha256-WGZkpffwe4I8FewdBHXGaLbKQP/kHr7UF2lCXBTcNb4=";
 
   nativeBuildInputs = lib.optionals stdenv.isLinux [makeWrapper];
 

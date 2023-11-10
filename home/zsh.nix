@@ -45,7 +45,7 @@
     sha256 = "sha256-j7ppGmNnfgep6JDdv5nn2gUGSOx4iPPc5afL1WDF3ZY=";
   };
 in {
-  home.packages = with pkgs; [comma procWatch];
+  home.packages = with pkgs; [procWatch];
 
   programs.atuin = {
     enable = true;
@@ -109,9 +109,14 @@ in {
     nix-direnv.enable = true;
   };
 
+  programs.nix-index-database = {
+    comma.enable = true;
+  };
+
   programs.nix-index = {
     enable = true;
     enableZshIntegration = true;
+    symlinkToCacheHome = true;
   };
 
   programs.starship = {

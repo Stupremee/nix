@@ -537,19 +537,19 @@
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "unstable"
         ]
       },
       "locked": {
-        "lastModified": 1698550809,
-        "narHash": "sha256-Um8+Wi6EAH5dCgfgl7OqaVd4wFJn6FKLafcP5QPr/98=",
-        "owner": "Mic92",
+        "lastModified": 1699156599,
+        "narHash": "sha256-Qk9ZE/pG9lNIGUVNArJxL0Hc0Soa92eQPPIhcDwWinU=",
+        "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "1f0981f5baeb78e3c89a8980ff1a39f06876fa8c",
+        "rev": "5388a4002179d6778d212dc2fdcc7ac3fdbd5b65",
         "type": "github"
       },
       "original": {
-        "owner": "Mic92",
+        "owner": "nix-community",
         "repo": "nix-index-database",
         "type": "github"
       }

@@ -216,6 +216,8 @@ in {
           ../home/editors/nvim
           ../home/graphical
           ../home/dev
+
+          inputs.nix-index-database.hmModules.nix-index
         ];
       };
 

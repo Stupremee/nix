@@ -2,6 +2,7 @@
   lib,
   pkgs,
   unstable-pkgs,
+  theme,
   ...
 }: let
   inherit (lib) mkDefault;
@@ -26,6 +27,7 @@ in {
 
       options = {
         features = "interactive";
+        light = theme.light;
       };
     };
 

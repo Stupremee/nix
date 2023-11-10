@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
+  swaylock = "${pkgs.swaylock}/bin/swaylock";
 in {
   services.swayidle = {
     enable = true;

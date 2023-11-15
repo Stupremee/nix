@@ -69,7 +69,7 @@
 
       copilot-lua
 
-      null-ls-nvim
+      none-ls-nvim
       vim-illuminate
       rust-tools-nvim
 

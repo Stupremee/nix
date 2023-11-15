@@ -53,6 +53,7 @@
     mitmproxy
     nmap
     minicom
+    inkscape-with-extensions
   ];
 
   # Set timezone and locale

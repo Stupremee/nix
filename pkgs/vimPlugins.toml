@@ -30,8 +30,8 @@ repo = "hrsh7th/cmp-nvim-lua"
 [cmp-nvim-lsp]
 repo = "hrsh7th/cmp-nvim-lsp"
 
-[null-ls-nvim]
-repo = "jose-elias-alvarez/null-ls.nvim"
+[none-ls-nvim]
+repo = "nvimtools/none-ls.nvim"
 
 [vim-illuminate]
 repo = "RRethy/vim-illuminate"

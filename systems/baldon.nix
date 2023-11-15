@@ -38,6 +38,23 @@
       iDZ2
       -----END CERTIFICATE-----
     ''
+    ''
+      EKD IoT
+      =======
+      -----BEGIN CERTIFICATE-----
+      MIIB+jCCAaGgAwIBAgIQFhFPiBF3ZqnvLGMbW93QcjAKBggqhkjOPQQDAjBcMSgw
+      JgYDVQQKEx9FbmVyZ2lla29uemVwdGUgRGV1dHNjaGxhbmQgSW9UMTAwLgYDVQQD
+      EydFbmVyZ2lla29uemVwdGUgRGV1dHNjaGxhbmQgSW9UIFJvb3QgQ0EwHhcNMjMx
+      MTE0MDkwMjM3WhcNMzMxMTExMDkwMjM3WjBcMSgwJgYDVQQKEx9FbmVyZ2lla29u
+      emVwdGUgRGV1dHNjaGxhbmQgSW9UMTAwLgYDVQQDEydFbmVyZ2lla29uemVwdGUg
+      RGV1dHNjaGxhbmQgSW9UIFJvb3QgQ0EwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNC
+      AAQB7gbNYP8O2ntO4HjG7OtLlpyJAgH0QL7W2ie/uyk7YyuLSxMF8CKByVdFoDz2
+      dMQPy/nLIqvOn6plvKZZgs3vo0UwQzAOBgNVHQ8BAf8EBAMCAQYwEgYDVR0TAQH/
+      BAgwBgEB/wIBATAdBgNVHQ4EFgQU5sUqlR/EtAPcVCLitdL5ZJAouawwCgYIKoZI
+      zj0EAwIDRwAwRAIgKdzvsbWpg9MWzOocnIwTqNYT2IbH+a4asJNyFKszJh0CIEtg
+      zO6Es8OSLDik3apKt8xvvs+Nm95HSXyOOG3e0wD1
+      -----END CERTIFICATE-----
+    ''
   ];
 
   programs.ssh.startAgent = true;

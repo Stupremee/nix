@@ -10,6 +10,13 @@
     kubelogin
     kubent
     argo
+    (azure-cli.overrideAttrs (old: {
+      propagatedBuildInputs =
+        old.propagatedBuildInputs
+        ++ [
+          python3Packages.pip
+        ];
+    }))
   ];
 
   programs.zsh.initExtra = ''

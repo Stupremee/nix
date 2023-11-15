@@ -1,21 +1,16 @@
 {
-  pkgs,
   unstable-pkgs,
   theme,
-  lib,
   ...
 }: {
-  home.packages = with unstable-pkgs;
-    [
-      kubectl
-      kubernetes-helm
-      k9s
-      kubelogin
-      kubent
-      argo
-      pkgs.azure-cli
-    ]
-    ++ (lib.optionals pkgs.stdenv.isLinux [pkgs.azure-storage-azcopy]);
+  home.packages = with unstable-pkgs; [
+    kubectl
+    kubernetes-helm
+    k9s
+    kubelogin
+    kubent
+    argo
+  ];
 
   programs.zsh.initExtra = ''
     load_plugin kubectl

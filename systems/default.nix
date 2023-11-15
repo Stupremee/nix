@@ -139,6 +139,7 @@ in {
     nixosConfigurations = {
       ironite = mkSystem {
         system = "x86_64-linux";
+        theme = "latte";
         modules = [
           ./ironite.nix
           ../nixos/server.nix

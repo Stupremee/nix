@@ -15,7 +15,7 @@
       argo
       pkgs.azure-cli
     ]
-    ++ (lib.optionals pkgs.stdenv.isLinux pkgs.azure-storage-azcopy);
+    ++ (lib.optionals pkgs.stdenv.isLinux [pkgs.azure-storage-azcopy]);
 
   programs.zsh.initExtra = ''
     load_plugin kubectl

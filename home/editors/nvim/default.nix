@@ -66,6 +66,7 @@
       cmp-luasnip
       cmp-nvim-lsp
       lua-snip
+      neoconf-nvim
 
       copilot-lua
 

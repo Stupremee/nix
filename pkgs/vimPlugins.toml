@@ -110,3 +110,6 @@ repo = "MunifTanjim/nui.nvim"
 
 [noice-nvim]
 repo = "folke/noice.nvim"
+
+[neoconf-nvim]
+repo = "folke/neoconf.nvim"

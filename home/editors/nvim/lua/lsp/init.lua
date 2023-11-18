@@ -1,5 +1,12 @@
-local status_ok, lsp = pcall(require, "lsp-zero")
+local status_ok, neoconf = pcall(require, "neoconf")
 if not status_ok then
+  return
+end
+
+neoconf.setup()
+
+local status_ok2, lsp = pcall(require, "lsp-zero")
+if not status_ok2 then
   return
 end
 
@@ -86,8 +93,8 @@ lsp.setup_servers({
 
 lsp.setup()
 
-local status_ok2, rust_tools = pcall(require, "rust-tools")
-if status_ok2 then
+local status_ok3, rust_tools = pcall(require, "rust-tools")
+if status_ok3 then
   rust_tools.setup({
     inlay_hints = {
       auto = false,

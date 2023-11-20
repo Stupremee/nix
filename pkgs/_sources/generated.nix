@@ -20,6 +20,14 @@
       sha256 = "1sq90s0f5l7l0675jyaa6xm6kx0likdz0cc13kz86726sdq7vhhv";
     };
   };
+  dymoprint = {
+    pname = "dymoprint";
+    version = "2.3.0";
+    src = fetchurl {
+      url = "https://pypi.org/packages/source/d/dymoprint/dymoprint-2.3.0.tar.gz";
+      sha256 = "sha256-uUlcNJvQ1SZAdgC1ojqDMqPnixZ6YYv8G6L0t6UyoIM=";
+    };
+  };
   kanidm = {
     pname = "kanidm";
     version = "v1.1.0-rc.15";
@@ -33,13 +41,13 @@
   };
   tailscale = {
     pname = "tailscale";
-    version = "v1.52.1";
+    version = "v1.54.0";
     src = fetchFromGitHub {
       owner = "tailscale";
       repo = "tailscale";
-      rev = "v1.52.1";
+      rev = "v1.54.0";
       fetchSubmodules = false;
-      sha256 = "sha256-hscKV4jhJ+tqgTFuOEThABpu8iqK3+av7+DcuSmZwQ4=";
+      sha256 = "sha256-/l3csuj1AZQo7C0BzkhqvkMNEQxc6Ers0KtZvxWS96Q=";
     };
   };
 }

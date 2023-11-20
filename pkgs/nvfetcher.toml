@@ -13,3 +13,7 @@ fetch.tarball = "https://github.com/authelia/authelia/releases/download/$ver/aut
 [tailscale]
 src.github = "tailscale/tailscale"
 fetch.github = "tailscale/tailscale"
+
+[dymoprint]
+src.pypi = "dymoprint"
+fetch.pypi = "dymoprint"

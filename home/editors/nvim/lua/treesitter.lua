@@ -32,12 +32,15 @@ configs.setup({
     disable = { "nix", "yuck" },
   },
 
-  context_commentstring = {
-    enable = true,
-    enable_autocmd = false,
-  },
-
   autotag = {
     enable = true,
   },
 })
+
+local status_ok2, comment = pcall(require, "ts_context_commentstring")
+if not status_ok2 then
+  return
+end
+
+comment.setup({})
+vim.g.skip_ts_context_commentstring_module = true

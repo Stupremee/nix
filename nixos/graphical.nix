@@ -1,14 +1,4 @@
-{
-  pkgs,
-  inputs,
-  system,
-  ...
-}: let
-  hyprland = inputs.hyprland.packages."${system}".default.override {
-    enableXWayland = true;
-    enableNvidiaPatches = true;
-  };
-in {
+{pkgs, ...}: {
   programs.dconf.enable = true;
 
   services.geoclue2.enable = true;
@@ -25,14 +15,18 @@ in {
     pulse.enable = true;
   };
 
-  # Onl yxdg portal because extraPortals will be added by the hyprland module
-  xdg.portal = {
-    enable = true;
+  xdg = {
+    portal = {
+      extraPortals = with pkgs; [xdg-desktop-portal-gtk];
+      config.common.default = [
+        "hyprland"
+        "gtk"
+      ];
+    };
   };
 
   programs.hyprland = {
     enable = true;
-    package = hyprland;
   };
 
   environment.systemPackages = [pkgs.xdg-utils];

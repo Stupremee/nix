@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   fonts = {
-    fonts = with pkgs; [
+    packages = with pkgs; [
       (nerdfonts.override {fonts = ["FiraCode" "Noto"];})
       noto-fonts
       noto-fonts-emoji
@@ -10,7 +10,7 @@
       material-design-icons
     ];
 
-    enableDefaultFonts = false;
+    enableDefaultPackages = false;
 
     fontconfig.defaultFonts = {
       serif = ["NotoSerif Nerd Font" "Noto Serif"];

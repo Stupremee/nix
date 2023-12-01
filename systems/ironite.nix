@@ -3,7 +3,6 @@
   modulesPath,
   config,
   pkgs,
-  unstable-pkgs,
   ...
 }: {
   imports = [
@@ -69,8 +68,15 @@
       ];
     };
 
-    defaultGateway = "94.130.88.129";
-    defaultGateway6 = "fe80::1";
+    defaultGateway = {
+      interface = "enp6s0";
+      address = "94.130.88.129";
+    };
+
+    defaultGateway6 = {
+      address = "fe80::1";
+      interface = "enp6s0";
+    };
 
     # We use hetzner robot firewall
     firewall = {

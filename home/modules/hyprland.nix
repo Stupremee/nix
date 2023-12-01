@@ -3,6 +3,7 @@
   inputs,
   system,
   pkgs,
+  unstable-pkgs,
   theme,
   lib,
   ...
@@ -73,11 +74,6 @@ in {
     pythonScratchpad = pkgs.writeShellScript "python-scratchpad" ''
       ${pkgs.python3}/bin/python3 -q
     '';
-
-    hyprland = inputs.hyprland.packages."${system}".default.override {
-      enableXWayland = true;
-      enableNvidiaPatches = true;
-    };
   in
     lib.mkIf cfg.enable {
       home.packages = with pkgs; [
@@ -87,7 +83,9 @@ in {
         wf-recorder
 
         inputs.hyprland-contrib.packages.${system}.grimblast
-        inputs.hyprpaper.packages.${system}.default
+        (inputs.hyprpaper.packages.${system}.default.overrideAttrs (old: {
+          buildInputs = old.buildInputs ++ (with unstable-pkgs; [libGL]);
+        }))
         wlr-randr
         wl-clipboard
         pciutils
@@ -97,12 +95,11 @@ in {
       ];
 
       programs.zsh.loginExtra = ''
-        [ "$(tty)" = "/dev/tty1" ] && exec systemd-cat -t hyprland "${hyprland}/bin/Hyprland"
+        [ "$(tty)" = "/dev/tty1" ] && exec systemd-cat -t hyprland "Hyprland"
       '';
 
       wayland.windowManager.hyprland = {
         enable = true;
-        package = hyprland;
 
         systemdIntegration = true;
 

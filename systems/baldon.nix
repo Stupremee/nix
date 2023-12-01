@@ -9,14 +9,6 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  networking.wireguard.enable = true;
-  networking.enableIPv6 = false;
-  networking.firewall.enable = false;
-  networking.hosts = {
-    "10.100.4.16" = ["mainframe.lan" "git.mainframe.lan" "ci.mainframe.lan" "cache.mainframe.lan" "ca.mainframe.lan" "docs.mainframe.lan"];
-    "10.5.4.4" = ["ekd-dev-k8s-mbi44zdo.privatelink.westeurope.azmk8s.io"];
-  };
-
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   security.pki.certificates = [
@@ -80,8 +72,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "baldon";
-
   boot.initrd.availableKernelModules = ["vmd" "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_usb_sdmmc"];
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
@@ -103,16 +93,28 @@
     {device = "/dev/disk/by-uuid/fbe5f07a-5bcc-41a4-b492-596f98247466";}
   ];
 
-  networking.useDHCP = lib.mkDefault false;
-  networking.interfaces = {
-    eno1.useDHCP = lib.mkDefault true;
+  networking = {
+    hostName = "baldon";
+    wireguard.enable = true;
+    enableIPv6 = false;
+    firewall.enable = false;
 
-    enp0s20f0u6u2.ipv4.addresses = [
-      {
-        address = "10.100.4.19";
-        prefixLength = 24;
-      }
-    ];
+    useDHCP = lib.mkDefault false;
+    interfaces = {
+      eno1.useDHCP = lib.mkDefault true;
+
+      enp0s20f0u6u2.ipv4.addresses = [
+        {
+          address = "10.100.4.19";
+          prefixLength = 24;
+        }
+      ];
+    };
+
+    hosts = {
+      "10.100.4.16" = ["mainframe.lan" "git.mainframe.lan" "ci.mainframe.lan" "cache.mainframe.lan" "ca.mainframe.lan" "docs.mainframe.lan"];
+      "10.5.4.4" = ["ekd-dev-k8s-mbi44zdo.privatelink.westeurope.azmk8s.io"];
+    };
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

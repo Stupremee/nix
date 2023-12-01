@@ -21,7 +21,7 @@
       fd
       fzf
       bat
-      exa
+      eza
       file
       procs
       jq
@@ -41,10 +41,10 @@
     ];
 
     shellAliases = {
-      ls = "exa --group-directories-first";
-      l = "exa -1";
-      ll = "exa -lg";
-      la = "exa -la";
+      ls = "eza --group-directories-first";
+      l = "eza -1";
+      ll = "eza -lg";
+      la = "eza -la";
 
       sc = "systemctl";
       ps = "procs";

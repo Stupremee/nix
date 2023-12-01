@@ -1,7 +1,7 @@
 {...}: {
   # Use networkd
-  systemd.network.enable = true;
-  networking.useNetworkd = true;
+  # systemd.network.enable = true;
+  # networking.useNetworkd = true;
 
   networking.nameservers = [
     "1.1.1.1"

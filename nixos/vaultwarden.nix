@@ -40,10 +40,7 @@
   services.postgresql.ensureUsers = [
     {
       name = "vaultwarden";
-      ensurePermissions = {
-        "DATABASE \"vaultwarden\"" = "ALL PRIVILEGES";
-        "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
-      };
+      ensureDBOwnership = true;
     }
   ];
 }

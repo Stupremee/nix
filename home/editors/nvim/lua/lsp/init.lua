@@ -54,7 +54,6 @@ lsp.on_attach(function(client, bufnr)
   })
 end)
 
-lsp.skip_server_setup({ "rust-analyzer" })
 local rust_lsp = lsp.build_options("rust_analyzer", {
   settings = {
     ["rust-analyzer"] = {
@@ -113,7 +112,7 @@ null_ls.setup({
   sources = {
     formatting.alejandra,
     formatting.stylua,
-    formatting.prettierd,
+    -- formatting.prettierd,
     formatting.black,
     formatting.xmllint,
     formatting.phpcsfixer,

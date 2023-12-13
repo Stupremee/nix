@@ -5,6 +5,11 @@
   ...
 }: {
   home.sessionVariables.TERMINAL = "${config.programs.rio.package}/bin/rio";
+
+  home.shellAliases = {
+    ssh = "TERM=xterm-256color ssh";
+  };
+
   programs.rio = {
     enable = true;
     package = unstable-pkgs.rio;
@@ -13,7 +18,7 @@
 
       fonts = {
         family = "MonaspiceNe Nerd Font Mono";
-        size = 14;
+        size = 16;
       };
 
       bindings.keys = [
@@ -26,6 +31,16 @@
           key = "c";
           "with" = "alt";
           action = "Copy";
+        }
+        {
+          key = "+";
+          "with" = "control";
+          action = "IncreaseFontSize";
+        }
+        {
+          key = "-";
+          "with" = "control";
+          action = "DecreaseFontSize";
         }
       ];
 

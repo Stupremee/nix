@@ -1,22 +1,25 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  unstable-pkgs,
+  ...
+}: {
   fonts = {
-    packages = with pkgs; [
-      (nerdfonts.override {fonts = ["FiraCode" "Noto"];})
-      noto-fonts
-      noto-fonts-emoji
-      fira-code
-
-      material-icons
-      material-design-icons
-    ];
+    packages = let
+      nerdFont = unstable-pkgs.nerdfonts.override {
+        fonts = ["Monaspace"];
+      };
+    in
+      with pkgs; [
+        nerdFont
+        monaspace
+      ];
 
     enableDefaultPackages = false;
 
     fontconfig.defaultFonts = {
-      serif = ["NotoSerif Nerd Font" "Noto Serif"];
-      sansSerif = ["NotoSans Nerd Font" "Noto Sans"];
-      monospace = ["FiraCode Nerd Font" "Fira Code"];
-      emoji = ["Noto Color Emoji"];
+      # serif = ["MonaspiceXe Nerd Font"];
+      # sansSerif = ["MonaspiceAr Nerd Font"];
+      monospace = ["MonaspiceNe Nerd Font Mono"];
     };
   };
 }

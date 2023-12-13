@@ -12,8 +12,22 @@
       navigation.mode = "Plain";
 
       fonts = {
-        size = 16;
+        family = "MonaspiceNe Nerd Font Mono";
+        size = 14;
       };
+
+      bindings.keys = [
+        {
+          key = "v";
+          "with" = "alt";
+          action = "Paste";
+        }
+        {
+          key = "c";
+          "with" = "alt";
+          action = "Copy";
+        }
+      ];
 
       colors = {
         foreground = theme.text;

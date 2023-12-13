@@ -1,4 +1,5 @@
 {
+  config,
   theme,
   pkgs,
   ...
@@ -28,7 +29,19 @@ in {
 
     escapeTime = 0;
 
-    extraConfig = ''
+    extraConfig = let
+      terminalSpecific =
+        if config.programs.rio.enable
+        then ''
+          set -g default-terminal "rio"
+          set-option -ga terminal-overrides ",rio:Tc"
+        ''
+        else ''
+          # enable true color support
+          set -g default-terminal 'screen-256color'
+          set -ga terminal-overrides ',*256col*:Tc'
+        '';
+    in ''
       # split panes using - and |
       bind | split-window -h
       bind - split-window -v
@@ -45,9 +58,7 @@ in {
       # enable mouse control
       set -g mouse on
 
-      # enable true color support
-      set -g default-terminal 'screen-256color'
-      set -ga terminal-overrides ',*256col*:Tc'
+      ${terminalSpecific}
 
       # disable esc key timeout
       set -s escape-time 0

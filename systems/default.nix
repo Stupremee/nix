@@ -176,7 +176,7 @@ in {
           ./home/aerial.nix
           ../home/git
           ../home/wayland
-          ../home/alacritty.nix
+          ../home/terminal/alacritty.nix
           ../home/pgp.nix
           ../home/xdg.nix
           ../home/zsh.nix
@@ -209,7 +209,7 @@ in {
           ./home/baldon.nix
           ../home/git
           ../home/wayland
-          ../home/alacritty.nix
+          ../home/terminal/rio.nix
           ../home/pgp.nix
           ../home/xdg.nix
           ../home/zsh.nix
@@ -241,7 +241,7 @@ in {
           ./home/nixius.nix
           ../home/git
           ../home/wayland
-          ../home/alacritty.nix
+          ../home/terminal/alacritty.nix
           ../home/pgp.nix
           ../home/xdg.nix
           ../home/zsh.nix

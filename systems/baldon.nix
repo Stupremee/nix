@@ -63,6 +63,14 @@
     nmap
     minicom
     inkscape-with-extensions
+    (python3.withPackages (ps:
+      with ps; [
+        pymodbus
+        click
+        pyserial
+        prompt-toolkit
+        pygments
+      ]))
   ];
 
   # Set timezone and locale

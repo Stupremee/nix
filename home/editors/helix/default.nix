@@ -3,9 +3,7 @@
   theme,
   ...
 }: {
-  programs.helix = let
-    inherit (builtins) fromTOML readFile;
-  in {
+  programs.helix = {
     enable = true;
     package = unstable-pkgs.helix;
 
@@ -14,9 +12,7 @@
     ];
 
     settings = {
-      theme = theme.name;
+      theme = "catppuccin_${theme.name}";
     };
-
-    themes."${theme.name}" = fromTOML (readFile ./themes/${theme.name}.toml);
   };
 }

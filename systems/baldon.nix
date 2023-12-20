@@ -66,10 +66,12 @@
     (python3.withPackages (ps:
       with ps; [
         pymodbus
+        aiohttp
         click
         pyserial
         prompt-toolkit
         pygments
+        typer
       ]))
   ];
 

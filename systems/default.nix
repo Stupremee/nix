@@ -151,6 +151,7 @@ in {
           ../nixos/mail.nix
           ../nixos/foldingathome.nix
           ../nixos/network/tailscale.nix
+          ../nixos/minecraft-server.nix
         ];
         home = true;
         homeModules = [

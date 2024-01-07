@@ -1,5 +1,4 @@
 {
-  pkgs,
   unstable-pkgs,
   modulesPath,
   config,
@@ -35,6 +34,8 @@
 
   # OpenVPN
   age.secrets.esyvpn.file = ../secrets/esyvpn.ovpn;
+
+  environment.systemPackages = with unstable-pkgs; [prismlauncher];
 
   # Enable wireshark
   programs.wireshark = {

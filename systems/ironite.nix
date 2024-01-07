@@ -78,9 +78,8 @@
       interface = "enp6s0";
     };
 
-    # We use hetzner robot firewall
     firewall = {
-      enable = false;
+      enable = true;
       allowedTCPPorts = [443 80];
     };
   };

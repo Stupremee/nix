@@ -42,11 +42,11 @@
         "pinned": false,
         "src": {
             "name": null,
-            "sha256": "sha256-uUlcNJvQ1SZAdgC1ojqDMqPnixZ6YYv8G6L0t6UyoIM=",
+            "sha256": "sha256-c/0BXfG0g0tg+256nyP5d4VRI4GMippw//h54PVndIU=",
             "type": "url",
-            "url": "https://pypi.org/packages/source/d/dymoprint/dymoprint-2.3.0.tar.gz"
+            "url": "https://pypi.org/packages/source/d/dymoprint/dymoprint-2.4.0.tar.gz"
         },
-        "version": "2.3.0"
+        "version": "2.4.0"
     },
     "kanidm": {
         "cargoLocks": null,
@@ -82,10 +82,10 @@
             "name": null,
             "owner": "tailscale",
             "repo": "tailscale",
-            "rev": "v1.54.0",
-            "sha256": "sha256-/l3csuj1AZQo7C0BzkhqvkMNEQxc6Ers0KtZvxWS96Q=",
+            "rev": "v1.56.1",
+            "sha256": "sha256-kMk5Q/KvNcsohHNLDMmpBm+gUxQEOeO8o/odukcJi0A=",
             "type": "github"
         },
-        "version": "v1.54.0"
+        "version": "v1.56.1"
     }
 }

@@ -1,5 +1,6 @@
 {
   pkgs,
+  packages,
   inputs,
   system,
   ...
@@ -10,6 +11,8 @@
     dbeaver
     inputs.devenv.packages."${system}".devenv
     httpie
+
+    packages.tproxy
   ];
 
   home.sessionVariables = {

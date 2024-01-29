@@ -1,6 +1,8 @@
 {
+  pkgs,
   unstable-pkgs,
   theme,
+  packages,
   ...
 }: {
   programs.helix = {
@@ -8,11 +10,30 @@
     package = unstable-pkgs.helix;
 
     extraPackages = with unstable-pkgs; [
+      packages."@volar/vue-language-server"
       rust-analyzer
     ];
 
     settings = {
       theme = "catppuccin_${theme.name}";
+
+      editor.line-number = "relative";
+      editor.lsp = {
+        display-messages = true;
+      };
+    };
+
+    languages = {
+      language-server.typescript-language-server = with pkgs.nodePackages; {
+        command = "${typescript-language-server}/bin/typescript-language-server";
+        args = ["--stdio" "--tsserver-path=${typescript}/lib/node_modules/typescript/lib"];
+      };
+
+      language-server.vuels = with pkgs.nodePackages; {
+        config = {
+          typescript.tsdk = "${typescript}/lib/node_modules/typescript/lib";
+        };
+      };
     };
   };
 }

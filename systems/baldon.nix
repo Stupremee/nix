@@ -1,5 +1,6 @@
 {
   pkgs,
+  unstable-pkgs,
   config,
   lib,
   modulesPath,
@@ -10,6 +11,8 @@
   ];
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
+  nix.settings.max-jobs = 12;
 
   security.pki.certificates = [
     ''
@@ -73,6 +76,7 @@
         pygments
         typer
       ]))
+    unstable-pkgs.bambu-studio
   ];
 
   # Set timezone and locale

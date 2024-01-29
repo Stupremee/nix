@@ -6,7 +6,11 @@
 }: let
   inherit (inputs) deploy-rs;
 in {
-  perSystem = {system, pkgs, ...}: {
+  perSystem = {
+    system,
+    pkgs,
+    ...
+  }: {
     checks = lib.mkIf pkgs.stdenv.isLinux (deploy-rs.lib."${system}".deployChecks self.deploy);
   };
 

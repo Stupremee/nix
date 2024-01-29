@@ -50,4 +50,15 @@
       sha256 = "sha256-kMk5Q/KvNcsohHNLDMmpBm+gUxQEOeO8o/odukcJi0A=";
     };
   };
+  tproxy = {
+    pname = "tproxy";
+    version = "v0.8.0";
+    src = fetchFromGitHub {
+      owner = "kevwan";
+      repo = "tproxy";
+      rev = "v0.8.0";
+      fetchSubmodules = false;
+      sha256 = "sha256-d4ZijF3clu00WZQGlurTkGkedurjt9fqfShdjbZWCSI=";
+    };
+  };
 }

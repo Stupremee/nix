@@ -17,3 +17,7 @@ fetch.github = "tailscale/tailscale"
 [dymoprint]
 src.pypi = "dymoprint"
 fetch.pypi = "dymoprint"
+
+[tproxy]
+src.github = "kevwan/tproxy"
+fetch.github = "kevwan/tproxy"

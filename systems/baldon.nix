@@ -14,6 +14,10 @@
 
   nix.settings.max-jobs = 12;
 
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+  programs.virt-manager.enable = true;
+
   security.pki.certificates = [
     ''
       EKD Internal
@@ -112,6 +116,7 @@
     wireguard.enable = true;
     enableIPv6 = false;
     firewall.enable = false;
+    firewall.allowedTCPPorts = [2222];
 
     useDHCP = lib.mkDefault false;
     interfaces = {

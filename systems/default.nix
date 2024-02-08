@@ -210,7 +210,7 @@ in {
           ./home/baldon.nix
           ../home/git
           ../home/wayland
-          ../home/terminal/rio.nix
+          ../home/terminal/alacritty.nix
           ../home/pgp.nix
           ../home/xdg.nix
           ../home/zsh.nix

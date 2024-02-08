@@ -31,15 +31,15 @@ in {
 
     extraConfig = let
       terminalSpecific =
-        if config.programs.rio.enable
+        if config.programs.alacritty.enable
         then ''
-          set -g default-terminal "rio"
-          set-option -ga terminal-overrides ",rio:Tc"
-        ''
-        else ''
           # enable true color support
           set -g default-terminal 'screen-256color'
           set -ga terminal-overrides ',*256col*:Tc'
+        ''
+        else ''
+          set -g default-terminal "rio"
+          set-option -ga terminal-overrides ",rio:Tc"
         '';
     in ''
       # split panes using - and |
@@ -58,7 +58,9 @@ in {
       # enable mouse control
       set -g mouse on
 
-      ${terminalSpecific}
+      # enable true color support
+      set -g default-terminal 'screen-256color'
+      set -ga terminal-overrides ',*256col*:Tc'
 
       # disable esc key timeout
       set -s escape-time 0

@@ -19,6 +19,7 @@ in {
         "video"
         "lp"
         "scanner"
+        "libvirtd"
       ];
       uid = 1000;
       openssh.authorizedKeys.keys = keys;

@@ -11,6 +11,8 @@
     dbeaver
     inputs.devenv.packages."${system}".devenv
     httpie
+    websocat
+    numbat
 
     packages.tproxy
   ];

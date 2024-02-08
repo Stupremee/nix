@@ -72,7 +72,7 @@ in {
     inherit (lib) removePrefix;
 
     pythonScratchpad = pkgs.writeShellScript "python-scratchpad" ''
-      ${pkgs.python3}/bin/python3 -q
+      ${pkgs.numbat}/bin/numbat
     '';
   in
     lib.mkIf cfg.enable {

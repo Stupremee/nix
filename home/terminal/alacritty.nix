@@ -1,7 +1,6 @@
 {
   config,
   theme,
-  unstable-pkgs,
   ...
 }: let
   keybind = key: mods: action: {inherit key mods action;};
@@ -14,12 +13,11 @@ in {
   home.sessionVariables.TERMINAL = "${config.programs.alacritty.package}/bin/alacritty";
   programs.alacritty = {
     enable = true;
-    package = unstable-pkgs.alacritty;
 
     settings = {
       env.TERM = "xterm-256color";
 
-      window.opacity = 0.9;
+      window.opacity = 1;
 
       cursor.style = "Block";
       cursor.vi_mode_style = "Block";

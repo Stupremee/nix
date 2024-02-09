@@ -12,7 +12,7 @@
 }:
 unstable.buildGo121Module rec {
   inherit (source) pname version src;
-  vendorHash = "sha256-bG/ydsJf2UncOcDo8/BXdvQJO3Mk0tl8JGje1b6kto4=";
+  vendorHash = "sha256-BK1zugKGtx2RpWHDvFZaFqz/YdoewsG8SscGt25uwtQ=";
 
   nativeBuildInputs = lib.optionals stdenv.isLinux [makeWrapper];
 

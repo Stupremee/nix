@@ -40,8 +40,8 @@
     rust-overlay.url = "github:oxalica/rust-overlay";
     rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
-    nixos-mailserver.inputs.nixpkgs.follows = "unstable";
+    nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
+    nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
     vinix.url = "github:Stupremee/vinix";
     vinix.inputs.nixpkgs.follows = "nixpkgs";

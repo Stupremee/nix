@@ -30,24 +30,24 @@
   };
   kanidm = {
     pname = "kanidm";
-    version = "v1.1.0-rc.15";
+    version = "v1.1.0-rc.16";
     src = fetchFromGitHub {
       owner = "kanidm";
       repo = "kanidm";
-      rev = "v1.1.0-rc.15";
+      rev = "v1.1.0-rc.16";
       fetchSubmodules = false;
-      sha256 = "sha256-0y8juXS61Z9zxOdsWAQ6lJurP+n855Nela6egYRecok=";
+      sha256 = "sha256-NH9V5KKI9LAtJ2/WuWtUJUzkjVMfO7Q5NQkK7Ys2olU=";
     };
   };
   tailscale = {
     pname = "tailscale";
-    version = "v1.56.1";
+    version = "v1.58.2";
     src = fetchFromGitHub {
       owner = "tailscale";
       repo = "tailscale";
-      rev = "v1.56.1";
+      rev = "v1.58.2";
       fetchSubmodules = false;
-      sha256 = "sha256-kMk5Q/KvNcsohHNLDMmpBm+gUxQEOeO8o/odukcJi0A=";
+      sha256 = "sha256-FiFFfUtse0CKR4XJ82HEjpZNxCaa4FnwSJfEzJ5kZgk=";
     };
   };
   tproxy = {

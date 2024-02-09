@@ -101,9 +101,7 @@ in {
       wayland.windowManager.hyprland = {
         enable = true;
 
-        systemdIntegration = true;
-
-        recommendedEnvironment = true;
+        systemd.enable = true;
 
         extraConfig = let
           inherit (lib) mapAttrsToList;

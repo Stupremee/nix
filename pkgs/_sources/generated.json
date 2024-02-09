@@ -62,11 +62,11 @@
             "name": null,
             "owner": "kanidm",
             "repo": "kanidm",
-            "rev": "v1.1.0-rc.15",
-            "sha256": "sha256-0y8juXS61Z9zxOdsWAQ6lJurP+n855Nela6egYRecok=",
+            "rev": "v1.1.0-rc.16",
+            "sha256": "sha256-NH9V5KKI9LAtJ2/WuWtUJUzkjVMfO7Q5NQkK7Ys2olU=",
             "type": "github"
         },
-        "version": "v1.1.0-rc.15"
+        "version": "v1.1.0-rc.16"
     },
     "tailscale": {
         "cargoLocks": null,
@@ -82,11 +82,11 @@
             "name": null,
             "owner": "tailscale",
             "repo": "tailscale",
-            "rev": "v1.56.1",
-            "sha256": "sha256-kMk5Q/KvNcsohHNLDMmpBm+gUxQEOeO8o/odukcJi0A=",
+            "rev": "v1.58.2",
+            "sha256": "sha256-FiFFfUtse0CKR4XJ82HEjpZNxCaa4FnwSJfEzJ5kZgk=",
             "type": "github"
         },
-        "version": "v1.56.1"
+        "version": "v1.58.2"
     },
     "tproxy": {
         "cargoLocks": null,

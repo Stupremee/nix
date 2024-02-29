@@ -5,6 +5,8 @@
     "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBaJhgjPCMsNf4xHk2DNJMRXdKfl7usg4dPDKrimD7hmV6UYWgOdXsS+g0eKvWadQ5FbiT6CsYO41vmvUlAZwm0="
   ];
 in {
+  users.groups.plugdev = {};
+
   users.users = {
     stu = {
       isNormalUser = true;
@@ -20,6 +22,7 @@ in {
         "lp"
         "scanner"
         "libvirtd"
+        "plugdev"
       ];
       uid = 1000;
       openssh.authorizedKeys.keys = keys;

@@ -133,6 +133,7 @@
     hosts = {
       "10.100.4.16" = ["mainframe.lan" "git.mainframe.lan" "ci.mainframe.lan" "cache.mainframe.lan" "ca.mainframe.lan" "docs.mainframe.lan"];
       "10.5.4.4" = ["ekd-dev-k8s-mbi44zdo.privatelink.westeurope.azmk8s.io"];
+      "10.5.0.132" = ["ekd-6ip8259i.privatelink.westeurope.azmk8s.io"];
     };
   };
 

@@ -151,7 +151,6 @@ in {
             kb_layout=eu
             follow_mouse=1
             sensitivity=${cfg.sensitivity}
-            force_no_accel
           }
 
           general {
@@ -165,6 +164,10 @@ in {
 
           decoration {
             rounding=5
+          }
+
+          xwayland {
+            force_zero_scaling = true
           }
 
           animations {

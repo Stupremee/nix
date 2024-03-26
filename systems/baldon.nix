@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstable-pkgs,
   config,
   lib,
   modulesPath,
@@ -17,6 +16,8 @@
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
   programs.virt-manager.enable = true;
+
+  programs.kdeconnect.enable = true;
 
   security.pki.certificates = [
     ''
@@ -65,6 +66,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    kicad
     bmap-tools
     mitmproxy
     nmap
@@ -80,7 +82,6 @@
         pygments
         typer
       ]))
-    unstable-pkgs.bambu-studio
   ];
 
   # Set timezone and locale
@@ -94,6 +95,19 @@
   boot.initrd.kernelModules = [];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
+
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-ocl
+      intel-vaapi-driver
+      intel-media-driver
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
+  };
+  environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";};
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/49c8985c-4b48-4bd3-999b-13d8867e11c9";
@@ -114,7 +128,7 @@
   networking = {
     hostName = "baldon";
     wireguard.enable = true;
-    enableIPv6 = false;
+    enableIPv6 = true;
     firewall.enable = false;
     firewall.allowedTCPPorts = [2222];
 

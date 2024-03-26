@@ -13,6 +13,7 @@
     httpie
     websocat
     numbat
+    burpsuite
 
     packages.tproxy
   ];

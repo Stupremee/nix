@@ -19,13 +19,8 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "unstable";
-
     hyprland-contrib.url = "github:hyprwm/contrib";
-    hyprland-contrib.inputs.nixpkgs.follows = "unstable";
-
     hyprpaper.url = "github:hyprwm/hyprpaper";
-    hyprpaper.inputs.nixpkgs.follows = "unstable";
 
     eww.url = "github:elkowar/eww";
     eww.inputs.nixpkgs.follows = "unstable";

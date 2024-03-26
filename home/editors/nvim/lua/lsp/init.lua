@@ -42,16 +42,6 @@ lsp.on_attach(function(client, bufnr)
       end,
     })
   end
-
-  -- Fix for https://github.com/sveltejs/language-tools/issues/2008
-  vim.api.nvim_create_autocmd("BufWritePost", {
-    pattern = { "*.js", "*.ts" },
-    callback = function(ctx)
-      if client.name == "svelte" then
-        client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-      end
-    end,
-  })
 end)
 
 local rust_lsp = lsp.build_options("rust_analyzer", {
@@ -75,6 +65,13 @@ require("user.lsp.settings.volar")
 require("user.lsp.settings.tailwindcss")
 require("user.lsp.settings.tsserver")
 require("user.lsp.settings.lua_ls")
+
+-- enable dynamic registration for svelte
+local lsp_capabilities = vim.lsp.protocol.make_client_capabilities() --or whatever your setup requires
+lsp_capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+lsp.configure("svelte", {
+  capabilities = lsp_capabilities,
+})
 
 lsp.setup_servers({
   -- "taplo",

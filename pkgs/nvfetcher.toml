@@ -10,10 +10,6 @@ fetch.github = "authelia/authelia"
 src.github = "authelia/authelia"
 fetch.tarball = "https://github.com/authelia/authelia/releases/download/$ver/authelia-$ver-public_html.tar.gz"
 
-[tailscale]
-src.github = "tailscale/tailscale"
-fetch.github = "tailscale/tailscale"
-
 [dymoprint]
 src.pypi = "dymoprint"
 fetch.pypi = "dymoprint"

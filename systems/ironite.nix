@@ -41,9 +41,8 @@
   };
 
   # Networking
-  modules.tailscale = {
-    useRoutingFeatures = "server";
-    nginxAuth = true;
+  services.tailscale = {
+    useRoutingFeatures = lib.mkForce "server";
     permitCertUid = builtins.toString config.users.users."${config.services.caddy.user}".uid;
   };
 

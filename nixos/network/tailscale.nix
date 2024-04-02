@@ -1,15 +1,17 @@
 {
   config,
-  packages,
+  unstable-pkgs,
+  lib,
   ...
 }: {
   # Enable tailscale VPN
-  modules.tailscale = {
+  services .tailscale = {
     enable = true;
-    package = packages.tailscale;
+    package = unstable-pkgs.tailscale;
+    useRoutingFeatures = lib.mkDefault "client";
   };
 
   # Trust the tailscale0 interface
-  networking.firewall.trustedInterfaces = [config.modules.tailscale.interfaceName];
-  networking.firewall.allowedUDPPorts = [config.modules.tailscale.port];
+  networking.firewall.trustedInterfaces = [config.services.tailscale.interfaceName];
+  networking.firewall.allowedUDPPorts = [config.services.tailscale.port];
 }

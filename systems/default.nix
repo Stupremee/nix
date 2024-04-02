@@ -21,7 +21,6 @@
 
     ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix
-    ../nixos/modules/tailscale.nix
     ../nixos/modules/backup.nix
     ../nixos/modules/age.nix
     ../nixos/modules/argo.nix

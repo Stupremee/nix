@@ -12,6 +12,7 @@
   services.vaultwarden = {
     enable = true;
     package = unstable-pkgs.vaultwarden;
+    webVaultPackage = unstable-pkgs.vaultwarden.webvault;
 
     environmentFile = config.age.secrets.vaultwardenEnv.path;
     dbBackend = "postgresql";

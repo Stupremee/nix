@@ -23,6 +23,7 @@ in {
         "scanner"
         "libvirtd"
         "plugdev"
+        "tss"
       ];
       uid = 1000;
       openssh.authorizedKeys.keys = keys;

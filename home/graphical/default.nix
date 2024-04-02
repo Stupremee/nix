@@ -16,8 +16,7 @@ in {
   ];
 
   home.packages = with unstable-pkgs; [
-    firefox-wayland
-    ungoogled-chromium
+    (pkgs.wrapFirefox (pkgs.firefox-devedition-unwrapped.override {pipewireSupport = true;}) {})
     webcord
   ];
 

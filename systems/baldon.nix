@@ -19,6 +19,31 @@
 
   programs.kdeconnect.enable = true;
 
+  security.tpm2 = {
+    enable = true;
+    tctiEnvironment.enable = true;
+  };
+
+  services.atftpd = {
+    enable = true;
+  };
+
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /srv/nfs 10.100.4.87/255.255.255.0(rw,no_root_squash,sync,no_subtree_check)
+    '';
+  };
+
+  # OpenVPN
+  age.secrets.enqsvpn.file = ../secrets/enqs.ovpn;
+  services.openvpn.servers = {
+    enqs = {
+      autoStart = false;
+      config = ''config ${config.age.secrets.enqsvpn.path} '';
+    };
+  };
+
   security.pki.certificates = [
     ''
       EKD Internal

@@ -31,4 +31,6 @@ in {
 
   "spotify".publicKeys = keysForSystem "nixius";
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
+
+  "enqs.ovpn".publicKeys = keysForSystem "baldon";
 }

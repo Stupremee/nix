@@ -21,7 +21,7 @@ in {
     package = unstable-pkgs.paperless-ngx;
     passwordFile = builtins.toString config.age.secrets.paperlessPassword.path;
 
-    extraConfig = {
+    settings = {
       PAPERLESS_URL = "https://docs.stu-dev.me";
 
       PAPERLESS_OCR_LANGUAGE = "deu+eng";

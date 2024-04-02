@@ -5,9 +5,10 @@
   pkgs,
   theme,
   config,
+  unstable-pkgs,
   ...
 }: let
-  eww = inputs.eww.packages."${system}".eww-wayland;
+  eww = unstable-pkgs.eww;
 
   deps = with pkgs; [
     config.wayland.windowManager.hyprland.package

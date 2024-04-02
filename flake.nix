@@ -22,10 +22,6 @@
     hyprland-contrib.url = "github:hyprwm/contrib";
     hyprpaper.url = "github:hyprwm/hyprpaper";
 
-    eww.url = "github:elkowar/eww";
-    eww.inputs.nixpkgs.follows = "unstable";
-    eww.inputs.rust-overlay.follows = "rust-overlay";
-
     devenv.url = "github:cachix/devenv/latest";
     devenv.inputs.nixpkgs.follows = "unstable";
 

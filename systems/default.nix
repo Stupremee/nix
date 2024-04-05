@@ -202,6 +202,7 @@ in {
           ../nixos/hardware/yubikey.nix
           ../nixos/network/tailscale.nix
           ../nixos/stlink.nix
+          ../nixos/zsa.nix
         ];
         home = true;
         theme = "frappe";

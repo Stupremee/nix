@@ -35,6 +35,10 @@
     '';
   };
 
+  hardware.bluetooth = {
+    enable = true;
+  };
+
   # OpenVPN
   age.secrets.enqsvpn.file = ../secrets/enqs.ovpn;
   services.openvpn.servers = {

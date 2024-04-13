@@ -130,8 +130,16 @@
     '';
   };
 
-  neovim =
-    pkgs.wrapNeovimUnstable (pkgs.neovim-unwrapped.override {treesitter-parsers = {};})
+  neovim = let
+    pkg =
+      (pkgs.neovim-unwrapped.override {
+        treesitter-parsers = {};
+      })
+      .overrideAttrs {
+        doCheck = false;
+      };
+  in
+    pkgs.wrapNeovimUnstable pkg
     (config
       // {
         wrapperArgs = (lib.escapeShellArgs config.wrapperArgs) + " --suffix PATH : \"${lib.makeBinPath extraPackages}\"";

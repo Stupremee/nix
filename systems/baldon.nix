@@ -1,5 +1,6 @@
 {
   pkgs,
+  unstable-pkgs,
   config,
   lib,
   modulesPath,
@@ -35,8 +36,10 @@
     '';
   };
 
+  services.blueman.enable = true;
   hardware.bluetooth = {
     enable = true;
+    package = unstable-pkgs.bluez;
   };
 
   # OpenVPN
@@ -127,7 +130,7 @@
 
   hardware.opengl = {
     enable = true;
-    extraPackages = with pkgs; [
+    extraPackages = with unstable-pkgs; [
       intel-ocl
       intel-vaapi-driver
       intel-media-driver
@@ -135,8 +138,11 @@
       libvdpau-va-gl
     ];
   };
-  environment.sessionVariables = {LIBVA_DRIVER_NAME = "iHD";};
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+    NIXOS_OZONE_WL = "1";
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/49c8985c-4b48-4bd3-999b-13d8867e11c9";
@@ -154,6 +160,7 @@
     {device = "/dev/disk/by-uuid/fbe5f07a-5bcc-41a4-b492-596f98247466";}
   ];
 
+  services.tailscale.useRoutingFeatures = "both";
   networking = {
     hostName = "baldon";
     wireguard.enable = true;
@@ -174,7 +181,7 @@
     };
 
     hosts = {
-      "10.100.4.16" = ["mainframe.lan" "git.mainframe.lan" "ci.mainframe.lan" "cache.mainframe.lan" "ca.mainframe.lan" "docs.mainframe.lan"];
+      "10.100.4.8" = ["mainframe.lan" "git.mainframe.lan" "ci.mainframe.lan" "cache.mainframe.lan" "ca.mainframe.lan" "docs.mainframe.lan"];
       "10.5.4.4" = ["ekd-dev-k8s-mbi44zdo.privatelink.westeurope.azmk8s.io"];
       "10.5.0.132" = ["ekd-6ip8259i.privatelink.westeurope.azmk8s.io"];
     };

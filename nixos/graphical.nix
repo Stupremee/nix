@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  unstable-pkgs,
+  ...
+}: {
   programs.dconf.enable = true;
 
   services.geoclue2.enable = true;
@@ -9,10 +13,13 @@
 
   services.pipewire = {
     enable = true;
+    package = unstable-pkgs.pipewire;
 
     wireplumber.enable = true;
+    wireplumber.package = unstable-pkgs.wireplumber;
     jack.enable = true;
     pulse.enable = true;
+    alsa.enable = true;
   };
 
   xdg = {

@@ -32,8 +32,7 @@
 (defwidget center []
   (box
     :space-evenly false
-    :halign "center"
-    (music)))
+    :halign "center"))
 
 (defwidget left []
   (box

@@ -31,9 +31,9 @@
     nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-23.11";
     nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
-    vinix.url = "github:Stupremee/vinix";
-    vinix.inputs.nixpkgs.follows = "nixpkgs";
-    vinix.inputs.rust-overlay.follows = "rust-overlay";
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows = "unstable";
+    nixvim.inputs.home-manager.follows = "home-manager";
   };
 
   outputs = inputs @ {

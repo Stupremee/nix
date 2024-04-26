@@ -14,16 +14,12 @@
           })
           (filter (v: v != null) (attrValues (mapAttrs
             (k: v:
-              if v == "directory" && k != "_sources" && k != "nodePackages" && k != "vimPlugins"
+              if v == "directory" && k != "_sources" && k != "nodePackages"
               then k
               else null)
             (readDir ./.)))));
 
     nodePackages = import ./nodePackages {inherit pkgs;};
-    vimPlugins = import ./vimPlugins {
-      inherit (pkgs.vimUtils) buildVimPlugin;
-      inherit (pkgs) fetchurl;
-    };
   in {
     _module.args.pkgs = import inputs.nixpkgs {
       inherit system;
@@ -44,7 +40,6 @@
         in
           pkgs.callPackage package args
       ))
-      // nodePackages
-      // vimPlugins;
+      // nodePackages;
   };
 }

@@ -18,7 +18,6 @@
 
         inputs'.deploy-rs.packages.deploy-rs
         inputs'.agenix.packages.agenix
-        inputs'.vinix.packages.default
         age-plugin-yubikey
       ];
     };

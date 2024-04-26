@@ -1,8 +1,8 @@
-{...}: {
+{helpers, ...}: {
   plugins = {
     lsp = {
       enable = true;
-      capabilities = "offsetEncoding =  'utf-16'";
+      capabilities = "capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true";
       servers = {
         lua-ls = {
           enable = true;

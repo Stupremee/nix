@@ -62,6 +62,16 @@
       action = "+test";
     }
 
+    {
+      mode = ["n"];
+      key = "<leader>h";
+      action = "<cmd>nohlsearch<cr>";
+      options = {
+        silent = true;
+        desc = "Clear current search";
+      };
+    }
+
     # Tabs
     {
       mode = "n";

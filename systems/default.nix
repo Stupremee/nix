@@ -217,7 +217,6 @@ in {
           ../home/zsh.nix
           ../home/tmux.nix
           ../home/editors/nvim
-          ../home/editors/helix
           ../home/graphical
           ../home/dev
 

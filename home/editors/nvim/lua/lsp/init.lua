@@ -85,6 +85,7 @@ lsp.setup_servers({
   "eslint",
   "html",
   "gopls",
+  "ruff",
 })
 
 lsp.setup()
@@ -109,13 +110,11 @@ null_ls.setup({
   sources = {
     formatting.alejandra,
     formatting.stylua,
-    -- formatting.prettierd,
-    formatting.black,
+    formatting.prettierd,
     formatting.xmllint,
     formatting.phpcsfixer,
 
     diagnostics.deadnix,
-    diagnostics.flake8,
     -- diagnostics.eslint_d,
     -- diagnostics.phpcs,
   },

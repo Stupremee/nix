@@ -104,6 +104,7 @@
     nmap
     minicom
     inkscape-with-extensions
+    unstable-pkgs.ghidra
     (python3.withPackages (ps:
       with ps; [
         pymodbus

@@ -3,6 +3,7 @@
   unstable-pkgs,
   theme,
   packages,
+  theme,
   ...
 }: {
   programs.helix = {
@@ -17,9 +18,10 @@
     settings = {
       theme = "catppuccin_${theme.name}";
 
-      editor.line-number = "relative";
-      editor.lsp = {
-        display-messages = true;
+      editor = {
+        line-number = "relative";
+        lsp.display-messages = true;
+        indent-guides.render = true;
       };
     };
 
@@ -35,5 +37,8 @@
         };
       };
     };
-  };
+
+    themes.catppuccin = {
+        "attribute" = "yellow";
+    };
 }

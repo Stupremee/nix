@@ -45,7 +45,10 @@
     sha256 = "sha256-j7ppGmNnfgep6JDdv5nn2gUGSOx4iPPc5afL1WDF3ZY=";
   };
 in {
-  home.packages = with pkgs; [procWatch];
+  home.packages = with pkgs; [
+    procWatch
+    unstable-pkgs.nh
+  ];
 
   programs.atuin = {
     enable = true;

@@ -35,12 +35,11 @@
     taplo-lsp
     terraform-ls
     lua-language-server
-    python310Packages.flake8
-    python310Packages.black
     libxml2 # for xmllint
     phpactor
     php82Packages.php-cs-fixer
     php82Packages.php-codesniffer
+    ruff
   ];
 
   config = pkgs.neovimUtils.makeNeovimConfig {

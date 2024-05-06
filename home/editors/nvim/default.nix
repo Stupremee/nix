@@ -16,7 +16,7 @@ in {
   home.packages = [pkg];
 
   home.sessionVariables = {
-    MANPAGER = "/nvim +Man!";
+    MANPAGER = "nvim +Man!";
     EDITOR = "nvim";
   };
 }

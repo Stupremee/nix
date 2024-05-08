@@ -173,7 +173,7 @@
     interfaces = {
       eno1.useDHCP = lib.mkDefault true;
 
-      enp0s20f0u6u2.ipv4.addresses = [
+      enp0s20f0u8u2.ipv4.addresses = [
         {
           address = "10.100.4.19";
           prefixLength = 24;

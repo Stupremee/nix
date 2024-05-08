@@ -10,13 +10,13 @@
 
     monitors = {
       "HDMI-A-1" = {
-        position = "2560x0";
+        position = "0x0";
         resolution = "3840x2160@60";
         scale = "1.5";
       };
 
       "DP-1" = {
-        position = "0x0";
+        position = "2560x0";
         resolution = "3840x2160@60";
         scale = "1.5";
       };

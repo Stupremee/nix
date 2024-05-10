@@ -9,7 +9,7 @@
   gitIdentity =
     pkgs.writeShellScriptBin "git-identity" (builtins.readFile ./git-identity);
 in {
-  home.packages = with unstable-pkgs; [gh fzf gitIdentity];
+  home.packages = with unstable-pkgs; [gh fzf gitIdentity git-credential-oauth];
 
   programs.git = {
     enable = true;
@@ -62,6 +62,17 @@ in {
 
       # core.pager = delta;
       # interactive.diffFilter = "${delta} --color-only --features=interactive";
+
+      credential.helper = [
+        "cache --timeout 7200"
+        "oauth"
+      ];
+
+      "credential \"https://git.mainframe.lan\"" = {
+        oauthClientId = "a4792ccc-144e-407e-86c9-5e7d8d9c3269";
+        oauthAuthURL = "/login/oauth/authorize";
+        oauthTokenURL = "/login/oauth/access_token";
+      };
     };
   };
 }

@@ -46,7 +46,7 @@
     ./utils/neodev.nix
     ./utils/nvim-colorizer.nix
     ./utils/todo-comments.nix
-    ./utils/ultimate-autopair.nix
+    ./utils/nvim-autopairs.nix
     ./utils/undotree.nix
     ./utils/whichkey.nix
   ];

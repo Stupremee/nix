@@ -13,11 +13,11 @@
             "name": null,
             "owner": "authelia",
             "repo": "authelia",
-            "rev": "v4.37.5",
-            "sha256": "sha256-xsdBnyPHFIimhp2rcudWqvVR36WN4vBXbxRmvgqMcDw=",
+            "rev": "v4.38.8",
+            "sha256": "sha256-wuGA3nxzMhpaJKPQeMgVv27zmLyUL5o3MVY+BM6SbAI=",
             "type": "github"
         },
-        "version": "v4.37.5"
+        "version": "v4.38.8"
     },
     "authelia-web": {
         "cargoLocks": null,
@@ -27,11 +27,11 @@
         "passthru": null,
         "pinned": false,
         "src": {
-            "sha256": "1sq90s0f5l7l0675jyaa6xm6kx0likdz0cc13kz86726sdq7vhhv",
+            "sha256": "sha256-0xcuWVNSBGnqxAf7QPVeuf2CBwtbvatrMm4UHl0zfCg=",
             "type": "tarball",
-            "url": "https://github.com/authelia/authelia/releases/download/v4.37.5/authelia-v4.37.5-public_html.tar.gz"
+            "url": "https://github.com/authelia/authelia/releases/download/v4.38.8/authelia-v4.38.8-public_html.tar.gz"
         },
-        "version": "v4.37.5"
+        "version": "v4.38.8"
     },
     "dymoprint": {
         "cargoLocks": null,
@@ -42,11 +42,11 @@
         "pinned": false,
         "src": {
             "name": null,
-            "sha256": "sha256-c/0BXfG0g0tg+256nyP5d4VRI4GMippw//h54PVndIU=",
+            "sha256": "sha256-mTa+W5trcOiz6tSRIMbVk2VD5BjQaJJMdGC5mpigckA=",
             "type": "url",
-            "url": "https://pypi.org/packages/source/d/dymoprint/dymoprint-2.4.0.tar.gz"
+            "url": "https://pypi.org/packages/source/d/dymoprint/dymoprint-2.5.0.tar.gz"
         },
-        "version": "2.4.0"
+        "version": "2.5.0"
     },
     "kanidm": {
         "cargoLocks": null,
@@ -62,31 +62,11 @@
             "name": null,
             "owner": "kanidm",
             "repo": "kanidm",
-            "rev": "v1.1.0-rc.16",
-            "sha256": "sha256-NH9V5KKI9LAtJ2/WuWtUJUzkjVMfO7Q5NQkK7Ys2olU=",
+            "rev": "v1.2.1",
+            "sha256": "sha256-nDAHlpQefCbmz4jw/1cDGQWkfvn/vIqpsOCPjn6yQ6s=",
             "type": "github"
         },
-        "version": "v1.1.0-rc.16"
-    },
-    "tailscale": {
-        "cargoLocks": null,
-        "date": null,
-        "extract": null,
-        "name": "tailscale",
-        "passthru": null,
-        "pinned": false,
-        "src": {
-            "deepClone": false,
-            "fetchSubmodules": false,
-            "leaveDotGit": false,
-            "name": null,
-            "owner": "tailscale",
-            "repo": "tailscale",
-            "rev": "v1.58.2",
-            "sha256": "sha256-FiFFfUtse0CKR4XJ82HEjpZNxCaa4FnwSJfEzJ5kZgk=",
-            "type": "github"
-        },
-        "version": "v1.58.2"
+        "version": "v1.2.1"
     },
     "tproxy": {
         "cargoLocks": null,
@@ -102,10 +82,10 @@
             "name": null,
             "owner": "kevwan",
             "repo": "tproxy",
-            "rev": "v0.8.0",
-            "sha256": "sha256-d4ZijF3clu00WZQGlurTkGkedurjt9fqfShdjbZWCSI=",
+            "rev": "v0.8.1",
+            "sha256": "sha256-LX3ciC3cMYuQPm6ekEkJPrSdTXH+WZ4flXyrsvJZgn8=",
             "type": "github"
         },
-        "version": "v0.8.0"
+        "version": "v0.8.1"
     }
 }

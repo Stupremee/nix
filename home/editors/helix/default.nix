@@ -3,7 +3,6 @@
   unstable-pkgs,
   theme,
   packages,
-  theme,
   ...
 }: {
   programs.helix = {
@@ -39,6 +38,7 @@
     };
 
     themes.catppuccin = {
-        "attribute" = "yellow";
+      "attribute" = "yellow";
     };
+  };
 }

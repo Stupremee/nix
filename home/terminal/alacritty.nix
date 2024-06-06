@@ -22,7 +22,7 @@ in {
       cursor.style = "Block";
       cursor.vi_mode_style = "Block";
 
-      key_bindings = [
+      keyboard.bindings = [
         (keybind "V" "Alt" "Paste")
         (keybind "C" "Alt" "Copy")
 
@@ -70,11 +70,6 @@ in {
           focused_match = {
             foreground = theme.base;
             background = theme.green;
-          };
-
-          footer_bar = {
-            foreground = theme.base;
-            background = theme.subtext0;
           };
         };
 

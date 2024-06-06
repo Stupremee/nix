@@ -10,13 +10,13 @@ in {
   };
 
   home.packages = lib.optionals stdenv.isLinux (with pkgs; [pinentry-qt]);
-  modules.gpg-agent = {
+  services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
     sshKeys = ["5AB7076AF80B4337FB20968CD54A1CD51376F46C"];
-    pinentryFlavor =
+    pinentryPackage =
       if stdenv.isDarwin
-      then "mac"
-      else "qt";
+      then pkgs.pinentry_max
+      else pkgs.pinentry.qt;
   };
 }

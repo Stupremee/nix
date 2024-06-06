@@ -8,7 +8,7 @@
 
   home.packages = with pkgs;
     [
-      dbeaver
+      dbeaver-bin
       unstable-pkgs.devenv
       httpie
       websocat

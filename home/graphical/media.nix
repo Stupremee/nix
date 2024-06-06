@@ -4,7 +4,6 @@
     playerctl
     pulsemixer
     imv
-    spotify-tui
   ];
 
   services.playerctld.enable = true;

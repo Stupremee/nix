@@ -15,7 +15,6 @@
     {
       mode = "n";
       key = "<leader>xx";
-      lua = true;
       action = ''function() require("trouble").toggle() end'';
       options = {
         silent = true;
@@ -25,7 +24,6 @@
     {
       mode = "n";
       key = "<leader>xw";
-      lua = true;
       action = ''function() require("trouble").toggle("workspace_diagnostics") end'';
       options = {
         silent = true;
@@ -35,7 +33,6 @@
     {
       mode = "n";
       key = "<leader>xd";
-      lua = true;
       action = ''function() require("trouble").toggle("document_diagnostics") end'';
       options = {
         silent = true;
@@ -45,7 +42,6 @@
     {
       mode = "n";
       key = "<leader>xq";
-      lua = true;
       action = ''function() require("trouble").toggle("quickfix") end'';
       options = {
         silent = true;
@@ -55,7 +51,6 @@
     {
       mode = "n";
       key = "<leader>xl";
-      lua = true;
       action = ''function() require("trouble").toggle("loclist") end'';
       options = {
         silent = true;

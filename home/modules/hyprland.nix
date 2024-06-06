@@ -72,7 +72,7 @@ in {
     inherit (lib) removePrefix;
 
     pythonScratchpad = pkgs.writeShellScript "python-scratchpad" ''
-      ${pkgs.numbat}/bin/numbat
+      ${unstable-pkgs.numbat}/bin/numbat
     '';
   in
     lib.mkIf cfg.enable {
@@ -137,6 +137,8 @@ in {
         in ''
           env = XDG_SESSION_TYPE,wayland
           env = WLR_NO_HARDWARE_CURSORS,1
+          env = HYPRCURSOR_SIZE,48
+          env = XCURSOR_SIZE,48
 
           # Monitor configuration
           ${monitorsConfig}

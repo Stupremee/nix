@@ -50,7 +50,6 @@
       imports =
         [
           ../home/modules/hyprland.nix
-          ../home/modules/gpg-agent.nix
 
           inputs.hyprland.homeManagerModules.default
         ]

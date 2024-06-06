@@ -131,10 +131,15 @@ in {
     settings = {
       add_newline = true;
 
-      character = {
+      character = let
+        vicmd = "[λ ·](bold green)";
+      in {
         success_symbol = "[λ ›](bold green)";
         error_symbol = "[λ ›](bold red)";
-        vicmd_symbol = "[λ ·](bold green)";
+        vimcmd_symbol = vicmd;
+        vimcmd_replace_one_symbol = vicmd;
+        vimcmd_replace_symbol = vicmd;
+        vimcmd_visual_symbol = vicmd;
       };
 
       cmd_duration = {

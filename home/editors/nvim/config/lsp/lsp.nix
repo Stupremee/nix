@@ -1,4 +1,12 @@
-{helpers, ...}: {
+{
+  helpers,
+  pkgs,
+  ...
+}: {
+  extraPlugins = with pkgs.vimPlugins; [
+    neoconf-nvim
+  ];
+
   plugins = {
     lsp = {
       enable = true;
@@ -52,6 +60,10 @@
       };
     };
   };
+
+  extraConfigLuaPre = ''
+    require("neoconf").setup({})
+  '';
 
   extraConfigLua = ''
     local _border = "rounded"

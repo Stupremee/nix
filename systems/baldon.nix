@@ -4,6 +4,7 @@
   config,
   lib,
   modulesPath,
+  packages,
   ...
 }: {
   imports = [
@@ -98,7 +99,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    kicad
+    packages.qmodbus
+    stm32cubemx
     bmap-tools
     mitmproxy
     nmap

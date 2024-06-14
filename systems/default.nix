@@ -199,6 +199,7 @@ in {
           ../nixos/keyring.nix
           ../nixos/binfmt.nix
           ../nixos/hardware/yubikey.nix
+          ../nixos/hardware/nvidia.nix
           ../nixos/network/tailscale.nix
           ../nixos/stlink.nix
           ../nixos/zsa.nix

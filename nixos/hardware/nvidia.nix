@@ -40,6 +40,7 @@
 
       powerManagement.enable = true;
       modesetting.enable = true;
+      open = true;
     };
   };
 }

@@ -27,6 +27,11 @@
           type = types.str;
           default = "1";
         };
+
+        disable = mkOption {
+          type = types.bool;
+          default = false;
+        };
       };
     };
 
@@ -106,11 +111,15 @@ in {
         extraConfig = let
           inherit (lib) mapAttrsToList;
 
-          monitorList =
-            mapAttrsToList (name: opts: ''
+          monitorList = mapAttrsToList (name: opts:
+            if opts.disable
+            then ''
+              monitor=${name},disable
+            ''
+            else ''
               monitor=${name},${opts.resolution},${opts.position},${opts.scale}
             '')
-            cfg.monitors;
+          cfg.monitors;
 
           monitorsConfig = builtins.concatStringsSep "" monitorList;
 

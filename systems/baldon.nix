@@ -131,19 +131,7 @@
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with unstable-pkgs; [
-      intel-ocl
-      intel-vaapi-driver
-      intel-media-driver
-      vaapiVdpau
-      libvdpau-va-gl
-    ];
-  };
-
   environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";
     NIXOS_OZONE_WL = "1";
   };
 
@@ -175,7 +163,7 @@
     interfaces = {
       eno1.useDHCP = lib.mkDefault true;
 
-      enp0s20f0u8u2.ipv4.addresses = [
+      enp0s20f0u7u2.ipv4.addresses = [
         {
           address = "10.100.4.19";
           prefixLength = 24;

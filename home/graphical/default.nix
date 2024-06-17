@@ -17,8 +17,6 @@ in {
 
   home.packages = with unstable-pkgs; [
     (pkgs.wrapFirefox (pkgs.firefox-devedition-unwrapped.override {pipewireSupport = true;}) {})
-    ungoogled-chromium
-    webcord
   ];
 
   home.pointerCursor = {

@@ -3,13 +3,14 @@
   packages,
   inputs,
   system,
+  theme,
   ...
 }: let
   pkg = inputs.nixvim.legacyPackages.${system}.makeNixvimWithModule {
     pkgs = unstable-pkgs;
     module = import ./config;
     extraSpecialArgs = {
-      inherit packages;
+      inherit packages theme;
     };
   };
 in {

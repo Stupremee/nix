@@ -1,4 +1,4 @@
-{...}: {
+{theme, ...}: {
   colorschemes = {
     catppuccin = {
       enable = true;
@@ -8,7 +8,7 @@
           light = "frappe";
           dark = "frappe";
         };
-        flavour = "frappe"; # "latte", "mocha", "frappe", "macchiato" or raw lua code
+        flavour = theme.name; # "latte", "mocha", "frappe", "macchiato" or raw lua code
 
         disableBold = false;
         disableItalic = false;

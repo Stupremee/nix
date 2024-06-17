@@ -32,8 +32,11 @@
     nixos-mailserver.inputs.nixpkgs.follows = "nixpkgs";
 
     nixvim.url = "github:nix-community/nixvim";
-    nixvim.inputs.nixpkgs.follows = "unstable";
-    nixvim.inputs.home-manager.follows = "home-manager";
+    # nixvim.inputs.nixpkgs.follows = "unstable";
+    # nixvim.inputs.home-manager.follows = "home-manager";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs = inputs @ {

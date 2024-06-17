@@ -28,6 +28,7 @@
     ../nixos/modules/roundcube
 
     inputs.agenix.nixosModules.default
+    inputs.disko.nixosModules.default
     inputs.home-manager.nixosModules.default
     inputs.hyprland.nixosModules.default
     inputs.nixos-mailserver.nixosModules.mailserver
@@ -249,6 +250,38 @@ in {
           ../home/zsh.nix
           ../home/tmux.nix
           ../home/graphical/spotify.nix
+          ../home/editors/nvim
+          ../home/graphical
+          ../home/dev
+
+          inputs.nix-index-database.hmModules.nix-index
+        ];
+      };
+
+      argon = mkSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./argon
+          ../nixos/fonts.nix
+          ../nixos/graphical.nix
+          ../nixos/hardware/yubikey.nix
+          ../nixos/hardware/logitech.nix
+          ../nixos/hardware/amd-gpu.nix
+          ../nixos/containers.nix
+          ../nixos/network/tailscale.nix
+        ];
+        home = true;
+        theme = "latte";
+        flakePath = "/home/stu/dev/nix/nix";
+        homeModules = [
+          ./home/argon.nix
+          ../home/git
+          ../home/wayland
+          ../home/terminal/alacritty.nix
+          ../home/pgp.nix
+          ../home/xdg.nix
+          ../home/zsh.nix
+          ../home/tmux.nix
           ../home/editors/nvim
           ../home/graphical
           ../home/dev

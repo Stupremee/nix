@@ -41,9 +41,11 @@
   };
 
   # Networking
+  services.tailscaleAuth.enable = true;
+
   services.tailscale = {
     useRoutingFeatures = lib.mkForce "server";
-    permitCertUid = builtins.toString config.users.users."${config.services.caddy.user}".uid;
+    permitCertUid = config.services.caddy.user;
   };
 
   networking = {

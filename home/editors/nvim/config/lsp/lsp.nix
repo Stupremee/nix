@@ -1,8 +1,4 @@
-{
-  helpers,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   extraPlugins = with pkgs.vimPlugins; [
     neoconf-nvim
   ];

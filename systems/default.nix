@@ -148,7 +148,6 @@ in {
           ../nixos/paperless.nix
           ../nixos/vaultwarden.nix
           ../nixos/mail.nix
-          ../nixos/foldingathome.nix
           ../nixos/network/tailscale.nix
           ../nixos/minecraft-server.nix
         ];

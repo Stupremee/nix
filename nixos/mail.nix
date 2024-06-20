@@ -5,6 +5,7 @@
 }: {
   age.secrets."mail@stu-dev.me".file = ../secrets/password/mail-at-stu-dev.me;
   age.secrets."docs@stu-dev.me".file = ../secrets/password/docs-at-stu-dev.me;
+  age.secrets."monitoring@stu-dev.me".file = ../secrets/password/monitoring-at-stu-dev.me;
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "justus.k@protonmail.com";
@@ -25,6 +26,10 @@
 
       "docs@stu-dev.me" = {
         hashedPasswordFile = config.age.secrets."docs@stu-dev.me".path;
+      };
+
+      "monitoring@stu-dev.me" = {
+        hashedPasswordFile = config.age.secrets."monitoring@stu-dev.me".path;
       };
     };
 

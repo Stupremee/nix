@@ -25,6 +25,8 @@ in {
   "password/restic".publicKeys = keysForSystems ["nether" "ironite"];
   "password/mail-at-stu-dev.me".publicKeys = keysForSystem "ironite";
   "password/docs-at-stu-dev.me".publicKeys = keysForSystem "ironite";
+  "password/monitoring-at-stu-dev.me".publicKeys = keysForSystem "ironite";
+  "password/grafana-admin".publicKeys = keysForSystem "ironite";
 
   "rclone.conf".publicKeys = keysForSystems ["nether" "ironite"];
   "vaultwarden.env".publicKeys = keysForSystems ["nether" "ironite"];

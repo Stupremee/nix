@@ -49,6 +49,7 @@
   };
 
   networking = {
+    useNetworkd = true;
     useDHCP = false;
 
     interfaces.enp6s0 = {

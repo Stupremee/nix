@@ -150,6 +150,7 @@ in {
           ../nixos/mail.nix
           ../nixos/network/tailscale.nix
           ../nixos/minecraft-server.nix
+          ../nixos/monitoring
         ];
         home = true;
         homeModules = [

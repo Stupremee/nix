@@ -1,5 +1,11 @@
 # Module for configuring the nix-daemon
-{lib, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
+  age.secrets.netrc.file = ../secrets/netrc;
+
   nix = {
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -10,6 +16,7 @@
       trusted-users = ["root" "@wheel" "ekd"];
       auto-optimise-store = lib.mkDefault true;
       log-lines = 50;
+      netrc-file = config.age.secrets.netrc.path;
     };
   };
 

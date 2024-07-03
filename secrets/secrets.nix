@@ -2,6 +2,7 @@ let
   users = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMyNWZe1K8/5yebGKey+yjJcASH7qZg6E24OPTj8veLN stu@nixius"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJqATr5SfHhUcyMfqrBBCrLM33Ax2u4FiQMiUPi37jkP stu@Stus-MacBook-3.local"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGfOv1f0ltBXJRN1DJSMzEIjWJ8Ty2LdPeOJowDTk4B stu@baldon"
   ];
 
   systems = {
@@ -35,4 +36,6 @@ in {
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
 
   "enqs.ovpn".publicKeys = keysForSystem "baldon";
+
+  "netrc".publicKeys = keysForSystem "baldon";
 }

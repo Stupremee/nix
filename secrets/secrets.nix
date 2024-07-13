@@ -36,6 +36,4 @@ in {
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
 
   "enqs.ovpn".publicKeys = keysForSystem "baldon";
-
-  "netrc".publicKeys = keysForSystem "baldon";
 }

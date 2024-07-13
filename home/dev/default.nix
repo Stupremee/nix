@@ -8,7 +8,6 @@
 
   home.packages = with pkgs;
     [
-      dbeaver-bin
       unstable-pkgs.devenv
       httpie
       websocat
@@ -16,7 +15,7 @@
 
       packages.tproxy
     ]
-    ++ (lib.optionals pkgs.stdenv.isLinux [pkgs.burpsuite]);
+    ++ (lib.optionals pkgs.stdenv.isLinux (with pkgs; [burpsuite dbeaver-bin]));
 
   home.sessionVariables = {
     SCCACHE_DIR = "/mnt/hdd/.sccache/";

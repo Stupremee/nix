@@ -128,7 +128,7 @@ in {
           ../home/zsh.nix
           ../home/editors/nvim
           ../home/dev
-          ../home/pgp.nix
+          # ../home/pgp.nix
 
           inputs.nix-index-database.hmModules.nix-index
         ];

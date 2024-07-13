@@ -5,8 +5,8 @@
 
       settings = {
         background = {
-          light = "frappe";
-          dark = "frappe";
+          light = theme.name;
+          dark = theme.name;
         };
         flavour = theme.name; # "latte", "mocha", "frappe", "macchiato" or raw lua code
 

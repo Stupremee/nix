@@ -6,7 +6,7 @@
   modules.hyprland = {
     enable = true;
 
-    sensitivity = "-1.0";
+    sensitivity = "-0.5";
 
     monitors = {
       "DP-5" = {

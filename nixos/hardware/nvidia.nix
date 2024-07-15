@@ -38,9 +38,9 @@
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-      powerManagement.enable = true;
+      powerManagement.enable = false;
       modesetting.enable = true;
-      open = true;
+      open = false;
     };
   };
 }

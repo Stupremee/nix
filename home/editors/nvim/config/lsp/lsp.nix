@@ -28,6 +28,7 @@
         pyright.enable = true;
         ruff-lsp.enable = true;
 
+        volar.enable = true;
         svelte.enable = true;
         tailwindcss.enable = true;
         jsonls.enable = true;

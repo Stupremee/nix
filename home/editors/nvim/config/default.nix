@@ -64,7 +64,8 @@
     rust-analyzer
     nodePackages.eslint_d
     nodePackages.typescript-language-server
-    packages."svelte-language-server"
+    nodePackages.svelte-language-server
+    vue-language-server
     packages."@fsouza/prettierd"
     packages."@tailwindcss/language-server"
     packages."vscode-langservers-extracted"

@@ -4,6 +4,7 @@
     folding = true;
     nixvimInjections = true;
 
+    settings.highlight.enable = true;
     settings.indent.enable = true;
   };
 

@@ -1,8 +1,8 @@
 let
   users = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMyNWZe1K8/5yebGKey+yjJcASH7qZg6E24OPTj8veLN stu@nixius"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJqATr5SfHhUcyMfqrBBCrLM33Ax2u4FiQMiUPi37jkP stu@Stus-MacBook-3.local"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINGfOv1f0ltBXJRN1DJSMzEIjWJ8Ty2LdPeOJowDTk4B stu@baldon"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0ACjf5QdZyZxmWvTwAhFZSH6yJJOynmdbz9BXxmRYm stu@argon"
   ];
 
   systems = {
@@ -31,6 +31,7 @@ in {
 
   "rclone.conf".publicKeys = keysForSystems ["nether" "ironite"];
   "vaultwarden.env".publicKeys = keysForSystems ["nether" "ironite"];
+  "teslamate.env".publicKeys = keysForSystems ["ironite"];
 
   "spotify".publicKeys = keysForSystem "nixius";
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";

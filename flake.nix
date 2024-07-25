@@ -37,6 +37,9 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "unstable";
+
+    teslamate.url = "github:teslamate-org/teslamate/v1.30.1";
+    teslamate.inputs.nixpkgs.follows = "unstable";
   };
 
   outputs = inputs @ {

@@ -151,6 +151,7 @@ in {
           ../nixos/network/tailscale.nix
           ../nixos/minecraft-server.nix
           ../nixos/monitoring
+          ../nixos/teslamate
         ];
         home = true;
         homeModules = [

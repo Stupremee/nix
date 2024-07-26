@@ -70,7 +70,7 @@ in {
     {
       mode = "n";
       key = "<leader>bd";
-      action = "<cmd>bdelete<cr>";
+      action = "<cmd>lua require('bufdelete').bufdelete(0)<cr>";
       options = {
         desc = "Delete buffer";
       };

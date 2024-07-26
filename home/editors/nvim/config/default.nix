@@ -40,6 +40,7 @@
     ./statusline/lualine.nix
     ./telescope/telescope.nix
 
+    ./utils/bufdelete.nix
     ./utils/illuminate.nix
     ./utils/markdown-preview.nix
     ./utils/mini.nix

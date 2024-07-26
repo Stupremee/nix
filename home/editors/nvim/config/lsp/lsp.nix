@@ -28,10 +28,16 @@
         pyright.enable = true;
         ruff-lsp.enable = true;
 
-        volar.enable = true;
         svelte.enable = true;
         tailwindcss.enable = true;
         jsonls.enable = true;
+
+        volar = {
+          enable = true;
+          extraOptions = {
+            init_options.vue.hybridMode = false;
+          };
+        };
 
         rust-analyzer = {
           enable = true;

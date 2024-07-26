@@ -1544,16 +1544,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1720593295,
-        "narHash": "sha256-aX6FjOKyjsA/0IgLw/AnB01ddNk0yS6vd01BH/reBP4=",
-        "owner": "teslamate-org",
+        "lastModified": 1721973400,
+        "narHash": "sha256-2OD6F9SE0MUduQvffWWn6mepZEfb0PZLVHxakjLH7wQ=",
+        "owner": "MyTeslaMate",
         "repo": "teslamate",
-        "rev": "df87d93f9a590a59b3e4c85b8956852b8fa90ed2",
+        "rev": "d09cc1fc11f8175a906bb007d4a31e0e58bad445",
         "type": "github"
       },
       "original": {
-        "owner": "teslamate-org",
-        "ref": "v1.30.1",
+        "owner": "MyTeslaMate",
         "repo": "teslamate",
         "type": "github"
       }

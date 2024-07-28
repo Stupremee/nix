@@ -33,7 +33,6 @@ in {
   "vaultwarden.env".publicKeys = keysForSystems ["nether" "ironite"];
   "teslamate.env".publicKeys = keysForSystems ["ironite"];
 
-  "spotify".publicKeys = keysForSystem "nixius";
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
 
   "enqs.ovpn".publicKeys = keysForSystem "baldon";

@@ -252,6 +252,7 @@ in {
           ../home/tmux.nix
           ../home/editors/nvim
           ../home/graphical
+          ../home/graphical/spotify.nix
           ../home/dev
 
           inputs.nix-index-database.hmModules.nix-index

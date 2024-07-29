@@ -31,6 +31,7 @@
         svelte.enable = true;
         tailwindcss.enable = true;
         jsonls.enable = true;
+        astro.enable = true;
 
         volar = {
           enable = true;

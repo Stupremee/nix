@@ -17,6 +17,8 @@
   # 16 core machine
   nix.settings.max-jobs = 16;
 
+  programs.nix-ld.enable = true;
+
   # Set hostname
   networking.hostName = "argon";
 

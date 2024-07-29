@@ -46,7 +46,11 @@
   # Disable this on MacOS, as this seems to cause some issues
   # https://github.com/NixOS/nix/issues/7273
   nix.settings.auto-optimise-store = false;
-  nix.settings.builders = lib.mkForce "ssh://root@ironite x86_64-linux";
+
+  nix.linux-builder = {
+    enable = true;
+    ephemeral = true;
+  };
 
   system.stateVersion = lib.mkForce 4;
 }

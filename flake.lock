@@ -1362,6 +1362,7 @@
         "nixvim": "nixvim",
         "rust-overlay": "rust-overlay",
         "teslamate": "teslamate",
+        "srvos": "srvos",
         "unstable": "unstable"
       }
     },
@@ -1382,6 +1383,26 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "srvos": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1720691926,
+        "narHash": "sha256-VE9ZfWRbyBjps5GV8KXiF8XodAykmwRpcJtPiVWCu8M=",
+        "owner": "nix-community",
+        "repo": "srvos",
+        "rev": "e3e8ff545ef14f13c69a0f743078637fde952018",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "srvos",
         "type": "github"
       }
     },

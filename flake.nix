@@ -41,6 +41,9 @@
     # teslamate.url = "github:teslamate-org/teslamate/v1.30.1";
     teslamate.url = "github:MyTeslaMate/teslamate";
     teslamate.inputs.nixpkgs.follows = "unstable";
+
+    srvos.url = "github:nix-community/srvos";
+    srvos.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = inputs @ {

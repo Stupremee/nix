@@ -6,6 +6,7 @@
 }: let
   inherit (builtins) map;
   inherit (lib) optionals flatten;
+  inherit (inputs) srvos;
 
   overrideModules = [
     "services/misc/paperless"
@@ -157,6 +158,19 @@ in {
         homeModules = [
           ../home/git
         ];
+      };
+
+      nether = mkSystem {
+        system = "aarch64-linux";
+        theme = "latte";
+        modules = [
+          ./nether
+          ../nixos/server.nix
+
+          srvos.nixosModules.server
+          srvos.nixosModules.hardware-hetzner-cloud-arm
+        ];
+        home = false;
       };
 
       aerial = mkSystem {

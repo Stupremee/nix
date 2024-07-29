@@ -5,16 +5,18 @@
       nix = ["statix"];
       python = ["ruff"];
       lua = ["selene"];
-      javascript = ["eslint_d"];
-      javascriptreact = ["eslint_d"];
-      typescript = ["eslint_d"];
-      typescriptreact = ["eslint_d"];
-      svelte = ["eslint_d"];
+      javascript = ["eslint_d" "eslint"];
+      javascriptreact = ["eslint_d" "eslint"];
+      typescript = ["eslint_d" "eslint"];
+      typescriptreact = ["eslint_d" "eslint"];
+      svelte = ["eslint_d" "eslint"];
+      vue = ["eslint_d" "eslint"];
       json = ["jsonlint"];
     };
 
     autoCmd = {
-      desc = "Lint buffer.";
+      event = "BufWritePost";
+      desc = "Lint buffer";
     };
   };
 

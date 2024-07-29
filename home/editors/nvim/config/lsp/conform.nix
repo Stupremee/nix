@@ -12,6 +12,7 @@
       typescriptreact = [["prettierd" "prettier"]];
       svelte = [["prettierd" "prettier"]];
       markdown = [["prettierd" "prettier"]];
+      vue = [["prettierd" "prettier"]];
       python = ["ruff"];
       nix = ["alejandra"];
       rust = ["rustfmt"];

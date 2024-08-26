@@ -23,7 +23,7 @@ in {
 
     delta = {
       enable = true;
-      package = unstable-pkgs.delta;
+      # package = unstable-pkgs.delta;
 
       options = {
         features = "interactive";

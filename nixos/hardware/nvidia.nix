@@ -14,16 +14,18 @@
 
   # Enable Vulkan support.
   environment.systemPackages = with pkgs; [
-    vulkan-loader
-    vulkan-validation-layers
+    # vulkan-loader
+    # vulkan-validation-layers
     vulkan-tools
   ];
 
   # Recommended environment variables for enhanced experience.
   environment.sessionVariables = {
+    VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
     LIBVA_DRIVER_NAME = "nvidia";
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    NVD_BACKEND = "direct";
   };
 
   # Hardware configuration for NVIDIA GPUs.
@@ -32,7 +34,7 @@
       enable = true;
       driSupport32Bit = true;
 
-      extraPackages = with pkgs; [nvidia-vaapi-driver];
+      # extraPackages = with pkgs; [nvidia-vaapi-driver];
     };
 
     nvidia = {

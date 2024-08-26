@@ -32,9 +32,9 @@
     };
   };
 
-  programs.hyprland = {
-    enable = true;
-  };
+  # programs.hyprland = {
+  #   enable = true;
+  # };
 
   environment.systemPackages = [pkgs.xdg-utils];
 

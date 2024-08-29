@@ -151,7 +151,6 @@ in {
           ../nixos/network/tailscale.nix
           ../nixos/minecraft-server.nix
           ../nixos/monitoring
-          ../nixos/teslamate
         ];
         home = true;
         homeModules = [
@@ -219,6 +218,7 @@ in {
           ../home/zsh.nix
           ../home/tmux.nix
           ../home/editors/nvim
+          ../home/editors/zed.nix
           ../home/graphical
           ../home/dev
 

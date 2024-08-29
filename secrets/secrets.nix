@@ -31,7 +31,6 @@ in {
 
   "rclone.conf".publicKeys = keysForSystems ["nether" "ironite"];
   "vaultwarden.env".publicKeys = keysForSystems ["nether" "ironite"];
-  "teslamate.env".publicKeys = keysForSystems ["ironite"];
 
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
 

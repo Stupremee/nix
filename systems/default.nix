@@ -218,7 +218,6 @@ in {
           ../home/zsh.nix
           ../home/tmux.nix
           ../home/editors/nvim
-          ../home/editors/zed.nix
           ../home/graphical
           ../home/dev
 

@@ -35,4 +35,6 @@ in {
   "esyvpn.ovpn".publicKeys = keysForSystem "nixius";
 
   "enqs.ovpn".publicKeys = keysForSystem "baldon";
+
+  "curseforge.env".publicKeys = keysForSystem "ironite";
 }

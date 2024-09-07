@@ -1,4 +1,4 @@
-{...}: {
+{unstable-pkgs, ...}: {
   modules.hyprland = {
     enable = true;
 
@@ -11,4 +11,8 @@
       };
     };
   };
+
+  home.packages = with unstable-pkgs; [
+    prismlauncher
+  ];
 }

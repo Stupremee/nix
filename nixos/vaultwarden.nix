@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   unstable-pkgs,
   ...
@@ -18,7 +19,7 @@
     dbBackend = "postgresql";
 
     config = {
-      domain = "https://bw.stu-dev.me";
+      domain = lib.mkDefault "https://bw.stu-dev.me";
       signupsAllowed = false;
 
       rocketAddress = "127.0.0.1";

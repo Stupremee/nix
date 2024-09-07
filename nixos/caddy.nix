@@ -1,4 +1,4 @@
-{...}: {
+{config, ...}: {
   # Enable caddy web server
   services.caddy = {
     enable = true;
@@ -6,5 +6,9 @@
     logFormat = ''
       level WARN
     '';
+  };
+
+  services.tailscale = {
+    permitCertUid = config.services.caddy.user;
   };
 }

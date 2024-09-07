@@ -20,7 +20,6 @@
     ../nixos/zsh.nix
     ../nixos/cachix.nix
 
-    ../nixos/modules/erase-darlings.nix
     ../nixos/modules/deploy.nix
     ../nixos/modules/backup.nix
     ../nixos/modules/age.nix
@@ -33,6 +32,7 @@
     inputs.home-manager.nixosModules.default
     inputs.hyprland.nixosModules.default
     inputs.nixos-mailserver.nixosModules.mailserver
+    inputs.impermanence.nixosModules.impermanence
   ];
 
   mkHomeModule = modules: system: theme: user: {
@@ -166,6 +166,10 @@ in {
         modules = [
           ./nether
           ../nixos/server.nix
+          ../nixos/network/tailscale.nix
+          ../nixos/caddy.nix
+          ../nixos/postgres.nix
+          # ../nixos/vaultwarden.nix
 
           srvos.nixosModules.server
           srvos.nixosModules.hardware-hetzner-cloud-arm

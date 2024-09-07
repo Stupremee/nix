@@ -28,6 +28,8 @@
 
   # Boot configuration
   boot = {
+    binfmt.emulatedSystems = ["aarch64-linux"];
+
     tmp = {
       useTmpfs = true;
       tmpfsSize = "75%";

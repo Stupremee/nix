@@ -5,12 +5,12 @@
       nix = ["statix"];
       python = ["ruff"];
       lua = ["selene"];
-      javascript = ["eslint_d" "eslint"];
-      javascriptreact = ["eslint_d" "eslint"];
-      typescript = ["eslint_d" "eslint"];
-      typescriptreact = ["eslint_d" "eslint"];
-      svelte = ["eslint_d" "eslint"];
-      vue = ["eslint_d" "eslint"];
+      javascript = ["eslint"];
+      javascriptreact = ["eslint"];
+      typescript = ["eslint"];
+      typescriptreact = ["eslint"];
+      svelte = ["eslint"];
+      vue = ["eslint"];
       json = ["jsonlint"];
     };
 

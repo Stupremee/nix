@@ -4,10 +4,7 @@
   pkgs,
   ...
 }: let
-  dataDir =
-    if config.modules.eraseDarlings.enable
-    then "${toString config.modules.eraseDarlings.persistDir}/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}"
-    else "/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}";
+  dataDir = "/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}";
 in {
   services.postgresql = {
     enable = true;
@@ -15,10 +12,6 @@ in {
 
     inherit dataDir;
   };
-
-  systemd.tmpfiles.rules = lib.optionals config.modules.eraseDarlings.enable [
-    "d '${dataDir}' 0750 postgres postgres - -"
-  ];
 
   modules.backups.postgresql = let
     compressSuffix = ".zstd";

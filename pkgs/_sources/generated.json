@@ -68,6 +68,26 @@
         },
         "version": "v1.2.1"
     },
+    "pymodbus-repl": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "pymodbus-repl",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "pymodbus-dev",
+            "repo": "repl",
+            "rev": "2.0.3",
+            "sha256": "sha256-yqSeuguzFE3cgP1VxpVI0e0dz0ja+ix0AS/nQPNLRMU=",
+            "type": "github"
+        },
+        "version": "2.0.3"
+    },
     "qmodbus": {
         "cargoLocks": null,
         "date": null,

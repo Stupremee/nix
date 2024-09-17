@@ -100,16 +100,7 @@
     minicom
     inkscape-with-extensions
     unstable-pkgs.ghidra
-    (python3.withPackages (ps:
-      with ps; [
-        pymodbus
-        aiohttp
-        click
-        pyserial
-        prompt-toolkit
-        pygments
-        typer
-      ]))
+    packages.pymodbus-repl
   ];
 
   # Set timezone and locale

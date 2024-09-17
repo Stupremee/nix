@@ -21,3 +21,8 @@ fetch.github = "kevwan/tproxy"
 [qmodbus]
 src.github = "ed-chemnitz/qmodbus"
 fetch.github = "ed-chemnitz/qmodbus"
+
+[pymodbus-repl]
+# src.github = "pymodbus-dev/repl"
+src.manual = "2.0.3"
+fetch.github = "pymodbus-dev/repl"

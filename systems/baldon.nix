@@ -93,6 +93,8 @@
 
   environment.systemPackages = with pkgs; [
     packages.qmodbus
+    teams-for-linux
+    localsend
     stm32cubemx
     bmap-tools
     mitmproxy

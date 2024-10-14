@@ -13,32 +13,33 @@
 
   # core packages for shell usage
   environment = {
-    systemPackages = with pkgs; [
-      coreutils-full
-      ripgrep
-      ripgrep-all
-      tldr
-      fd
-      fzf
-      bat
-      eza
-      file
-      procs
-      jq
-      dogdns
-      yq
-      manix
-      git
-      pv
-      sd
-      du-dust
-      ouch
+    systemPackages = with pkgs;
+      [
+        ripgrep
+        ripgrep-all
+        tldr
+        fd
+        fzf
+        bat
+        eza
+        file
+        procs
+        jq
+        dogdns
+        yq
+        manix
+        git
+        pv
+        sd
+        du-dust
+        ouch
 
-      man-db
-      man-pages
-      posix_man_pages
-      stdmanpages
-    ];
+        man-db
+        man-pages
+        posix_man_pages
+        stdmanpages
+      ]
+      ++ (lib.optionals stdenv.isLinux (with pkgs; [coreutils-full]));
 
     shellAliases = {
       ls = "eza --group-directories-first";

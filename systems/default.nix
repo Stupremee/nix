@@ -72,6 +72,9 @@
       modules =
         modules
         ++ [
+          {
+            _module.args.packages = self.packages."${system}";
+          }
           inputs.home-manager.darwinModules.home-manager
           (mkHomeModule homeModules system theme user)
         ];

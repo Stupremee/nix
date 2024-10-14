@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  packages,
   ...
 }: {
   services.nix-daemon.enable = true;

@@ -37,4 +37,6 @@ in {
   "enqs.ovpn".publicKeys = keysForSystem "baldon";
 
   "curseforge.env".publicKeys = keysForSystem "ironite";
+
+  "coolify.env".publicKeys = keysForSystem "ironite";
 }

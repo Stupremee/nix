@@ -151,6 +151,7 @@ in {
           ../nixos/network/tailscale.nix
           ../nixos/minecraft-server.nix
           ../nixos/monitoring
+          ../nixos/coolify.nix
         ];
         home = true;
         homeModules = [

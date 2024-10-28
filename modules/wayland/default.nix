@@ -45,6 +45,19 @@ in {
       };
     };
 
+    # Fix for boot logs bleeding into the tuigreet
+    # https://github.com/apognu/tuigreet/issues/68#issuecomment-2001807691
+    systemd.services.greetd.serviceConfig = {
+      Type = "idle";
+      StandardInput = "tty";
+      StandardOutput = "tty";
+      StandardError = "journal"; # Without this errors will spam on screen
+      # Without these bootlogs will spam on screen
+      TTYReset = true;
+      TTYVHangup = true;
+      TTYVTDisallocate = true;
+    };
+
     security = {
       polkit.enable = true;
       rtkit.enable = true;

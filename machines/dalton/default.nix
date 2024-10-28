@@ -13,7 +13,10 @@
       import = ./home.nix;
     };
 
-    nix-common.maxJobs = 8;
+    nix-common = {
+      maxJobs = 8;
+      flakePath = "/home/stu/dev/nix/nix";
+    };
   };
 
   networking = {

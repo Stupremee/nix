@@ -18,6 +18,8 @@ in {
   config = mkIf cfg.enable {
     services.dbus.enable = true;
 
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
     xdg = {
       mime.enable = true;
       icons.enable = true;

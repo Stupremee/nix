@@ -16,6 +16,11 @@ in {
       type = types.int;
       default = 4;
     };
+
+    flakePath = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -54,10 +59,17 @@ in {
 
       # Clean up old generations after 30 days
       gc = {
-        automatic = true;
+        automatic = !config.programs.nh.clean.enable;
         dates = "weekly";
         options = "--delete-older-than 30d";
       };
+    };
+
+    programs.nh = {
+      enable = true;
+      clean.enable = true;
+      clean.extraArgs = "--keep-since 7d --keep 10";
+      flake = cfg.flakePath;
     };
 
     system.activationScripts.update-diff = {

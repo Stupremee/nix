@@ -42,6 +42,11 @@ in {
   options.my.hyprland = {
     enable = mkEnableOption "Enable configuration for hyprland window manager";
 
+    sensitivity = mkOption {
+      type = types.str;
+      default = "1.0";
+    };
+
     monitors = mkOption {
       type = types.attrsOf (types.submodule monitorOpts);
       default = {};
@@ -72,7 +77,7 @@ in {
         input = {
           kb_layout = "eu";
           follow_mouse = 1;
-          sensitivity = "1.0";
+          sensitivity = cfg.sensitivity;
           accel_profile = "flat";
         };
 

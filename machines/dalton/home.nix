@@ -7,6 +7,8 @@
     hyprland = {
       enable = true;
 
+      sensitivity = "0.0";
+
       monitors = {
         "DP-5" = {
           position = "0x0";

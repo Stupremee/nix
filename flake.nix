@@ -1,7 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -20,6 +20,11 @@
     hyprpolkitagent = {
       url = "github:hyprwm/hyprpolkitagent";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
@@ -97,7 +102,16 @@
     # Set formatter for `nix fmt` command
     formatter = forAllSystems (pkgs: pkgs.alejandra);
 
-    overlays.default = final: prev: {} // (inputs.hyprpolkitagent.overlays.default final prev);
+    overlays.default = final: prev: let
+      unstable = import inputs.nixpkgs-unstable {
+        inherit (final) system;
+      };
+    in
+      {
+        inherit (unstable) libinput;
+      }
+      // (inputs.hyprpolkitagent.overlays.default final prev)
+      // (inputs.hyprland.overlays.default final prev);
 
     # Development shell when working on this flake
     devShells = forAllSystems (pkgs: {

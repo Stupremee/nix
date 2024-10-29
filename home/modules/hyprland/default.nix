@@ -54,10 +54,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      hyprpolkitagent
-    ];
-
     catppuccin.pointerCursor.enable = true;
     home.pointerCursor = {
       size = 24;

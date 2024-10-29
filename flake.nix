@@ -16,16 +16,6 @@
     catppuccin = {
       url = "github:catppuccin/nix";
     };
-
-    hyprpolkitagent = {
-      url = "github:hyprwm/hyprpolkitagent";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs = inputs @ {
@@ -102,16 +92,7 @@
     # Set formatter for `nix fmt` command
     formatter = forAllSystems (pkgs: pkgs.alejandra);
 
-    overlays.default = final: prev: let
-      unstable = import inputs.nixpkgs-unstable {
-        inherit (final) system;
-      };
-    in
-      {
-        inherit (unstable) libinput;
-      }
-      // (inputs.hyprpolkitagent.overlays.default final prev)
-      // (inputs.hyprland.overlays.default final prev);
+    overlays.default = final: prev: {};
 
     # Development shell when working on this flake
     devShells = forAllSystems (pkgs: {

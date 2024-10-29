@@ -39,17 +39,14 @@ with lib; let
       };
     };
 
-  monitorList = mapAttrsToList (name: opts:
-    if opts.disable
-    then ''
-      monitor=${name},disable
-    ''
-    else ''
-      monitor=${name},${opts.resolution},${opts.position},${opts.scale}
-    '')
-  cfg.monitors;
-
-  monitorsConfig = builtins.concatStringsSep "" monitorList;
+  monitor =
+    mapAttrsToList (
+      name: opts:
+        if opts.disable
+        then "${name},disable"
+        else "${name},${opts.resolution},${opts.position},${opts.scale}"
+    )
+    cfg.monitors;
 in {
   options.my.hyprland = {
     enable = mkEnableOption "Enable configuration for hyprland window manager";
@@ -67,6 +64,10 @@ in {
       enable = true;
 
       settings = {
+        inherit monitor;
+
+        "$mod" = "SUPER";
+
         input = {
           kb_layout = "eu";
           follow_mouse = 1;
@@ -87,34 +88,34 @@ in {
 
         bind =
           [
-            "SUPER, Return, exec, $TERMINAL"
+            "$mod, Return, exec, $TERMINAL"
 
             # compositor commands
-            "SUPER, q, killactive"
-            "SUPER, f, fullscreen"
-            "SUPER SHIFT, f, togglefloating"
+            "$mod, q, killactive"
+            "$mod, f, fullscreen"
+            "$mod SHIFT, f, togglefloating"
 
             # move focus
-            "SUPER, h, movefocus, l"
-            "SUPER, j, movefocus, d"
-            "SUPER, k, movefocus, u"
-            "SUPER, l, movefocus, r"
+            "$mod, h, movefocus, l"
+            "$mod, j, movefocus, d"
+            "$mod, k, movefocus, u"
+            "$mod, l, movefocus, r"
 
             # move window
-            "SUPER SHIFT, h, movewindow, l"
-            "SUPER SHIFT, j, movewindow, d"
-            "SUPER SHIFT, k, movewindow, u"
-            "SUPER SHIFT, l, movewindow, r"
+            "$mod SHIFT, h, movewindow, l"
+            "$mod SHIFT, j, movewindow, d"
+            "$mod SHIFT, k, movewindow, u"
+            "$mod SHIFT, l, movewindow, r"
           ]
           ++ (
             # workspaces
-            # binds SUPER + [shift +] {1..9} to [move to] workspace {1..9}
+            # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
             builtins.concatLists (builtins.genList (
                 i: let
                   ws = i + 1;
                 in [
-                  "SUPER, code:1${toString i}, workspace, ${toString ws}"
-                  "SUPER SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+                  "$mod, code:1${toString i}, workspace, ${toString ws}"
+                  "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
                 ]
               )
               9)
@@ -129,8 +130,6 @@ in {
         binde=,l,resizeactive,10 0
         bind=,escape,submap,reset
         submap=reset
-
-        ${monitorsConfig}
       '';
     };
   };

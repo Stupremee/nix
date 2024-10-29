@@ -38,15 +38,6 @@ with lib; let
         };
       };
     };
-
-  monitor =
-    mapAttrsToList (
-      name: opts:
-        if opts.disable
-        then "${name},disable"
-        else "${name},${opts.resolution},${opts.position},${opts.scale}"
-    )
-    cfg.monitors;
 in {
   options.my.hyprland = {
     enable = mkEnableOption "Enable configuration for hyprland window manager";
@@ -58,14 +49,24 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      hyprpolkitagent
+    ];
+
+    catppuccin.pointerCursor.enable = true;
+    home.pointerCursor = {
+      size = 24;
+      gtk.enable = true;
+    };
+
     gtk.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;
 
-      settings = {
-        inherit monitor;
+      systemd.variables = ["--all"];
 
+      settings = {
         "$mod" = "SUPER";
 
         input = {
@@ -88,7 +89,7 @@ in {
 
         bind =
           [
-            "$mod, Return, exec, $TERMINAL"
+            "$mod, Return, exec, alacritty"
 
             # compositor commands
             "$mod, q, killactive"
@@ -120,6 +121,15 @@ in {
               )
               9)
           );
+
+        monitor =
+          mapAttrsToList (
+            name: opts:
+              if opts.disable
+              then "${name},disable"
+              else "${name},${opts.resolution},${opts.position},${opts.scale}"
+          )
+          cfg.monitors;
       };
 
       extraConfig = ''
@@ -131,6 +141,47 @@ in {
         bind=,escape,submap,reset
         submap=reset
       '';
+    };
+
+    services.hyprpaper = {
+      enable = true;
+
+      settings = {
+        preload = "${../../wallpaper.png}";
+        wallpaper =
+          mapAttrsToList (
+            name: _: "${name}, ${../../wallpaper.png}"
+          )
+          cfg.monitors;
+      };
+    };
+
+    services.hypridle = {
+      enable = true;
+
+      settings = {
+        general = {
+          after_sleep_cmd = "hyprctl dispatch dpms on";
+          ignore_dbus_inhibit = false;
+          lock_cmd = "hyprlock";
+        };
+
+        listener = [
+          {
+            timeout = 900;
+            on-timeout = "hyprlock";
+          }
+          {
+            timeout = 1200;
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
+          }
+        ];
+      };
+    };
+
+    programs.hyprlock = {
+      enable = true;
     };
   };
 }

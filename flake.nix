@@ -16,6 +16,11 @@
     catppuccin = {
       url = "github:catppuccin/nix";
     };
+
+    hyprpolkitagent = {
+      url = "github:hyprwm/hyprpolkitagent";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -92,7 +97,7 @@
     # Set formatter for `nix fmt` command
     formatter = forAllSystems (pkgs: pkgs.alejandra);
 
-    overlays.default = final: prev: {};
+    overlays.default = final: prev: {} // (inputs.hyprpolkitagent.overlays.default final prev);
 
     # Development shell when working on this flake
     devShells = forAllSystems (pkgs: {

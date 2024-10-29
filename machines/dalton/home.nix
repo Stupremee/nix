@@ -4,6 +4,7 @@
     zsh.enable = true;
 
     mako.enable = true;
+
     hyprland = {
       enable = true;
 

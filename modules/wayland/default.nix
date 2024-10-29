@@ -18,7 +18,10 @@ in {
   config = mkIf cfg.enable {
     services.dbus.enable = true;
 
-    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    environment.sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      WLR_NO_HARDWARE_CURSORS = "1";
+    };
 
     xdg = {
       mime.enable = true;
@@ -39,23 +42,10 @@ in {
       enable = true;
       settings = {
         default_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --command Hyprland";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
           user = "greeter";
         };
       };
-    };
-
-    # Fix for boot logs bleeding into the tuigreet
-    # https://github.com/apognu/tuigreet/issues/68#issuecomment-2001807691
-    systemd.services.greetd.serviceConfig = {
-      Type = "idle";
-      StandardInput = "tty";
-      StandardOutput = "tty";
-      StandardError = "journal"; # Without this errors will spam on screen
-      # Without these bootlogs will spam on screen
-      TTYReset = true;
-      TTYVHangup = true;
-      TTYVTDisallocate = true;
     };
 
     security = {

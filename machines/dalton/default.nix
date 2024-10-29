@@ -5,6 +5,8 @@
 
   my = {
     desktop.enable = true;
+    wayland.hyprland.enable = true;
+
     nvidia.enable = true;
     bluetooth.enable = true;
 

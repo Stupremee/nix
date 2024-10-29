@@ -21,7 +21,6 @@ in {
 
       wayland = {
         enable = true;
-        hyprland.enable = true;
       };
 
       docker.enable = true;

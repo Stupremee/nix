@@ -43,7 +43,7 @@ in {
 
       nixpkgs.config = {
         allowBroken = true;
-        allowUnfree = true;
+        allowUnfree = false;
       };
     };
   };

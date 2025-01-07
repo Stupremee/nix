@@ -21,14 +21,26 @@ in {
       opengl = {
         enable = true;
         driSupport32Bit = true;
+
+        extraPackages = with pkgs; [
+          nvidia-vaapi-driver
+        ];
       };
 
       nvidia = {
-        open = true;
+        open = false;
         modesetting.enable = true;
       };
     };
 
-    environment.systemPackages = with pkgs; [nvtopPackages.full];
+    environment = {
+      systemPackages = with pkgs; [nvtopPackages.full];
+
+      sessionVariables = {
+        LIBVA_DRIVER_NAME = "nvidia";
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        NVD_BACKEND = "direct";
+      };
+    };
   };
 }

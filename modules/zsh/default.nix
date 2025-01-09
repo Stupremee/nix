@@ -47,7 +47,7 @@ in {
 
         man-db
         man-pages
-        posix_man_pages
+        man-pages-posix
         stdmanpages
       ];
 

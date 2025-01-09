@@ -19,6 +19,8 @@ in {
 
     root = {
       enable = mkEnableOption "Activate the root user";
+
+      enablePassword = mkEnableOption "Activate login to root user via password.";
     };
 
     stu = {
@@ -35,6 +37,8 @@ in {
     users.users = {
       root = mkIf cfg.root.enable {
         openssh.authorizedKeys.keys = keys;
+
+        hashedPassword = mkIf cfg.root.enablePassword "$y$j9T$88ErfFaSFvBV9lMG/4TVr.$Am5kfQJLXNlKAwNHLjcmSuW/yiIjjjin6010lrEr392";
       };
 
       stu = mkIf cfg.stu.enable {
@@ -47,6 +51,8 @@ in {
           ++ cfg.stu.extraGroups;
         uid = 1000;
         openssh.authorizedKeys.keys = keys;
+
+        hashedPassword = "$y$j9T$fq7cSllyiKjpR4nG2mzG31$5RNvNqLzQeVejRabNJ1eVnL.v5DQRTu0VLpS6HhHwc0";
       };
     };
 

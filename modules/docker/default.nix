@@ -16,6 +16,7 @@ in {
 
     virtualisation.docker = {
       enable = true;
+      storageDriver = mkDefault "overlay2";
       autoPrune = {
         enable = true;
         dates = "weekly";

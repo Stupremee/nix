@@ -27,7 +27,7 @@ in {
     nixpkgs.overlays = [flake-self.overlays.default];
 
     # Do not allow unfree licenced packages
-    nixpkgs.config.allowUnfree = false;
+    nixpkgs.config.allowUnfree = true;
 
     nix = {
       nixPath = ["nixpkgs=${nixpkgs}"];

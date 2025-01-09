@@ -54,7 +54,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    catppuccin.pointerCursor.enable = true;
+    catppuccin.cursors.enable = true;
     home.pointerCursor = {
       size = 24;
       gtk.enable = true;

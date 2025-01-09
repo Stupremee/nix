@@ -12,6 +12,14 @@
       import = ./home.nix;
     };
 
+    persist = {
+      enable = true;
+      btrfs = {
+        enable = true;
+        disk = "/dev/disk/by-partlabel/disk-system-root";
+      };
+    };
+
     nix-common = {
       maxJobs = 8;
       flakePath = "/home/stu/dev/nix/nix";
@@ -19,13 +27,19 @@
   };
 
   networking = {
-    hostName = "dalton";
+    hostName = "arcus";
   };
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
+
+      grub = {
+        enable = true;
+        devices = ["nodev"];
+        efiSupport = true;
+        useOSProber = true;
+      };
     };
 
     initrd = {
@@ -39,7 +53,7 @@
 
   hardware = {
     enableRedistributableFirmware = true;
-    cpu.intel.updateMicrocode = true;
+    cpu.amd.updateMicrocode = true;
     enableAllFirmware = true;
   };
 

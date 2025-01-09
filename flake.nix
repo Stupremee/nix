@@ -16,6 +16,10 @@
     catppuccin = {
       url = "github:catppuccin/nix";
     };
+
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
   };
 
   outputs = inputs @ {
@@ -82,6 +86,7 @@
               ++ [
                 inputs.disko.nixosModules.default
                 inputs.home-manager.nixosModules.default
+                inputs.impermanence.nixosModules.default
 
                 (./machines + "/${x}/default.nix")
               ];

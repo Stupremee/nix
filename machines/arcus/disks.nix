@@ -1,7 +1,7 @@
 {
   disko.devices = {
     disk = {
-      vda = {
+      system = {
         imageSize = "8G";
         type = "disk";
         device = "/dev/nvme1n1";

@@ -22,7 +22,6 @@ in
       };
 
       docker.enable = true;
-      fonts.enable = true;
 
       networking = {
         enable = true;

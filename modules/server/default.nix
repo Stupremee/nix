@@ -18,7 +18,7 @@ in
     my = {
       user = {
         root.enable = true;
-        mainUser = "root";
+        stu.enable = true;
       };
 
       docker.enable = true;

@@ -68,15 +68,19 @@ in
       fileSystems."/persist".neededForBoot = true;
     }
     (mkIf cfg.btrfs.enable {
+      boot.initrd.supportedFilesystems = [ "btrfs"];
+
       boot.initrd.systemd.services.btrfs-rollback = {
         description = "Rollback btrfs root dataset to blank snapshot";
         wantedBy = [ "initrd.target" ];
-        before = [ "sysroot.mount" ];
+        requires = [ "dev-disk-by\\x2dpartlabel-disk\\x2dsystem\\x2droot.device" ];
+        after = [ "dev-disk-by\\x2dpartlabel-disk\\x2dsystem\\x2droot.device" ];
+        before = [ "-.mount" "sysroot.mount" ];
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = ''
           mkdir /btrfs_tmp
-          mount ${cfg.btrfs.disk} /btrfs_tmp
+          mount -t btrfs ${cfg.btrfs.disk} /btrfs_tmp
           if [[ -e /btrfs_tmp/rootfs ]]; then
               mkdir -p /btrfs_tmp/old_roots
               timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/rootfs)" "+%Y-%m-%-d_%H:%M:%S")

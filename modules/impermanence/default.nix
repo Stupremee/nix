@@ -68,30 +68,37 @@ in
       fileSystems."/persist".neededForBoot = true;
     }
     (mkIf cfg.btrfs.enable {
-      boot.initrd.postDeviceCommands = lib.mkAfter ''
-        mkdir /btrfs_tmp
-        mount ${cfg.btrfs.disk} /btrfs_tmp
-        if [[ -e /btrfs_tmp/rootfs ]]; then
-            mkdir -p /btrfs_tmp/old_roots
-            timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
-            mv /btrfs_tmp/rootfs "/btrfs_tmp/old_roots/$timestamp"
-        fi
+      boot.initrd.systemd.services.btrfs-rollback = {
+        description = "Rollback btrfs root dataset to blank snapshot";
+        wantedBy = [ "initrd.target" ];
+        before = [ "sysroot.mount" ];
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
+        script = ''
+          mkdir /btrfs_tmp
+          mount ${cfg.btrfs.disk} /btrfs_tmp
+          if [[ -e /btrfs_tmp/rootfs ]]; then
+              mkdir -p /btrfs_tmp/old_roots
+              timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
+              mv /btrfs_tmp/rootfs "/btrfs_tmp/old_roots/$timestamp"
+          fi
 
-        delete_subvolume_recursively() {
-            IFS=$'\n'
-            for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-                delete_subvolume_recursively "/btrfs_tmp/$i"
-            done
-            btrfs subvolume delete "$1"
-        }
+          delete_subvolume_recursively() {
+              IFS=$'\n'
+              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                  delete_subvolume_recursively "/btrfs_tmp/$i"
+              done
+              btrfs subvolume delete "$1"
+          }
 
-        for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
-            delete_subvolume_recursively "$i"
-        done
+          for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+              delete_subvolume_recursively "$i"
+          done
 
-        btrfs subvolume create /btrfs_tmp/rootfs
-        umount /btrfs_tmp
-      '';
+          btrfs subvolume create /btrfs_tmp/rootfs
+          umount /btrfs_tmp
+        '';
+      };
     })
   ]);
 }

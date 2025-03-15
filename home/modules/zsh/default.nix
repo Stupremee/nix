@@ -4,7 +4,8 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.zsh;
 
   zshPlugin = src: rec {
@@ -12,9 +13,9 @@ with lib; let
     name = src.pname;
     file = "share/${name}/${name}.zsh";
   };
-in {
-  options.my.zsh.enable =
-    mkEnableOption "Enable ZSH shell";
+in
+{
+  options.my.zsh.enable = mkEnableOption "Enable ZSH shell";
 
   config = mkIf cfg.enable {
     programs.atuin = {
@@ -75,16 +76,18 @@ in {
       settings = {
         add_newline = true;
 
-        character = let
-          vicmd = "[λ ·](bold green)";
-        in {
-          success_symbol = "[λ ›](bold green)";
-          error_symbol = "[λ ›](bold red)";
-          vimcmd_symbol = vicmd;
-          vimcmd_replace_one_symbol = vicmd;
-          vimcmd_replace_symbol = vicmd;
-          vimcmd_visual_symbol = vicmd;
-        };
+        character =
+          let
+            vicmd = "[λ ·](bold green)";
+          in
+          {
+            success_symbol = "[λ ›](bold green)";
+            error_symbol = "[λ ›](bold red)";
+            vimcmd_symbol = vicmd;
+            vimcmd_replace_one_symbol = vicmd;
+            vimcmd_replace_symbol = vicmd;
+            vimcmd_visual_symbol = vicmd;
+          };
 
         cmd_duration = {
           show_notifications = false;

@@ -5,9 +5,11 @@
   flake-self,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.home;
-in {
+in
+{
   options.my.home = {
     enable = mkEnableOption "Enable home manager";
 
@@ -26,20 +28,18 @@ in {
     home-manager.useUserPackages = true;
 
     home-manager.users."${cfg.user}" = {
-      imports =
-        (map (p: ./modules/${p}) (builtins.attrNames (builtins.readDir ./modules)))
-        ++ [
-          flake-self.inputs.catppuccin.homeManagerModules.catppuccin
+      imports = (map (p: ./modules/${p}) (builtins.attrNames (builtins.readDir ./modules))) ++ [
+        flake-self.inputs.catppuccin.homeManagerModules.catppuccin
 
-          {
-            nixpkgs.overlays = [
-              flake-self.overlays.default
-            ];
-          }
-          ./common.nix
+        {
+          nixpkgs.overlays = [
+            flake-self.overlays.default
+          ];
+        }
+        ./common.nix
 
-          cfg.import
-        ];
+        cfg.import
+      ];
 
       nixpkgs.config = {
         allowBroken = true;

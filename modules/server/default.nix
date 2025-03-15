@@ -5,18 +5,16 @@
   inputs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.server;
-in {
+in
+{
   options.my.server = {
     enable = mkEnableOption "Enable the default server configuration";
   };
 
   config = mkIf cfg.enable {
-    imports = [
-      inputs.srvos.nixosModules.server
-    ];
-
     my = {
       user = {
         root.enable = true;

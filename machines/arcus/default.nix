@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   imports = [
     ./disks.nix
   ];
@@ -36,19 +37,27 @@
 
       grub = {
         enable = true;
-        devices = ["nodev"];
+        devices = [ "nodev" ];
         efiSupport = true;
         useOSProber = true;
       };
     };
 
     initrd = {
-      availableKernelModules = ["xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_usb_sdmmc"];
-      kernelModules = [];
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "rtsx_usb_sdmmc"
+      ];
+      kernelModules = [ ];
     };
 
-    kernelModules = ["kvm-intel"];
-    extraModulePackages = [];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
   };
 
   hardware = {

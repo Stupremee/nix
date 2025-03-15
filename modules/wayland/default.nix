@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.wayland;
-in {
+in
+{
   options.my.wayland = {
     enable = mkEnableOption "Enable wayland";
 
@@ -31,10 +33,13 @@ in {
         enable = true;
 
         wlr.enable = !cfg.hyprland.enable;
-        extraPortals = optionals (!cfg.hyprland.enable) (with pkgs; [
-          xdg-desktop-portal-wlr
-          xdg-desktop-portal-gtk
-        ]);
+        extraPortals = optionals (!cfg.hyprland.enable) (
+          with pkgs;
+          [
+            xdg-desktop-portal-wlr
+            xdg-desktop-portal-gtk
+          ]
+        );
       };
     };
 

@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.locale;
-in {
+in
+{
   options.my.locale = {
     enable = mkEnableOption "Set default locale settings";
   };
@@ -33,7 +35,7 @@ in {
 
     console = {
       earlySetup = true;
-      packages = [pkgs.terminus_font];
+      packages = [ pkgs.terminus_font ];
       font = "${pkgs.terminus_font}/share/consolefonts/ter-112n.psf.gz";
       keyMap = "us";
     };

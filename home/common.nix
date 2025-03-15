@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   manual.manpages.enable = true;
 
   programs.command-not-found.enable = true;

@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   disko.devices.disk = {
     system = {
       type = "disk";
@@ -14,7 +15,10 @@
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
-              mountOptions = ["defaults" "umask=0077"];
+              mountOptions = [
+                "defaults"
+                "umask=0077"
+              ];
             };
           };
 
@@ -27,21 +31,24 @@
               settings.allowDiscards = true;
               content = {
                 type = "btrfs";
-                extraArgs = ["-f"];
+                extraArgs = [ "-f" ];
                 subvolumes = {
                   "/root" = {
                     mountpoint = "/";
-                    mountOptions = [];
+                    mountOptions = [ ];
                   };
 
                   "/home" = {
                     mountpoint = "/home";
-                    mountOptions = ["compress=zstd"];
+                    mountOptions = [ "compress=zstd" ];
                   };
 
                   "/nix" = {
                     mountpoint = "/nix";
-                    mountOptions = ["compress=zstd" "noatime"];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                   };
 
                   "/swap" = {

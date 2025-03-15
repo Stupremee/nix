@@ -25,7 +25,7 @@
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = ["-f"];
+                extraArgs = [ "-f" ];
 
                 postCreateHook = ''
                   MNTPOINT=$(mktemp -d)
@@ -36,22 +36,25 @@
 
                 subvolumes = {
                   "/rootfs" = {
-                    mountOptions = ["compress=zstd"];
+                    mountOptions = [ "compress=zstd" ];
                     mountpoint = "/";
                   };
 
                   "/home" = {
-                    mountOptions = ["compress=zstd"];
+                    mountOptions = [ "compress=zstd" ];
                     mountpoint = "/home";
                   };
 
                   "/persist" = {
-                    mountOptions = ["compress=zstd"];
+                    mountOptions = [ "compress=zstd" ];
                     mountpoint = "/persist";
                   };
 
                   "/nix" = {
-                    mountOptions = ["compress=zstd" "noatime"];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                     mountpoint = "/nix";
                   };
 

@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.sound;
-in {
+in
+{
   options.my.sound = {
     enable = mkEnableOption "Enable default sound settings";
   };
@@ -33,6 +35,6 @@ in {
       pulsemixer
     ];
 
-    users.extraUsers.${config.my.user.mainUser}.extraGroups = ["audio"];
+    users.extraUsers.${config.my.user.mainUser}.extraGroups = [ "audio" ];
   };
 }

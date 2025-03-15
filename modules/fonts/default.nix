@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.fonts;
-in {
+in
+{
   options.my.fonts = {
     enable = mkEnableOption "Enable default fonts";
   };
@@ -15,12 +17,17 @@ in {
     fonts = {
       fontDir.enable = true;
 
-      packages = let
-        nerdFont = pkgs.nerdfonts.override {
-          fonts = ["Monaspace" "Noto"];
-        };
-      in
-        with pkgs; [
+      packages =
+        let
+          nerdFont = pkgs.nerdfonts.override {
+            fonts = [
+              "Monaspace"
+              "Noto"
+            ];
+          };
+        in
+        with pkgs;
+        [
           nerdFont
           monaspace
           noto-fonts
@@ -31,10 +38,19 @@ in {
       enableDefaultPackages = false;
 
       fontconfig.defaultFonts = {
-        serif = ["NotoSerif Nerd Font" "Noto Serif"];
-        sansSerif = ["NotoSans Nerd Font" "Noto Sans"];
-        monospace = ["MonaspiceNe Nerd Font Mono" "Monaspace Neon"];
-        emoji = ["Noto Color Emoji"];
+        serif = [
+          "NotoSerif Nerd Font"
+          "Noto Serif"
+        ];
+        sansSerif = [
+          "NotoSans Nerd Font"
+          "Noto Sans"
+        ];
+        monospace = [
+          "MonaspiceNe Nerd Font Mono"
+          "Monaspace Neon"
+        ];
+        emoji = [ "Noto Color Emoji" ];
       };
     };
   };

@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.yubikey;
-in {
+in
+{
   options.my.yubikey = {
     enable = mkEnableOption "Enable yubikey support";
   };
@@ -27,7 +29,7 @@ in {
 
     services.pcscd.enable = true;
 
-    environment.systemPackages = [pkgs.yubikey-personalization];
-    services.udev.packages = [pkgs.yubikey-personalization];
+    environment.systemPackages = [ pkgs.yubikey-personalization ];
+    services.udev.packages = [ pkgs.yubikey-personalization ];
   };
 }

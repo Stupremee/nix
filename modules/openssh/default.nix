@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.openssh;
-in {
+in
+{
   options.my.openssh = {
     enable = mkEnableOption "Enable default settings for openssh";
   };

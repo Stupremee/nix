@@ -4,18 +4,20 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.nvidia;
-in {
+in
+{
   options.my.nvidia = {
     enable = mkEnableOption "Enable nvidia support";
   };
 
   config = mkIf cfg.enable {
-    services.xserver.videoDrivers = ["nvidia"];
+    services.xserver.videoDrivers = [ "nvidia" ];
 
     # Make sure nouveau never runs alongside the official driver.
-    boot.blacklistedKernelModules = ["nouveau"];
+    boot.blacklistedKernelModules = [ "nouveau" ];
 
     hardware = {
       graphics = {
@@ -34,7 +36,7 @@ in {
     };
 
     environment = {
-      systemPackages = with pkgs; [nvtopPackages.full];
+      systemPackages = with pkgs; [ nvtopPackages.full ];
 
       sessionVariables = {
         LIBVA_DRIVER_NAME = "nvidia";

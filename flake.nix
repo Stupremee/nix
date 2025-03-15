@@ -13,6 +13,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    srvos = {
+      url = "github:nix-community/srvos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     catppuccin = {
       url = "github:catppuccin/nix";
     };
@@ -82,7 +87,7 @@
             };
 
             modules =
-              builtins.attrValues self.nixosModules
+              (builtins.attrValues self.nixosModules)
               ++ [
                 inputs.disko.nixosModules.default
                 inputs.home-manager.nixosModules.default

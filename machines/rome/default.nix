@@ -17,6 +17,7 @@
     nix-common = {
       enable = true;
       maxJobs = 8;
+      flakePath = "/home/stu/nix";
     };
 
     server.enable = true;

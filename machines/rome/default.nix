@@ -1,5 +1,7 @@
-{...}: {
+{ inputs, ... }:
+{
   imports = [
+    inputs.srvos.nixosModules.server
     ./disks.nix
   ];
 
@@ -32,12 +34,18 @@
     };
 
     initrd = {
-      availableKernelModules = ["xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
-      kernelModules = [];
+      availableKernelModules = [
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = [ ];
     };
 
-    kernelModules = ["kvm-amd"];
-    extraModulePackages = [];
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
   };
 
   hardware = {

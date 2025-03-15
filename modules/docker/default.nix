@@ -4,15 +4,17 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.docker;
-in {
+in
+{
   options.my.docker = {
     enable = mkEnableOption "Enable docker containers";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [docker-compose];
+    environment.systemPackages = with pkgs; [ docker-compose ];
 
     virtualisation.docker = {
       enable = true;
@@ -27,6 +29,6 @@ in {
       backend = "docker";
     };
 
-    users.extraUsers.${config.my.user.mainUser}.extraGroups = ["docker"];
+    users.extraUsers.${config.my.user.mainUser}.extraGroups = [ "docker" ];
   };
 }

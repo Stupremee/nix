@@ -27,58 +27,81 @@
     };
   };
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    ...
-  }: let
-    supportedSystems = ["aarch64-linux" "x86_64-linux" "aarch64-darwin"];
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      ...
+    }:
+    let
+      supportedSystems = [
+        "aarch64-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
 
-    nixpkgsFor = system:
-      import nixpkgs {
-        inherit system;
-      };
+      nixpkgsFor =
+        system:
+        import nixpkgs {
+          inherit system;
+        };
 
-    forAllSystems = fn: nixpkgs.lib.genAttrs supportedSystems (system: fn (nixpkgsFor system));
-  in {
-    nixosModules =
-      builtins.listToAttrs (map
-        (x: {
-          name = x;
-          value = {
-            config,
-            pkgs,
-            lib,
-            modulesPath,
-            ...
-          }: {
-            imports = [
-              (import ./modules/${x} {
-                flake-self = self;
-                inherit pkgs lib config modulesPath inputs nixpkgs;
-              })
-            ];
-          };
-        })
-        (builtins.attrNames (builtins.readDir ./modules)))
-      // {
-        home = {
-          config,
-          pkgs,
-          lib,
-          modulesPath,
-          ...
-        }:
-          import ./home {
-            flake-self = self;
-            inherit pkgs lib config modulesPath inputs nixpkgs;
-          };
-      };
+      forAllSystems = fn: nixpkgs.lib.genAttrs supportedSystems (system: fn (nixpkgsFor system));
+    in
+    {
+      nixosModules =
+        builtins.listToAttrs (
+          map (x: {
+            name = x;
+            value =
+              {
+                config,
+                pkgs,
+                lib,
+                modulesPath,
+                ...
+              }:
+              {
+                imports = [
+                  (import ./modules/${x} {
+                    flake-self = self;
+                    inherit
+                      pkgs
+                      lib
+                      config
+                      modulesPath
+                      inputs
+                      nixpkgs
+                      ;
+                  })
+                ];
+              };
+          }) (builtins.attrNames (builtins.readDir ./modules))
+        )
+        // {
+          home =
+            {
+              config,
+              pkgs,
+              lib,
+              modulesPath,
+              ...
+            }:
+            import ./home {
+              flake-self = self;
+              inherit
+                pkgs
+                lib
+                config
+                modulesPath
+                inputs
+                nixpkgs
+                ;
+            };
+        };
 
-    nixosConfigurations =
-      builtins.listToAttrs
-      (map
-        (x: {
+      nixosConfigurations = builtins.listToAttrs (
+        map (x: {
           name = x;
           value = nixpkgs.lib.nixosSystem {
             specialArgs = {
@@ -86,30 +109,28 @@
               flake-self = self;
             };
 
-            modules =
-              (builtins.attrValues self.nixosModules)
-              ++ [
-                inputs.disko.nixosModules.default
-                inputs.home-manager.nixosModules.default
-                inputs.impermanence.nixosModules.default
+            modules = (builtins.attrValues self.nixosModules) ++ [
+              inputs.disko.nixosModules.default
+              inputs.home-manager.nixosModules.default
+              inputs.impermanence.nixosModules.default
 
-                (./machines + "/${x}/default.nix")
-              ];
+              (./machines + "/${x}/default.nix")
+            ];
           };
-        })
-        (builtins.attrNames (builtins.readDir ./machines)));
+        }) (builtins.attrNames (builtins.readDir ./machines))
+      );
 
-    # Set formatter for `nix fmt` command
-    formatter = forAllSystems (pkgs: pkgs.alejandra);
+      # Set formatter for `nix fmt` command
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
 
-    overlays.default = final: prev: {};
+      overlays.default = final: prev: { };
 
-    # Development shell when working on this flake
-    devShells = forAllSystems (pkgs: {
-      default = pkgs.mkShell {
-        buildInputs = with pkgs; [
-        ];
-      };
-    });
-  };
+      # Development shell when working on this flake
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+          ];
+        };
+      });
+    };
 }

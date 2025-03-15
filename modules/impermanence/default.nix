@@ -4,20 +4,22 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.persist;
-in {
+in
+{
   options.my.persist = {
     enable = mkEnableOption "Enable impermanence";
 
     directories = mkOption {
       type = types.listOf types.anything;
-      default = [];
+      default = [ ];
     };
 
     files = mkOption {
       type = types.listOf types.anything;
-      default = [];
+      default = [ ];
     };
 
     btrfs = {
@@ -35,21 +37,17 @@ in {
         enable = true;
         hideMounts = true;
 
-        directories =
-          [
-            "/var/log"
-            "/var/lib/bluetooth"
-            "/var/lib/nixos"
-            "/var/lib/systemd/coredump"
-            "/etc/NetworkManager/system-connections"
-          ]
-          ++ cfg.directories;
+        directories = [
+          "/var/log"
+          "/var/lib/bluetooth"
+          "/var/lib/nixos"
+          "/var/lib/systemd/coredump"
+          "/etc/NetworkManager/system-connections"
+        ] ++ cfg.directories;
 
-        files =
-          [
-            "/etc/machine-id"
-          ]
-          ++ cfg.files;
+        files = [
+          "/etc/machine-id"
+        ] ++ cfg.files;
       };
 
       users.mutableUsers = false;

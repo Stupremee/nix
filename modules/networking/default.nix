@@ -3,9 +3,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.networking;
-in {
+in
+{
   options.my.networking = {
     enable = mkEnableOption "Network configuration";
 
@@ -13,7 +15,12 @@ in {
       enable = mkEnableOption "Enable tailscale";
 
       profile = mkOption {
-        type = types.enum ["none" "client" "server" "both"];
+        type = types.enum [
+          "none"
+          "client"
+          "server"
+          "both"
+        ];
         default = "none";
       };
 
@@ -37,7 +44,7 @@ in {
       ];
     };
 
-    users.extraUsers.${config.my.user.mainUser}.extraGroups = ["networkmanager"];
+    users.extraUsers.${config.my.user.mainUser}.extraGroups = [ "networkmanager" ];
 
     services.tailscale = mkIf cfg.tailscale.enable {
       enable = true;
@@ -46,6 +53,8 @@ in {
       inherit (cfg.tailscale) openFirewall;
     };
 
-    networking.firewall.trustedInterfaces = optionals cfg.tailscale.openFirewall [config.services.tailscale.interfaceName];
+    networking.firewall.trustedInterfaces = optionals cfg.tailscale.openFirewall [
+      config.services.tailscale.interfaceName
+    ];
   };
 }

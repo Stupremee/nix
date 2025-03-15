@@ -4,9 +4,11 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.zsh;
-in {
+in
+{
   options.my.zsh = {
     enable = mkEnableOption "Enable zsh and install default programs";
   };
@@ -79,6 +81,6 @@ in {
     };
 
     # Needed for zsh completion of system packages, e.g. systemd
-    environment.pathsToLink = ["/share/zsh"];
+    environment.pathsToLink = [ "/share/zsh" ];
   };
 }

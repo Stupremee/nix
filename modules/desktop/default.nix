@@ -5,9 +5,11 @@
   inputs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.desktop;
-in {
+in
+{
   options.my.desktop = {
     enable = mkEnableOption "Enable the default desktop configuration";
   };

@@ -6,9 +6,11 @@
   nixpkgs,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.nix-common;
-in {
+in
+{
   options.my.nix-common = {
     enable = mkEnableOption "Enable default settings for nix-daemon";
 
@@ -24,13 +26,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    nixpkgs.overlays = [flake-self.overlays.default];
+    nixpkgs.overlays = [ flake-self.overlays.default ];
 
     # Allow unfree licenced packages
     nixpkgs.config.allowUnfree = true;
 
     nix = {
-      nixPath = ["nixpkgs=${nixpkgs}"];
+      nixPath = [ "nixpkgs=${nixpkgs}" ];
 
       extraOptions = ''
         experimental-features = nix-command flakes
@@ -50,8 +52,8 @@ in {
           "nixpkgs-wayland.cachix.org-1:3lwxaILxMRkVhehr5StQprHdEo4IrE8sRho9R9HOLYA="
         ];
 
-        allowed-users = ["root"];
-        trusted-users = ["root"];
+        allowed-users = [ "root" ];
+        trusted-users = [ "root" ];
 
         auto-optimise-store = true;
         log-lines = 50;
@@ -86,8 +88,7 @@ in {
     };
 
     # Let 'nixos-version --json' know the Git revision of this flake.
-    system.configurationRevision =
-      nixpkgs.lib.mkIf (flake-self ? rev) flake-self.rev;
+    system.configurationRevision = nixpkgs.lib.mkIf (flake-self ? rev) flake-self.rev;
 
     nix.registry.nixpkgs.flake = nixpkgs;
     nix.registry.my.flake = flake-self;

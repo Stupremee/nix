@@ -4,18 +4,19 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.alacritty;
 
-  keybind = key: mods: action: {inherit key mods action;};
+  keybind = key: mods: action: { inherit key mods action; };
 
   viKeybind = key: mods: action: {
     inherit key mods action;
     mode = "Vi";
   };
-in {
-  options.my.alacritty.enable =
-    mkEnableOption "Enable alacritty terminal";
+in
+{
+  options.my.alacritty.enable = mkEnableOption "Enable alacritty terminal";
 
   config = mkIf cfg.enable {
     home.sessionVariables.TERMINAL = "${config.programs.alacritty.package}/bin/alacritty";

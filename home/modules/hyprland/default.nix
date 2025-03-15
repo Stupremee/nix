@@ -4,18 +4,21 @@
   config,
   ...
 }:
-with lib; let
+with lib;
+let
   cfg = config.my.hyprland;
 
-  keybind = key: mods: action: {inherit key mods action;};
+  keybind = key: mods: action: { inherit key mods action; };
 
   viKeybind = key: mods: action: {
     inherit key mods action;
     mode = "Vi";
   };
 
-  monitorOpts = {...}:
-    with lib; {
+  monitorOpts =
+    { ... }:
+    with lib;
+    {
       options = {
         position = mkOption {
           type = types.str;
@@ -38,7 +41,8 @@ with lib; let
         };
       };
     };
-in {
+in
+{
   options.my.hyprland = {
     enable = mkEnableOption "Enable configuration for hyprland window manager";
 
@@ -49,7 +53,7 @@ in {
 
     monitors = mkOption {
       type = types.attrsOf (types.submodule monitorOpts);
-      default = {};
+      default = { };
     };
   };
 
@@ -65,7 +69,7 @@ in {
     wayland.windowManager.hyprland = {
       enable = true;
 
-      systemd.variables = ["--all"];
+      systemd.variables = [ "--all" ];
 
       settings = {
         "$mod" = "SUPER";
@@ -112,25 +116,27 @@ in {
           ++ (
             # workspaces
             # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-            builtins.concatLists (builtins.genList (
-                i: let
+            builtins.concatLists (
+              builtins.genList (
+                i:
+                let
                   ws = i + 1;
-                in [
+                in
+                [
                   "$mod, code:1${toString i}, workspace, ${toString ws}"
                   "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
                 ]
-              )
-              9)
+              ) 9
+            )
           );
 
-        monitor =
-          mapAttrsToList (
-            name: opts:
-              if opts.disable
-              then "${name},disable"
-              else "${name},${opts.resolution},${opts.position},${opts.scale}"
-          )
-          cfg.monitors;
+        monitor = mapAttrsToList (
+          name: opts:
+          if opts.disable then
+            "${name},disable"
+          else
+            "${name},${opts.resolution},${opts.position},${opts.scale}"
+        ) cfg.monitors;
       };
 
       extraConfig = ''
@@ -149,11 +155,7 @@ in {
 
       settings = {
         preload = "${../../wallpaper.png}";
-        wallpaper =
-          mapAttrsToList (
-            name: _: "${name}, ${../../wallpaper.png}"
-          )
-          cfg.monitors;
+        wallpaper = mapAttrsToList (name: _: "${name}, ${../../wallpaper.png}") cfg.monitors;
       };
     };
 

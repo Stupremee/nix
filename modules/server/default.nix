@@ -27,7 +27,7 @@ in
         enable = true;
         tailscale = {
           enable = true;
-          profile = mkDefault "client";
+          profile = mkDefault "server";
           openFirewall = mkDefault true;
         };
       };

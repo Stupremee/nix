@@ -26,7 +26,7 @@ in {
   config = mkIf cfg.enable {
     nixpkgs.overlays = [flake-self.overlays.default];
 
-    # Do not allow unfree licenced packages
+    # Allow unfree licenced packages
     nixpkgs.config.allowUnfree = true;
 
     nix = {

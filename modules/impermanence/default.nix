@@ -68,14 +68,17 @@ in
       fileSystems."/persist".neededForBoot = true;
     }
     (mkIf cfg.btrfs.enable {
-      boot.initrd.supportedFilesystems = [ "btrfs"];
+      boot.initrd.supportedFilesystems = [ "btrfs" ];
 
       boot.initrd.systemd.services.btrfs-rollback = {
         description = "Rollback btrfs root dataset to blank snapshot";
         wantedBy = [ "initrd.target" ];
         requires = [ "dev-disk-by\\x2dpartlabel-disk\\x2dsystem\\x2droot.device" ];
         after = [ "dev-disk-by\\x2dpartlabel-disk\\x2dsystem\\x2droot.device" ];
-        before = [ "-.mount" "sysroot.mount" ];
+        before = [
+          "-.mount"
+          "sysroot.mount"
+        ];
         unitConfig.DefaultDependencies = "no";
         serviceConfig.Type = "oneshot";
         script = ''

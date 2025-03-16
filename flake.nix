@@ -3,8 +3,22 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
+    nixos-unified = {
+      url = "github:srid/nixos-unified";
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -29,108 +43,67 @@
 
   outputs =
     inputs@{
-      self,
-      nixpkgs,
+      flake-parts,
       ...
     }:
-    let
-      supportedSystems = [
-        "aarch64-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-      ];
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      {
+        ...
+      }:
+      {
+        imports = [
+          inputs.treefmt-nix.flakeModule
+          inputs.nixos-unified.flakeModules.default
+          ./modules
+          ./machines
+        ];
 
-      nixpkgsFor =
-        system:
-        import nixpkgs {
-          inherit system;
+        systems = [
+          "x86_64-linux"
+          "aarch64-darwin"
+        ];
+
+        flake = {
+          overlays.default = final: prev: { };
         };
 
-      forAllSystems = fn: nixpkgs.lib.genAttrs supportedSystems (system: fn (nixpkgsFor system));
-    in
-    {
-      nixosModules =
-        builtins.listToAttrs (
-          map (x: {
-            name = x;
-            value =
-              {
-                config,
-                pkgs,
-                lib,
-                modulesPath,
-                ...
-              }:
-              {
-                imports = [
-                  (import ./modules/${x} {
-                    flake-self = self;
-                    inherit
-                      pkgs
-                      lib
-                      config
-                      modulesPath
-                      inputs
-                      nixpkgs
-                      ;
-                  })
-                ];
+        perSystem =
+          {
+            inputs,
+            pkgs,
+            system,
+            self',
+            ...
+          }:
+          {
+            # Select all inputs as primary inputs, to make them update
+            nixos-unified = {
+              primary-inputs = builtins.attrNames inputs;
+            };
+
+            packages.default = self'.packages.activate;
+
+            devShells.default = pkgs.mkShell {
+              packages = with pkgs; [ ];
+            };
+
+            treefmt = {
+              projectRootFile = "flake.nix";
+
+              programs.nixfmt = {
+                enable = true;
+                package = pkgs.nixfmt-rfc-style;
               };
-          }) (builtins.attrNames (builtins.readDir ./modules))
-        )
-        // {
-          home =
-            {
-              config,
-              pkgs,
-              lib,
-              modulesPath,
-              ...
-            }:
-            import ./home {
-              flake-self = self;
-              inherit
-                pkgs
-                lib
-                config
-                modulesPath
-                inputs
-                nixpkgs
-                ;
+
+              settings.global.excludes = [
+                ".envrc"
+                ".editorconfig"
+                "README.md"
+                "LICENSE"
+                "*.png"
+              ];
             };
-        };
-
-      nixosConfigurations = builtins.listToAttrs (
-        map (x: {
-          name = x;
-          value = nixpkgs.lib.nixosSystem {
-            specialArgs = {
-              inherit inputs;
-              flake-self = self;
-            };
-
-            modules = (builtins.attrValues self.nixosModules) ++ [
-              inputs.disko.nixosModules.default
-              inputs.home-manager.nixosModules.default
-              inputs.impermanence.nixosModules.default
-
-              (./machines + "/${x}/default.nix")
-            ];
           };
-        }) (builtins.attrNames (builtins.readDir ./machines))
-      );
-
-      # Set formatter for `nix fmt` command
-      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
-
-      overlays.default = final: prev: { };
-
-      # Development shell when working on this flake
-      devShells = forAllSystems (pkgs: {
-        default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-          ];
-        };
-      });
-    };
+      }
+    );
 }

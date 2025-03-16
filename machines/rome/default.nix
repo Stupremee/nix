@@ -1,9 +1,12 @@
-{ inputs, ... }:
+{ flake, ... }:
 {
   imports = [
-    inputs.srvos.nixosModules.server
+    flake.inputs.srvos.nixosModules.server
     ./disks.nix
   ];
+
+  # Remote activation
+  nixos-unified.sshTarget = "stu@rome";
 
   my = {
     persist = {

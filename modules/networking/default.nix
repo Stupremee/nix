@@ -53,6 +53,8 @@ in
       inherit (cfg.tailscale) openFirewall;
     };
 
+    my.persist.directories = ["/var/lib/tailscale"];
+
     networking.firewall.trustedInterfaces = optionals cfg.tailscale.openFirewall [
       config.services.tailscale.interfaceName
     ];

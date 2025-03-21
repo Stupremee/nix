@@ -32,13 +32,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    catppuccin = {
-      url = "github:catppuccin/nix";
-    };
+    catppuccin.url = "github:catppuccin/nix";
 
-    impermanence = {
-      url = "github:nix-community/impermanence";
-    };
+    impermanence.url = "github:nix-community/impermanence";
+
+    flake-root.url = "github:srid/flake-root";
+
+    mission-control.url = "github:Platonic-Systems/mission-control";
   };
 
   outputs =
@@ -56,6 +56,7 @@
           inputs.nixos-unified.flakeModules.default
           ./modules
           ./machines
+          ./devshell.nix
         ];
 
         systems = [
@@ -79,12 +80,6 @@
             # Select all inputs as primary inputs, to make them update
             nixos-unified = {
               primary-inputs = builtins.attrNames inputs;
-            };
-
-            packages.default = self'.packages.activate;
-
-            devShells.default = pkgs.mkShell {
-              packages = with pkgs; [ ];
             };
 
             treefmt = {

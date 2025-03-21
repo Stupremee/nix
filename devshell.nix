@@ -21,6 +21,11 @@
           exec = "${lib.getExe self'.formatter}";
         };
 
+        check = {
+          description = "Run nix flake check";
+          exec = "nix flake check";
+        };
+
         activate = {
           description = "Used to remotely activate machines";
           exec = "nix run .#activate --";

@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, self, ... }:
 {
   imports = [
     inputs.flake-root.flakeModule
@@ -26,16 +26,24 @@
           exec = "nix flake check";
         };
 
-        activate = {
+        activate =
+        let
+          machines = builtins.concatStringsSep " " (lib.attrNames self.nixosConfigurations);
+        in {
           description = "Used to remotely activate machines";
-          exec = "nix run .#activate --";
+          exec = ''
+            nix run .#activate -- "$(${pkgs.gum}/bin/gum choose ${machines})"
+          '';
         };
       };
 
       devShells.default = pkgs.mkShell {
         inputsFrom = [ config.mission-control.devShell ];
 
-        nativeBuildInputs = [ config.agenix-rekey.package ];
+        nativeBuildInputs = with pkgs; [
+          config.agenix-rekey.package
+          age-plugin-yubikey
+        ];
       };
     };
 }

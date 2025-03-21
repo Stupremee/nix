@@ -21,6 +21,7 @@
       enable = true;
       maxJobs = 8;
       flakePath = "/home/stu/nix";
+      isRemoteBuilder = true;
     };
 
     server.enable = true;

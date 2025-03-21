@@ -12,7 +12,7 @@ let
 
 in
 {
-  options.my.secrets= with lib; {
+  options.my.secrets = with lib; {
     enable = mkEnableOption "Enable secrets via agenix-rekey";
     sshKey = mkOption {
       type = with types; coercedTo path (x: if isPath x then readFile x else x) str;

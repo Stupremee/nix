@@ -37,6 +37,8 @@ in
       zsh.enable = true;
     };
 
+    environment.enableAllTerminfo = true;
+
     programs.dconf.enable = true;
     powerManagement.cpuFreqGovernor = "powersave";
   };

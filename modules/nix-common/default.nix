@@ -14,6 +14,12 @@ in
   options.my.nix-common = {
     enable = mkEnableOption "Enable default settings for nix-daemon";
 
+    isRemoteBuilder = mkOption {
+      type = types.bool;
+      description = "Indicates if this machine is used as a remote builder.";
+      default = false;
+    };
+
     maxJobs = mkOption {
       type = types.int;
       default = 4;
@@ -73,6 +79,7 @@ in
       enable = true;
       clean.enable = true;
       clean.extraArgs = "--keep-since 7d --keep 10";
+      clean.dates = if cfg.isRemoteBuilder then "daily" else "weekly";
       flake = cfg.flakePath;
     };
 

@@ -24,6 +24,11 @@
     };
 
     server.enable = true;
+
+    my.secrets = {
+      enable = true;
+      sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMi2IZSLhltKQJ29jQGqPju3YVeNozMvauIoOCRogPFe";
+    };
   };
 
   networking = {

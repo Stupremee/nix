@@ -16,12 +16,16 @@
         map (x: {
           name = x;
           value = self.nixos-unified.lib.mkLinuxSystem { home-manager = true; } {
-            imports = (attrValues self.nixosModules) ++ [
-              inputs.disko.nixosModules.default
-              inputs.impermanence.nixosModules.default
+            imports =
+              (attrValues self.nixosModules)
+              ++ (with inputs; [
+                disko.nixosModules.default
+                impermanence.nixosModules.default
+                agenix.nixosModules.default
+                agenix-rekey.nixosModules.default
 
-              ./${x}/default.nix
-            ];
+                ./${x}/default.nix
+              ]);
           };
         }) (attrNames (filterAttrs (_: ty: ty == "directory") (readDir ./.)))
       );

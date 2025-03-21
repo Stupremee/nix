@@ -3,6 +3,7 @@
   imports = [
     inputs.flake-root.flakeModule
     inputs.mission-control.flakeModule
+    inputs.agenix-rekey.flakeModule
   ];
 
   perSystem =
@@ -29,7 +30,7 @@
       devShells.default = pkgs.mkShell {
         inputsFrom = [ config.mission-control.devShell ];
 
-        packages = with pkgs; [ ];
+        nativeBuildInputs = [ config.agenix-rekey.package ];
       };
     };
 }

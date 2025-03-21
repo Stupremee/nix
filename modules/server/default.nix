@@ -35,6 +35,7 @@ in
       nix-common.enable = true;
       openssh.enable = true;
       zsh.enable = true;
+      backup.enable = true;
     };
 
     environment.enableAllTerminfo = true;

@@ -25,5 +25,7 @@ in
         KbdInteractiveAuthentication = false;
       };
     };
+
+    my.backups.sskKeys.paths = builtins.map (v: v.path) config.services.openssh.hostKeys;
   };
 }

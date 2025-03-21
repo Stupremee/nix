@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  flake-self,
   ...
 }:
 with lib;
@@ -37,13 +38,14 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
+  config = {
     age.rekey = {
       hostPubkey = cfg.sshKey;
 
       masterIdentities = [ ../../secrets/master-keys/yubikey-c.age ];
       storageMode = "local";
-      localStorageDir = ./. + "/secrets/rekeyed/${config.networking.hostName}";
+      generatedSecretsDir = flake-self.outPath + "/secrets/generated/${config.networking.hostName}";
+      localStorageDir = flake-self.outPath + "/secrets/rekeyed/${config.networking.hostName}";
     };
   };
 }

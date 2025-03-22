@@ -26,6 +26,6 @@ in
       };
     };
 
-    my.backups.sskKeys.paths = builtins.map (v: v.path) config.services.openssh.hostKeys;
+    my.backups.ssh-keys.paths = builtins.map (v: v.path) config.services.openssh.hostKeys;
   };
 }

@@ -33,11 +33,16 @@
 
     caddy.enable = true;
     paperless.enable = true;
+    postfix.enable = true;
+    oidc.enable = true;
   };
 
   networking = {
     hostName = "rome";
     hostId = "538d52a0";
+
+    # Somehow, doesn't work. Need to figure out why
+    enableIPv6 = false;
   };
 
   boot = {

@@ -34,7 +34,6 @@
     caddy.enable = true;
     paperless.enable = true;
     postfix.enable = true;
-    oidc.enable = true;
   };
 
   networking = {

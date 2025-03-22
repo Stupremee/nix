@@ -26,7 +26,12 @@ in
       '';
     };
 
+    my.persist.directories = [ "/var/lib/caddy" ];
+
     age.secrets.caddyEnv.rekeyFile = ../../secrets/caddy.env.age;
-    systemd.services.caddy.serviceConfig.EnvironmentFile = config.age.secrets.caddyEnv.path;
+    systemd.services.caddy.serviceConfig = {
+      EnvironmentFile = config.age.secrets.caddyEnv.path;
+      AmbientCapabilities="CAP_NET_BIND_SERVICE";
+    };
   };
 }

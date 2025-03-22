@@ -36,6 +36,24 @@
     postfix.enable = true;
   };
 
+  # Required for allowing document scanner to connect via SSH
+  users.users.paperless = {
+    useDefaultShell = true;
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmfX3AdAEB8C/69EqEuvDFR9PfEHvsxweuUdMQ5JsVOvp4PCl2p+4xcMEclegQaYl8wXrf9s6DWPNzapeIzf7ZmigS6EVQlyz7sHgHT3t5dEW3jBvL2Hi/swgPb0h5YaN8odxq+/1HQfhwuW0Vor2kpU+jn7fRZ+2kiRJDqlbEBo0iP94lxvw5u/u0fUolkmbCB09hnoOQNrsgFpOuM1c1/DGshH/8EsB0rgRZm8gh+geh4f+c1CD3dXrtYuadMYacqX5D3KDrwrvOJwm7JC7BhOyBIZEyTmEOOi88mlLXAlXjpeTQTlHCx2lBBGNG3dOg2P7ceCKQoM82Lo77NUql root@BRW5CF370CD9392"
+    ];
+  };
+  services.openssh.settings = {
+    HostKeyAlgorithms = "ssh-rsa,ssh-rsa-cert-v01@openssh.com";
+    PubkeyAcceptedAlgorithms = "+ssh-rsa,ssh-rsa-cert-v01@openssh.com";
+    Macs = [
+      "hmac-sha2-512-etm@openssh.com"
+      "hmac-sha2-256-etm@openssh.com"
+      "umac-128-etm@openssh.com"
+      "hmac-sha2-512"
+    ];
+  };
+
   networking = {
     hostName = "rome";
     hostId = "538d52a0";

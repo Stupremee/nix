@@ -32,6 +32,7 @@
     };
 
     caddy.enable = true;
+    paperless.enable = true;
   };
 
   networking = {

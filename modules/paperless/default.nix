@@ -48,6 +48,14 @@ in
       };
     };
 
+    my.backups.paperless.dynamicFilesFrom = let
+      path = config.services.paperless.dataDir;
+    in ''
+      mkdir -p ${path}/exported
+      ${path}/paperless-manage document_exporter ${path}/exported
+      echo ${path}/exported/
+    '';
+
     services.gotenberg = {
       enable = true;
     };

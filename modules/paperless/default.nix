@@ -46,6 +46,9 @@ in
 
         PAPERLESS_CONSUMER_ENABLE_BARCODES = true;
         PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE = true;
+
+        # Check mail every 5 minutes
+        PAPERLESS_EMAIL_TASK_CRON = "*/5 * * * *";
       };
     };
 

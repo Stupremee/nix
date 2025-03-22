@@ -37,8 +37,8 @@ in
         PAPERLESS_URL = "https://docs.stu-dev.me";
 
         PAPERLESS_OCR_LANGUAGE = "deu+eng";
-        PAPERLESS_TASK_WORKERS = 2;
-        PAPERLESS_THREADS_PER_WORKER = 4;
+        PAPERLESS_TASK_WORKERS = 4;
+        PAPERLESS_THREADS_PER_WORKER = 8;
 
         PAPERLESS_TIKA_ENABLED = true;
         PAPERLESS_TIKA_ENDPOINT = "http://127.0.0.1:${toString config.services.tika.port}";
@@ -46,6 +46,8 @@ in
 
         PAPERLESS_CONSUMER_ENABLE_BARCODES = true;
         PAPERLESS_CONSUMER_ENABLE_ASN_BARCODE = true;
+        PAPERLESS_CONSUMER_BARCODE_UPSCALE = "1.5";
+        PAPERLESS_CONSUMER_BARCODE_DPI = 600;
 
         # Check mail every 5 minutes
         PAPERLESS_EMAIL_TASK_CRON = "*/5 * * * *";

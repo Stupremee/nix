@@ -27,14 +27,15 @@
         };
 
         activate =
-        let
-          machines = builtins.concatStringsSep " " (lib.attrNames self.nixosConfigurations);
-        in {
-          description = "Used to remotely activate machines";
-          exec = ''
-            nix run .#activate -- "$(${pkgs.gum}/bin/gum choose ${machines})"
-          '';
-        };
+          let
+            machines = builtins.concatStringsSep " " (lib.attrNames self.nixosConfigurations);
+          in
+          {
+            description = "Used to remotely activate machines";
+            exec = ''
+              nix run .#activate -- "$(${pkgs.gum}/bin/gum choose ${machines})"
+            '';
+          };
       };
 
       devShells.default = pkgs.mkShell {

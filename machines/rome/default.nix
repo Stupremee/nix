@@ -30,6 +30,8 @@
       enable = true;
       sshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJEFO0TbdOgpnHFhsnHwi+VB/FMTGrTiXJtPcY+1lslT";
     };
+
+    caddy.enable = true;
   };
 
   networking = {

@@ -31,7 +31,7 @@ in
     age.secrets.caddyEnv.rekeyFile = ../../secrets/caddy.env.age;
     systemd.services.caddy.serviceConfig = {
       EnvironmentFile = config.age.secrets.caddyEnv.path;
-      AmbientCapabilities="CAP_NET_BIND_SERVICE";
+      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
     };
   };
 }

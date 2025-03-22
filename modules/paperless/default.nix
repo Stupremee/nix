@@ -24,6 +24,7 @@ in
     };
 
     services.caddy.virtualHosts."docs.stu-dev.me".extraConfig = ''
+      import cloudflare
       reverse_proxy :${toString config.services.paperless.port}
     '';
 

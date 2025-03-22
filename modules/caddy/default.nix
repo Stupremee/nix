@@ -21,8 +21,13 @@ in
         level WARN
       '';
 
-      globalConfig = ''
-        acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      extraConfig = ''
+        (cloudflare) {
+          tls {
+            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+            resolvers 1.1.1.1 1.0.0.1
+          }
+        }
       '';
     };
 

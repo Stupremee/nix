@@ -50,6 +50,17 @@ in
         ] ++ cfg.files;
       };
 
+      system.activationScripts."createPersistentStorageDirs".deps = [ "var-lib-private-permissions" "users" "groups" ];
+      system.activationScripts = {
+        "var-lib-private-permissions" = {
+          deps = [ "specialfs" ];
+          text = ''
+            mkdir -p /var/lib/private
+            chmod 0700 /var/lib/private
+          '';
+        };
+      };
+
       users.mutableUsers = false;
       my.user.root.enablePassword = true;
 

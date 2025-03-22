@@ -61,6 +61,7 @@
 
   outputs =
     inputs@{
+      self,
       flake-parts,
       ...
     }:
@@ -75,22 +76,32 @@
           ./modules
           ./machines
           ./devshell.nix
+          ./packages
         ];
 
         systems = import inputs.systems;
 
         flake = {
-          overlays.default = final: prev: { };
+          overlays.default = final: prev: {
+            caddy = self.packages.${final.system}.caddy;
+          };
         };
 
         perSystem =
           {
             pkgs,
             system,
-            self',
+            lib,
             ...
           }:
           {
+            # Make our overlay available to the devShell
+            # "Flake parts does not yet come with an endorsed module that initializes the pkgs argument.""
+            # So we must do this manually; https://flake.parts/overlays#consuming-an-overlay
+            _module.args.pkgs-unstable = import inputs.nixpkgs-unstable {
+              inherit system;
+            };
+
             # Select all inputs as primary inputs, to make them update
             nixos-unified = {
               primary-inputs = builtins.attrNames inputs;
@@ -110,6 +121,8 @@
                 "README.md"
                 "LICENSE"
                 "*.png"
+                "packages/caddy/src/*"
+                "secrets/*"
               ];
             };
           };

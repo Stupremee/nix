@@ -49,9 +49,11 @@ in
       };
     };
 
-    my.persist.directories = [{
-      directory = "/var/lib/postfix";
-      inherit (config.services.postfix) user group;
-    }];
+    my.persist.directories = [
+      {
+        directory = "/var/lib/postfix";
+        inherit (config.services.postfix) user group;
+      }
+    ];
   };
 }

@@ -40,11 +40,6 @@ in
 
         cfg.import
       ];
-
-      nixpkgs.config = {
-        allowBroken = true;
-        allowUnfree = true;
-      };
     };
   };
 }

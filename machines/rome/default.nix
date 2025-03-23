@@ -34,6 +34,7 @@
     caddy.enable = true;
     paperless.enable = true;
     postfix.enable = true;
+    oidc.enable = true;
   };
 
   # Required for allowing document scanner to connect via SSH

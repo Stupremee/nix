@@ -50,11 +50,11 @@ in
         ] ++ cfg.files;
       };
 
-      system.activationScripts."createPersistentStorageDirs".deps = [
-        "var-lib-private-permissions"
-        "users"
-        "groups"
+      systemd.tmpfiles.rules = [
+        "d /var/lib/private 0700 root root"
       ];
+
+      system.activationScripts."createPersistentStorageDirs".deps = [ "var-lib-private-permissions" "users" "groups" ];
       system.activationScripts = {
         "var-lib-private-permissions" = {
           deps = [ "specialfs" ];

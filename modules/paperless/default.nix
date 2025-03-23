@@ -17,6 +17,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    age.secrets.paperless-env.rekeyFile = ../../secrets/paperless.env.age;
     age.secrets.paperlessPassword = {
       generator.script = "alnum";
       owner = "paperless";
@@ -52,7 +53,25 @@ in
 
         # Check mail every 5 minutes
         PAPERLESS_EMAIL_TASK_CRON = "*/5 * * * *";
+
+        PAPERLESS_APPS= "allauth.socialaccount.providers.openid_connect";
+        # PAPERLESS_SOCIALACCOUNT_PROVIDERS is provided by secret environment file
+        PAPERLESS_DISABLE_REGULAR_LOGIN = true;
       };
+    };
+
+    systemd.services = {
+      paperless-consumer.serviceConfig.EnvironmentFile = config.age.secrets.paperless-env.path;
+      paperless-scheduler.serviceConfig.EnvironmentFile = config.age.secrets.paperless-env.path;
+      paperless-task-queue.serviceConfig.EnvironmentFile = config.age.secrets.paperless-env.path;
+      paperless-web.serviceConfig.EnvironmentFile = config.age.secrets.paperless-env.path;
+    };
+
+    my.oidc.clients.paperless = {
+      secret = "$pbkdf2-sha512$310000$jTGxRtvejw4PcV.Z35dOZg$tFOu8151UQxuxfTH/Q8fFi1/fiJqTX.DQt.qvdJLODNbNzytYI2f9Sc./.nvpZ5Q5YWFQCPbakW5uHxY29nWJw";
+      name = "Paperless";
+      redirect_uris = ["https://docs.stu-dev.me/accounts/oidc/authelia/login/callback/"];
+      scopes = ["openid" "profile" "email" "groups"];
     };
 
     my.backups.paperless =

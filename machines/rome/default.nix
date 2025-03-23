@@ -35,7 +35,7 @@
     paperless.enable = true;
     postfix.enable = true;
     oidc.enable = true;
-    home-assistant.enable = false;
+    home-assistant.enable = true;
     stirling-pdf.enable = true;
   };
 

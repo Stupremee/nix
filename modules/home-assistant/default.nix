@@ -43,6 +43,9 @@ in
         "ezviz"
         "ipp"
         "brother"
+
+        # Non-device integrations
+        "co2signal"
       ];
 
       config = {

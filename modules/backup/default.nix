@@ -55,6 +55,22 @@ in
                 '';
               };
 
+              backupPrepareCommand = mkOption {
+                type = types.nullOr types.str;
+                default = null;
+                description = ''
+                  A script that must run before starting the backup process.
+                '';
+              };
+
+              backupCleanupCommand = mkOption {
+                type = types.nullOr types.str;
+                default = null;
+                description = ''
+                  A script that must run after finishing the backup process.
+                '';
+              };
+
               timerConfig = mkOption {
                 type = types.attrs;
                 default = {

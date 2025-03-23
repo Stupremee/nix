@@ -76,7 +76,7 @@ in
 
     services.caddy.virtualHosts."ldap.stu-dev.me".extraConfig = ''
       import cloudflare
-      reverse_proxy :${toString config.services.lldap.settings.http_port} {
+      reverse_proxy :${toString config.services.lldap.settings.http_port}
     '';
 
     services.caddy.virtualHosts."auth.stu-dev.me".extraConfig = ''

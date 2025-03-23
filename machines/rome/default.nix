@@ -36,6 +36,7 @@
     postfix.enable = true;
     oidc.enable = true;
     home-assistant.enable = false;
+    stirling-pdf.enable = true;
   };
 
   # Required for allowing document scanner to connect via SSH

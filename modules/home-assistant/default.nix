@@ -10,7 +10,7 @@ let
 
   cfg = config.my.home-assistant;
 
-  lldap-ha-auth = pkgs.callPackage ./lldap-ha-auth.nix {};
+  lldap-ha-auth = pkgs.callPackage ./lldap-ha-auth.nix { };
 in
 {
   options.my.home-assistant = {

@@ -35,6 +35,7 @@
     paperless.enable = true;
     postfix.enable = true;
     oidc.enable = true;
+    home-assistant.enable = false;
   };
 
   # Required for allowing document scanner to connect via SSH

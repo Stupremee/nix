@@ -36,7 +36,10 @@ in
 
               scopes = mkOption {
                 type = types.listOf types.str;
-                default = ["openid" "profile"];
+                default = [
+                  "openid"
+                  "profile"
+                ];
               };
 
               redirect_uris = mkOption {
@@ -50,22 +53,26 @@ in
   };
 
   config = mkIf cfg.enable {
-    age.secrets = 
-    let
-      secret = attrs: {
-        owner = "authelia-main";
-        group = "authelia-main";
-      } // attrs;
-    in {
-      lldap-env.rekeyFile = ../../secrets/lldap.env.age;
+    age.secrets =
+      let
+        secret =
+          attrs:
+          {
+            owner = "authelia-main";
+            group = "authelia-main";
+          }
+          // attrs;
+      in
+      {
+        lldap-env.rekeyFile = ../../secrets/lldap.env.age;
 
-      authelia-private-key = secret { rekeyFile = ../../secrets/authelia-private-key.age; };
-      authelia-ldap-user-password = secret { rekeyFile = ../../secrets/authelia-ldap-user-password.age; };
-      authelia-storage-encryption-key = secret { generator.script = "alnum"; };
-      authelia-jwt-secret = secret { generator.script = "alnum"; };
-      authelia-session-secret = secret { generator.script = "alnum"; };
-      authelia-hmac-secret = secret { generator.script = "alnum"; };
-    };
+        authelia-private-key = secret { rekeyFile = ../../secrets/authelia-private-key.age; };
+        authelia-ldap-user-password = secret { rekeyFile = ../../secrets/authelia-ldap-user-password.age; };
+        authelia-storage-encryption-key = secret { generator.script = "alnum"; };
+        authelia-jwt-secret = secret { generator.script = "alnum"; };
+        authelia-session-secret = secret { generator.script = "alnum"; };
+        authelia-hmac-secret = secret { generator.script = "alnum"; };
+      };
 
     services.caddy.virtualHosts."ldap.stu-dev.me".extraConfig = ''
       import cloudflare
@@ -84,7 +91,7 @@ in
         storageEncryptionKeyFile = config.age.secrets.authelia-storage-encryption-key.path;
         jwtSecretFile = config.age.secrets.authelia-jwt-secret.path;
         sessionSecretFile = config.age.secrets.authelia-session-secret.path;
-        oidcHmacSecretFile  = config.age.secrets.authelia-hmac-secret.path;
+        oidcHmacSecretFile = config.age.secrets.authelia-hmac-secret.path;
         oidcIssuerPrivateKeyFile = config.age.secrets.authelia-private-key.path;
       };
 
@@ -105,14 +112,16 @@ in
         };
 
         session = {
-          cookies = [{
-            name = "authelia_session";
-            domain = "stu-dev.me";
-            authelia_url = "https://auth.stu-dev.me";
-            expiration = "1h";
-            inactivity = "10m";
-            remember_me = "1M";
-          }];
+          cookies = [
+            {
+              name = "authelia_session";
+              domain = "stu-dev.me";
+              authelia_url = "https://auth.stu-dev.me";
+              expiration = "1h";
+              inactivity = "10m";
+              remember_me = "1M";
+            }
+          ];
         };
 
         storage.local.path = "/var/lib/authelia-main/database.db";
@@ -126,10 +135,12 @@ in
 
         access_control = {
           default_policy = "deny";
-          rules = [{
-            domain = "*.stu-dev.me";
-            policy =  "one_factor";
-          }];
+          rules = [
+            {
+              domain = "*.stu-dev.me";
+              policy = "one_factor";
+            }
+          ];
         };
 
         identity_providers.oidc.clients = mapAttrsToList (id: cfg: {
@@ -148,7 +159,8 @@ in
       };
 
       environmentVariables = {
-        AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE = config.age.secrets.authelia-ldap-user-password.path;
+        AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE =
+          config.age.secrets.authelia-ldap-user-password.path;
       };
     };
 
@@ -162,20 +174,21 @@ in
       };
     };
 
-    my.backups.lldap = 
+    my.backups.lldap =
       let
         path = "/var/lib/lldap";
-    in {
-      dynamicFilesFrom = ''
-        mkdir -p ${path}/backups
-        ${pkgs.sqlite}/bin/sqlite3 ${path}/users.db ".backup '${path}/backups/users.db'"
-        echo ${path}/backups/
-      '';
+      in
+      {
+        dynamicFilesFrom = ''
+          mkdir -p ${path}/backups
+          ${pkgs.sqlite}/bin/sqlite3 ${path}/users.db ".backup '${path}/backups/users.db'"
+          echo ${path}/backups/
+        '';
 
         backupCleanupCommand = ''
           rm -rf ${path}/backups/users.db
         '';
-  };
+      };
 
     my.persist.directories = [
       "/var/lib/private/lldap"

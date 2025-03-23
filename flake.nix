@@ -114,6 +114,7 @@
                 enable = true;
                 package = pkgs.nixfmt-rfc-style;
               };
+              programs.shfmt.enable = true;
 
               settings.global.excludes = [
                 ".envrc"

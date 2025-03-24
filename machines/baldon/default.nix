@@ -8,39 +8,28 @@
     desktop.enable = true;
     wayland.hyprland.enable = true;
 
+    nvidia.enable = true;
+    bluetooth.enable = true;
+
     home = {
       enable = true;
       import = ./home.nix;
     };
 
-    persist = {
-      enable = true;
-      btrfs = {
-        enable = true;
-        disk = "/dev/disk/by-partlabel/disk-system-root";
-      };
-    };
-
     nix-common = {
-      maxJobs = 8;
+      maxJobs = 12;
       flakePath = "/home/stu/dev/nix/nix";
     };
   };
 
   networking = {
-    hostName = "arcus";
+    hostName = "baldon";
   };
 
   boot = {
     loader = {
+      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
-
-      grub = {
-        enable = true;
-        devices = [ "nodev" ];
-        efiSupport = true;
-        useOSProber = true;
-      };
     };
 
     initrd = {
@@ -62,7 +51,7 @@
 
   hardware = {
     enableRedistributableFirmware = true;
-    cpu.amd.updateMicrocode = true;
+    cpu.intel.updateMicrocode = true;
     enableAllFirmware = true;
   };
 

@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -14,9 +13,7 @@ in
   config = mkIf cfg.enable {
     programs.nvf = {
       enable = true;
-      settings = [
-        ./config
-      ];
+      settings = ./config;
     };
   };
 }

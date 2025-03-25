@@ -1,6 +1,4 @@
 {
-  config,
-  pkgs,
   lib,
   ...
 }:
@@ -10,6 +8,8 @@
   programs.command-not-found.enable = true;
 
   programs.home-manager.enable = true;
+
+  fonts.fontconfig.enable = true;
 
   catppuccin = {
     enable = true;

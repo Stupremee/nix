@@ -19,8 +19,6 @@ in
 
       escapeTime = 0;
 
-      terminal = "screen-256color";
-
       extraConfig = ''
         # split panes using - and |
         bind | split-window -h
@@ -37,6 +35,10 @@ in
 
         # enable mouse control
         set -g mouse on
+
+        # enable true color support
+        set -g default-terminal 'screen-256color'
+        set -ga terminal-overrides ',*256col*:Tc'
 
         # disable esc key timeout
         set -s escape-time 0

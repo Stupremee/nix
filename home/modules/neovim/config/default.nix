@@ -1,4 +1,3 @@
-{ ... }:
 {
   vim = {
     viAlias = false;
@@ -9,6 +8,29 @@
       name = "catppuccin";
       style = "frappe";
     };
+
+    undoFile.enable = true;
+
+    keymaps = [
+      {
+        key = "<leader>?";
+        mode = "n";
+        silent = true;
+        action = ":Cheatsheet<CR>";
+      }
+      {
+        key = "<leader>e";
+        mode = "n";
+        silent = true;
+        action = ":Neotree toggle<CR>";
+      }
+      {
+        key = "<leader>h";
+        mode = "n";
+        silent = true;
+        action = ":nohlsearch<CR>";
+      }
+    ];
 
     spellcheck = {
       enable = true;
@@ -109,7 +131,6 @@
       surround.enable = true;
 
       motion = {
-        hop.enable = true;
         leap.enable = true;
 
         # Cool plugin, but a bit annoying
@@ -126,22 +147,10 @@
       noice.enable = true;
       colorizer.enable = true;
       illuminate.enable = true;
-
-      breadcrumbs = {
-        enable = true;
-      };
+      breadcrumbs.enable = true;
 
       smartcolumn = {
         enable = true;
-        setupOpts.custom_colorcolumn = {
-          nix = "110";
-          ruby = "120";
-          java = "130";
-          go = [
-            "90"
-            "130"
-          ];
-        };
       };
 
       fastaction.enable = true;

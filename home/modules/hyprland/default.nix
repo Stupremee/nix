@@ -46,6 +46,10 @@ in
   options.my.hyprland = {
     enable = mkEnableOption "Enable configuration for hyprland window manager";
 
+    terminal = mkOption {
+      type = types.str;
+    };
+
     sensitivity = mkOption {
       type = types.str;
       default = "1.0";
@@ -75,9 +79,9 @@ in
         "$mod" = "SUPER";
 
         input = {
+          inherit (cfg) sensitivity;
           kb_layout = "eu";
           follow_mouse = 1;
-          sensitivity = cfg.sensitivity;
           accel_profile = "flat";
         };
 
@@ -96,7 +100,7 @@ in
 
         bind =
           [
-            "$mod, Return, exec, alacritty"
+            "$mod, Return, exec, ${cfg.terminal}"
 
             # compositor commands
             "$mod, q, killactive"

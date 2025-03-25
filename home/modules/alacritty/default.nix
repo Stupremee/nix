@@ -21,6 +21,7 @@ in
   config = mkIf cfg.enable {
     home.sessionVariables.TERMINAL = "${config.programs.alacritty.package}/bin/alacritty";
 
+    my.hyprland.terminal = "alacritty";
     programs.alacritty = {
       enable = true;
 

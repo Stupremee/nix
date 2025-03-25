@@ -2,10 +2,11 @@
 {
   my = {
     alacritty.enable = true;
+    mako.enable = true;
+
     zsh.enable = true;
     tmux.enable = true;
-
-    mako.enable = true;
+    neovim.enable = true;
 
     hyprland = {
       enable = true;

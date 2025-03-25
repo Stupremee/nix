@@ -7,6 +7,7 @@
     zsh.enable = true;
     tmux.enable = true;
     neovim.enable = true;
+    git.enable = true;
 
     hyprland = {
       enable = true;

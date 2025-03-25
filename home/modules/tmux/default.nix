@@ -33,6 +33,10 @@ in
         bind k select-pane -U
         bind l select-pane -R
 
+        # Session shortcuts
+        bind S command-prompt -p "New Session:" "new-session -A -s '%%'"
+        bind K confirm kill-session
+
         # enable mouse control
         set -g mouse on
 

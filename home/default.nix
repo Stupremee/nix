@@ -30,6 +30,7 @@ in
     home-manager.users."${cfg.user}" = {
       imports = (map (p: ./modules/${p}) (builtins.attrNames (builtins.readDir ./modules))) ++ [
         flake-self.inputs.catppuccin.homeManagerModules.catppuccin
+        flake-self.inputs.nvf.homeManagerModules.default
 
         {
           nixpkgs.overlays = [

@@ -47,6 +47,12 @@
       inputs.systems.follows = "systems";
     };
 
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.systems.follows = "systems";
+    };
+
     catppuccin.url = "github:catppuccin/nix";
 
     impermanence.url = "github:nix-community/impermanence";
@@ -63,9 +69,7 @@
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      {
-        ...
-      }:
+      { ... }:
       {
         imports = [
           inputs.treefmt-nix.flakeModule
@@ -79,8 +83,8 @@
         systems = import inputs.systems;
 
         flake = {
-          overlays.default = final: prev: {
-            caddy = self.packages.${final.system}.caddy;
+          overlays.default = final: _: {
+            inherit (self.packages.${final.system}) caddy;
           };
         };
 
@@ -98,6 +102,12 @@
             _module.args.pkgs-unstable = import inputs.nixpkgs-unstable {
               inherit system;
             };
+
+            packages.neovim =
+              (inputs.nvf.lib.neovimConfiguration {
+                inherit pkgs;
+                modules = [ ./home/modules/neovim/config ];
+              }).neovim;
 
             # Select all inputs as primary inputs, to make them update
             nixos-unified = {

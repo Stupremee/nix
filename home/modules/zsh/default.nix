@@ -55,12 +55,26 @@ in
         mkdir -p $ZSH_CACHE_DIR/completions
       '';
 
-      initExtra = ''
-        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
+      initExtra =
+        let
+          tmuxStart =
+            if config.programs.tmux.enable then
+              ''
+                if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ ! -n "$SSH_CONNECTION" ]; then
+                  tmux a -t default || exec tmux new -s default;
+                fi
+              ''
+            else
+              "";
+        in
+        ''
+          ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
-        # Include hidden files in completions
-        _comp_options+=(globdots)
-      '';
+          # Include hidden files in completions
+          _comp_options+=(globdots)
+
+          ${tmuxStart}
+        '';
     };
 
     programs.direnv = {

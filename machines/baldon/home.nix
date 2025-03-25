@@ -3,6 +3,7 @@
   my = {
     alacritty.enable = true;
     zsh.enable = true;
+    tmux.enable = true;
 
     mako.enable = true;
 

@@ -47,10 +47,7 @@
       inputs.systems.follows = "systems";
     };
 
-    catppuccin = {
-      url = "github:catppuccin/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    catppuccin.url = "github:catppuccin/nix";
 
     impermanence.url = "github:nix-community/impermanence";
 

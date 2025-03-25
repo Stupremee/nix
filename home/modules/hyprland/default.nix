@@ -81,6 +81,8 @@ in
           accel_profile = "flat";
         };
 
+        animations.enabled = 0;
+
         windowrulev2 = [
           "float,class:pinentry-qt"
           "center,class:pinentry-qt"

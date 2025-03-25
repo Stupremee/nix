@@ -9,7 +9,7 @@
     hyprland = {
       enable = true;
 
-      sensitivity = "0.0";
+      sensitivity = "-0.5";
 
       monitors = {
         "DP-5" = {
@@ -18,7 +18,7 @@
           scale = "1.5";
         };
 
-        "DP-6" = {
+        "DP-3" = {
           position = "2560x0";
           resolution = "3840x2160@60";
           scale = "1.5";

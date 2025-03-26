@@ -53,6 +53,20 @@ in
       };
     };
 
+    # Options to avoid logs to override the tuigreet application.
+    # https://github.com/apognu/tuigreet/issues/68#issuecomment-1586359960
+    systemd.services.greetd.serviceConfig = {
+      Type = "idle";
+      StandardInput = "tty";
+      StandardOutput = "tty";
+      StandardError = "journal"; # Without this errors will spam on screen
+
+      # Without these boot logs will spam on screen
+      TTYReset = true;
+      TTYVHangup = true;
+      TTYVTDisallocate = true;
+    };
+
     security = {
       polkit.enable = true;
       rtkit.enable = true;

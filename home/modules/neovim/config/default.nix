@@ -94,10 +94,21 @@
     };
 
     tabline = {
-      nvimBufferline.enable = true;
-    };
+      nvimBufferline = {
+        enable = true;
 
-    treesitter.context.enable = true;
+        mappings = {
+          closeCurrent = "<leader>bd";
+          cycleNext = "L";
+          cyclePrevious = "H";
+        };
+
+        setupOpts.options = {
+          numbers = "none";
+          indicator.style = "none";
+        };
+      };
+    };
 
     binds = {
       whichKey.enable = true;
@@ -147,12 +158,9 @@
       noice.enable = true;
       colorizer.enable = true;
       illuminate.enable = true;
-      breadcrumbs.enable = true;
+      breadcrumbs.enable = false;
 
-      smartcolumn = {
-        enable = true;
-      };
-
+      smartcolumn.enable = true;
       fastaction.enable = true;
     };
 

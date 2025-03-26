@@ -1,19 +1,11 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
 with lib;
 let
   cfg = config.my.hyprland;
-
-  keybind = key: mods: action: { inherit key mods action; };
-
-  viKeybind = key: mods: action: {
-    inherit key mods action;
-    mode = "Vi";
-  };
 
   monitorOpts =
     { ... }:

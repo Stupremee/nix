@@ -63,77 +63,10 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      flake-parts,
-      ...
-    }:
-    flake-parts.lib.mkFlake { inherit inputs; } (
-      { ... }:
-      {
-        imports = [
-          inputs.treefmt-nix.flakeModule
-          inputs.nixos-unified.flakeModules.default
-          ./modules
-          ./machines
-          ./devshell.nix
-          ./packages
-        ];
-
-        systems = import inputs.systems;
-
-        flake = {
-          overlays.default = final: _: {
-            inherit (self.packages.${final.system}) caddy;
-          };
-        };
-
-        perSystem =
-          {
-            pkgs,
-            system,
-            lib,
-            ...
-          }:
-          {
-            # Make our overlay available to the devShell
-            # "Flake parts does not yet come with an endorsed module that initializes the pkgs argument.""
-            # So we must do this manually; https://flake.parts/overlays#consuming-an-overlay
-            _module.args.pkgs-unstable = import inputs.nixpkgs-unstable {
-              inherit system;
-            };
-
-            packages.neovim =
-              (inputs.nvf.lib.neovimConfiguration {
-                inherit pkgs;
-                modules = [ ./home/modules/neovim/config ];
-              }).neovim;
-
-            # Select all inputs as primary inputs, to make them update
-            nixos-unified = {
-              primary-inputs = builtins.attrNames inputs;
-            };
-
-            treefmt = {
-              projectRootFile = "flake.nix";
-
-              programs.nixfmt = {
-                enable = true;
-                package = pkgs.nixfmt-rfc-style;
-              };
-              programs.shfmt.enable = true;
-
-              settings.global.excludes = [
-                ".envrc"
-                ".editorconfig"
-                "README.md"
-                "LICENSE"
-                "*.png"
-                "packages/caddy/src/*"
-                "secrets/*"
-              ];
-            };
-          };
-      }
-    );
+    inputs:
+    inputs.nixos-unified.lib.mkFlake {
+      inherit inputs;
+      systems = import inputs.systems;
+      root = ./.;
+    };
 }

@@ -2,6 +2,7 @@
   lib,
   config,
   flake,
+  pkgs,
   ...
 }:
 with lib;
@@ -58,9 +59,16 @@ in
 
   config = mkIf cfg.enable {
     catppuccin.cursors.enable = true;
-    home.pointerCursor = {
-      size = 24;
-      gtk.enable = true;
+    home = {
+      pointerCursor = {
+        size = 16;
+        gtk.enable = true;
+      };
+
+      packages = with pkgs; [
+        grimblast
+        wf-recorder
+      ];
     };
 
     gtk.enable = true;
@@ -113,6 +121,16 @@ in
             "$mod SHIFT, j, movewindow, d"
             "$mod SHIFT, k, movewindow, u"
             "$mod SHIFT, l, movewindow, r"
+
+            # Start application launcher
+            "$mod, p, exec, rofi-launcher"
+            "$mod_SHIFT, p, exec, rofi-runner"
+
+            "$mod, m, exec, rofi-powermenu"
+
+            # Making screenshots
+            "$mod, s, exec, grimblast --notify copysave area"
+            "$mod_SHIFT, s, exec, rofi-screenshot"
           ]
           ++ (
             # workspaces

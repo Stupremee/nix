@@ -124,7 +124,10 @@
     };
 
     dashboard = {
-      alpha.enable = true;
+      alpha = {
+        enable = true;
+        theme = "theta";
+      };
     };
 
     notify = {
@@ -133,6 +136,13 @@
 
     projects = {
       project-nvim.enable = true;
+    };
+
+    session.nvim-session-manager = {
+      enable = true;
+      setupOpts = {
+        autoload_mode = "CurrentDir";
+      };
     };
 
     utility = {
@@ -168,8 +178,17 @@
       chatgpt.enable = false;
 
       copilot = {
-        enable = false;
-        cmp.enable = false;
+        enable = true;
+        mappings.suggestion = {
+          accept = "<M-f>";
+          prev = "<M-p>";
+          next = "<M-n>";
+        };
+
+        setupOpts.suggestion = {
+          enabled = true;
+          auto_trigger = true;
+        };
       };
 
       codecompanion-nvim.enable = false;

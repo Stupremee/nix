@@ -36,6 +36,10 @@
       enable = true;
     };
 
+    formatter.conform-nvim = {
+      enable = true;
+    };
+
     lsp = {
       formatOnSave = true;
       lspkind.enable = false;

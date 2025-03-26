@@ -1,34 +1,40 @@
-{ inputs, self, ... }:
+{ inputs, ... }:
 {
   imports = [
-    inputs.flake-root.flakeModule
-    inputs.mission-control.flakeModule
+    inputs.just-flake.flakeModule
     inputs.agenix-rekey.flakeModule
   ];
 
   perSystem =
     {
       pkgs,
-      self',
       config,
-      lib,
       ...
     }:
     {
-      mission-control.scripts = {
-        fmt = {
-          description = "Format the whole project";
-          exec = "${lib.getExe self'.formatter}";
-        };
+      just-flake.features = {
+        flake = {
+          enable = true;
+          justfile = ''
+            # Runs the activate script
+            activate *args:
+              nix run .#activate -- {{ args }}
 
-        check = {
-          description = "Run nix flake check";
-          exec = "nix flake check";
+            # Checks the flake
+            check:
+              nix flake check
+
+            # Auto Format the whole tree
+            fmt:
+              nix fmt
+          '';
         };
       };
 
       devShells.default = pkgs.mkShell {
-        inputsFrom = [ config.mission-control.devShell ];
+        inputsFrom = [
+          config.just-flake.outputs.devShell
+        ];
 
         nativeBuildInputs = with pkgs; [
           config.agenix-rekey.package

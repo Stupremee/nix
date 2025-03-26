@@ -57,9 +57,7 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    flake-root.url = "github:srid/flake-root";
-
-    mission-control.url = "github:Platonic-Systems/mission-control";
+    just-flake.url = "github:juspay/just-flake";
   };
 
   outputs =

@@ -65,10 +65,7 @@ in
         module = flake.inputs.self + /configurations/home/${name}.nix;
       in
       mkIf (pathExists module) {
-        imports = [
-          flake.inputs.self.homeModules.default
-          module
-        ];
+        imports = [ module ];
       };
 
     nix.settings = mkIf cfg.stu.enable {

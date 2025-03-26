@@ -135,6 +135,9 @@ in
             # dismiss notifications
             "ctrl, 65, exec, makoctl dismiss"
             "ctrl_shift, 65, exec, makoctl restore"
+
+            # lock screen
+            "$mod_SHIFT, x, exec, hyprlock"
           ]
           ++ (
             # workspaces

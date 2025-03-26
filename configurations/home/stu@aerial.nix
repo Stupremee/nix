@@ -1,44 +1,17 @@
-{ flake, pkgs, ... }:
-let
-  inherit (flake.inputs) self;
-in
+{ pkgs, ... }:
 {
-  imports = [ self.homeModules.default ];
-
-  home = {
-    username = "stu";
-
-    packages = with pkgs; [
-      firefox-devedition
-    ];
-  };
+  home.packages = with pkgs; [
+    firefox-devedition
+  ];
 
   my = {
-    alacritty.enable = true;
-    mako.enable = true;
-
-    zsh.enable = true;
-    tmux.enable = true;
-    neovim.enable = true;
-    git.enable = true;
-
-    rofi.enable = true;
     hyprland = {
-      enable = true;
-
-      sensitivity = "-0.5";
+      sensitivity = "0.0";
 
       monitors = {
-        "DP-5" = {
+        "DP-1" = {
           position = "0x0";
-          resolution = "3840x2160@60";
-          scale = "1.5";
-        };
-
-        "DP-3" = {
-          position = "2560x0";
-          resolution = "3840x2160@60";
-          scale = "1.5";
+          resolution = "2560x1440";
         };
       };
     };

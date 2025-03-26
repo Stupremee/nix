@@ -1,35 +1,14 @@
-{ flake, pkgs, ... }:
-let
-  inherit (flake.inputs) self;
-in
+{ pkgs, ... }:
 {
-  imports = [ self.homeModules.default ];
-
-  home = {
-    username = "stu";
-
-    packages = with pkgs; [
-      ungoogled-chromium
-      firefox-devedition
-      teams-for-linux
-    ];
-  };
+  home.packages = with pkgs; [
+    firefox-devedition
+    ungoogled-chromium
+    teams-for-linux
+  ];
 
   my = {
-    alacritty.enable = true;
-    mako.enable = true;
-
-    zsh.enable = true;
-    tmux.enable = true;
-    neovim.enable = true;
-    git.enable = true;
-
-    rofi.enable = true;
     hyprland = {
-      enable = true;
-
       sensitivity = "-0.5";
-
       monitors = {
         "DP-5" = {
           position = "0x0";

@@ -59,13 +59,17 @@ in
     # Enable home-manager for our user
     home-manager.users.stu =
       let
-        inherit (builtins) pathExists;
+        inherit (builtins) map pathExists;
 
-        name = "stu@${config.networking.hostName}";
-        module = flake.inputs.self + /configurations/home/${name}.nix;
+        names = [
+          "stu"
+          "stu@${config.networking.hostName}"
+        ];
       in
-      mkIf (pathExists module) {
-        imports = [ module ];
+      {
+        imports = filter pathExists (
+          map (name: flake.inputs.self + /configurations/home/${name}.nix) names
+        );
       };
 
     nix.settings = mkIf cfg.stu.enable {

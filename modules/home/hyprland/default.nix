@@ -131,6 +131,10 @@ in
             # Making screenshots
             "$mod, s, exec, grimblast --notify copysave area"
             "$mod_SHIFT, s, exec, rofi-screenshot"
+
+            # dismiss notifications
+            "ctrl, 65, exec, makoctl dismiss"
+            "ctrl_shift, 65, exec, makoctl restore"
           ]
           ++ (
             # workspaces

@@ -1,11 +1,19 @@
-{ flake, ... }:
+{ flake, pkgs, ... }:
 let
   inherit (flake.inputs) self;
 in
 {
   imports = [ self.homeModules.default ];
 
-  home.username = "stu";
+  home = {
+    username = "stu";
+
+    packages = with pkgs; [
+      ungoogled-chromium
+      firefox-devedition
+      teams-for-linux
+    ];
+  };
 
   my = {
     alacritty.enable = true;

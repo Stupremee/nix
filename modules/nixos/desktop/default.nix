@@ -1,8 +1,6 @@
 {
   lib,
-  pkgs,
   config,
-  inputs,
   ...
 }:
 with lib;
@@ -29,6 +27,7 @@ in
       fonts.enable = true;
       sound.enable = true;
       locale.enable = true;
+      avahi.enable = true;
 
       networking = {
         enable = true;

@@ -10,11 +10,14 @@
       treefmt = {
         projectRootFile = "flake.nix";
 
-        programs.nixfmt = {
-          enable = true;
-          package = pkgs.nixfmt-rfc-style;
+        programs = {
+          nixfmt = {
+            enable = true;
+            package = pkgs.nixfmt-rfc-style;
+          };
+          shfmt.enable = true;
+          just.enable = true;
         };
-        programs.shfmt.enable = true;
 
         settings.global.excludes = [
           ".envrc"

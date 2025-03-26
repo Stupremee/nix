@@ -5,11 +5,11 @@ IDENTITIES=$(git config --global --name-only --get-regexp "user.*..name" | sed -
 
 # filter them with fzf
 ID=$(echo "${IDENTITIES}" | fzf -e -1 +m -q "$1")
-if ! git config --global --get-regexp "user.${ID}.name" > /dev/null; then
-    echo "Please use a valid git identity
+if ! git config --global --get-regexp "user.${ID}.name" >/dev/null; then
+  echo "Please use a valid git identity
 Options:"
-    git config --global --name-only --get-regexp "user.*..name" | sed -e 's/^user.//' -e 's/.name$//' -e 's/^/\t/'
-    exit 1
+  git config --global --name-only --get-regexp "user.*..name" | sed -e 's/^user.//' -e 's/.name$//' -e 's/^/\t/'
+  exit 1
 fi
 
 # set the ID locally in each repo (eg in the repo's .git/config)

@@ -10,7 +10,7 @@ let
 
   cfg = config.my.git;
 
-  gitIdentity = pkgs.writeShellScriptBin "git-identity" (readFile ./git-identity);
+  gitIdentity = pkgs.writeShellScriptBin "git-identity" (readFile ./git-identity.sh);
 in
 {
   options.my.git.enable = mkEnableOption "Enable proper Git in shell";

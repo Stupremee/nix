@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ flake, pkgs, ... }:
 {
   imports = with flake.inputs; [
     self.nixosModules.default
@@ -16,6 +16,15 @@
     nix-common = {
       maxJobs = 12;
       flakePath = "/home/stu/dev/nix/nix";
+    };
+
+    user.stu.extraGroups = [ "wireshark" ];
+  };
+
+  programs = {
+    wireshark = {
+      enable = true;
+      package = pkgs.wireshark;
     };
   };
 

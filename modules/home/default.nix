@@ -1,4 +1,9 @@
-{ flake, lib, ... }:
+{
+  flake,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
 {
   imports =
@@ -8,6 +13,10 @@ with lib;
       nvf.homeManagerModules.default
     ]
     ++ (attrValues (filterAttrs (name: _: name != "default") flake.inputs.self.homeModules));
+
+  home.packages = with pkgs; [
+    devenv
+  ];
 
   nixpkgs.overlays = [
     flake.inputs.self.overlays.default

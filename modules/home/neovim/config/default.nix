@@ -38,6 +38,12 @@
 
     formatter.conform-nvim = {
       enable = true;
+      setupOpts.formatters_by_ft = {
+        terraform = [
+          "tofu_fmt"
+          "terraform_fmt"
+        ];
+      };
     };
 
     lsp = {
@@ -62,6 +68,7 @@
 
       markdown.enable = true;
       bash.enable = true;
+      terraform.enable = true;
 
       rust = {
         enable = true;

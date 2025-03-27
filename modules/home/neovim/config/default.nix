@@ -1,5 +1,14 @@
+{ pkgs, lib, ... }:
+let
+  inherit (lib.generators) mkLuaInline;
+in
 {
   vim = {
+    extraPackages = with pkgs; [
+      gitlab-ci-ls
+      yamlfmt
+    ];
+
     viAlias = false;
     vimAlias = true;
 
@@ -43,8 +52,26 @@
           "tofu_fmt"
           "terraform_fmt"
         ];
+        yaml = [ "yamlfmt" ];
+        "yaml.gitlab" = [ "yamlfmt" ];
       };
     };
+
+    autocmds = [
+      {
+        desc = "Set filetype to GitLab CI file";
+        pattern = [ "*.gitlab-ci*.{yml,yaml}" ];
+        event = [
+          "BufRead"
+          "BufNewFile"
+        ];
+        callback = mkLuaInline ''
+          function() 
+            vim.bo.filetype = "yaml.gitlab"
+          end
+        '';
+      }
+    ];
 
     lsp = {
       formatOnSave = true;
@@ -53,6 +80,12 @@
       lspsaga.enable = false;
       trouble.enable = true;
       lspSignature.enable = true;
+
+      lspconfig.sources = {
+        gitlab_ci_ls = ''
+          require'lspconfig'.gitlab_ci_ls.setup{}
+        '';
+      };
     };
 
     languages = {

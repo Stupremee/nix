@@ -37,6 +37,15 @@ let
         };
       };
     };
+
+  importEnv =
+    (pkgs.writeScript "hyprland-import-env" (readFile ./import-env.sh)).overrideAttrs
+      (old: {
+        buildCommand = ''
+          ${old.buildCommand}
+          patchShebangs $out
+        '';
+      });
 in
 {
   options.my.hyprland = {
@@ -89,6 +98,14 @@ in
         };
 
         animations.enabled = 0;
+
+        env = [
+          "HYPRCURSOR_SIZE,16"
+        ];
+
+        exec-once = [
+          "hyprctl setcursor HYPRCURSOR_SIZE 16"
+        ];
 
         windowrulev2 = [
           "float,class:pinentry-qt"

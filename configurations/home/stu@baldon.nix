@@ -1,5 +1,7 @@
 { pkgs, ... }:
 {
+  imports = [ ./stu.nix ];
+
   home.packages = with pkgs; [
     firefox-devedition
     ungoogled-chromium

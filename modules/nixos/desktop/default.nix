@@ -15,7 +15,10 @@ in
   config = mkIf cfg.enable {
     my = {
       user = {
-        stu.enable = true;
+        stu = {
+          enable = true;
+          enableHome = true;
+        };
         root.enable = true;
       };
 

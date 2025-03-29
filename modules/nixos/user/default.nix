@@ -27,6 +27,9 @@ in
 
     stu = {
       enable = mkEnableOption "Activate the main user";
+
+      enableHome = mkEnableOption "Activate home manager";
+
       extraGroups = mkOption {
         type = types.listOf types.str;
         default = [ ];
@@ -66,7 +69,7 @@ in
           "stu@${config.networking.hostName}"
         ];
       in
-      {
+      mkIf cfg.stu.enableHome {
         imports = filter pathExists (
           map (name: flake.inputs.self + /configurations/home/${name}.nix) names
         );

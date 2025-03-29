@@ -23,6 +23,11 @@ in
       reverse_proxy :${toString config.services.home-assistant.config.http.server_port}
     '';
 
+    services.caddy.virtualHosts."esp.stu-dev.me".extraConfig = ''
+      import cloudflare
+      reverse_proxy :${toString config.services.esphome.port}
+    '';
+
     services.home-assistant = {
       enable = true;
 
@@ -43,6 +48,7 @@ in
         "ezviz"
         "ipp"
         "brother"
+        "esphome"
 
         # Non-device integrations
         "co2signal"
@@ -78,11 +84,20 @@ in
       };
     };
 
+    services.esphome = {
+      enable = true;
+    };
+
     my.persist.directories = [
       {
         directory = "/var/lib/hass";
         user = "hass";
         group = "hass";
+      }
+      {
+        directory = "/var/lib/private/esphome";
+        user = "esphome";
+        group = "esphome";
       }
     ];
   };

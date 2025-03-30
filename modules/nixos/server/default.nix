@@ -22,6 +22,7 @@ in
       };
 
       docker.enable = true;
+      avahi.enable = true;
 
       networking = {
         enable = true;

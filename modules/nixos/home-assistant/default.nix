@@ -25,6 +25,7 @@ in
 
     services.caddy.virtualHosts."esp.stu-dev.me".extraConfig = ''
       import cloudflare
+      import authelia
       reverse_proxy :${toString config.services.esphome.port}
     '';
 

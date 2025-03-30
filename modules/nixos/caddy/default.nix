@@ -28,6 +28,13 @@ in
             resolvers 1.1.1.1 1.0.0.1
           }
         }
+
+        (authelia) {
+          forward_auth localhost:9091 {
+            uri /api/authz/forward-auth
+            copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
+          }
+        }
       '';
     };
 

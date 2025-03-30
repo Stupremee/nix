@@ -71,6 +71,9 @@ in
 
         # Non-device integrations
         "co2signal"
+        "tibber"
+        "soundtouch"
+        "spotify"
       ];
 
       config = {

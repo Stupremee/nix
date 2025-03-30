@@ -29,6 +29,24 @@ in
       reverse_proxy :${toString config.services.esphome.port}
     '';
 
+    services.caddy.virtualHosts."zigbee.stu-dev.me".extraConfig = ''
+      import cloudflare
+      import authelia
+      reverse_proxy :8080
+    '';
+
+    age.secrets = {
+      hass-mqtt-password = {
+        generator.script = "alnum";
+      };
+      zigbee2mqtt-mqtt-password.rekeyFile = ../../../secrets/zigbee2mqtt-mqtt-password.age;
+      "zigbee2mqtt-secrets.yaml" = {
+        rekeyFile = ../../../secrets/zigbee2mqtt-secrets.yaml.age;
+        owner = "zigbee2mqtt";
+        group = "zigbee2mqtt";
+      };
+    };
+
     services.home-assistant = {
       enable = true;
 
@@ -89,6 +107,32 @@ in
       enable = true;
     };
 
+    services.zigbee2mqtt = {
+      enable = true;
+      dataDir =
+        if config.my.persist.enable then "/persist/var/lib/zigbee2mqtt" else "/var/lib/zigbee2mqtt";
+
+      settings = {
+        serial = {
+          port = "/dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_660d27acdd49ef11a096c98cff00cc63-if00-port0";
+          adapter = "zstack";
+        };
+
+        homeassistant.enable = true;
+
+        mqtt = {
+          enable = true;
+          user = "zigbee2mqtt";
+          password = "!${config.age.secrets."zigbee2mqtt-secrets.yaml".path} mqtt_password";
+        };
+
+        frontend = {
+          enable = true;
+          host = "127.0.0.1";
+        };
+      };
+    };
+
     my.persist.directories = [
       {
         directory = "/var/lib/hass";
@@ -101,5 +145,20 @@ in
         group = "esphome";
       }
     ];
+
+    my.mqtt = {
+      enable = true;
+
+      users = {
+        hass = {
+          acl = [ "readwrite #" ];
+          passwordFile = config.age.secrets.hass-mqtt-password.path;
+        };
+        zigbee2mqtt = {
+          acl = [ "readwrite #" ];
+          passwordFile = config.age.secrets.zigbee2mqtt-mqtt-password.path;
+        };
+      };
+    };
   };
 }

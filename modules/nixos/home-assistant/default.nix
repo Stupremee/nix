@@ -109,6 +109,7 @@ in
 
     services.zigbee2mqtt = {
       enable = true;
+      package = pkgs.unstable.zigbee2mqtt_2;
       dataDir =
         if config.my.persist.enable then "/persist/var/lib/zigbee2mqtt" else "/var/lib/zigbee2mqtt";
 
@@ -132,8 +133,14 @@ in
         };
 
         availability.enabled = true;
+        advanced.transmit_power = 20;
       };
     };
+    systemd.services.zigbee2mqtt.serviceConfig.SystemCallFilter = [
+      "@system-service @pkey"
+      "~@privileged @resources"
+      "@chown"
+    ];
 
     my.persist.directories = [
       {

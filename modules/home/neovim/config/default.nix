@@ -102,6 +102,11 @@ in
       markdown.enable = true;
       bash.enable = true;
       terraform.enable = true;
+      svelte.enable = true;
+      ts = {
+        enable = true;
+        extensions.ts-error-translator.enable = true;
+      };
 
       rust = {
         enable = true;

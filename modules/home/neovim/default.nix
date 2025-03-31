@@ -13,12 +13,13 @@ in
   config = mkIf cfg.enable {
     programs.nvf = {
       enable = true;
+      enableManpages = true;
+      defaultEditor = true;
       settings = ./config;
     };
 
     home.sessionVariables = {
       MANPAGER = "nvim +Man!";
-      EDITOR = "nvim";
     };
   };
 }

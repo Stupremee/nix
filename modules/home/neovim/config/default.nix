@@ -12,6 +12,8 @@ in
     viAlias = false;
     vimAlias = true;
 
+    additionalRuntimePaths = [ ./nvim ];
+
     options = {
       tabstop = 4;
       shiftwidth = 4;

@@ -4,6 +4,7 @@
 
   home.packages = with pkgs; [
     firefox-devedition
+    spotify-player
   ];
 
   my = {

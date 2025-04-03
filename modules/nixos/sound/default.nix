@@ -33,6 +33,7 @@ in
     environment.systemPackages = with pkgs; [
       pavucontrol
       pulsemixer
+      playerctl
     ];
 
     users.extraUsers.${config.my.user.mainUser}.extraGroups = [ "audio" ];

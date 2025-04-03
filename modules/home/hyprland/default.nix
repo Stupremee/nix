@@ -37,15 +37,6 @@ let
         };
       };
     };
-
-  importEnv =
-    (pkgs.writeScript "hyprland-import-env" (readFile ./import-env.sh)).overrideAttrs
-      (old: {
-        buildCommand = ''
-          ${old.buildCommand}
-          patchShebangs $out
-        '';
-      });
 in
 {
   options.my.hyprland = {
@@ -155,6 +146,17 @@ in
 
             # lock screen
             "$mod_SHIFT, x, exec, hyprlock"
+
+            # media controls
+            "$mod, XF86AudioPlay, exec, playerctl play-pause"
+            "$mod, XF86AudioPrev, exec, playerctl previous"
+            "$mod, XF86AudioNext, exec, playerctl next"
+
+            # volume
+            "$mod, XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+            "$mod, XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+            "$mod, XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            "$mod, XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
           ]
           ++ (
             # workspaces

@@ -68,6 +68,7 @@ in
       packages = with pkgs; [
         grimblast
         wf-recorder
+        wl-clipboard
       ];
     };
 

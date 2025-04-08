@@ -135,6 +135,38 @@ in
     statusline = {
       lualine = {
         enable = true;
+        activeSection.b = [
+          ''
+            {
+              "filetype",
+              colored = true,
+              icon_only = true,
+              icon = { align = 'left' }
+            }
+          ''
+          ''
+            {
+              "filename",
+              symbols = {modified = ' ', readonly = ' '},
+              separator = {right = ''}
+            }
+          ''
+          ''
+            {
+              "macro",
+              fmt = function()
+                local reg = vim.fn.reg_recording()
+                if reg ~= "" then
+                  return "recording @" .. reg
+                end
+                return nil
+              end,
+              draw_empty = false,
+              colored = true,
+              separator = { left = '', right = '' }
+            }
+          ''
+        ];
       };
     };
 

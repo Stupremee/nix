@@ -95,6 +95,12 @@ in
       };
     };
 
+    treesitter = {
+      grammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        just
+      ];
+    };
+
     languages = {
       enableLSP = true;
       enableFormat = true;

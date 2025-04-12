@@ -6,6 +6,8 @@
 }:
 let
   inherit (lib.generators) mkLuaInline;
+
+  ctrlAlt = if pkgs.stdenv.isDarwin then "C" else "M";
 in
 {
   vim = {
@@ -104,9 +106,9 @@ in
         setupModule = "supermaven-nvim";
         setupOpts = {
           keymaps = {
-            accept_suggestion = "<M-f>";
-            clear_suggestion = "<M-e>";
-            accept_word = "<M-w>";
+            accept_suggestion = "<${ctrlAlt}-f>";
+            clear_suggestion = "<${ctrlAlt}-e>";
+            accept_word = "<${ctrlAlt}-w>";
           };
         };
       };
@@ -349,9 +351,9 @@ in
       copilot = {
         enable = true;
         mappings.suggestion = {
-          accept = "<M-f>";
-          prev = "<M-p>";
-          next = "<M-n>";
+          accept = "<${ctrlAlt}-f>";
+          prev = "<${ctrlAlt}-p>";
+          next = "<${ctrlAlt}-n>";
         };
 
         setupOpts.suggestion = {

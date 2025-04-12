@@ -15,7 +15,10 @@ in
       enable = true;
       enableManpages = true;
       defaultEditor = true;
-      settings = ./config;
+      settings = {
+        _module.args.theme = config.catppuccin.flavor;
+        imports = [ ./config ];
+      };
     };
 
     home.sessionVariables = {

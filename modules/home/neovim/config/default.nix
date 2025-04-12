@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, theme, ... }:
 let
   inherit (lib.generators) mkLuaInline;
 in
@@ -22,7 +22,7 @@ in
     theme = {
       enable = true;
       name = "catppuccin";
-      style = "frappe";
+      style = theme;
     };
 
     undoFile.enable = true;

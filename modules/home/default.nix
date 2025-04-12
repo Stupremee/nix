@@ -9,7 +9,7 @@ with lib;
   imports =
     with flake.inputs;
     [
-      catppuccin.homeManagerModules.catppuccin
+      catppuccin.homeModules.catppuccin
       nvf.homeManagerModules.default
     ]
     ++ (attrValues (filterAttrs (name: _: name != "default") flake.inputs.self.homeModules));

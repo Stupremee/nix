@@ -13,20 +13,9 @@ in
   options.my.nix-common = {
     enable = mkEnableOption "Enable default settings for nix-daemon";
 
-    isRemoteBuilder = mkOption {
-      type = types.bool;
-      description = "Indicates if this machine is used as a remote builder.";
-      default = false;
-    };
-
     maxJobs = mkOption {
       type = types.int;
       default = 4;
-    };
-
-    flakePath = mkOption {
-      type = types.nullOr types.path;
-      default = null;
     };
   };
 
@@ -63,7 +52,9 @@ in
         allowed-users = [ "root" ];
         trusted-users = [ "root" ];
 
-        auto-optimise-store = true;
+        # Disable this on MacOS, as this seems to cause some issues
+        # https://github.com/NixOS/nix/issues/7273
+        auto-optimise-store = !pkgs.stdenv.isDarwin;
         log-lines = 50;
 
         max-jobs = cfg.maxJobs;
@@ -71,18 +62,9 @@ in
 
       # Clean up old generations after 30 days
       gc = {
-        automatic = !config.programs.nh.clean.enable;
-        dates = "weekly";
+        automatic = mkDefault true;
         options = "--delete-older-than 30d";
       };
-    };
-
-    programs.nh = {
-      enable = true;
-      clean.enable = true;
-      clean.extraArgs = "--keep-since 7d --keep 10";
-      clean.dates = if cfg.isRemoteBuilder then "daily" else "weekly";
-      flake = cfg.flakePath;
     };
 
     system.activationScripts.update-diff = {

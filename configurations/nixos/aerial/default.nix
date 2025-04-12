@@ -10,8 +10,9 @@
     desktop.enable = true;
     wayland.hyprland.enable = true;
 
-    nix-common = {
-      maxJobs = 8;
+    nix-common.maxJobs = 8;
+    nh = {
+      enable = true;
       flakePath = "/home/stu/dev/nix/nix";
     };
   };

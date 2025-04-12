@@ -22,6 +22,10 @@
     nix-common = {
       enable = true;
       maxJobs = 8;
+    };
+
+    nh = {
+      enable = true;
       flakePath = "/home/stu/nix";
       isRemoteBuilder = true;
     };

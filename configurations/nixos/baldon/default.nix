@@ -13,8 +13,9 @@
     nvidia.enable = true;
     bluetooth.enable = true;
 
-    nix-common = {
-      maxJobs = 12;
+    nix-common.maxJobs = 12;
+    nh = {
+      enable = true;
       flakePath = "/home/stu/dev/nix/nix";
     };
 

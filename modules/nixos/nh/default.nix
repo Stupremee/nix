@@ -34,6 +34,6 @@ in
       flake = cfg.flakePath;
     };
 
-    nix.settings.gc.automatic = mkForce false;
+    nix.gc.automatic = mkForce false;
   };
 }

@@ -1,4 +1,9 @@
-{ pkgs, lib, theme, ... }:
+{
+  pkgs,
+  lib,
+  theme,
+  ...
+}:
 let
   inherit (lib.generators) mkLuaInline;
 in

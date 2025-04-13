@@ -8,6 +8,8 @@
   ];
 
   my = {
+    dev.k8s.enable = true;
+
     hyprland = {
       sensitivity = "0.0";
 

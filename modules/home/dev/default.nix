@@ -16,7 +16,7 @@ in
   config = mkMerge [
     (mkIf cfg.k8s.enable {
       home = {
-        packages = with pkgs; [
+        packages = with pkgs.unstable; [
           kubectl
           kubelogin-oidc
           fluxcd
@@ -32,10 +32,14 @@ in
       };
 
       programs = {
-        k9s.enable = true;
+        k9s = {
+          enable = true;
+          package = pkgs.unstable.k9s;
+        };
         kubecolor = {
           enable = true;
           enableAlias = true;
+          package = pkgs.unstable.kubecolor;
         };
       };
     })

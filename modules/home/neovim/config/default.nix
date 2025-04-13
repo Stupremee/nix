@@ -118,6 +118,7 @@ in
       };
 
       markdown.enable = true;
+      yaml.enable = true;
       bash.enable = true;
       terraform.enable = true;
       svelte.enable = true;

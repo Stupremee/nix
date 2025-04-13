@@ -19,6 +19,7 @@ in
         packages = with pkgs; [
           kubectl
           kubelogin-oidc
+          fluxcd
           kubectx
           kustomize
           kubernetes-helm

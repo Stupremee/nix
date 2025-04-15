@@ -59,13 +59,17 @@ in
 
     formatter.conform-nvim = {
       enable = true;
-      setupOpts.formatters_by_ft = {
-        terraform = [
-          "tofu_fmt"
-          "terraform_fmt"
-        ];
-        yaml = [ "yamlfmt" ];
-        "yaml.gitlab" = [ "yamlfmt" ];
+      setupOpts = {
+        formatters_by_ft = {
+          terraform = [
+            "tofu_fmt"
+            "terraform_fmt"
+          ];
+          yaml = [ "yamlfmt" ];
+          "yaml.gitlab" = [ "yamlfmt" ];
+        };
+
+        formatters.rustfmt.default_edition = "2024";
       };
     };
 

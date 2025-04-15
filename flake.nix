@@ -57,6 +57,7 @@
       url = "github:notashelf/nvf";
       inputs.flake-parts.follows = "flake-parts";
       inputs.systems.follows = "systems";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     catppuccin.url = "github:catppuccin/nix";

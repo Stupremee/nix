@@ -9,6 +9,8 @@ let
 in
 {
   vim = {
+    package = pkgs.unstable.neovim-unwrapped;
+
     extraPackages = with pkgs; [
       gitlab-ci-ls
       yamlfmt
@@ -57,6 +59,14 @@ in
       enable = true;
     };
 
+    pluginRC.conform-nvim = lib.mkAfter ''
+      require("conform").formatters.rustfmt = {
+        options = {
+          default_edition = "2024"
+        },
+      }
+    '';
+
     formatter.conform-nvim = {
       enable = true;
       setupOpts = {
@@ -68,8 +78,6 @@ in
           yaml = [ "yamlfmt" ];
           "yaml.gitlab" = [ "yamlfmt" ];
         };
-
-        formatters.rustfmt.default_edition = "2024";
       };
     };
 

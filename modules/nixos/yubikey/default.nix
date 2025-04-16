@@ -29,7 +29,10 @@ in
 
     services.pcscd.enable = true;
 
-    environment.systemPackages = [ pkgs.yubikey-personalization ];
+    environment.systemPackages = with pkgs; [
+      yubikey-personalization
+      pinentry-curses
+    ];
     services.udev.packages = [ pkgs.yubikey-personalization ];
   };
 }

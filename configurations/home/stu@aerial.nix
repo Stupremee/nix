@@ -4,6 +4,7 @@
 
   home.packages = with pkgs; [
     firefox-devedition
+    ungoogled-chromium
     spotify-player
   ];
 

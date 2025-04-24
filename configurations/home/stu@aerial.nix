@@ -2,10 +2,11 @@
 {
   imports = [ ./stu.nix ];
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs.unstable; [
     firefox-devedition
     ungoogled-chromium
     spotify-player
+    localsend
   ];
 
   my = {

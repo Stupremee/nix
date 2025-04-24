@@ -59,6 +59,20 @@ in
       enable = true;
     };
 
+    lazy.plugins = {
+      "nlsp-settings.nvim" = {
+        package = pkgs.vimPlugins.nlsp-settings-nvim;
+        setupModule = "nlspsettings";
+        setupOpts = {
+          config_home = mkLuaInline ''vim.fn.stdpath('config') .. "/nlsp-settings" '';
+          local_settings_dir = ".nlsp-settings";
+          local_settings_root_markers_fallback = [ ".git" ];
+          append_default_schemas = true;
+          loader = "json";
+        };
+      };
+    };
+
     pluginRC.conform-nvim = lib.mkAfter ''
       require("conform").formatters.rustfmt = {
         options = {

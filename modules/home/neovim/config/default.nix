@@ -53,6 +53,33 @@ in
         silent = true;
         action = ":nohlsearch<CR>";
       }
+      {
+        key = "<leader>aa";
+        mode = [
+          "n"
+          "v"
+        ];
+        silent = true;
+        action = ":CodeCompanionActions<CR>";
+        desc = "CodeCompanion Actions";
+      }
+      {
+        key = "<leader>ac";
+        mode = [
+          "n"
+          "v"
+        ];
+        silent = true;
+        action = ":CodeCompanionChat Toggle<CR>";
+        desc = "CodeCompanion Chat";
+      }
+      {
+        key = "<leader>ad";
+        mode = "v";
+        silent = true;
+        action = ":CodeCompanionChat Add<CR>";
+        desc = "CodeCompanion Chat Add";
+      }
     ];
 
     spellcheck = {
@@ -71,6 +98,10 @@ in
           loader = "json";
         };
       };
+
+      codecompanion-nvim.after = ''
+        vim.cmd([[cab cc CodeCompanion]])
+      '';
     };
 
     pluginRC.conform-nvim = lib.mkAfter ''
@@ -317,7 +348,7 @@ in
         };
       };
 
-      codecompanion-nvim.enable = false;
+      codecompanion-nvim.enable = true;
     };
 
     comments = {

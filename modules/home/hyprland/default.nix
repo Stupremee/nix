@@ -69,6 +69,8 @@ in
         grimblast
         wf-recorder
         wl-clipboard
+        imv
+        mpv
       ];
     };
 

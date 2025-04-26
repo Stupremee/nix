@@ -46,6 +46,7 @@ in
         wget
         bash-completion
         usbutils
+        viddy
 
         man-db
         man-pages
@@ -60,6 +61,7 @@ in
         la = "eza -la";
 
         ps = "procs";
+        watch = "viddy";
 
         opt = ''
           manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix {}" | xargs manix

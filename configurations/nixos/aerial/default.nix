@@ -15,6 +15,8 @@
       enable = true;
       flakePath = "/home/stu/dev/nix/nix";
     };
+
+    hardware.logitech.enable = true;
   };
 
   networking = {

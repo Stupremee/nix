@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ flake, pkgs, ... }:
 let
   inherit (flake.inputs) self;
 in
@@ -7,6 +7,9 @@ in
 
   home = {
     username = "stu";
+    packages = with pkgs; [
+      fh
+    ];
   };
 
   my = {

@@ -99,6 +99,18 @@ in
         };
       };
 
+      "supermaven-nvim" = {
+        package = pkgs.vimPlugins.supermaven-nvim;
+        setupModule = "supermaven-nvim";
+        setupOpts = {
+          keymaps = {
+            accept_suggestion = "<M-f>";
+            clear_suggestion = "<M-e>";
+            accept_word = "<M-w>";
+          };
+        };
+      };
+
       codecompanion-nvim.after = ''
         vim.cmd([[cab cc CodeCompanion]])
       '';
@@ -343,7 +355,7 @@ in
         };
 
         setupOpts.suggestion = {
-          enabled = true;
+          enabled = false;
           auto_trigger = true;
         };
       };

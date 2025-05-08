@@ -24,6 +24,7 @@ in
           kustomize
           kubernetes-helm
           stern
+          kubent
         ];
 
         shellAliases = {

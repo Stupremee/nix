@@ -15,5 +15,8 @@ in
     zsh.enable = true;
     neovim.enable = true;
     git.enable = true;
+    dev = {
+      k8s.enable = true;
+    };
   };
 }

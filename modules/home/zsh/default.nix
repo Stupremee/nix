@@ -18,6 +18,10 @@ in
   options.my.zsh.enable = mkEnableOption "Enable ZSH shell";
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      comma
+    ];
+
     programs.atuin = {
       enable = true;
       enableZshIntegration = true;
@@ -109,6 +113,10 @@ in
           min_time_to_notify = 60000;
         };
       };
+    };
+
+    programs.command-not-found = {
+      enable = true;
     };
   };
 }

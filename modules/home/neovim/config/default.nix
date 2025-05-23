@@ -197,6 +197,7 @@ in
         enable = true;
         extensions.ts-error-translator.enable = true;
       };
+      php.enable = true;
 
       rust = {
         enable = true;

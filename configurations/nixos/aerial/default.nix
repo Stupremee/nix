@@ -17,6 +17,8 @@
     };
 
     hardware.logitech.enable = true;
+
+    gaming.steam.enable = true;
   };
 
   networking = {

@@ -17,23 +17,15 @@ in
     fonts = {
       fontDir.enable = true;
 
-      packages =
-        let
-          nerdFont = pkgs.nerdfonts.override {
-            fonts = [
-              "Monaspace"
-              "Noto"
-            ];
-          };
-        in
-        with pkgs;
-        [
-          nerdFont
-          monaspace
-          noto-fonts
-          noto-fonts-color-emoji
-          corefonts
-        ];
+      packages = with pkgs; [
+        nerd-fonts.monaspace
+        nerd-fonts.noto
+
+        monaspace
+        noto-fonts
+        noto-fonts-color-emoji
+        corefonts
+      ];
 
       enableDefaultPackages = false;
 

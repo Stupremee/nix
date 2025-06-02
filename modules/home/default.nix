@@ -18,10 +18,6 @@ with lib;
     devenv
   ];
 
-  nixpkgs.overlays = [
-    flake.inputs.self.overlays.default
-  ];
-
   manual.manpages.enable = true;
 
   programs = {

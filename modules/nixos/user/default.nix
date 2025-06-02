@@ -60,20 +60,24 @@ in
     };
 
     # Enable home-manager for our user
-    home-manager.users.stu =
-      let
-        inherit (builtins) map pathExists;
+    home-manager = {
+      useGlobalPkgs = true;
 
-        names = [
-          "stu"
-          "stu@${config.networking.hostName}"
-        ];
-      in
-      mkIf cfg.stu.enableHome {
-        imports = filter pathExists (
-          map (name: flake.inputs.self + /configurations/home/${name}.nix) names
-        );
-      };
+      users.stu =
+        let
+          inherit (builtins) map pathExists;
+
+          names = [
+            "stu"
+            "stu@${config.networking.hostName}"
+          ];
+        in
+        mkIf cfg.stu.enableHome {
+          imports = filter pathExists (
+            map (name: flake.inputs.self + /configurations/home/${name}.nix) names
+          );
+        };
+    };
 
     nix.settings = mkIf cfg.stu.enable {
       allowed-users = [ "stu" ];

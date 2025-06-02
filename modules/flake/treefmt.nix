@@ -16,7 +16,6 @@
             package = pkgs.nixfmt-rfc-style;
           };
           shfmt.enable = true;
-          just.enable = true;
         };
 
         settings.global.excludes = [

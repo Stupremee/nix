@@ -59,7 +59,7 @@ in
         mkdir -p $ZSH_CACHE_DIR/completions
       '';
 
-      initExtra =
+      initContent =
         let
           tmuxStart =
             if config.programs.tmux.enable then

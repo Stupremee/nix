@@ -37,7 +37,7 @@
       enable = true;
       pkiBundle = "/var/lib/sbctl";
 
-      settings.reboot-for-bitlocker = true;
+      settings.reboot-for-bitlocker = "yes";
     };
 
     loader = {

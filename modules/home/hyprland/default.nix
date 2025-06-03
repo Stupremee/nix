@@ -51,6 +51,16 @@ in
       default = "1.0";
     };
 
+    swap-escape-caps = mkOption {
+      type = types.bool;
+      default = false;
+    };
+
+    extraSettings = mkOption {
+      type = types.attrs;
+      default = { };
+    };
+
     monitors = mkOption {
       type = types.attrsOf (types.submodule monitorOpts);
       default = { };
@@ -187,7 +197,7 @@ in
           else
             "${name},${opts.resolution},${opts.position},${opts.scale}"
         ) cfg.monitors;
-      };
+      } // cfg.extraSettings;
 
       extraConfig = ''
         submap=resize

@@ -15,7 +15,18 @@
     hyprland = {
       sensitivity = "0.0";
 
-      monitors = { };
+      extraSettings = {
+        input.kb_options = "caps:swapescape";
+        "input:touchpad".natural_scroll = true;
+      };
+
+      monitors = {
+        "eDP-1" = {
+          position = "auto";
+          resolution = "1920x1200";
+          scale = "1.0";
+        };
+      };
     };
   };
 }

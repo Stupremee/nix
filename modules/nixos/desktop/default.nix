@@ -51,6 +51,6 @@ in
 
     programs.dconf.enable = true;
 
-    powerManagement.cpuFreqGovernor = "performance";
+    powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   };
 }

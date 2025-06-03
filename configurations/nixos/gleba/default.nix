@@ -49,6 +49,9 @@
     enableAllFirmware = true;
   };
 
+  # TODO: Move into laptop module for more power optimizations
+  powerManagement.cpuFreqGovernor = "powersave";
+
   # nixpkgs meta related options
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "25.05";
@@ -56,7 +59,7 @@
   # Manual disk configuration
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/72032365-7970-4d49-90ba-1c94da2ee498";
+      device = "/dev/disk/by-uuid/719e76d4-bb0d-4335-9ab9-0e144e1b039c";
       fsType = "ext4";
     };
 
@@ -69,4 +72,6 @@
       ];
     };
   };
+
+  boot.initrd.luks.devices."enc".device = "/dev/disk/by-uuid/041b8ff1-a6ea-461a-ba75-928aefcd01da";
 }

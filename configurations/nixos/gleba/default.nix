@@ -13,6 +13,8 @@
       enable = true;
       flakePath = "/home/stu/dev/nix/nix";
     };
+
+    amdgpu.enable = true;
   };
 
   networking = {

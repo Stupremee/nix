@@ -17,6 +17,7 @@
     };
 
     hardware.logitech.enable = true;
+    amdgpu.enable = true;
 
     gaming.steam.enable = true;
   };

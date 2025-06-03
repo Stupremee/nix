@@ -60,6 +60,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     catppuccin.url = "github:catppuccin/nix";
 
     impermanence.url = "github:nix-community/impermanence";

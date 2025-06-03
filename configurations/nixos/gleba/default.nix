@@ -1,7 +1,13 @@
-{ flake, ... }:
+{
+  flake,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = with flake.inputs; [
     self.nixosModules.default
+    lanzaboote.nixosModules.lanzaboote
   ];
 
   my = {
@@ -17,14 +23,28 @@
     amdgpu.enable = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    pkgs.sbctl
+  ];
+
   networking = {
     hostName = "gleba";
   };
 
   boot = {
+    # Enable secure boot
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+
+      settings.reboot-for-bitlocker = true;
+    };
+
     loader = {
       efi.canTouchEfiVariables = true;
-      systemd-boot.enable = true;
+
+      # Disable, because lanzaboote replaces the systemd-boot module
+      systemd-boot.enable = lib.mkForce false;
     };
 
     initrd = {

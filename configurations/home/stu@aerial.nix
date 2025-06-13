@@ -7,7 +7,6 @@
     ungoogled-chromium
     spotify-player
     localsend
-    _1password-gui
   ];
 
   my = {

@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ flake, pkgs, ... }:
 {
   imports = with flake.inputs; [
     self.nixosModules.default
@@ -21,6 +21,10 @@
 
     gaming.steam.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    _1password-gui
+  ];
 
   networking = {
     hostName = "aerial";

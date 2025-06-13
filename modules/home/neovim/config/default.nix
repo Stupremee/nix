@@ -11,8 +11,6 @@ let
 in
 {
   vim = {
-    package = pkgs.unstable.neovim-unwrapped;
-
     extraPackages = with pkgs; [
       gitlab-ci-ls
       yamlfmt
@@ -173,7 +171,7 @@ in
           lspconfig.tofu_ls.setup {
             capabilities = capabilities,
             on_attach=default_on_attach,
-            cmd = {"${pkgs.unstable.opentofu-ls}/bin/opentofu-ls", "serve"},
+            cmd = {"${pkgs.opentofu-ls}/bin/opentofu-ls", "serve"},
           }
         '';
       };

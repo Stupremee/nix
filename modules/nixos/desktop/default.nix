@@ -49,7 +49,10 @@ in
 
     environment.enableAllTerminfo = true;
 
-    programs.dconf.enable = true;
+    programs = {
+      dconf.enable = true;
+      _1password.enable = true;
+    };
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   };

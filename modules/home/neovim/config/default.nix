@@ -168,6 +168,14 @@ in
         gitlab_ci_ls = ''
           require'lspconfig'.gitlab_ci_ls.setup{}
         '';
+
+        opentofu-ls = ''
+          lspconfig.tofu_ls.setup {
+            capabilities = capabilities,
+            on_attach=default_on_attach,
+            cmd = {"${pkgs.unstable.opentofu-ls}/bin/opentofu-ls", "serve"},
+          }
+        '';
       };
     };
 
@@ -187,12 +195,16 @@ in
       nix = {
         enable = true;
         format.type = "nixfmt";
+        lsp.enable = false;
       };
 
       markdown.enable = true;
       yaml.enable = true;
       bash.enable = true;
-      terraform.enable = true;
+      terraform = {
+        enable = true;
+        lsp.enable = false;
+      };
       svelte.enable = true;
       ts = {
         enable = true;

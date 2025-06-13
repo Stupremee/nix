@@ -10,7 +10,10 @@
   ];
 
   my = {
-    dev.k8s.enable = true;
+    dev = {
+      k8s.enable = true;
+      azure.enable = true;
+    };
 
     hyprland = {
       sensitivity = "0.0";

@@ -167,11 +167,11 @@ in
           require'lspconfig'.gitlab_ci_ls.setup{}
         '';
 
-        opentofu-ls = ''
+        tofu-ls = ''
           lspconfig.tofu_ls.setup {
             capabilities = capabilities,
             on_attach=default_on_attach,
-            cmd = {"${pkgs.opentofu-ls}/bin/opentofu-ls", "serve"},
+            cmd = {"${pkgs.tofu-ls}/bin/opentofu-ls", "serve"},
           }
         '';
       };

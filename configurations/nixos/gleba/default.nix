@@ -26,7 +26,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    pkgs.sbctl
+    sbctl
+    _1password-gui
   ];
 
   networking = {

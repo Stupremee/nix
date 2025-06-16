@@ -18,10 +18,6 @@ in
   options.my.zsh.enable = mkEnableOption "Enable ZSH shell";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      comma
-    ];
-
     programs.atuin = {
       enable = true;
       enableZshIntegration = true;
@@ -115,8 +111,10 @@ in
       };
     };
 
-    programs.command-not-found = {
+    programs.nix-index = {
       enable = true;
+      enableZshIntegration = true;
     };
+    programs.nix-index-database.comma.enable = true;
   };
 }

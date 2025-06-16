@@ -13,6 +13,7 @@
   my = {
     desktop.enable = true;
     wayland.hyprland.enable = true;
+    bluetooth.enable = true;
 
     nix-common.maxJobs = 8;
     nh = {
@@ -21,6 +22,7 @@
     };
 
     amdgpu.enable = true;
+    laptop.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -68,9 +70,6 @@
     cpu.amd.updateMicrocode = true;
     enableAllFirmware = true;
   };
-
-  # TODO: Move into laptop module for more power optimizations
-  powerManagement.cpuFreqGovernor = "powersave";
 
   # nixpkgs meta related options
   nixpkgs.hostPlatform = "x86_64-linux";

@@ -3,6 +3,7 @@
   config,
   flake,
   pkgs,
+  theme,
   ...
 }:
 with lib;
@@ -37,6 +38,10 @@ let
         };
       };
     };
+
+  pythonScratchpad = pkgs.writeShellScript "python-scratchpad" ''
+    ${pkgs.numbat}/bin/numbat
+  '';
 in
 {
   options.my.hyprland = {
@@ -64,6 +69,13 @@ in
     monitors = mkOption {
       type = types.attrsOf (types.submodule monitorOpts);
       default = { };
+    };
+
+    hyprpanel = {
+      settings = mkOption {
+        type = types.attrs;
+        default = { };
+      };
     };
   };
 
@@ -159,6 +171,9 @@ in
 
             # lock screen
             "$mod_SHIFT, x, exec, hyprlock"
+
+            # Python scratchpad
+            "$mod, o, exec, ${cfg.terminal} --title PythonScratchpad -e ${pythonScratchpad}"
           ]
           ++ (
             # workspaces
@@ -324,6 +339,40 @@ in
           }
         ];
       };
+    };
+
+    programs.hyprpanel = {
+      enable = true;
+      systemd.enable = true;
+      hyprland.enable = true;
+      overwrite.enable = true;
+
+      settings = {
+        inherit (config.my.hyprland) terminal;
+
+        menus = {
+          clock.weather = {
+            unit = "metric";
+            location = "Leipzig";
+          };
+        };
+
+        bar = {
+          launcher.autoDetectIcon = true;
+          customModules.weather.unit = "metric";
+        };
+
+        theme = {
+          bar.transparent = true;
+
+          name = "catppuccin_${config.catppuccin.flavor}";
+
+          font = {
+            name = "Monaspace Neon Light";
+            size = "16px";
+          };
+        };
+      } // cfg.hyprpanel.settings;
     };
   };
 }

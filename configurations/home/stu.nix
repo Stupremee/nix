@@ -14,7 +14,6 @@ in
 
   my = {
     alacritty.enable = true;
-    mako.enable = true;
     zsh.enable = true;
     tmux.enable = true;
     neovim.enable = true;

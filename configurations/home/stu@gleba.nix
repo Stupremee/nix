@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
   closeLid = pkgs.writeShellScript "close-lid" ''
-    if [ ! -z "$(hyprctl monitors | grep DP-7)" ]; then
+    if [ ! -z "$(hyprctl monitors | grep ' DP')" ]; then
       hyprctl keyword monitor "eDP-1, disable"
     else
       hyprlock
@@ -9,7 +9,7 @@ let
   '';
 
   openLid = pkgs.writeShellScript "open-lid" ''
-    if [ ! -z "$(hyprctl monitors | grep DP-7)" ]; then
+    if [ ! -z "$(hyprctl monitors | grep ' DP')" ]; then
       hyprctl keyword monitor "eDP-1, 1920x1200, auto, 1"
     else
       hyprlock
@@ -40,25 +40,59 @@ in
         "input:touchpad".natural_scroll = true;
       };
 
-      monitors = {
-        "eDP-1" = {
-          position = "auto";
-          resolution = "1920x1200";
-          scale = "1.0";
-        };
+      monitors =
+        let
+          curvedMon = {
+            position = "0x0";
+            resolution = "5120x2160@75";
+            scale = "1.6";
+          };
+        in
+        {
+          "eDP-1" = {
+            position = "auto";
+            resolution = "1920x1200";
+            scale = "1.0";
+          };
 
-        "DP-7" = {
-          position = "auto";
-          resolution = "5120x2160@75";
-          scale = "1.6";
+          "DP-6" = curvedMon;
+          "DP-4" = curvedMon;
         };
-      };
 
       extraSettings = {
         bindl = [
           ", switch:off:Lid Switch, exec, ${openLid}"
           ", switch:on:Lid Switch, exec, ${closeLid}"
         ];
+      };
+
+      hyprpanel.settings.layout = {
+        "bar.layouts" =
+          let
+            layout = {
+              left = [
+                "dashboard"
+                "workspaces"
+                "windowtitle"
+              ];
+              middle = [ "media" ];
+              right = [
+                "volume"
+                "network"
+                "bluetooth"
+                "battery"
+                "systray"
+                "clock"
+                "notifications"
+              ];
+            };
+          in
+          {
+            "0" = layout;
+            "1" = layout;
+            "2" = layout;
+            "3" = layout;
+          };
       };
     };
   };

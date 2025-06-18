@@ -13,9 +13,7 @@ let
   cfg = config.my.hyprland;
 
   monitorOpts =
-    { ... }:
-    with lib;
-    {
+    _: with lib; {
       options = {
         position = mkOption {
           type = types.str;
@@ -360,6 +358,7 @@ in
         bar = {
           launcher.autoDetectIcon = true;
           customModules.weather.unit = "metric";
+          workspaces.show_numbered = true;
         };
 
         theme = {

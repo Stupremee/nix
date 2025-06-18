@@ -64,6 +64,15 @@ in
           ", switch:off:Lid Switch, exec, ${openLid}"
           ", switch:on:Lid Switch, exec, ${closeLid}"
         ];
+
+        general = {
+          layout = "master";
+        };
+
+        master = {
+          mfact = 0.5;
+          orientation = "center";
+        };
       };
 
       hyprpanel.settings.layout = {

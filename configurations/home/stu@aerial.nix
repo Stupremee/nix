@@ -24,6 +24,25 @@
           resolution = "2560x1440";
         };
       };
+
+      hyprpanel.settings.layout = {
+        "bar.layouts" = {
+          "0" = {
+            left = [
+              "dashboard"
+              "workspaces"
+              "windowtitle"
+            ];
+            middle = [ "media" ];
+            right = [
+              "volume"
+              "systray"
+              "clock"
+              "notifications"
+            ];
+          };
+        };
+      };
     };
   };
 }

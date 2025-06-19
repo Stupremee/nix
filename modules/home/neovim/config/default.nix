@@ -167,13 +167,13 @@ in
           require'lspconfig'.gitlab_ci_ls.setup{}
         '';
 
-        tofu-ls = ''
-          lspconfig.tofu_ls.setup {
-            capabilities = capabilities,
-            on_attach=default_on_attach,
-            cmd = {"${pkgs.tofu-ls}/bin/opentofu-ls", "serve"},
-          }
-        '';
+        # tofu-ls = ''
+        #   lspconfig.tofu_ls.setup {
+        #     capabilities = capabilities,
+        #     on_attach=default_on_attach,
+        #     cmd = {"${pkgs.tofu-ls}/bin/opentofu-ls", "serve"},
+        #   }
+        # '';
       };
     };
 
@@ -199,10 +199,8 @@ in
       markdown.enable = true;
       yaml.enable = true;
       bash.enable = true;
-      terraform = {
-        enable = true;
-        lsp.enable = false;
-      };
+      terraform.enable = true;
+      hcl.enable = true;
       svelte.enable = true;
       ts = {
         enable = true;

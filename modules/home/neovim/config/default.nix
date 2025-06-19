@@ -138,6 +138,13 @@ in
       };
     };
 
+    diagnostics.nvim-lint = {
+      formatters_by_ft = {
+        typescript = [ "biomejs" ];
+        javascript = [ "biomejs" ];
+      };
+    };
+
     autocmds = [
       {
         desc = "Set filetype to GitLab CI file";
@@ -205,6 +212,7 @@ in
       ts = {
         enable = true;
         extensions.ts-error-translator.enable = true;
+        format.type = "biome";
       };
       php.enable = true;
 

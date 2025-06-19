@@ -57,6 +57,7 @@ in
         home = {
           packages = with pkgs.unstable; [
             (azure-cli.withExtensions extensions)
+            azure-functions-core-tools
           ];
         };
       }

@@ -97,5 +97,12 @@ in
       nixpkgs-unstable.flake = flake.inputs.nixpkgs-unstable;
       my.flake = flake.inputs.self;
     };
+
+    programs.nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        icu
+      ];
+    };
   };
 }

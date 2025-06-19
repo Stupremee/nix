@@ -14,6 +14,7 @@ in
     extraPackages = with pkgs; [
       gitlab-ci-ls
       yamlfmt
+      biome
     ];
 
     viAlias = false;
@@ -139,6 +140,7 @@ in
     };
 
     diagnostics.nvim-lint = {
+      enable = true;
       linters_by_ft = {
         typescript = [ "biomejs" ];
         javascript = [ "biomejs" ];

@@ -55,8 +55,9 @@ in
             scale = "1.0";
           };
 
-          "DP-6" = curvedMon;
           "DP-4" = curvedMon;
+          "DP-6" = curvedMon;
+          "DP-7" = curvedMon;
         };
 
       extraSettings = {

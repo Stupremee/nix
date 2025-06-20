@@ -139,7 +139,7 @@ in
     };
 
     diagnostics.nvim-lint = {
-      formatters_by_ft = {
+      linters_by_ft = {
         typescript = [ "biomejs" ];
         javascript = [ "biomejs" ];
       };

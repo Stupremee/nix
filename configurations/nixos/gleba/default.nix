@@ -35,6 +35,8 @@
   };
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+
     # Enable secure boot
     lanzaboote = {
       enable = true;

@@ -43,6 +43,7 @@ in
         ouch
         zsh
         curl
+        httpie
         wget
         bash-completion
         usbutils

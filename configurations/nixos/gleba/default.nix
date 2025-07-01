@@ -23,6 +23,8 @@
 
     amdgpu.enable = true;
     laptop.enable = true;
+
+    localsend.enable = true;
   };
 
   environment.systemPackages = with pkgs; [

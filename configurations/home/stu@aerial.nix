@@ -6,7 +6,6 @@
     firefox-devedition
     ungoogled-chromium
     spotify-player
-    localsend
   ];
 
   my = {

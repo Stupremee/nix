@@ -52,6 +52,7 @@ in
     programs = {
       dconf.enable = true;
       _1password.enable = true;
+      nm-applet.enable = true;
     };
 
     powerManagement.cpuFreqGovernor = lib.mkDefault "performance";

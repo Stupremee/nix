@@ -348,6 +348,8 @@ in
       settings = {
         inherit (config.my.hyprland) terminal;
 
+        scalingPriority = "hyprland";
+
         menus = {
           clock.weather = {
             unit = "metric";

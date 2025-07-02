@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 with lib;
@@ -13,6 +14,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [
+      # TUI for configuration IWD
+      impala
+    ];
+
     my = {
       user = {
         stu = {

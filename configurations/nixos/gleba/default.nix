@@ -25,6 +25,15 @@
     laptop.enable = true;
 
     localsend.enable = true;
+
+    user.stu.extraGroups = [ "wireshark" ];
+  };
+
+  programs = {
+    wireshark = {
+      enable = true;
+      package = pkgs.wireshark;
+    };
   };
 
   environment.systemPackages = with pkgs; [

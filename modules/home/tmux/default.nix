@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -14,6 +13,7 @@ in
   config = mkIf cfg.enable {
     programs.tmux = {
       enable = true;
+      tmuxp.enable = true;
       keyMode = "vi";
       prefix = "C-a";
 

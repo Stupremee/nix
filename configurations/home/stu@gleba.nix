@@ -23,6 +23,7 @@ in
     firefox-devedition
     ungoogled-chromium
     spotify-player
+    libreoffice-still
   ];
 
   my = {

@@ -10,6 +10,16 @@
     lanzaboote.nixosModules.lanzaboote
   ];
 
+  networking.firewall.enable = false;
+
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      gutenprint
+      foomatic-db
+    ];
+  };
+
   my = {
     desktop.enable = true;
     wayland.hyprland.enable = true;

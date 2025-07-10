@@ -135,6 +135,30 @@ in
           ];
           yaml = [ "yamlfmt" ];
           "yaml.gitlab" = [ "yamlfmt" ];
+
+          javascript = [ "biome" ];
+          json = [ "biome" ];
+          typescript = [
+            "biome"
+            "biome-organize-imports"
+          ];
+          typescriptreact = [
+            "biome"
+            "biome-organize-imports"
+          ];
+        };
+
+        formatters.biome-organize-imports = {
+          # Required until conform-nvim is updated in nixpkgs
+          args = [
+            "check"
+            "--write"
+            "--formatter-enabled=false"
+            "--linter-enabled=false"
+            "--assist-enabled=true"
+            "--stdin-file-path"
+            "$FILENAME"
+          ];
         };
       };
     };
@@ -143,6 +167,8 @@ in
       enable = true;
       linters_by_ft = {
         typescript = [ "biomejs" ];
+        typescriptreact = [ "biomejs" ];
+        json = [ "biomejs" ];
         javascript = [ "biomejs" ];
       };
     };
@@ -174,6 +200,28 @@ in
       lspconfig.sources = {
         gitlab_ci_ls = ''
           require'lspconfig'.gitlab_ci_ls.setup{}
+        '';
+
+        jsonls = ''
+          local capabilities = vim.lsp.protocol.make_client_capabilities()
+          capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+          lspconfig.jsonls.setup {
+            capabilities = capabilities;
+            on_attach = default_on_attach;
+            cmd = {"${pkgs.vscode-langservers-extracted}/bin/vscode-json-language-server", "--stdio"};
+            init_options = {
+              provideFormatter = false;
+            }
+          }
+        '';
+
+        biome = ''
+          lspconfig.biome.setup {
+            capabilities = capabilities,
+            on_attach = default_on_attach,
+            cmd = {"${pkgs.biome}/bin/biome", "lsp-proxy"},
+          }
         '';
 
         # tofu-ls = ''
@@ -214,7 +262,8 @@ in
       ts = {
         enable = true;
         extensions.ts-error-translator.enable = true;
-        format.type = "biome";
+        format.enable = false;
+        extraDiagnostics.enable = false;
       };
       php.enable = true;
 

@@ -24,6 +24,7 @@ in
     ungoogled-chromium
     spotify-player
     libreoffice-still
+    dbeaver-bin
   ];
 
   my = {
@@ -76,33 +77,24 @@ in
         };
       };
 
-      hyprpanel.settings.layout = {
-        "bar.layouts" =
-          let
-            layout = {
-              left = [
-                "dashboard"
-                "workspaces"
-                "windowtitle"
-              ];
-              middle = [ "media" ];
-              right = [
-                "volume"
-                "network"
-                "bluetooth"
-                "battery"
-                "systray"
-                "clock"
-                "notifications"
-              ];
-            };
-          in
-          {
-            "0" = layout;
-            "1" = layout;
-            "2" = layout;
-            "3" = layout;
-          };
+      hyprpanel.settings = {
+        bar.layouts."*" = {
+          left = [
+            "dashboard"
+            "workspaces"
+            "windowtitle"
+          ];
+          middle = [ "media" ];
+          right = [
+            "volume"
+            "network"
+            "bluetooth"
+            "battery"
+            "systray"
+            "clock"
+            "notifications"
+          ];
+        };
       };
     };
   };

@@ -136,6 +136,9 @@ in
           yaml = [ "yamlfmt" ];
           "yaml.gitlab" = [ "yamlfmt" ];
 
+          html = [ "biome" ];
+          css = [ "biome" ];
+          svelte = [ "biome" ];
           javascript = [ "biome" ];
           json = [ "biome" ];
           typescript = [
@@ -235,9 +238,7 @@ in
     };
 
     treesitter = {
-      grammars = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        just
-      ];
+      grammars = [ pkgs.vimPlugins.nvim-treesitter.withAllGrammars ];
     };
 
     lsp.enable = true;
@@ -258,7 +259,11 @@ in
       bash.enable = true;
       terraform.enable = true;
       hcl.enable = true;
-      svelte.enable = true;
+      tailwind.enable = true;
+      svelte = {
+        enable = true;
+        format.enable = false;
+      };
       ts = {
         enable = true;
         extensions.ts-error-translator.enable = true;

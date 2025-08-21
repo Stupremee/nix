@@ -19,6 +19,8 @@ with lib;
     devenv
   ];
 
+  my.xdg.enable = true;
+
   manual.manpages.enable = true;
 
   programs = {

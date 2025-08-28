@@ -29,6 +29,7 @@ in
 
   my = {
     dev = {
+      enable = true;
       k8s.enable = true;
       azure.enable = true;
     };

@@ -37,6 +37,7 @@ in
           kubernetes-helm
           stern
           kubent
+          opencode
         ];
 
         shellAliases = {

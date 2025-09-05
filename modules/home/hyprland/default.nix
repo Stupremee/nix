@@ -9,6 +9,7 @@
 with lib;
 let
   inherit (flake.inputs) self;
+  inherit (builtins) fromJSON readFile;
 
   cfg = config.my.hyprland;
 
@@ -132,63 +133,62 @@ in
           "pin,title:PythonScratchpad"
         ];
 
-        bind =
-          [
-            "$mod, Return, exec, ${cfg.terminal}"
+        bind = [
+          "$mod, Return, exec, ${cfg.terminal}"
 
-            # compositor commands
-            "$mod, q, killactive"
-            "$mod, f, fullscreen"
-            "$mod SHIFT, f, togglefloating"
+          # compositor commands
+          "$mod, q, killactive"
+          "$mod, f, fullscreen"
+          "$mod SHIFT, f, togglefloating"
 
-            # move focus
-            "$mod, h, movefocus, l"
-            "$mod, j, movefocus, d"
-            "$mod, k, movefocus, u"
-            "$mod, l, movefocus, r"
+          # move focus
+          "$mod, h, movefocus, l"
+          "$mod, j, movefocus, d"
+          "$mod, k, movefocus, u"
+          "$mod, l, movefocus, r"
 
-            # move window
-            "$mod SHIFT, h, movewindow, l"
-            "$mod SHIFT, j, movewindow, d"
-            "$mod SHIFT, k, movewindow, u"
-            "$mod SHIFT, l, movewindow, r"
+          # move window
+          "$mod SHIFT, h, movewindow, l"
+          "$mod SHIFT, j, movewindow, d"
+          "$mod SHIFT, k, movewindow, u"
+          "$mod SHIFT, l, movewindow, r"
 
-            # Start application launcher
-            "$mod, p, exec, rofi-launcher"
-            "$mod_SHIFT, p, exec, rofi-runner"
+          # Start application launcher
+          "$mod, p, exec, rofi-launcher"
+          "$mod_SHIFT, p, exec, rofi-runner"
 
-            "$mod, m, exec, rofi-powermenu"
+          "$mod, m, exec, rofi-powermenu"
 
-            # Making screenshots
-            "$mod, s, exec, grimblast --notify copysave area"
-            "$mod_SHIFT, s, exec, rofi-screenshot"
+          # Making screenshots
+          "$mod, s, exec, grimblast --notify copysave area"
+          "$mod_SHIFT, s, exec, rofi-screenshot"
 
-            # dismiss notifications
-            "ctrl, 65, exec, makoctl dismiss"
-            "ctrl_shift, 65, exec, makoctl restore"
+          # dismiss notifications
+          "ctrl, 65, exec, makoctl dismiss"
+          "ctrl_shift, 65, exec, makoctl restore"
 
-            # lock screen
-            "$mod_SHIFT, x, exec, hyprlock"
+          # lock screen
+          "$mod_SHIFT, x, exec, hyprlock"
 
-            # Python scratchpad
-            "$mod, o, exec, ${cfg.terminal} --title PythonScratchpad -e ${pythonScratchpad}"
-          ]
-          ++ (
-            # workspaces
-            # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-            builtins.concatLists (
-              builtins.genList (
-                i:
-                let
-                  ws = i + 1;
-                in
-                [
-                  "$mod, code:1${toString i}, workspace, ${toString ws}"
-                  "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-                ]
-              ) 9
-            )
-          );
+          # Python scratchpad
+          "$mod, o, exec, ${cfg.terminal} --title PythonScratchpad -e ${pythonScratchpad}"
+        ]
+        ++ (
+          # workspaces
+          # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
+          builtins.concatLists (
+            builtins.genList (
+              i:
+              let
+                ws = i + 1;
+              in
+              [
+                "$mod, code:1${toString i}, workspace, ${toString ws}"
+                "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+              ]
+            ) 9
+          )
+        );
 
         bindl = [
           ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
@@ -210,7 +210,8 @@ in
           else
             "${name},${opts.resolution},${opts.position},${opts.scale}"
         ) cfg.monitors;
-      } // cfg.extraSettings;
+      }
+      // cfg.extraSettings;
 
       extraConfig = ''
         submap=resize
@@ -248,11 +249,11 @@ in
 
         listener = [
           {
-            timeout = 120;
+            timeout = 60;
             on-timeout = "hyprlock";
           }
           {
-            timeout = 300;
+            timeout = 120;
             on-timeout = "hyprctl dispatch dpms off";
             on-resume = "hyprctl dispatch dpms on";
           }
@@ -364,14 +365,14 @@ in
         theme = {
           bar.transparent = true;
 
-          name = "catppuccin_${config.catppuccin.flavor}";
-
           font = {
             name = "Monaspace Neon Light";
             size = "16px";
           };
-        };
-      } // cfg.hyprpanel.settings;
+        }
+        // (fromJSON (readFile ./hyprpanel-themes/catppuccin_${config.catppuccin.flavor}.json));
+      }
+      // cfg.hyprpanel.settings;
     };
   };
 }

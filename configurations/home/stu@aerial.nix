@@ -5,7 +5,7 @@
   home.packages = with pkgs.unstable; [
     firefox-devedition
     ungoogled-chromium
-    spotify-player
+    pkgs.spotify-player
   ];
 
   my = {

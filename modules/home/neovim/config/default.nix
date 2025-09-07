@@ -256,6 +256,7 @@ in
 
       markdown.enable = true;
       yaml.enable = true;
+      helm.enable = true;
       bash.enable = true;
       terraform.enable = true;
       hcl.enable = true;

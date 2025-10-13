@@ -8,8 +8,8 @@
 }:
 with lib;
 let
+  inherit (builtins) readFile fromJSON;
   inherit (flake.inputs) self;
-  inherit (builtins) fromJSON readFile;
 
   cfg = config.my.hyprland;
 
@@ -362,15 +362,19 @@ in
           workspaces.show_numbered = true;
         };
 
-        theme = {
-          bar.transparent = true;
+        theme =
+          let
+            themeData = fromJSON (readFile ./hyprpanel-themes/catppuccin_${config.catppuccin.flavor}.json);
+          in
+          {
+            bar.transparent = true;
 
-          font = {
-            name = "Monaspace Neon Light";
-            size = "16px";
-          };
-        }
-        // (fromJSON (readFile ./hyprpanel-themes/catppuccin_${config.catppuccin.flavor}.json));
+            font = {
+              name = "Monaspace Neon Light";
+              size = "16px";
+            };
+          }
+          // themeData;
       }
       // cfg.hyprpanel.settings;
     };

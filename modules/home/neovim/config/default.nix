@@ -15,6 +15,7 @@ in
       gitlab-ci-ls
       yamlfmt
       biome
+      rustywind
     ];
 
     viAlias = false;
@@ -146,6 +147,7 @@ in
             "biome-organize-imports"
           ];
           typescriptreact = [
+            "rustywind"
             "biome"
             "biome-organize-imports"
           ];

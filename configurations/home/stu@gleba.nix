@@ -25,6 +25,7 @@ in
     spotify-player
     libreoffice-still
     dbeaver-bin
+    powershell
   ];
 
   my = {

@@ -21,7 +21,6 @@ in
     (mkIf cfg.enable {
       home = {
         packages = with pkgs.unstable; [
-          opencode
         ];
       };
     })
@@ -61,6 +60,7 @@ in
       let
         extensions = with pkgs.azure-cli-extensions; [
           ad
+          ssh
         ];
       in
       {

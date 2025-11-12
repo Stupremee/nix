@@ -36,7 +36,10 @@
 
     localsend.enable = true;
 
-    user.stu.extraGroups = [ "wireshark" ];
+    user.stu.extraGroups = [
+      "video"
+      "wireshark"
+    ];
   };
 
   programs = {
@@ -49,6 +52,8 @@
   environment.systemPackages = with pkgs; [
     sbctl
     _1password-gui
+    gphoto2
+    ffmpeg
   ];
 
   networking = {
@@ -88,8 +93,9 @@
     kernelModules = [
       "kvm-amd"
       "amdgpu"
+      "v4l2loopback"
     ];
-    extraModulePackages = [ ];
+    extraModulePackages = [ pkgs.linuxPackages_latest.v4l2loopback ];
   };
 
   hardware = {

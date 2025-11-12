@@ -51,7 +51,8 @@ in
         home = "/home/stu";
         extraGroups = [
           "wheel"
-        ] ++ cfg.stu.extraGroups;
+        ]
+        ++ cfg.stu.extraGroups;
         uid = 1000;
         openssh.authorizedKeys.keys = keys;
 

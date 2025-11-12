@@ -74,6 +74,9 @@ in
         "tibber"
         "soundtouch"
         "spotify"
+
+        "wiz"
+        "homeassistant_hardware"
       ];
 
       config = {
@@ -97,6 +100,8 @@ in
             }
           ];
         };
+
+        automation = "!include automations.yaml";
 
         http = {
           use_x_forwarded_for = true;

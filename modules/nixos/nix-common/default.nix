@@ -23,7 +23,12 @@ in
     nixpkgs.overlays = [ flake.inputs.self.overlays.default ];
 
     # Allow unfree licenced packages
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [
+        "python3.12-ecdsa-0.19.1"
+      ];
+    };
 
     nix = {
       nixPath = [
@@ -98,11 +103,11 @@ in
       my.flake = flake.inputs.self;
     };
 
-    programs.nix-ld = {
-      enable = true;
-      libraries = with pkgs; [
-        icu
-      ];
-    };
+    # programs.nix-ld = {
+    #   enable = true;
+    #   libraries = with pkgs; [
+    #     icu
+    #   ];
+    # };
   };
 }

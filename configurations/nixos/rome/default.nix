@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ flake, pkgs, ... }:
 {
   imports = with flake.inputs; [
     self.nixosModules.default
@@ -6,6 +6,15 @@
 
     ./disks.nix
   ];
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      icu
+      zlib
+      xorg.libxcb
+    ];
+  };
 
   # Remote activation
   nixos-unified.sshTarget = "stu@rome";

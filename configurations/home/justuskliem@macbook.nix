@@ -8,10 +8,11 @@ in
   catppuccin.flavor = "latte";
 
   home = {
-    username = "jkliem";
+    username = "justuskliem";
   };
 
   my = {
+    xdg.enable = false;
     zsh.enable = true;
     neovim.enable = true;
     git.enable = true;

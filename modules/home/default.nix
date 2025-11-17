@@ -19,7 +19,7 @@ with lib;
     devenv
   ];
 
-  my.xdg.enable = true;
+  my.xdg.enable = lib.mkDefault true;
 
   manual.manpages.enable = true;
 

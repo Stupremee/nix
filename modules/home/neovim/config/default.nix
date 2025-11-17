@@ -101,17 +101,17 @@ in
         };
       };
 
-      "supermaven-nvim" = {
-        package = pkgs.vimPlugins.supermaven-nvim;
-        setupModule = "supermaven-nvim";
-        setupOpts = {
-          keymaps = {
-            accept_suggestion = "<${ctrlAlt}-f>";
-            clear_suggestion = "<${ctrlAlt}-e>";
-            accept_word = "<${ctrlAlt}-w>";
-          };
-        };
-      };
+      # "supermaven-nvim" = {
+      #   package = pkgs.vimPlugins.supermaven-nvim;
+      #   setupModule = "supermaven-nvim";
+      #   setupOpts = {
+      #     keymaps = {
+      #       accept_suggestion = "<${ctrlAlt}-f>";
+      #       clear_suggestion = "<${ctrlAlt}-e>";
+      #       accept_word = "<${ctrlAlt}-w>";
+      #     };
+      #   };
+      # };
 
       codecompanion-nvim.after = ''
         vim.cmd([[cab cc CodeCompanion]])

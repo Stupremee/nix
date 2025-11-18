@@ -11,7 +11,7 @@ with lib;
     [
       catppuccin.homeModules.catppuccin
       nvf.homeManagerModules.default
-      nix-index-database.hmModules.nix-index
+      nix-index-database.homeModules.nix-index
     ]
     ++ (attrValues (filterAttrs (name: _: name != "default") flake.inputs.self.homeModules));
 

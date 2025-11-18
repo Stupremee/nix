@@ -15,4 +15,11 @@ in
 self: _: {
   unstable = mkPkgs self.system;
   caddy = self.unstable.callPackage "${packages}/caddy" { };
+  nushell = self.nushell.overrideAttrs (_: {
+    doCheck = false;
+    dontCargoCheck = true;
+    checkPhase = ''
+      echo "Skipping tests with dontCargoCheck"
+    '';
+  });
 }

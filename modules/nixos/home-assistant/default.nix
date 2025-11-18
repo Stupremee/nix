@@ -141,7 +141,10 @@ in
         };
 
         availability.enabled = true;
-        advanced.transmit_power = 20;
+        advanced = {
+          transmit_power = 20;
+          log_level = "warning";
+        };
       };
     };
     systemd.services.zigbee2mqtt.serviceConfig.SystemCallFilter = [

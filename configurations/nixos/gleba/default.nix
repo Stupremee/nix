@@ -10,7 +10,24 @@
     lanzaboote.nixosModules.lanzaboote
   ];
 
-  networking.firewall.enable = false;
+  networking = {
+    firewall.enable = false;
+    hosts = {
+      "127.0.0.1" = [
+        "api.enigma.localhost"
+        "enigma.localhost"
+      ];
+    };
+  };
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      icu
+      zlib
+      xorg.libxcb
+    ];
+  };
 
   services.printing = {
     enable = true;

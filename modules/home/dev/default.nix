@@ -21,6 +21,7 @@ in
     (mkIf cfg.enable {
       home = {
         packages = with pkgs.unstable; [
+          claude-code
         ];
       };
     })

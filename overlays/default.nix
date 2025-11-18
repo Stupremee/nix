@@ -9,6 +9,7 @@ let
     system:
     import inputs.nixpkgs-unstable {
       inherit system;
+      config.allowUnfree = true;
     };
 in
 self: _: {

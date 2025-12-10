@@ -26,6 +26,7 @@ in
     options = {
       tabstop = 4;
       shiftwidth = 4;
+      spell = false;
     };
 
     theme = {
@@ -85,7 +86,7 @@ in
     ];
 
     spellcheck = {
-      enable = true;
+      enable = false;
     };
 
     lazy.plugins = {
@@ -118,13 +119,13 @@ in
       '';
     };
 
-    pluginRC.conform-nvim = lib.mkAfter ''
-      require("conform").formatters.rustfmt = {
-        options = {
-          default_edition = "2024"
-        },
-      }
-    '';
+    # pluginRC.conform-nvim = lib.mkAfter ''
+    #   # require("conform").formatters.rustfmt = {
+    #   #   options = {
+    #   #     default_edition = "2024"
+    #   #   },
+    #   # }
+    # '';
 
     formatter.conform-nvim = {
       enable = true;
@@ -277,7 +278,20 @@ in
 
       rust = {
         enable = true;
+        format.enable = true;
         crates.enable = true;
+
+        lsp.opts = ''
+          ['rust-analyzer'] = {
+            files = {
+              excludeDirs = { ".direnv" }
+            },
+            checkOnSave = true,
+            procMacro = {
+              enable = true,
+            },
+          },
+        '';
       };
     };
 
@@ -434,7 +448,7 @@ in
         };
 
         setupOpts.suggestion = {
-          enabled = false;
+          enabled = true;
           auto_trigger = true;
         };
       };

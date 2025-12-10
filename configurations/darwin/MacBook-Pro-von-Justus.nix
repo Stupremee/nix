@@ -32,6 +32,13 @@
     enableSSHSupport = true;
   };
 
+  homebrew = {
+    enable = true;
+    brews = [
+      "libpq"
+    ];
+  };
+
   nix.settings.builders = lib.mkForce "ssh://root@rome x86_64-linux";
 
   system.stateVersion = lib.mkForce 6;

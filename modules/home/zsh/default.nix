@@ -39,7 +39,7 @@ in
 
       autocd = true;
       defaultKeymap = "viins";
-      dotDir = ".config/zsh";
+      dotDir = "${config.home.homeDirectory}/.config/zsh";
 
       history = {
         path = "${config.xdg.dataHome}/zsh/zshHistory";

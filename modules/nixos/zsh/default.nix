@@ -39,7 +39,7 @@ in
         git
         pv
         sd
-        du-dust
+        dust
         ouch
         zsh
         curl

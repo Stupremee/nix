@@ -31,33 +31,32 @@ in
 
     programs.bat.enable = true;
 
+    programs.delta = {
+      enable = true;
+    };
+
     programs.git = {
       enable = true;
-      package = pkgs.gitAndTools.gitFull;
-
-      userName = mkDefault "Justus K";
-      userEmail = mkDefault "justus.k@protonmail.com";
 
       signing.key = mkDefault "D54A1CD51376F46C";
       signing.signByDefault = true;
 
-      delta = {
-        enable = true;
-      };
+      settings = {
+        alias = {
+          st = "status";
+          co = "switch";
+          df = "diff";
+          lg = "log --oneline";
+          p = "push";
+          c = "commit";
+          a = "add";
+        };
 
-      aliases = {
-        st = "status";
-        co = "switch";
-        df = "diff";
-        lg = "log --oneline";
-        p = "push";
-        c = "commit";
-        a = "add";
-      };
+        user = {
+          name = mkDefault "Justus K";
+          email = mkDefault "justus.k@protonmail.com";
+        };
 
-      lfs.enable = true;
-
-      extraConfig = {
         pull.rebase = true;
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
@@ -88,6 +87,8 @@ in
           "oauth"
         ];
       };
+
+      lfs.enable = true;
     };
   };
 }

@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ pkgs, flake, ... }:
 let
   inherit (flake.inputs) self;
 in
@@ -9,6 +9,10 @@ in
 
   home = {
     username = "justuskliem";
+    packages = with pkgs; [
+      tailscale
+      fh
+    ];
   };
 
   my = {
@@ -17,7 +21,9 @@ in
     neovim.enable = true;
     git.enable = true;
     dev = {
+      enable = true;
       k8s.enable = true;
+      azure.enable = true;
     };
   };
 }

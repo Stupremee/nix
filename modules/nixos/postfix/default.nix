@@ -28,13 +28,13 @@ in
 
     services.postfix = {
       enable = true;
-      relayHost = "smtp.migadu.com";
-      relayPort = 465;
 
       mapFiles.sender_canonical_maps = pkgs.writeText "sender_canonical_maps" "/.+/ ${cfg.from}";
       mapFiles.header_check = pkgs.writeText "header_check" "/From:.*/ REPLACE From: ${config.networking.hostName} <${cfg.from}>";
 
-      config = {
+      settings.main = {
+        relayhost = [ "smtp.migadu.com:465" ];
+
         inet_interfaces = "127.0.0.1";
 
         smtp_sasl_auth_enable = "yes";

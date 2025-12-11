@@ -65,6 +65,11 @@ in
       in
       {
         lldap-env.rekeyFile = ../../../secrets/lldap.env.age;
+        lldap-user-pass = {
+          rekeyFile = ../../../secrets/lldap-user-pass.age;
+          # FIXME: do not make password public
+          mode = "444";
+        };
 
         authelia-private-key = secret { rekeyFile = ../../../secrets/authelia-private-key.age; };
         authelia-ldap-user-password = secret {
@@ -170,9 +175,13 @@ in
       enable = true;
       environmentFile = config.age.secrets.lldap-env.path;
 
+      silenceForceUserPassResetWarning = true;
+
       settings = {
         http_url = "https://ldap.stu-dev.me";
         ldap_base_dn = "dc=stu-dev,dc=me";
+
+        ldap_user_pass_file = config.age.secrets.lldap-user-pass.path;
       };
     };
 

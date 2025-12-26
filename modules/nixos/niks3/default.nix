@@ -68,7 +68,6 @@ in
           boundClaims = {
             repository_owner = [ "Deutsche-Warmepumpen-Werke" ];
           };
-          boundSubject = [ "repo:Deutsche-Warmepumpen-Werke/*:*" ];
         };
       };
     };

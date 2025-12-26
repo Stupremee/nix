@@ -52,6 +52,7 @@
     oidc.enable = true;
     home-assistant.enable = true;
     stirling-pdf.enable = true;
+    niks3.enable = true;
   };
 
   # Required for allowing document scanner to connect via SSH

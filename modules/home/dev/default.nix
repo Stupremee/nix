@@ -23,6 +23,7 @@ in
         packages = with pkgs.unstable; [
           claude-code
           cloudflared
+          mkcert
         ];
       };
     })

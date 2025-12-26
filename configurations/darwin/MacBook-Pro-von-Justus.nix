@@ -36,6 +36,7 @@
     enable = true;
     brews = [
       "libpq"
+      "psqlodbc"
     ];
   };
 

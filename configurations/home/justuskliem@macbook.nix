@@ -11,6 +11,7 @@ in
     username = "justuskliem";
     packages = with pkgs; [
       tailscale
+      httpie
       fh
     ];
   };

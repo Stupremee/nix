@@ -24,6 +24,12 @@ in
           claude-code
           cloudflared
           mkcert
+          attic-client
+        ];
+
+        sessionPath = [
+          "$HOME/.opencode/bin"
+          "$HOME/.bun/bin"
         ];
       };
     })

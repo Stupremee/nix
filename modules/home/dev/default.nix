@@ -30,6 +30,7 @@ in
         sessionPath = [
           "$HOME/.opencode/bin"
           "$HOME/.bun/bin"
+          "$HOME/.cargo/bin"
         ];
       };
     })

@@ -377,7 +377,21 @@ in
       cheatsheet.enable = true;
     };
 
-    telescope.enable = true;
+    telescope = {
+      enable = true;
+      setupOpts = {
+        defaults.vimgrep_arguments = [
+          "${pkgs.ripgrep}/bin/rg"
+          "--color=never"
+          "--no-heading"
+          "--with-filename"
+          "--line-number"
+          "--column"
+          "--smart-case"
+          "--hidden"
+        ];
+      };
+    };
 
     git = {
       enable = true;

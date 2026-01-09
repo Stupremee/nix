@@ -38,8 +38,11 @@ in
         PAPERLESS_URL = "https://docs.stu-dev.me";
 
         PAPERLESS_OCR_LANGUAGE = "deu+eng";
-        PAPERLESS_TASK_WORKERS = 4;
-        PAPERLESS_THREADS_PER_WORKER = 8;
+        # PAPERLESS_TASK_WORKERS = 4;
+        # PAPERLESS_THREADS_PER_WORKER = 8;
+
+        PAPERLESS_TASK_WORKERS = 1;
+        PAPERLESS_THREADS_PER_WORKER = 1;
 
         PAPERLESS_TIKA_ENABLED = true;
         PAPERLESS_TIKA_ENDPOINT = "http://127.0.0.1:${toString config.services.tika.port}";

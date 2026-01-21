@@ -1,0 +1,1773 @@
+- name: "ESS 1"
+  type: tcp
+  host: ASP-E2-AS22AE30465G021.local
+  port: 502
+
+  binary_sensors:
+    - slave: 247
+      name: "ESS 1 - BMS1 Online"
+      unique_id: "ess_1_bms1_online"
+      address: 37002
+      input_type: input
+      device_class: connectivity
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Connected"
+      unique_id: "ess_1_meter1_connected"
+      address: 38801
+      input_type: input
+      device_class: connectivity
+      scan_interval: 10
+
+  switches:
+    - slave: 247
+      name: "ESS 1 - BMS1 Force Charge Enable"
+      unique_id: "ess_1_bms1_force_charge_enable"
+      address: 37636
+      write_type: holding
+      command_on: 1
+      command_off: 0
+      verify:
+        input_type: holding
+        address: 37636
+        state_on: 1
+        state_off: 0
+        delay: 0
+
+  sensors:
+    # ---- Device meta (1 hour) ----
+    - slave: 247
+      name: "ESS 1 - Device Model Name"
+      unique_id: "ess_1_device_model_name"
+      address: 30000
+      input_type: input
+      data_type: string
+      count: 16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - Device Serial Number"
+      unique_id: "ess_1_device_serial_number"
+      address: 30016
+      input_type: input
+      data_type: string
+      count: 16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - Firmware Master Version"
+      unique_id: "ess_1_firmware_master_version"
+      address: 36001
+      input_type: input
+      data_type: uint16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - Firmware Slave Version"
+      unique_id: "ess_1_firmware_slave_version"
+      address: 36002
+      input_type: input
+      data_type: uint16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - Firmware Manager Version"
+      unique_id: "ess_1_firmware_manager_version"
+      address: 36003
+      input_type: input
+      data_type: uint16
+      scan_interval: 3600
+
+    # ---- BMS meta (1 hour) ----
+    - slave: 247
+      name: "ESS 1 - BMS1 Firmware Master Version"
+      unique_id: "ess_1_bms1_firmware_master_version"
+      address: 37003
+      input_type: input
+      data_type: uint16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Firmware Slave Version"
+      unique_id: "ess_1_bms1_firmware_slave_version"
+      address: 37004
+      input_type: input
+      data_type: uint16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Slave Serial Number"
+      unique_id: "ess_1_bms1_slave_serial_number"
+      address: 37005
+      input_type: input
+      data_type: string
+      count: 16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Slave2 Firmware Version"
+      unique_id: "ess_1_bms1_slave2_firmware_version"
+      address: 37034
+      input_type: input
+      data_type: uint16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Slave1 Serial Number"
+      unique_id: "ess_1_bms1_slave1_serial_number"
+      address: 37097
+      input_type: input
+      data_type: string
+      count: 16
+      scan_interval: 3600
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Slave2 Serial Number"
+      unique_id: "ess_1_bms1_slave2_serial_number"
+      address: 37113
+      input_type: input
+      data_type: string
+      count: 16
+      scan_interval: 3600
+
+    # ---- BMS instantaneous (10s) ----
+    - slave: 247
+      name: "ESS 1 - BMS1 Voltage"
+      unique_id: "ess_1_bms1_voltage"
+      address: 37609
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Current"
+      unique_id: "ess_1_bms1_current"
+      address: 37610
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Ambient Temperature"
+      unique_id: "ess_1_bms1_ambient_temperature"
+      address: 37611
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 State of Charge"
+      unique_id: "ess_1_bms1_state_of_charge"
+      address: 37612
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "%"
+      device_class: battery
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Max Temperature"
+      unique_id: "ess_1_bms1_temperature_max"
+      address: 37617
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Min Temperature"
+      unique_id: "ess_1_bms1_temperature_min"
+      address: 37618
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Max Cell Voltage"
+      unique_id: "ess_1_bms1_cell_voltage_max"
+      address: 37619
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "mV"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Min Cell Voltage"
+      unique_id: "ess_1_bms1_cell_voltage_min"
+      address: 37620
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "mV"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 State of Health"
+      unique_id: "ess_1_bms1_state_of_health"
+      address: 37624
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "%"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 10
+
+    # (Energy-like but still "instantaneous" telemetry; keep 10s)
+    - slave: 247
+      name: "ESS 1 - BMS1 Remaining Energy"
+      unique_id: "ess_1_bms1_remaining_energy"
+      address: 37632
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "Wh"
+      device_class: energy
+      state_class: measurement
+      scale: 10
+      precision: 0
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Full Charge Capacity"
+      unique_id: "ess_1_bms1_full_charge_capacity"
+      address: 37633
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "Ah"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - BMS1 Design Energy"
+      unique_id: "ess_1_bms1_design_energy"
+      address: 37635
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "Wh"
+      device_class: energy
+      state_class: measurement
+      scale: 10
+      precision: 0
+      scan_interval: 10
+
+    # ---- Meter 1 (V/I 10s, Power 1s, PF/Freq 10s) ----
+    - slave: 247
+      name: "ESS 1 - Meter1 Voltage L1"
+      unique_id: "ess_1_meter1_voltage_l1"
+      address: 38802
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Voltage L2"
+      unique_id: "ess_1_meter1_voltage_l2"
+      address: 38804
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Voltage L3"
+      unique_id: "ess_1_meter1_voltage_l3"
+      address: 38806
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Current L1"
+      unique_id: "ess_1_meter1_current_l1"
+      address: 38808
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Current L2"
+      unique_id: "ess_1_meter1_current_l2"
+      address: 38810
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Current L3"
+      unique_id: "ess_1_meter1_current_l3"
+      address: 38812
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Active Power Total"
+      unique_id: "ess_1_meter1_active_power_total"
+      address: 38814
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Active Power L1"
+      unique_id: "ess_1_meter1_active_power_l1"
+      address: 38816
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Active Power L2"
+      unique_id: "ess_1_meter1_active_power_l2"
+      address: 38818
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Active Power L3"
+      unique_id: "ess_1_meter1_active_power_l3"
+      address: 38820
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Reactive Power Total"
+      unique_id: "ess_1_meter1_reactive_power_total"
+      address: 38822
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "var"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Reactive Power L1"
+      unique_id: "ess_1_meter1_reactive_power_l1"
+      address: 38824
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "var"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Reactive Power L2"
+      unique_id: "ess_1_meter1_reactive_power_l2"
+      address: 38826
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "var"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Reactive Power L3"
+      unique_id: "ess_1_meter1_reactive_power_l3"
+      address: 38828
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "var"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Apparent Power Total"
+      unique_id: "ess_1_meter1_apparent_power_total"
+      address: 38830
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "VA"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Apparent Power L1"
+      unique_id: "ess_1_meter1_apparent_power_l1"
+      address: 38832
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "VA"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Apparent Power L2"
+      unique_id: "ess_1_meter1_apparent_power_l2"
+      address: 38834
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "VA"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Apparent Power L3"
+      unique_id: "ess_1_meter1_apparent_power_l3"
+      address: 38836
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "VA"
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Power Factor Total"
+      unique_id: "ess_1_meter1_power_factor_total"
+      address: 38838
+      input_type: input
+      data_type: int32
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Power Factor L1"
+      unique_id: "ess_1_meter1_power_factor_l1"
+      address: 38840
+      input_type: input
+      data_type: int32
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Power Factor L2"
+      unique_id: "ess_1_meter1_power_factor_l2"
+      address: 38842
+      input_type: input
+      data_type: int32
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Power Factor L3"
+      unique_id: "ess_1_meter1_power_factor_l3"
+      address: 38844
+      input_type: input
+      data_type: int32
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Meter1 Frequency"
+      unique_id: "ess_1_meter1_frequency"
+      address: 38846
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "Hz"
+      device_class: frequency
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    # ---- Status / alarms (10s) ----
+    - slave: 247
+      name: "ESS 1 - Inverter Status 1 (Raw)"
+      unique_id: "ess_1_status_1"
+      address: 39063
+      input_type: input
+      data_type: uint16
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Status 3 (Raw)"
+      unique_id: "ess_1_status_3"
+      address: 39065
+      input_type: input
+      data_type: uint32
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Alarm 1 (Raw)"
+      unique_id: "ess_1_alarm_1"
+      address: 39067
+      input_type: input
+      data_type: uint16
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Alarm 2 (Raw)"
+      unique_id: "ess_1_alarm_2"
+      address: 39068
+      input_type: input
+      data_type: uint16
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Alarm 3 (Raw)"
+      unique_id: "ess_1_alarm_3"
+      address: 39069
+      input_type: input
+      data_type: uint16
+      scan_interval: 10
+
+    # ---- PV strings (V/A 10s) ----
+    - slave: 247
+      name: "ESS 1 - PV1 Voltage"
+      unique_id: "ess_1_pv1_voltage"
+      address: 39070
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - PV1 Current"
+      unique_id: "ess_1_pv1_current"
+      address: 39071
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - PV2 Voltage"
+      unique_id: "ess_1_pv2_voltage"
+      address: 39072
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - PV2 Current"
+      unique_id: "ess_1_pv2_current"
+      address: 39073
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - PV3 Voltage"
+      unique_id: "ess_1_pv3_voltage"
+      address: 39074
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - PV3 Current"
+      unique_id: "ess_1_pv3_current"
+      address: 39075
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - PV4 Voltage"
+      unique_id: "ess_1_pv4_voltage"
+      address: 39076
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - PV4 Current"
+      unique_id: "ess_1_pv4_current"
+      address: 39077
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    # ---- PV input power (1s) ----
+    - slave: 247
+      name: "ESS 1 - PV Input Power Total"
+      unique_id: "ess_1_pv_input_power_total"
+      address: 39118
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 3
+      scan_interval: 5
+
+    # ---- Grid (V/I/T/F/PF 10s, P/Q 1s) ----
+    - slave: 247
+      name: "ESS 1 - Grid Voltage L1"
+      unique_id: "ess_1_grid_voltage_l1"
+      address: 39123
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Grid Voltage L2"
+      unique_id: "ess_1_grid_voltage_l2"
+      address: 39124
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Grid Voltage L3"
+      unique_id: "ess_1_grid_voltage_l3"
+      address: 39125
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Current L1"
+      unique_id: "ess_1_inverter_current_l1"
+      address: 39126
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Current L2"
+      unique_id: "ess_1_inverter_current_l2"
+      address: 39128
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Current L3"
+      unique_id: "ess_1_inverter_current_l3"
+      address: 39130
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Active Power"
+      unique_id: "ess_1_active_power"
+      address: 39134
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 3
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Reactive Power"
+      unique_id: "ess_1_reactive_power"
+      address: 39136
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "kvar"
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Power Factor"
+      unique_id: "ess_1_power_factor"
+      address: 39138
+      input_type: input
+      data_type: int16
+      state_class: measurement
+      scale: 0.001
+      precision: 3
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Grid Frequency"
+      unique_id: "ess_1_grid_frequency"
+      address: 39139
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "Hz"
+      device_class: frequency
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Internal Temperature"
+      unique_id: "ess_1_internal_temperature"
+      address: 39141
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    # ---- Energy generated (left 60s / totals) ----
+    - slave: 247
+      name: "ESS 1 - Energy Generated Total"
+      unique_id: "ess_1_energy_generated_total"
+      address: 39149
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 2
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Energy Generated Today"
+      unique_id: "ess_1_energy_generated_today"
+      address: 39151
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 2
+      scan_interval: 60
+
+    # ---- Instant power (1s) ----
+    - slave: 247
+      name: "ESS 1 - Meter Collection Active Power"
+      unique_id: "ess_1_meter_collection_active_power"
+      address: 39168
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    # ---- EPS (V/I/F 10s, power 1s) ----
+    - slave: 247
+      name: "ESS 1 - EPS Voltage L1"
+      unique_id: "ess_1_eps_voltage_l1"
+      address: 39201
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - EPS Voltage L2"
+      unique_id: "ess_1_eps_voltage_l2"
+      address: 39202
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - EPS Voltage L3"
+      unique_id: "ess_1_eps_voltage_l3"
+      address: 39203
+      input_type: input
+      data_type: uint16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - EPS Current L1"
+      unique_id: "ess_1_eps_current_l1"
+      address: 39204
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - EPS Current L2"
+      unique_id: "ess_1_eps_current_l2"
+      address: 39206
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - EPS Current L3"
+      unique_id: "ess_1_eps_current_l3"
+      address: 39208
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - EPS Power L1"
+      unique_id: "ess_1_eps_power_l1"
+      address: 39210
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - EPS Power L2"
+      unique_id: "ess_1_eps_power_l2"
+      address: 39212
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - EPS Power L3"
+      unique_id: "ess_1_eps_power_l3"
+      address: 39214
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - EPS Power Total"
+      unique_id: "ess_1_eps_power_total"
+      address: 39216
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - EPS Frequency"
+      unique_id: "ess_1_eps_frequency"
+      address: 39218
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "Hz"
+      device_class: frequency
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    # ---- Loads (power = 1s) ----
+    - slave: 247
+      name: "ESS 1 - Load Power L1"
+      unique_id: "ess_1_load_power_l1"
+      address: 39219
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Load Power L2"
+      unique_id: "ess_1_load_power_l2"
+      address: 39221
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Load Power L3"
+      unique_id: "ess_1_load_power_l3"
+      address: 39223
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Load Power Total"
+      unique_id: "ess_1_load_power_total_39225"
+      address: 39225
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    # ---- Battery (V/I 10s, power 1s) ----
+    - slave: 247
+      name: "ESS 1 - Battery1 Voltage"
+      unique_id: "ess_1_battery1_voltage"
+      address: 39227
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Battery1 Current"
+      unique_id: "ess_1_battery1_current"
+      address: 39228
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Battery1 Power"
+      unique_id: "ess_1_battery1_power"
+      address: 39230
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Battery Power Total"
+      unique_id: "ess_1_battery_power_total"
+      address: 39237
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    # ---- Inverter per-phase powers (all power-like => 1s) ----
+    - slave: 247
+      name: "ESS 1 - Inverter Active Power L1"
+      unique_id: "ess_1_inv_active_power_l1"
+      address: 39248
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Active Power L2"
+      unique_id: "ess_1_inv_active_power_l2"
+      address: 39250
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Active Power L3"
+      unique_id: "ess_1_inv_active_power_l3"
+      address: 39252
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Reactive Power L1"
+      unique_id: "ess_1_inv_reactive_power_l1"
+      address: 39256
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "var"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Reactive Power L2"
+      unique_id: "ess_1_inv_reactive_power_l2"
+      address: 39258
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "var"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Reactive Power L3"
+      unique_id: "ess_1_inv_reactive_power_l3"
+      address: 39260
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "var"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Apparent Power L1"
+      unique_id: "ess_1_inv_apparent_power_l1"
+      address: 39264
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "VA"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Apparent Power L2"
+      unique_id: "ess_1_inv_apparent_power_l2"
+      address: 39266
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "VA"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Apparent Power L3"
+      unique_id: "ess_1_inv_apparent_power_l3"
+      address: 39268
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "VA"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Inverter Apparent Power Total"
+      unique_id: "ess_1_inv_apparent_power_total"
+      address: 39270
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "VA"
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    # ---- Inverter frequency (10s) ----
+    - slave: 247
+      name: "ESS 1 - Inverter Frequency L1"
+      unique_id: "ess_1_inv_frequency_l1"
+      address: 39272
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "Hz"
+      device_class: frequency
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Frequency L2"
+      unique_id: "ess_1_inv_frequency_l2"
+      address: 39273
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "Hz"
+      device_class: frequency
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - Inverter Frequency L3"
+      unique_id: "ess_1_inv_frequency_l3"
+      address: 39274
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "Hz"
+      device_class: frequency
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    # ---- Available import/export power (1s) ----
+    - slave: 247
+      name: "ESS 1 - Available Import Power"
+      unique_id: "ess_1_available_import_power"
+      address: 39275
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - Available Export Power"
+      unique_id: "ess_1_available_export_power"
+      address: 39277
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    # ---- PV string power (1s) ----
+    - slave: 247
+      name: "ESS 1 - PV1 Power"
+      unique_id: "ess_1_pv1_power"
+      address: 39279
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - PV2 Power"
+      unique_id: "ess_1_pv2_power"
+      address: 39281
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - PV3 Power"
+      unique_id: "ess_1_pv3_power"
+      address: 39283
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - PV4 Power"
+      unique_id: "ess_1_pv4_power"
+      address: 39285
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    # ---- MPPT (V/I 10s, power 1s) ----
+    - slave: 247
+      name: "ESS 1 - MPPT1 Voltage"
+      unique_id: "ess_1_mppt1_voltage"
+      address: 39327
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - MPPT1 Current"
+      unique_id: "ess_1_mppt1_current"
+      address: 39328
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - MPPT1 Power"
+      unique_id: "ess_1_mppt1_power"
+      address: 39329
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - MPPT2 Voltage"
+      unique_id: "ess_1_mppt2_voltage"
+      address: 39331
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - MPPT2 Current"
+      unique_id: "ess_1_mppt2_current"
+      address: 39332
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - MPPT2 Power"
+      unique_id: "ess_1_mppt2_power"
+      address: 39333
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - MPPT3 Voltage"
+      unique_id: "ess_1_mppt3_voltage"
+      address: 39335
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - MPPT3 Current"
+      unique_id: "ess_1_mppt3_current"
+      address: 39336
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - MPPT3 Power"
+      unique_id: "ess_1_mppt3_power"
+      address: 39337
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    - slave: 247
+      name: "ESS 1 - MPPT4 Voltage"
+      unique_id: "ess_1_mppt4_voltage"
+      address: 39339
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "V"
+      device_class: voltage
+      state_class: measurement
+      scale: 0.1
+      precision: 1
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - MPPT4 Current"
+      unique_id: "ess_1_mppt4_current"
+      address: 39340
+      input_type: input
+      data_type: int16
+      unit_of_measurement: "A"
+      device_class: current
+      state_class: measurement
+      scale: 0.01
+      precision: 2
+      scan_interval: 10
+
+    - slave: 247
+      name: "ESS 1 - MPPT4 Power"
+      unique_id: "ess_1_mppt4_power"
+      address: 39341
+      input_type: input
+      data_type: int32
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      scale: 1
+      precision: 0
+      scan_interval: 5
+
+    # ---- Energy counters (kept 60s) ----
+    - slave: 247
+      name: "ESS 1 - PV Energy Total"
+      unique_id: "ess_1_pv_power_total"
+      address: 39601
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - PV Energy Today"
+      unique_id: "ess_1_pv_energy_today"
+      address: 39603
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Charge Energy Total"
+      unique_id: "ess_1_charge_energy_total"
+      address: 39605
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Charge Energy Today"
+      unique_id: "ess_1_charge_energy_today"
+      address: 39607
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Discharge Energy Total"
+      unique_id: "ess_1_discharge_power_total"
+      address: 39609
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Discharge Energy Today"
+      unique_id: "ess_1_discharge_power_today"
+      address: 39611
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Feeder Network Energy Total"
+      unique_id: "ess_1_feeder_network_power_total"
+      address: 39613
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Feeder Network Energy Today"
+      unique_id: "ess_1_feeder_network_power_today"
+      address: 39615
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Energy Consumed Total"
+      unique_id: "ess_1_energy_consumed_total"
+      address: 39617
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Energy Consumed Today"
+      unique_id: "ess_1_energy_consumed_today"
+      address: 39619
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Output Energy Total"
+      unique_id: "ess_1_output_power_total"
+      address: 39621
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Output Energy Today"
+      unique_id: "ess_1_output_power_today"
+      address: 39623
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Input Energy Total"
+      unique_id: "ess_1_input_power_total"
+      address: 39625
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Input Energy Today"
+      unique_id: "ess_1_input_power_today"
+      address: 39627
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Load Energy Total"
+      unique_id: "ess_1_load_power_total_39629"
+      address: 39629
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total_increasing
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+
+    - slave: 247
+      name: "ESS 1 - Load Energy Today"
+      unique_id: "ess_1_load_power_today"
+      address: 39631
+      input_type: input
+      data_type: uint32
+      unit_of_measurement: "kWh"
+      device_class: energy
+      state_class: total
+      scale: 0.01
+      precision: 1
+      scan_interval: 60
+

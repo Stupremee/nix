@@ -50,6 +50,11 @@ in
     services.home-assistant = {
       enable = true;
 
+      extraPackages =
+        python3Packages: with python3Packages; [
+          aiogithubapi
+        ];
+
       extraComponents = [
         # Components required to complete the onboarding
         "analytics"
@@ -74,9 +79,11 @@ in
         "tibber"
         "soundtouch"
         "spotify"
+        "forecast_solar"
 
         "wiz"
         "homeassistant_hardware"
+        "tessie"
       ];
 
       config = {
@@ -102,6 +109,7 @@ in
         };
 
         automation = "!include automations.yaml";
+        modbus = "!include ${./modbus.yaml}";
 
         http = {
           use_x_forwarded_for = true;

@@ -32,7 +32,7 @@ in
     services.caddy.virtualHosts."zigbee.stu-dev.me".extraConfig = ''
       import cloudflare
       import authelia
-      reverse_proxy :8080
+      reverse_proxy :18080
     '';
 
     age.secrets = {
@@ -146,6 +146,7 @@ in
         frontend = {
           enable = true;
           host = "127.0.0.1";
+          port = 18080;
         };
 
         availability.enabled = true;

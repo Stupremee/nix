@@ -54,6 +54,7 @@
     stirling-pdf.enable = true;
     niks3.enable = false;
     unifi.enable = true;
+    stremio.enable = true;
   };
 
   # Required for allowing document scanner to connect via SSH

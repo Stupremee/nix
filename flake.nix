@@ -10,7 +10,7 @@
     };
 
     nixos-unified = {
-      url = "github:srid/nixos-unified/ee94b71a81b7445c5d2ed35c53210a5b227baabb";
+      url = "github:srid/nixos-unified";
     };
 
     home-manager = {

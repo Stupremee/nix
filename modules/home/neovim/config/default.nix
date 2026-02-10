@@ -253,7 +253,7 @@ in
 
       nix = {
         enable = true;
-        format.type = "nixfmt";
+        format.type = [ "nixfmt" ];
         lsp.enable = false;
       };
 
@@ -279,7 +279,8 @@ in
       rust = {
         enable = true;
         format.enable = true;
-        crates.enable = true;
+
+        extensions.crates-nvim.enable = true;
 
         lsp.opts = ''
           ['rust-analyzer'] = {

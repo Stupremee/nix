@@ -244,7 +244,35 @@ in
       grammars = [ pkgs.vimPlugins.nvim-treesitter.withAllGrammars ];
     };
 
-    lsp.enable = true;
+    lsp = {
+      enable = true;
+
+      servers.tsgo = {
+        cmd = [
+          (lib.getExe pkgs.typescript-go)
+          "--lsp"
+          "--stdio"
+        ];
+        init_options = {
+          hostInfo = "neovim";
+        };
+
+        filetypes = [
+          "javascript"
+          "javascriptreact"
+          "javascript.jsx"
+          "typescript"
+          "typescriptreact"
+          "typescript.tsx"
+        ];
+        root_markers = [
+          "tsconfig.json"
+          "jsconfig.json"
+          "package.json"
+          ".git"
+        ];
+      };
+    };
 
     languages = {
       enableFormat = true;
@@ -273,6 +301,9 @@ in
         extensions.ts-error-translator.enable = true;
         format.enable = false;
         extraDiagnostics.enable = false;
+
+        # we use ts-go below
+        lsp.enable = false;
       };
       php.enable = true;
 

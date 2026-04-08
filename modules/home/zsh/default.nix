@@ -70,6 +70,15 @@ in
         ''
           ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
+          if [ -f "$HOME/.vite-plus/env" ]; then
+            source "$HOME/.vite-plus/env"
+          fi
+
+          if (( $+commands[forge] )); then
+            eval "$(forge zsh theme)"
+            eval "$(forge zsh plugin)"
+          fi
+
           # Include hidden files in completions
           _comp_options+=(globdots)
 

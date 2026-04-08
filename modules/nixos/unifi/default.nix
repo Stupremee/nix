@@ -17,6 +17,7 @@ in
     services.unifi = {
       enable = true;
       openFirewall = true;
+      unifiPackage = pkgs.unstable.unifi;
     };
 
     my.persist.directories = [

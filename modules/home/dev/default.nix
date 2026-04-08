@@ -21,16 +21,19 @@ in
     (mkIf cfg.enable {
       home = {
         packages = with pkgs.unstable; [
-          claude-code
           cloudflared
           mkcert
           attic-client
+          nixd
+          nixfmt
         ];
 
         sessionPath = [
           "$HOME/.opencode/bin"
           "$HOME/.bun/bin"
           "$HOME/.cargo/bin"
+          "$HOME/.local/bin"
+          "/opt/homebrew/bin"
         ];
       };
     })

@@ -81,6 +81,8 @@
 
     # Somehow, doesn't work. Need to figure out why
     enableIPv6 = false;
+
+    firewall.allowedUDPPorts = [ 20000 ];
   };
 
   boot = {

@@ -10,17 +10,23 @@ let
     import inputs.nixpkgs-unstable {
       inherit system;
       config.allowUnfree = true;
+      overlays = [
+        (_: prev: {
+          direnv = prev.direnv.overrideAttrs (_: {
+            postPatch = ''
+              substituteInPlace GNUmakefile --replace-fail " -linkmode=external" ""
+            '';
+          });
+        })
+      ];
     };
 in
-self: _: {
+self: prev: {
   unstable = mkPkgs self.system;
   caddy = self.unstable.callPackage "${packages}/caddy" { };
-
-  # nushell = self.nushell.overrideAttrs (_: {
-  #   doCheck = false;
-  #   dontCargoCheck = true;
-  #   checkPhase = ''
-  #     echo "Skipping tests with dontCargoCheck"
-  #   '';
-  # });
+  direnv = prev.direnv.overrideAttrs (_: {
+    postPatch = ''
+      substituteInPlace GNUmakefile --replace-fail " -linkmode=external" ""
+    '';
+  });
 }

@@ -16,7 +16,7 @@ with lib;
     ++ (attrValues (filterAttrs (name: _: name != "default") flake.inputs.self.homeModules));
 
   home.packages = with pkgs; [
-    devenv
+    unstable.devenv
   ];
 
   my.xdg.enable = lib.mkDefault true;

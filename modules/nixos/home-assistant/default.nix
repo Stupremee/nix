@@ -111,6 +111,19 @@ in
         automation = "!include automations.yaml";
         modbus = "!include ${./modbus.yaml}";
 
+        input_select = {
+          hea_thor_power_mode = {
+            name = "HEA THOR Power Mode";
+            options = [
+              "Disabled"
+              "3 kW"
+              "6 kW"
+              "9 kW"
+            ];
+            initial = "Disabled";
+          };
+        };
+
         http = {
           use_x_forwarded_for = true;
           server_host = "127.0.0.1";
@@ -121,6 +134,13 @@ in
 
     services.esphome = {
       enable = true;
+      package = pkgs.unstable.esphome;
+    };
+
+    systemd.services.esphome = {
+      environment = {
+        PYTHONPATH = "${pkgs.unstable.esphome}/lib/python3.13/site-packages:${pkgs.python3Packages.makePythonPath pkgs.esphome.dependencies}";
+      };
     };
 
     services.zigbee2mqtt = {

@@ -1,3 +1,410 @@
+- name: hea_thor
+  type: tcp
+  host: 192.168.188.93
+  port: 502
+  delay: 0
+  message_wait_milliseconds: 100
+  timeout: 5
+
+  sensors:
+    - name: "HEA THOR Reg 1000 Power"
+      unique_id: hea_thor_reg_1000
+      slave: 1
+      address: 1000
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: W
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1001 Temperature T1"
+      unique_id: hea_thor_reg_1001
+      slave: 1
+      address: 1001
+      input_type: holding
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1002 Tmax"
+      unique_id: hea_thor_reg_1002
+      slave: 1
+      address: 1002
+      input_type: holding
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      scan_interval: 30
+
+    - name: "HEA THOR Reg 1005 Boost Mode"
+      unique_id: hea_thor_reg_1005
+      slave: 1
+      address: 1005
+      input_type: holding
+      data_type: uint16
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1006 Tmin"
+      unique_id: hea_thor_reg_1006
+      slave: 1
+      address: 1006
+      input_type: holding
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      scan_interval: 30
+
+    - name: "HEA THOR Reg 1007 Boost Time 1 Start"
+      unique_id: hea_thor_reg_1007
+      slave: 1
+      address: 1007
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: h
+      scan_interval: 60
+
+    - name: "HEA THOR Reg 1008 Boost Time 1 Stop"
+      unique_id: hea_thor_reg_1008
+      slave: 1
+      address: 1008
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: h
+      scan_interval: 60
+
+    - name: "HEA THOR Reg 1009 Actual Hour"
+      unique_id: hea_thor_reg_1009
+      slave: 1
+      address: 1009
+      input_type: holding
+      data_type: uint16
+      scan_interval: 30
+
+    - name: "HEA THOR Reg 1010 Actual Minute"
+      unique_id: hea_thor_reg_1010
+      slave: 1
+      address: 1010
+      input_type: holding
+      data_type: uint16
+      scan_interval: 30
+
+    - name: "HEA THOR Reg 1011 Actual Second"
+      unique_id: hea_thor_reg_1011
+      slave: 1
+      address: 1011
+      input_type: holding
+      data_type: uint16
+      scan_interval: 30
+
+    - name: "HEA THOR Reg 1012 Boost Activate"
+      unique_id: hea_thor_reg_1012
+      slave: 1
+      address: 1012
+      input_type: holding
+      data_type: uint16
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1015 Tempchip"
+      unique_id: hea_thor_reg_1015
+      slave: 1
+      address: 1015
+      input_type: holding
+      data_type: uint16
+      scan_interval: 60
+
+    - name: "HEA THOR Reg 1016 FW Main Version"
+      unique_id: hea_thor_reg_1016
+      slave: 1
+      address: 1016
+      input_type: holding
+      data_type: uint16
+      scan_interval: 300
+
+    - name: "HEA THOR Reg 1017 Power Stage FW Version"
+      unique_id: hea_thor_reg_1017
+      slave: 1
+      address: 1017
+      input_type: holding
+      data_type: uint16
+      scan_interval: 300
+
+    - name: "HEA THOR Reg 1018-1025 Serial Number"
+      unique_id: hea_thor_reg_1018_1025
+      slave: 1
+      address: 1018
+      input_type: holding
+      data_type: string
+      count: 8
+      scan_interval: 300
+
+    - name: "HEA THOR Reg 1026 Boost Time 2 Start"
+      unique_id: hea_thor_reg_1026
+      slave: 1
+      address: 1026
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: h
+      scan_interval: 60
+
+    - name: "HEA THOR Reg 1027 Boost Time 2 Stop"
+      unique_id: hea_thor_reg_1027
+      slave: 1
+      address: 1027
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: h
+      scan_interval: 60
+
+    - name: "HEA THOR Reg 1028 FW Sub Version"
+      unique_id: hea_thor_reg_1028
+      slave: 1
+      address: 1028
+      input_type: holding
+      data_type: uint16
+      scan_interval: 300
+
+    - name: "HEA THOR Reg 1029 FW Update State"
+      unique_id: hea_thor_reg_1029
+      slave: 1
+      address: 1029
+      input_type: holding
+      data_type: uint16
+      scan_interval: 60
+
+    - name: "HEA THOR Reg 1030 Temperature T2"
+      unique_id: hea_thor_reg_1030
+      slave: 1
+      address: 1030
+      input_type: holding
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: "°C"
+      device_class: temperature
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1053 Legionella Interval"
+      unique_id: hea_thor_reg_1053
+      slave: 1
+      address: 1053
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: d
+      scan_interval: 300
+
+    - name: "HEA THOR Reg 1054 Legionella Start"
+      unique_id: hea_thor_reg_1054
+      slave: 1
+      address: 1054
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: h
+      scan_interval: 300
+
+    - name: "HEA THOR Reg 1055 Legionella Temp"
+      unique_id: hea_thor_reg_1055
+      slave: 1
+      address: 1055
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: "°C"
+      device_class: temperature
+      scan_interval: 300
+
+    - name: "HEA THOR Reg 1056 Legionella Mode"
+      unique_id: hea_thor_reg_1056
+      slave: 1
+      address: 1056
+      input_type: holding
+      data_type: uint16
+      scan_interval: 300
+
+    - name: "HEA THOR Reg 1058 Relay Status"
+      unique_id: hea_thor_reg_1058
+      slave: 1
+      address: 1058
+      input_type: holding
+      data_type: uint16
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1061 U L1"
+      unique_id: hea_thor_reg_1061
+      slave: 1
+      address: 1061
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: V
+      device_class: voltage
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1062 I L1"
+      unique_id: hea_thor_reg_1062
+      slave: 1
+      address: 1062
+      input_type: holding
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: A
+      device_class: current
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1064 Frequency"
+      unique_id: hea_thor_reg_1064
+      slave: 1
+      address: 1064
+      input_type: holding
+      data_type: uint16
+      scale: 0.001
+      precision: 3
+      unit_of_measurement: Hz
+      device_class: frequency
+      state_class: measurement
+      scan_interval: 30
+
+    - name: "HEA THOR Reg 1067 U L2"
+      unique_id: hea_thor_reg_1067
+      slave: 1
+      address: 1067
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: V
+      device_class: voltage
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1068 I L2"
+      unique_id: hea_thor_reg_1068
+      slave: 1
+      address: 1068
+      input_type: holding
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: A
+      device_class: current
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1072 U L3"
+      unique_id: hea_thor_reg_1072
+      slave: 1
+      address: 1072
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: V
+      device_class: voltage
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1073 I L3"
+      unique_id: hea_thor_reg_1073
+      slave: 1
+      address: 1073
+      input_type: holding
+      data_type: uint16
+      scale: 0.1
+      precision: 1
+      unit_of_measurement: A
+      device_class: current
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1074 P out1"
+      unique_id: hea_thor_reg_1074
+      slave: 1
+      address: 1074
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: W
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1075 P out2"
+      unique_id: hea_thor_reg_1075
+      slave: 1
+      address: 1075
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: W
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1076 P out3"
+      unique_id: hea_thor_reg_1076
+      slave: 1
+      address: 1076
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: W
+      state_class: measurement
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1077 Operation State"
+      unique_id: hea_thor_reg_1077
+      slave: 1
+      address: 1077
+      input_type: holding
+      data_type: uint16
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1080 Power + Relays"
+      unique_id: hea_thor_reg_1080
+      slave: 1
+      address: 1080
+      input_type: holding
+      data_type: uint16
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1081 Device State"
+      unique_id: hea_thor_reg_1081
+      slave: 1
+      address: 1081
+      input_type: holding
+      data_type: uint16
+      scan_interval: 10
+
+    - name: "HEA THOR Reg 1090 API State"
+      unique_id: hea_thor_reg_1090
+      slave: 1
+      address: 1090
+      input_type: holding
+      data_type: uint16
+      scan_interval: 30
+
+    - name: "HEA THOR Reg 1091 STL Trigger Temperature"
+      unique_id: hea_thor_reg_1091
+      slave: 1
+      address: 1091
+      input_type: holding
+      data_type: uint16
+      unit_of_measurement: "°C"
+      device_class: temperature
+      scan_interval: 60
+
+  switches:
+    - name: "HEA THOR Reg 1081 Device Enable"
+      unique_id: hea_thor_switch_1081
+      slave: 1
+      address: 1081
+      write_type: holding
+      command_on: 1
+      command_off: 0
+      verify:
+        input_type: holding
+        address: 1081
+
 - name: "ESS 1"
   type: tcp
   host: ASP-E2-AS22AE30465G021.local

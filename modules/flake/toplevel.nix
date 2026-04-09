@@ -6,7 +6,12 @@
   ];
 
   perSystem =
-    { self', system, ... }:
+    {
+      self',
+      system,
+      pkgs,
+      ...
+    }:
     {
       _module.args.pkgs = import inputs.nixpkgs {
         inherit system;
@@ -14,6 +19,7 @@
       };
       # Enables 'nix run' to activate.
       packages.default = self'.packages.activate;
+      packages.sunspecModbusServer = pkgs.callPackage ../../packages/sunspec-modbus-server { };
 
       nixos-unified = {
         primary-inputs = [

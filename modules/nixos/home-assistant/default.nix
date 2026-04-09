@@ -6,8 +6,6 @@
 }:
 with lib;
 let
-  inherit (builtins) readFile;
-
   cfg = config.my.home-assistant;
 
   lldap-ha-auth = pkgs.callPackage ./lldap-ha-auth.nix { };

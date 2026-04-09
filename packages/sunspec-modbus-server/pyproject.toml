@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sunspec-modbus-server"
+version = "0.1.0"
+description = "Virtual SunSpec Modbus TCP server backed by Home Assistant"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "aiohttp",
+  "pymodbus",
+]
+
+[project.scripts]
+sunspec-modbus-server = "sunspec_modbus_server.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

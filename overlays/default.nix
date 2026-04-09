@@ -24,6 +24,7 @@ in
 self: prev: {
   unstable = mkPkgs self.system;
   caddy = self.unstable.callPackage "${packages}/caddy" { };
+  sunspecModbusServer = self.unstable.callPackage "${packages}/sunspec-modbus-server" { };
   direnv = prev.direnv.overrideAttrs (_: {
     postPatch = ''
       substituteInPlace GNUmakefile --replace-fail " -linkmode=external" ""

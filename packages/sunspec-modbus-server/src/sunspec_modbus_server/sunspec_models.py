@@ -264,6 +264,30 @@ METER_MODEL = _build_model_definition(
     ],
 )
 
+MPPT_MODEL = _build_model_definition(
+    model_id=160,
+    length=28,
+    points=[
+        ("DCA_SF", "i16", 1),
+        ("DCV_SF", "i16", 1),
+        ("DCW_SF", "i16", 1),
+        ("DCWH_SF", "i16", 1),
+        ("Evt", "u32", 2),
+        ("N", "u16", 1),
+        ("TmsPer", "u16", 1),
+        ("M1_ID", "u16", 1),
+        ("M1_IDStr", "string", 8),
+        ("M1_DCA", "u16", 1),
+        ("M1_DCV", "u16", 1),
+        ("M1_DCW", "u16", 1),
+        ("M1_DCWH", "u32", 2),
+        ("M1_Tms", "u32", 2),
+        ("M1_Tmp", "i16", 1),
+        ("M1_DCSt", "u16", 1),
+        ("M1_DCEvt", "u32", 2),
+    ],
+)
+
 BATTERY_MODEL = _build_model_definition(
     model_id=124,
     length=25,
@@ -363,6 +387,7 @@ BATTERY_BASE_MODEL = _build_model_definition(
 MODEL_SEQUENCE: tuple[tuple[str, ModelDefinition], ...] = (
     ("common", COMMON_MODEL),
     ("inverter", INVERTER_MODEL),
+    ("mppt", MPPT_MODEL),
     ("meter", METER_MODEL),
     ("battery", BATTERY_MODEL),
     ("battery_base", BATTERY_BASE_MODEL),

@@ -11,6 +11,7 @@ from sunspec_modbus_server.value_definitions import (
 def test_normalize_values_fills_defaults() -> None:
     values = normalize_values({"active_power_w": 1234})
     assert values["active_power_w"] == 1234.0
+    assert values["pv_power_w"] == 0.0
     assert values["grid_power_w"] == 0.0
     assert values["frequency_hz"] == 50.0
     assert values["battery_soc_pct"] == 50.0

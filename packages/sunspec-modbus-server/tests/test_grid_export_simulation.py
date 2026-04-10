@@ -31,6 +31,7 @@ def make_simulator() -> GridExportSimulator:
 def make_values(**overrides: float) -> dict[str, float]:
     values = {
         "active_power_w": 4000.0,
+        "pv_power_w": 4000.0,
         "grid_power_w": 0.0,
         "battery_power_w": 0.0,
         "battery_soc_pct": 90.0,
@@ -109,7 +110,7 @@ def test_simulation_deactivates_when_pv_no_longer_covers_house_load() -> None:
     simulator = make_simulator()
     simulator.apply(make_values())
 
-    effective = simulator.apply(make_values(active_power_w=600.0, grid_power_w=0.0, battery_power_w=500.0))
+    effective = simulator.apply(make_values(pv_power_w=600.0, grid_power_w=0.0, battery_power_w=500.0))
 
     assert simulator.active is False
     assert effective["grid_power_w"] == 0.0

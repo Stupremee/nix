@@ -20,6 +20,7 @@ The server exposes holding registers starting at raw Modbus address `40000` with
 - Discovery block (`SunS`)
 - Model 1: Common
 - Model 103: Inverter
+- Model 160: Multiple MPPT Inverter Extension
 - Model 203: Meter (three-phase wye / ABCN)
 - Model 124: Basic Storage Controls
 - Model 802: Battery Base
@@ -32,6 +33,7 @@ In `homeAssistant` mode the service polls Home Assistant state values and maps t
 Supported mapping keys:
 
 - `active_power_w`
+- `pv_power_w`
 - `grid_power_w`
 - `apparent_power_va`
 - `reactive_power_var`
@@ -59,17 +61,19 @@ Each mapping entry can either be a plain entity id string or an object with
 report kW but need to feed SunSpec watt registers. Set `negate: true` to invert
 the value before it is written into SunSpec registers.
 
-`active_power_w` feeds inverter power in Model `103.W`.
+`active_power_w` feeds inverter AC power in `103.W`.
+`pv_power_w` feeds inverter DC power in `103.DCW` and PV input power in `160.M1_DCW`.
 `grid_power_w` feeds instantaneous grid import/export in Model `203.W`, which is the usual place for `Netzbezug`.
 `total_energy_absorbed_wh` feeds `203.TotWhImp`, and `total_energy_injected_wh` feeds `203.TotWhExp`.
 `battery_power_w` and `battery_soc_pct` feed both storage Model `124` and battery Model `802`.
 Use positive `battery_power_w` for discharge and negative `battery_power_w` for charge.
-The server derives `124.OutWRte` and `124.InWRte` from that single sensor, and also writes live battery power into `802.W`.
+The server derives `124.OutWRte` and `124.InWRte` as percentages of the configured max battery power, and also mirrors live battery power into `802.W` and `802.ReqW`.
 
 When `gridExportSimulation.enable = true`, the service computes a virtual
 effective `grid_power_w` from these live values only:
 
 - `active_power_w`
+- `pv_power_w`
 - `grid_power_w`
 - `battery_power_w`
 - `battery_soc_pct`
@@ -114,6 +118,10 @@ Example with Home Assistant polling:
           entityId = "sensor.wechselrichter_leistung_kw";
           scale = 1000;
         };
+        pv_power_w = {
+          entityId = "sensor.pv_input_power_kw";
+          scale = 1000;
+        };
         grid_power_w = {
           entityId = "sensor.netzbezug_kw";
           scale = 1000;
@@ -156,6 +164,9 @@ Raw JSON example with exactly the six values used by the virtual export heuristi
     "tokenFile": "/run/secrets/homeassistant-token",
     "entityIds": {
       "active_power_w": {
+        "entityId": "sensor.ess_1_active_power"
+      },
+      "pv_power_w": {
         "entityId": "sensor.ess_1_pv_input_power_total"
       },
       "total_energy_injected_wh": {
@@ -190,6 +201,7 @@ Example with dummy values:
     dataSource = "dummy";
     dummyValues = {
       active_power_w = 2500;
+      pv_power_w = 3200;
       grid_power_w = 1200;
       total_energy_injected_wh = 123456;
       total_energy_absorbed_wh = 987654;
@@ -214,7 +226,7 @@ That flag ignores any config file and starts the server with built-in defaults o
 ## Limitations
 
 - The refactored server is read-only.
-- Only Model 1, Model 103, Model 203, storage Model 124, and battery Model 802 are implemented.
+- Only Model 1, Model 103, Model 160, Model 203, storage Model 124, and battery Model 802 are implemented.
 - Home Assistant polling expects sensor states to be directly parseable as numbers.
 - The virtual export heuristic is intentionally approximate because the real
   curtailed PV surplus is not directly measurable from the available sensors.

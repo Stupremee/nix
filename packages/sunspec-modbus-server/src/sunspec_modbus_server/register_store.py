@@ -24,6 +24,10 @@ from .value_definitions import DEFAULT_VALUES, normalize_values
 class SunSpecRegisterStore:
     """In-memory SunSpec register map backed by polled Home Assistant values."""
 
+    BATTERY_MAX_POWER_W = 5000
+    BATTERY_NOMINAL_VOLTAGE_V = 51.2
+    PV_NOMINAL_VOLTAGE_V = 600.0
+
     def __init__(
         self,
         *,
@@ -122,6 +126,20 @@ class SunSpecRegisterStore:
         self._write_u32("inverter", "EvtVnd3", 0)
         self._write_u32("inverter", "EvtVnd4", 0)
 
+        self._write_i16("mppt", "DCA_SF", 0)
+        self._write_i16("mppt", "DCV_SF", 0)
+        self._write_i16("mppt", "DCW_SF", 0)
+        self._write_i16("mppt", "DCWH_SF", 0)
+        self._write_u32("mppt", "Evt", 0)
+        self._write_u16("mppt", "N", 1)
+        self._write_u16("mppt", "TmsPer", 0)
+        self._write_u16("mppt", "M1_ID", 1)
+        self._write_string("mppt", "M1_IDStr", "PV1")
+        self._write_u32("mppt", "M1_Tms", 0)
+        self._write_i16("mppt", "M1_Tmp", 25)
+        self._write_u16("mppt", "M1_DCSt", 1)
+        self._write_u32("mppt", "M1_DCEvt", 0)
+
         self._write_i16("meter", "A_SF", -1)
         self._write_i16("meter", "V_SF", -1)
         self._write_i16("meter", "Hz_SF", -2)
@@ -143,11 +161,11 @@ class SunSpecRegisterStore:
         self._write_i16("battery", "InBatV_SF", -1)
         self._write_i16("battery", "SoC_SF", 0)
         self._write_i16("battery", "InOutWRte_SF", 0)
-        self._write_u16("battery", "WChaMax", 5000)
+        self._write_u16("battery", "WChaMax", self.BATTERY_MAX_POWER_W)
         self._write_u16("battery", "WChaGra", 100)
         self._write_u16("battery", "WDisChaGra", 100)
         self._write_u16("battery", "StorCtl_Mod", 0)
-        self._write_u16("battery", "VAChaMax", 5000)
+        self._write_u16("battery", "VAChaMax", self.BATTERY_MAX_POWER_W)
         self._write_u16("battery", "MinRsvPct", 0)
         self._write_u16("battery", "StorAval", 0)
         self._write_u16("battery", "InBatV", 5120)
@@ -172,8 +190,8 @@ class SunSpecRegisterStore:
         self._write_i16("battery_base", "W_SF", 0)
         self._write_u16("battery_base", "AHRtg", 100)
         self._write_u16("battery_base", "WHRtg", 10000)
-        self._write_u16("battery_base", "WChaRteMax", 5000)
-        self._write_u16("battery_base", "WDisChaRteMax", 5000)
+        self._write_u16("battery_base", "WChaRteMax", self.BATTERY_MAX_POWER_W)
+        self._write_u16("battery_base", "WDisChaRteMax", self.BATTERY_MAX_POWER_W)
         self._write_u16("battery_base", "SoCMax", 100)
         self._write_u16("battery_base", "SoCMin", 0)
         self._write_u16("battery_base", "SocRsvMax", 100)
@@ -210,6 +228,7 @@ class SunSpecRegisterStore:
         values = normalize_values(self._dynamic_values)
 
         inverter_power = int(round(values["active_power_w"]))
+        pv_power = int(round(values["pv_power_w"]))
         grid_power = int(round(values["grid_power_w"]))
         apparent_power = int(round(
             values["apparent_power_va"]
@@ -241,7 +260,16 @@ class SunSpecRegisterStore:
         battery_power = int(round(values["battery_power_w"]))
         battery_soc = int(round(values["battery_soc_pct"]))
         battery_power_abs = abs(battery_power)
-        battery_power_rate = max(0, min(100, battery_power_abs))
+        pv_dc_power = max(0, pv_power)
+        pv_dc_voltage = int(round(self.PV_NOMINAL_VOLTAGE_V))
+        pv_dc_current = int(round(pv_dc_power / self.PV_NOMINAL_VOLTAGE_V)) if pv_dc_power > 0 else 0
+        battery_power_rate = max(
+            0,
+            min(
+                100,
+                int(round((battery_power_abs / self.BATTERY_MAX_POWER_W) * 100.0)),
+            ),
+        )
 
         self._write_u16("inverter", "A", self._clamp_u16(total_current))
         self._write_u16("inverter", "AphA", self._clamp_u16(phase_current))
@@ -257,14 +285,24 @@ class SunSpecRegisterStore:
             "WH",
             self._clamp_u32(int(round(values["total_energy_injected_wh"]))),
         )
-        self._write_u16("inverter", "DCA", self._clamp_u16(total_current))
-        self._write_u16("inverter", "DCV", self._clamp_u16(int(round(voltage_ll * 10.0))))
-        self._write_i16("inverter", "DCW", self._clamp_i16(inverter_power))
+        self._write_u16("inverter", "DCA", self._clamp_u16(pv_dc_current))
+        self._write_u16("inverter", "DCV", self._clamp_u16(pv_dc_voltage))
+        self._write_i16("inverter", "DCW", self._clamp_i16(pv_dc_power))
         self._write_i16("inverter", "TmpCab", self._clamp_i16(int(round(values["cabinet_temperature_c"]))))
         self._write_i16("inverter", "TmpSnk", self._clamp_i16(int(round(values["heat_sink_temperature_c"]))))
         self._write_i16("inverter", "TmpTrns", self._clamp_i16(int(round(values["transformer_temperature_c"]))))
         self._write_i16("inverter", "TmpOt", self._clamp_i16(int(round(values["other_temperature_c"]))))
         self._write_u16("inverter", "St", 4 if inverter_power != 0 else 1)
+
+        self._write_u16("mppt", "M1_DCA", self._clamp_u16(pv_dc_current))
+        self._write_u16("mppt", "M1_DCV", self._clamp_u16(pv_dc_voltage))
+        self._write_u16("mppt", "M1_DCW", self._clamp_u16(pv_dc_power))
+        self._write_u32(
+            "mppt",
+            "M1_DCWH",
+            self._clamp_u32(int(round(values["total_energy_injected_wh"]))),
+        )
+        self._write_u16("mppt", "M1_DCSt", 4 if pv_dc_power > 0 else 1)
 
         self._write_u16("meter", "A", self._clamp_u16(total_current))
         self._write_u16("meter", "AphA", self._clamp_u16(phase_current))
@@ -312,16 +350,31 @@ class SunSpecRegisterStore:
         self._write_u32("meter", "TotWhImpPhB", self._clamp_u32(phase_import_wh))
         self._write_u32("meter", "TotWhImpPhC", self._clamp_u32(phase_import_wh))
 
-        self._write_u16("battery", "WChaMax", self._clamp_u16(max(1, battery_power_abs)))
-        self._write_u16("battery", "VAChaMax", self._clamp_u16(max(1, battery_power_abs)))
+        self._write_u16("battery", "WChaMax", self._clamp_u16(self.BATTERY_MAX_POWER_W))
+        self._write_u16("battery", "VAChaMax", self._clamp_u16(self.BATTERY_MAX_POWER_W))
         self._write_u16("battery", "ChaState", self._clamp_u16(battery_soc))
         self._write_u16("battery", "StorAval", self._clamp_u16(battery_soc))
-        self._write_u16("battery_base", "WChaRteMax", self._clamp_u16(max(1, battery_power_abs)))
-        self._write_u16("battery_base", "WDisChaRteMax", self._clamp_u16(max(1, battery_power_abs)))
+        self._write_u16("battery_base", "WChaRteMax", self._clamp_u16(self.BATTERY_MAX_POWER_W))
+        self._write_u16("battery_base", "WDisChaRteMax", self._clamp_u16(self.BATTERY_MAX_POWER_W))
         self._write_u16("battery_base", "SoC", self._clamp_u16(battery_soc))
         self._write_u16("battery_base", "DoD", self._clamp_u16(100 - battery_soc))
         self._write_i16("battery_base", "W", self._clamp_i16(battery_power))
-        self._write_i16("battery_base", "A", self._clamp_i16(int(round(battery_power / 51.2))))
+        self._write_i16(
+            "battery_base",
+            "ReqW",
+            self._clamp_i16(battery_power),
+        )
+        self._write_i16(
+            "battery_base",
+            "A",
+            self._clamp_i16(int(round(battery_power / self.BATTERY_NOMINAL_VOLTAGE_V))),
+        )
+        battery_current_abs = max(
+            0,
+            int(round(battery_power_abs / self.BATTERY_NOMINAL_VOLTAGE_V)),
+        )
+        self._write_u16("battery_base", "AChaMax", self._clamp_u16(battery_current_abs))
+        self._write_u16("battery_base", "ADisChaMax", self._clamp_u16(battery_current_abs))
         if battery_power > 0:
             self._write_u16("battery", "ChaSt", 3)
             self._write_u16("battery", "StorCtl_Mod", 0b10)
@@ -330,6 +383,7 @@ class SunSpecRegisterStore:
             self._write_i16("battery", "OutWRte", self._clamp_i16(battery_power_rate))
             self._write_i16("battery", "InWRte", 0)
             self._write_u16("battery_base", "ChaSt", 3)
+            self._write_u16("battery_base", "ReqInvState", 1)
         elif battery_power < 0:
             self._write_u16("battery", "ChaSt", 4)
             self._write_u16("battery", "StorCtl_Mod", 0b1)
@@ -338,6 +392,7 @@ class SunSpecRegisterStore:
             self._write_i16("battery", "OutWRte", 0)
             self._write_i16("battery", "InWRte", self._clamp_i16(battery_power_rate))
             self._write_u16("battery_base", "ChaSt", 4)
+            self._write_u16("battery_base", "ReqInvState", 1)
         elif battery_soc >= 100:
             self._write_u16("battery", "ChaSt", 5)
             self._write_u16("battery", "StorCtl_Mod", 0)
@@ -346,6 +401,7 @@ class SunSpecRegisterStore:
             self._write_i16("battery", "OutWRte", 0)
             self._write_i16("battery", "InWRte", 0)
             self._write_u16("battery_base", "ChaSt", 5)
+            self._write_u16("battery_base", "ReqInvState", 0)
         else:
             self._write_u16("battery", "ChaSt", 6)
             self._write_u16("battery", "StorCtl_Mod", 0)
@@ -354,6 +410,7 @@ class SunSpecRegisterStore:
             self._write_i16("battery", "OutWRte", 0)
             self._write_i16("battery", "InWRte", 0)
             self._write_u16("battery_base", "ChaSt", 6)
+            self._write_u16("battery_base", "ReqInvState", 0)
 
     def _derive_current(self, active_power_w: float, voltage_ln_v: float) -> float:
         voltage = max(voltage_ln_v, 1.0)

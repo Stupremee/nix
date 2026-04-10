@@ -155,6 +155,10 @@ in
             entityId = "sensor.inverter_power_kw";
             scale = 1000;
           };
+          pv_power_w = {
+            entityId = "sensor.pv_input_power_kw";
+            scale = 1000;
+          };
           grid_power_w = {
             entityId = "sensor.grid_import_kw";
             scale = 1000;
@@ -170,7 +174,7 @@ in
           `entityId`, `scale`, and optional `negate`. The `scale` is multiplied
           onto the fetched state before it is written into SunSpec registers.
           When `negate = true`, the scaled value is multiplied by `-1`.
-          Supported keys include `active_power_w`, `grid_power_w`, `apparent_power_va`,
+          Supported keys include `active_power_w`, `pv_power_w`, `grid_power_w`, `apparent_power_va`,
           `reactive_power_var`, `power_factor_pct`, `current_a`, `voltage_ln_v`,
           `voltage_ll_v`, `frequency_hz`, `total_energy_injected_wh`,
           `total_energy_absorbed_wh`, `total_reactive_energy_injected_varh`,
@@ -187,6 +191,7 @@ in
       default = { };
       example = {
         active_power_w = 2500;
+        pv_power_w = 3200;
         grid_power_w = 1200;
         total_energy_injected_wh = 123456;
         voltage_ln_v = 230.0;

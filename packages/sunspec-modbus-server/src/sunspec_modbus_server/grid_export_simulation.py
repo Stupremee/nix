@@ -44,11 +44,11 @@ class GridExportSimulator:
 
         house_load_w = max(
             0.0,
-            values["active_power_w"] + values["grid_power_w"] + values["battery_power_w"],
+            values["pv_power_w"] + values["grid_power_w"] + values["battery_power_w"],
         )
         pv_can_cover_house_load = (
             values["grid_power_w"] <= self._config.grid_import_tolerance_w
-            and values["active_power_w"] >= house_load_w - self._config.pv_cover_margin_w
+            and values["pv_power_w"] >= house_load_w - self._config.pv_cover_margin_w
         )
         battery_is_idle = (
             abs(values["battery_power_w"]) <= self._config.battery_idle_tolerance_w
@@ -90,7 +90,7 @@ class GridExportSimulator:
         simulated_export_w = (
             charging_export_w
             if charging_export_w > 0.0
-            else max(0.0, values["active_power_w"])
+            else max(0.0, values["pv_power_w"])
         )
         effective_values = dict(values)
         effective_values["grid_power_w"] = min(

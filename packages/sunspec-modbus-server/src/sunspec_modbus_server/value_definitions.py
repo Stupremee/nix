@@ -36,6 +36,14 @@ VALUE_DEFINITIONS: dict[str, ValueDefinition] = {
         minimum=-30000.0,
         maximum=30000.0,
     ),
+    "pv_power_w": ValueDefinition(
+        key="pv_power_w",
+        description="PV input power",
+        unit="W",
+        default=0.0,
+        minimum=0.0,
+        maximum=30000.0,
+    ),
     "grid_power_w": ValueDefinition(
         key="grid_power_w",
         description="Grid import or export active power",

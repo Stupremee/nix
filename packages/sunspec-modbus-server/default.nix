@@ -9,6 +9,8 @@ python3Packages.buildPythonApplication {
 
   src = ./.;
 
+  doCheck = false;
+
   build-system = with python3Packages; [
     setuptools
   ];

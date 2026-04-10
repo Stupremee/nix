@@ -82,28 +82,45 @@ def test_simulation_deactivates_on_real_grid_import() -> None:
 
 def test_simulation_uses_battery_charging_power_as_virtual_export() -> None:
     simulator = make_simulator()
-    effective = simulator.apply(make_values(battery_power_w=-1500.0, battery_soc_pct=40.0))
+    effective = simulator.apply(
+        make_values(
+            active_power_w=900.0,
+            pv_power_w=4000.0,
+            battery_power_w=-1500.0,
+            battery_soc_pct=40.0,
+        )
+    )
 
-    assert simulator.active is True
-    assert effective["grid_power_w"] == -1500.0
+    assert simulator.active is False
+    assert effective["active_power_w"] == 4000.0
+    assert effective["grid_power_w"] == 0.0
 
 
 def test_simulation_does_not_fake_export_for_battery_charging_during_grid_import() -> None:
     simulator = make_simulator()
-    effective = simulator.apply(make_values(battery_power_w=-1500.0, grid_power_w=200.0, battery_soc_pct=40.0))
+    effective = simulator.apply(
+        make_values(
+            active_power_w=900.0,
+            pv_power_w=4000.0,
+            battery_power_w=-1500.0,
+            grid_power_w=200.0,
+            battery_soc_pct=40.0,
+        )
+    )
 
     assert simulator.active is False
     assert effective["grid_power_w"] == 200.0
+    assert effective["active_power_w"] == 4000.0
 
 
-def test_simulation_deactivates_when_battery_is_discharging() -> None:
+def test_simulation_sets_pv_power_to_zero_when_battery_is_discharging() -> None:
     simulator = make_simulator()
     simulator.apply(make_values())
 
-    effective = simulator.apply(make_values(battery_power_w=150.0))
+    effective = simulator.apply(make_values(pv_power_w=2200.0, battery_power_w=150.0))
 
     assert simulator.active is False
-    assert effective["grid_power_w"] == 0.0
+    assert effective["pv_power_w"] == 0.0
 
 
 def test_simulation_deactivates_when_pv_no_longer_covers_house_load() -> None:

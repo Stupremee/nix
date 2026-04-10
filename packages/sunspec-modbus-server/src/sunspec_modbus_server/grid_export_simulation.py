@@ -42,26 +42,28 @@ class GridExportSimulator:
         if not self._config.enable:
             return values
 
-        house_load_w = max(
-            0.0,
-            values["pv_power_w"] + values["grid_power_w"] + values["battery_power_w"],
-        )
-        pv_can_cover_house_load = (
-            values["grid_power_w"] <= self._config.grid_import_tolerance_w
-            and values["pv_power_w"] >= house_load_w - self._config.pv_cover_margin_w
-        )
-        battery_is_idle = (
-            abs(values["battery_power_w"]) <= self._config.battery_idle_tolerance_w
-        )
+        effective_values = dict(values)
         battery_is_charging = (
             values["battery_power_w"] < -self._config.battery_idle_tolerance_w
         )
-        charging_export_w = (
-            abs(values["battery_power_w"])
-            if battery_is_charging and pv_can_cover_house_load
-            else 0.0
+        battery_is_discharging = (
+            values["battery_power_w"] > self._config.battery_idle_tolerance_w
         )
+        battery_is_idle = not battery_is_charging and not battery_is_discharging
 
+        if battery_is_charging:
+            effective_values["active_power_w"] = max(0.0, values["pv_power_w"])
+        elif battery_is_discharging:
+            effective_values["pv_power_w"] = 0.0
+
+        house_load_w = max(
+            0.0,
+            effective_values["pv_power_w"] + values["grid_power_w"] + values["battery_power_w"],
+        )
+        pv_can_cover_house_load = (
+            values["grid_power_w"] <= self._config.grid_import_tolerance_w
+            and effective_values["pv_power_w"] >= house_load_w - self._config.pv_cover_margin_w
+        )
         previous_active = self.active
         if self._full_battery_active:
             self._full_battery_active = (
@@ -76,7 +78,7 @@ class GridExportSimulator:
                 and pv_can_cover_house_load
             )
 
-        self._active = charging_export_w > 0.0 or self._full_battery_active
+        self._active = self._full_battery_active
 
         if previous_active != self._active:
             LOGGER.info(
@@ -85,14 +87,9 @@ class GridExportSimulator:
             )
 
         if not self._active:
-            return values
+            return effective_values
 
-        simulated_export_w = (
-            charging_export_w
-            if charging_export_w > 0.0
-            else max(0.0, values["pv_power_w"])
-        )
-        effective_values = dict(values)
+        simulated_export_w = max(0.0, effective_values["pv_power_w"])
         effective_values["grid_power_w"] = min(
             values["grid_power_w"],
             -simulated_export_w,

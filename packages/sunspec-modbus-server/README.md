@@ -22,8 +22,6 @@ The server exposes holding registers starting at raw Modbus address `40000` with
 - Model 103: Inverter
 - Model 160: Multiple MPPT Inverter Extension
 - Model 203: Meter (three-phase wye / ABCN)
-- Model 124: Basic Storage Controls
-- Model 802: Battery Base
 - End marker (`0xFFFF`)
 
 ## Home Assistant mapping
@@ -65,9 +63,7 @@ the value before it is written into SunSpec registers.
 `pv_power_w` feeds inverter DC power in `103.DCW` and PV input power in `160.M1_DCW`.
 `grid_power_w` feeds instantaneous grid import/export in Model `203.W`, which is the usual place for `Netzbezug`.
 `total_energy_absorbed_wh` feeds `203.TotWhImp`, and `total_energy_injected_wh` feeds `203.TotWhExp`.
-`battery_power_w` and `battery_soc_pct` feed both storage Model `124` and battery Model `802`.
-Use positive `battery_power_w` for discharge and negative `battery_power_w` for charge.
-The server derives `124.OutWRte` and `124.InWRte` as percentages of the configured max battery power, and also mirrors live battery power into `802.W` and `802.ReqW`.
+`battery_power_w` and `battery_soc_pct` are only used by the simulation layer and are not exposed through SunSpec registers.
 
 When `gridExportSimulation.enable = true`, the service computes a virtual
 effective `grid_power_w` from these live values only:
@@ -82,9 +78,9 @@ effective `grid_power_w` from these live values only:
 
 Only the instantaneous meter power fields are modified by that heuristic.
 The import/export energy counters remain real.
-If the battery is actively charging, the charging power is exposed as virtual
-export. If the battery is effectively idle and sufficiently full, the existing
-full-battery heuristic continues to use the current PV power as virtual export.
+If the battery is actively charging, the reported inverter power is rewritten to the current PV input power.
+If the battery is discharging, the reported PV power is forced to `0`.
+If the battery is effectively idle and sufficiently full, the existing full-battery heuristic continues to use the current PV power as virtual export.
 
 ## NixOS module usage
 
@@ -226,7 +222,7 @@ That flag ignores any config file and starts the server with built-in defaults o
 ## Limitations
 
 - The refactored server is read-only.
-- Only Model 1, Model 103, Model 160, Model 203, storage Model 124, and battery Model 802 are implemented.
+- Only Model 1, Model 103, Model 160, and Model 203 are implemented.
 - Home Assistant polling expects sensor states to be directly parseable as numbers.
 - The virtual export heuristic is intentionally approximate because the real
   curtailed PV surplus is not directly measurable from the available sensors.

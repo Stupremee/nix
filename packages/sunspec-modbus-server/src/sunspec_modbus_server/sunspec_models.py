@@ -389,8 +389,6 @@ MODEL_SEQUENCE: tuple[tuple[str, ModelDefinition], ...] = (
     ("inverter", INVERTER_MODEL),
     ("mppt", MPPT_MODEL),
     ("meter", METER_MODEL),
-    ("battery", BATTERY_MODEL),
-    ("battery_base", BATTERY_BASE_MODEL),
 )
 
 

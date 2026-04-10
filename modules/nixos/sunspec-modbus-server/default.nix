@@ -46,6 +46,16 @@ let
       dummyValues
       ;
     unitId = cfg.unitId;
+    gridExportSimulation = {
+      inherit (cfg.gridExportSimulation)
+        enable
+        activateSocPct
+        deactivateSocPct
+        gridImportToleranceW
+        batteryIdleToleranceW
+        pvCoverMarginW
+        ;
+    };
     homeAssistant = {
       inherit (cfg.homeAssistant)
         url
@@ -189,6 +199,50 @@ in
         Used directly when `dataSource = "dummy"` and also as startup defaults.
       '';
     };
+
+    gridExportSimulation = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Whether to simulate grid export for a downstream heat pump by
+          overriding only the instantaneous grid power registers.
+        '';
+      };
+
+      activateSocPct = mkOption {
+        type = types.number;
+        default = 90;
+        description = "Battery state-of-charge threshold that activates virtual export.";
+      };
+
+      deactivateSocPct = mkOption {
+        type = types.number;
+        default = 88;
+        description = "Battery state-of-charge threshold below which virtual export deactivates.";
+      };
+
+      gridImportToleranceW = mkOption {
+        type = types.number;
+        default = 50;
+        description = "Maximum real grid import still treated as effectively zero for simulation.";
+      };
+
+      batteryIdleToleranceW = mkOption {
+        type = types.number;
+        default = 100;
+        description = ''
+          Maximum absolute battery power still treated as idle.
+          Charging below `-batteryIdleToleranceW` is interpreted as virtual export.
+        '';
+      };
+
+      pvCoverMarginW = mkOption {
+        type = types.number;
+        default = 100;
+        description = "Margin used when deciding whether PV still fully covers the estimated house load.";
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -255,6 +309,10 @@ in
       {
         assertion = cfg.dataSource != "homeAssistant" || cfg.homeAssistant.tokenFile != null;
         message = "services.sunspecModbusServer.homeAssistant.tokenFile must be set when dataSource = \"homeAssistant\"";
+      }
+      {
+        assertion = cfg.gridExportSimulation.deactivateSocPct <= cfg.gridExportSimulation.activateSocPct;
+        message = "services.sunspecModbusServer.gridExportSimulation.deactivateSocPct must be <= activateSocPct";
       }
     ];
   };

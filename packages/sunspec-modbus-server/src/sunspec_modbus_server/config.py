@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from .grid_export_simulation import GridExportSimulationConfig
 from .ha_client import HomeAssistantConfig
 from .value_definitions import normalize_entity_mappings, normalize_values
 
@@ -22,6 +23,7 @@ class AppConfig:
     poll_interval_seconds: int
     log_level: str
     data_source: str
+    grid_export_simulation: GridExportSimulationConfig
     home_assistant: HomeAssistantConfig
     dummy_values: dict[str, float]
 
@@ -36,6 +38,7 @@ class AppConfig:
             poll_interval_seconds=5,
             log_level="INFO",
             data_source="dummy",
+            grid_export_simulation=GridExportSimulationConfig(),
             home_assistant=HomeAssistantConfig(
                 url="http://127.0.0.1:8123",
                 token_file=None,
@@ -55,6 +58,7 @@ class AppConfig:
         payload = json.loads(Path(config_path).read_text(encoding="utf-8"))
 
         home_assistant_payload = payload.get("homeAssistant", {})
+        grid_export_simulation_payload = payload.get("gridExportSimulation", {})
         token_file = (
             home_assistant_token_file_override
             or home_assistant_payload.get("tokenFile")
@@ -68,6 +72,24 @@ class AppConfig:
             poll_interval_seconds=int(payload["pollIntervalSeconds"]),
             log_level=str(payload["logLevel"]).upper(),
             data_source=str(payload.get("dataSource", "homeAssistant")),
+            grid_export_simulation=GridExportSimulationConfig(
+                enable=bool(grid_export_simulation_payload.get("enable", False)),
+                activate_soc_pct=float(
+                    grid_export_simulation_payload.get("activateSocPct", 90.0)
+                ),
+                deactivate_soc_pct=float(
+                    grid_export_simulation_payload.get("deactivateSocPct", 88.0)
+                ),
+                grid_import_tolerance_w=float(
+                    grid_export_simulation_payload.get("gridImportToleranceW", 50.0)
+                ),
+                battery_idle_tolerance_w=float(
+                    grid_export_simulation_payload.get("batteryIdleToleranceW", 100.0)
+                ),
+                pv_cover_margin_w=float(
+                    grid_export_simulation_payload.get("pvCoverMarginW", 100.0)
+                ),
+            ),
             home_assistant=HomeAssistantConfig(
                 url=str(home_assistant_payload.get("url", "http://127.0.0.1:8123")),
                 token_file=str(token_file) if token_file else None,
@@ -89,6 +111,13 @@ class AppConfig:
             raise ValueError(
                 "homeAssistant.tokenFile must be set when dataSource is 'homeAssistant'"
             )
+        if (
+            app_config.grid_export_simulation.deactivate_soc_pct
+            > app_config.grid_export_simulation.activate_soc_pct
+        ):
+            raise ValueError(
+                "gridExportSimulation.deactivateSocPct must be <= activateSocPct"
+            )
 
         return app_config
 
@@ -102,6 +131,11 @@ class AppConfig:
             "pollIntervalSeconds": self.poll_interval_seconds,
             "logLevel": self.log_level,
             "dataSource": self.data_source,
+            "gridExportSimulation": {
+                "enable": self.grid_export_simulation.enable,
+                "activateSocPct": self.grid_export_simulation.activate_soc_pct,
+                "deactivateSocPct": self.grid_export_simulation.deactivate_soc_pct,
+            },
             "homeAssistantUrl": self.home_assistant.url,
             "mappedEntities": len(self.home_assistant.entity_mappings),
             "dummyValues": len(self.dummy_values),

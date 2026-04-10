@@ -9,10 +9,12 @@ import logging
 from pathlib import Path
 
 from .config import AppConfig
+from .grid_export_simulation import GridExportSimulator
 from .ha_client import HomeAssistantClient
 from .logging_utils import configure_logging
 from .modbus_server import serve_modbus_tcp
 from .register_store import SunSpecRegisterStore
+from .value_definitions import normalize_values
 
 
 LOGGER = logging.getLogger(__name__)
@@ -21,17 +23,19 @@ LOGGER = logging.getLogger(__name__)
 async def _poll_home_assistant_loop(
     *,
     app_config: AppConfig,
+    simulator: GridExportSimulator,
     store: SunSpecRegisterStore,
 ) -> None:
     """Poll Home Assistant states and map them into the in-memory register store."""
     token = Path(app_config.home_assistant.token_file).read_text(encoding="utf-8").strip()
     client = HomeAssistantClient(app_config.home_assistant, token)
     try:
-        current_values = store.get_dynamic_values()
+        raw_values = normalize_values(app_config.dummy_values)
         while True:
             try:
-                current_values = await client.fetch_values(previous_values=current_values)
-                store.update_dynamic_values(current_values)
+                raw_values = await client.fetch_values(previous_values=raw_values)
+                effective_values = simulator.apply(raw_values)
+                store.update_dynamic_values(effective_values)
                 LOGGER.info(
                     "Home Assistant refresh succeeded for %s mapped entities",
                     len(app_config.home_assistant.entity_mappings),
@@ -60,11 +64,13 @@ async def run_app(app_config: AppConfig) -> None:
     else:
         LOGGER.info("Using dummy values for all SunSpec measurements")
 
+    simulator = GridExportSimulator(app_config.grid_export_simulation)
+    initial_values = simulator.apply(app_config.dummy_values)
     store = SunSpecRegisterStore(
         unit_id=app_config.unit_id,
         base_address=app_config.base_address,
         poll_interval_seconds=app_config.poll_interval_seconds,
-        initial_values=app_config.dummy_values,
+        initial_values=initial_values,
     )
 
     async with asyncio.TaskGroup() as task_group:
@@ -80,6 +86,7 @@ async def run_app(app_config: AppConfig) -> None:
             task_group.create_task(
                 _poll_home_assistant_loop(
                     app_config=app_config,
+                    simulator=simulator,
                     store=store,
                 )
             )

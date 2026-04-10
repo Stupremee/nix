@@ -9,6 +9,10 @@ The server supports two runtime modes:
 - `homeAssistant`: poll existing Home Assistant entities through the REST API using a long-lived access token.
 - `dummy`: serve only configured dummy values without any Home Assistant dependency.
 
+It can also simulate virtual grid export for a downstream heat pump by
+overriding only the instantaneous grid power while leaving the energy counters
+untouched.
+
 ## SunSpec layout
 
 The server exposes holding registers starting at raw Modbus address `40000` with this model stack:
@@ -62,6 +66,22 @@ the value before it is written into SunSpec registers.
 Use positive `battery_power_w` for discharge and negative `battery_power_w` for charge.
 The server derives `124.OutWRte` and `124.InWRte` from that single sensor, and also writes live battery power into `802.W`.
 
+When `gridExportSimulation.enable = true`, the service computes a virtual
+effective `grid_power_w` from these live values only:
+
+- `active_power_w`
+- `grid_power_w`
+- `battery_power_w`
+- `battery_soc_pct`
+- `total_energy_injected_wh`
+- `total_energy_absorbed_wh`
+
+Only the instantaneous meter power fields are modified by that heuristic.
+The import/export energy counters remain real.
+If the battery is actively charging, the charging power is exposed as virtual
+export. If the battery is effectively idle and sufficiently full, the existing
+full-battery heuristic continues to use the current PV power as virtual export.
+
 ## NixOS module usage
 
 Example with Home Assistant polling:
@@ -76,6 +96,15 @@ Example with Home Assistant polling:
     openFirewall = true;
     pollIntervalSeconds = 5;
     dataSource = "homeAssistant";
+
+    gridExportSimulation = {
+      enable = true;
+      activateSocPct = 90;
+      deactivateSocPct = 88;
+      gridImportToleranceW = 50;
+      batteryIdleToleranceW = 100;
+      pvCoverMarginW = 100;
+    };
 
     homeAssistant = {
       url = "http://127.0.0.1:8123";
@@ -100,6 +129,55 @@ Example with Home Assistant polling:
       };
     };
   };
+}
+```
+
+Raw JSON example with exactly the six values used by the virtual export heuristic:
+
+```json
+{
+  "host": "0.0.0.0",
+  "port": 1502,
+  "unitId": 1,
+  "baseAddress": 40000,
+  "pollIntervalSeconds": 5,
+  "logLevel": "INFO",
+  "dataSource": "homeAssistant",
+  "gridExportSimulation": {
+    "enable": true,
+    "activateSocPct": 90,
+    "deactivateSocPct": 88,
+    "gridImportToleranceW": 50,
+    "batteryIdleToleranceW": 100,
+    "pvCoverMarginW": 100
+  },
+  "homeAssistant": {
+    "url": "https://home.stu-dev.me",
+    "tokenFile": "/run/secrets/homeassistant-token",
+    "entityIds": {
+      "active_power_w": {
+        "entityId": "sensor.ess_1_pv_input_power_total"
+      },
+      "total_energy_injected_wh": {
+        "entityId": "sensor.ess_1_pv_energy_total",
+        "scale": 1000
+      },
+      "total_energy_absorbed_wh": {
+        "entityId": "sensor.ess_1_energy_consumed_total",
+        "scale": 1000
+      },
+      "grid_power_w": {
+        "entityId": "sensor.ess_1_meter1_active_power_total",
+        "negate": true
+      },
+      "battery_power_w": {
+        "entityId": "sensor.ess_1_battery_power_total"
+      },
+      "battery_soc_pct": {
+        "entityId": "sensor.ess_1_bms1_state_of_charge"
+      }
+    }
+  }
 }
 ```
 
@@ -138,3 +216,5 @@ That flag ignores any config file and starts the server with built-in defaults o
 - The refactored server is read-only.
 - Only Model 1, Model 103, Model 203, storage Model 124, and battery Model 802 are implemented.
 - Home Assistant polling expects sensor states to be directly parseable as numbers.
+- The virtual export heuristic is intentionally approximate because the real
+  curtailed PV surplus is not directly measurable from the available sensors.

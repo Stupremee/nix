@@ -80,7 +80,10 @@ Only the instantaneous meter power fields are modified by that heuristic.
 The import/export energy counters remain real.
 If the battery is actively charging, the reported inverter power is rewritten to the current PV input power.
 If the battery is discharging, the reported PV power is forced to `0`.
-If the battery is effectively idle and sufficiently full, the existing full-battery heuristic continues to use the current PV power as virtual export.
+If the battery state of charge reaches `activateSocPct` (default `99`), the meter model reports
+`real_grid_power_w - (2 * pv_power_w)`.
+The same simulated amount is also added to the reported PV value.
+As soon as the battery starts discharging, that export emulation is disabled again and the real meter power is reported.
 
 ## NixOS module usage
 
@@ -99,8 +102,8 @@ Example with Home Assistant polling:
 
     gridExportSimulation = {
       enable = true;
-      activateSocPct = 90;
-      deactivateSocPct = 88;
+      activateSocPct = 99;
+      deactivateSocPct = 99;
       gridImportToleranceW = 50;
       batteryIdleToleranceW = 100;
       pvCoverMarginW = 100;
@@ -149,8 +152,8 @@ Raw JSON example with exactly the six values used by the virtual export heuristi
   "dataSource": "homeAssistant",
   "gridExportSimulation": {
     "enable": true,
-    "activateSocPct": 90,
-    "deactivateSocPct": 88,
+    "activateSocPct": 99,
+    "deactivateSocPct": 99,
     "gridImportToleranceW": 50,
     "batteryIdleToleranceW": 100,
     "pvCoverMarginW": 100
@@ -224,5 +227,5 @@ That flag ignores any config file and starts the server with built-in defaults o
 - The refactored server is read-only.
 - Only Model 1, Model 103, Model 160, and Model 203 are implemented.
 - Home Assistant polling expects sensor states to be directly parseable as numbers.
-- The virtual export heuristic is intentionally approximate because the real
-  curtailed PV surplus is not directly measurable from the available sensors.
+- The virtual export simulation uses a fixed `2 * pv_power_w` offset once the battery is full,
+  so it remains intentionally approximate.

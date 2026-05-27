@@ -13,7 +13,6 @@ in
       tailscale
       httpie
       fh
-      nodejs
     ];
   };
 

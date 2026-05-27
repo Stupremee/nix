@@ -217,13 +217,13 @@ in
 
       activateSocPct = mkOption {
         type = types.number;
-        default = 90;
+        default = 99;
         description = "Battery state-of-charge threshold that activates virtual export.";
       };
 
       deactivateSocPct = mkOption {
         type = types.number;
-        default = 88;
+        default = 99;
         description = "Battery state-of-charge threshold below which virtual export deactivates.";
       };
 

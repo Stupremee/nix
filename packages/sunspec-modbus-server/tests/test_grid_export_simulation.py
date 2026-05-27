@@ -19,8 +19,8 @@ def make_simulator() -> GridExportSimulator:
     return GridExportSimulator(
         GridExportSimulationConfig(
             enable=True,
-            activate_soc_pct=90.0,
-            deactivate_soc_pct=88.0,
+            activate_soc_pct=99.0,
+            deactivate_soc_pct=99.0,
             grid_import_tolerance_w=50.0,
             battery_idle_tolerance_w=100.0,
             pv_cover_margin_w=100.0,
@@ -34,7 +34,7 @@ def make_values(**overrides: float) -> dict[str, float]:
         "pv_power_w": 4000.0,
         "grid_power_w": 0.0,
         "battery_power_w": 0.0,
-        "battery_soc_pct": 90.0,
+        "battery_soc_pct": 99.0,
         "total_energy_injected_wh": 1234.0,
         "total_energy_absorbed_wh": 5678.0,
     }
@@ -47,37 +47,43 @@ def test_simulation_activates_when_conditions_match() -> None:
     effective = simulator.apply(make_values())
 
     assert simulator.active is True
-    assert effective["grid_power_w"] == -4000.0
+    assert effective["grid_power_w"] == -8000.0
 
 
-def test_simulation_stays_active_between_deactivate_and_activate_thresholds() -> None:
+def test_simulation_subtracts_virtual_export_from_real_meter_value() -> None:
     simulator = make_simulator()
-    simulator.apply(make_values(battery_soc_pct=90.0))
-
-    effective = simulator.apply(make_values(battery_soc_pct=89.0))
+    effective = simulator.apply(make_values(grid_power_w=750.0))
 
     assert simulator.active is True
-    assert effective["grid_power_w"] == -4000.0
+    assert effective["grid_power_w"] == -7250.0
+    assert effective["pv_power_w"] == 12000.0
 
 
-def test_simulation_deactivates_below_hysteresis_threshold() -> None:
+def test_simulation_deactivates_below_full_battery_threshold() -> None:
     simulator = make_simulator()
-    simulator.apply(make_values(battery_soc_pct=90.0))
+    simulator.apply(make_values(battery_soc_pct=99.0))
 
-    effective = simulator.apply(make_values(battery_soc_pct=87.0))
+    effective = simulator.apply(make_values(battery_soc_pct=98.0))
 
     assert simulator.active is False
     assert effective["grid_power_w"] == 0.0
 
 
-def test_simulation_deactivates_on_real_grid_import() -> None:
+def test_simulation_deactivates_immediately_when_battery_starts_discharging() -> None:
     simulator = make_simulator()
-    simulator.apply(make_values())
+    simulator.apply(make_values(battery_soc_pct=99.0))
 
-    effective = simulator.apply(make_values(grid_power_w=120.0))
+    effective = simulator.apply(
+        make_values(
+            battery_soc_pct=99.0,
+            battery_power_w=150.0,
+            grid_power_w=320.0,
+            pv_power_w=4000.0,
+        )
+    )
 
     assert simulator.active is False
-    assert effective["grid_power_w"] == 120.0
+    assert effective["grid_power_w"] == 320.0
 
 
 def test_simulation_uses_battery_charging_power_as_virtual_export() -> None:
@@ -123,16 +129,6 @@ def test_simulation_sets_pv_power_to_zero_when_battery_is_discharging() -> None:
     assert effective["pv_power_w"] == 0.0
 
 
-def test_simulation_deactivates_when_pv_no_longer_covers_house_load() -> None:
-    simulator = make_simulator()
-    simulator.apply(make_values())
-
-    effective = simulator.apply(make_values(pv_power_w=600.0, grid_power_w=0.0, battery_power_w=500.0))
-
-    assert simulator.active is False
-    assert effective["grid_power_w"] == 0.0
-
-
 def test_only_meter_power_registers_are_affected_not_energy_counters() -> None:
     simulator = make_simulator()
     raw_values = make_values()
@@ -146,6 +142,6 @@ def test_only_meter_power_registers_are_affected_not_energy_counters() -> None:
     total_wh_exp = store.get_registers(layout.field_address("meter", "TotWhExp"), 2)
     total_wh_imp = store.get_registers(layout.field_address("meter", "TotWhImp"), 2)
 
-    assert decode_i16(meter_watts[0]) == -4000
+    assert decode_i16(meter_watts[0]) == -8000
     assert decode_u32(total_wh_exp) == 1234
     assert decode_u32(total_wh_imp) == 5678

@@ -37,6 +37,7 @@ in
       hass-mqtt-password = {
         generator.script = "alnum";
       };
+      sunspec-home-assistant-token.rekeyFile = ../../../secrets/sunspec-home-assistant-token.age;
       zigbee2mqtt-mqtt-password.rekeyFile = ../../../secrets/zigbee2mqtt-mqtt-password.age;
       "zigbee2mqtt-secrets.yaml" = {
         rekeyFile = ../../../secrets/zigbee2mqtt-secrets.yaml.age;
@@ -126,6 +127,53 @@ in
           use_x_forwarded_for = true;
           server_host = "127.0.0.1";
           trusted_proxies = [ "127.0.0.1" ];
+        };
+      };
+    };
+
+    services.sunspecModbusServer = {
+      enable = true;
+      host = "0.0.0.0";
+      port = 1502;
+      unitId = 1;
+      baseAddress = 40000;
+      pollIntervalSeconds = 5;
+      logLevel = "INFO";
+      dataSource = "homeAssistant";
+      openFirewall = true;
+
+      gridExportSimulation = {
+        enable = true;
+      };
+
+      homeAssistant = {
+        url = "https://home.stu-dev.me";
+        tokenFile = config.age.secrets.sunspec-home-assistant-token.path;
+        entityIds = {
+          active_power_w = {
+            entityId = "sensor.ess_1_pv_input_power_total";
+          };
+          pv_power_w = {
+            entityId = "sensor.ess_1_pv_input_power_total";
+          };
+          total_energy_injected_wh = {
+            entityId = "sensor.ess_1_pv_energy_total";
+            scale = 1000;
+          };
+          total_energy_absorbed_wh = {
+            entityId = "sensor.ess_1_energy_consumed_total";
+            scale = 1000;
+          };
+          grid_power_w = {
+            entityId = "sensor.ess_1_meter1_active_power_total";
+            negate = true;
+          };
+          battery_power_w = {
+            entityId = "sensor.ess_1_battery_power_total";
+          };
+          battery_soc_pct = {
+            entityId = "sensor.ess_1_bms1_state_of_charge";
+          };
         };
       };
     };

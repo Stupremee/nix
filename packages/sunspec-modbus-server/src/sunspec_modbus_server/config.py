@@ -75,10 +75,10 @@ class AppConfig:
             grid_export_simulation=GridExportSimulationConfig(
                 enable=bool(grid_export_simulation_payload.get("enable", False)),
                 activate_soc_pct=float(
-                    grid_export_simulation_payload.get("activateSocPct", 90.0)
+                    grid_export_simulation_payload.get("activateSocPct", 99.0)
                 ),
                 deactivate_soc_pct=float(
-                    grid_export_simulation_payload.get("deactivateSocPct", 88.0)
+                    grid_export_simulation_payload.get("deactivateSocPct", 99.0)
                 ),
                 grid_import_tolerance_w=float(
                     grid_export_simulation_payload.get("gridImportToleranceW", 50.0)

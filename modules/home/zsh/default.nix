@@ -74,10 +74,16 @@ in
             source "$HOME/.vite-plus/env"
           fi
 
+          if (( $+commands[mise] )); then
+            eval "$(mise activate zsh)"
+          fi
+
           if (( $+commands[forge] )); then
             eval "$(forge zsh theme)"
             eval "$(forge zsh plugin)"
           fi
+
+          eval "$(wt config shell init zsh)"
 
           # Include hidden files in completions
           _comp_options+=(globdots)

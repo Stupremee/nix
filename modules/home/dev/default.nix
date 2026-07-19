@@ -29,6 +29,11 @@ in
         ];
 
         sessionPath = [
+          "$HOME/.kimi-code/bin"
+          "$HOME/go/bin"
+          "$HOME/.localcan/bin"
+          "$HOME/.nub/shims"
+          "$HOME/.nub/bin"
           "$HOME/.opencode/bin"
           "$HOME/.bun/bin"
           "$HOME/.cargo/bin"

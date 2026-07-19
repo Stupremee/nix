@@ -23,9 +23,17 @@
     };
   };
 
-  environment.systemPackages = with pkgs; [
-    gnupg
-  ];
+  environment = {
+    shellInit = lib.mkAfter ''
+      if [ -f "$HOME/.vite-plus/env" ]; then
+        . "$HOME/.vite-plus/env"
+      fi
+    '';
+
+    systemPackages = with pkgs; [
+      gnupg
+    ];
+  };
 
   programs.gnupg.agent = {
     enable = true;

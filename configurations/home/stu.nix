@@ -13,12 +13,9 @@ in
   };
 
   my = {
-    alacritty.enable = true;
     zsh.enable = true;
     tmux.enable = true;
     neovim.enable = true;
     git.enable = true;
-    rofi.enable = true;
-    hyprland.enable = true;
   };
 }

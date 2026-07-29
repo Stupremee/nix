@@ -16,14 +16,10 @@
     ];
   };
 
-  programs.zsh.shellInit = ''
-    if [ "''${USER-}" = "stu" ]; then
-      export PATH="$HOME/.vite-plus/bin:$HOME/.local/bin:$HOME/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.bun/bin:$HOME/.local/share/pnpm:$PATH"
-    fi
-  '';
-
   # Remote activation
   nixos-unified.sshTarget = "stu@rome";
+
+  home-manager.backupFileExtension = "hm-backup";
 
   my = {
     persist = {
@@ -46,6 +42,7 @@
     };
 
     server.enable = true;
+    user.stu.enableHome = true;
 
     secrets = {
       enable = true;

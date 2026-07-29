@@ -83,7 +83,9 @@ in
             eval "$(forge zsh plugin)"
           fi
 
-          eval "$(wt config shell init zsh)"
+          if (( $+commands[wt] )); then
+            eval "$(wt config shell init zsh)"
+          fi
 
           # Include hidden files in completions
           _comp_options+=(globdots)

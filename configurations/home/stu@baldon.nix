@@ -9,7 +9,11 @@
   ];
 
   my = {
+    alacritty.enable = true;
+    rofi.enable = true;
+
     hyprland = {
+      enable = true;
       sensitivity = "-0.5";
       monitors = {
         "DP-5" = {

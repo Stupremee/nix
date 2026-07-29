@@ -4,6 +4,17 @@
   pkgs,
   ...
 }:
+let
+  userBinDirectories = [
+    ".vite-plus/bin"
+    ".local/bin"
+    "bin"
+    ".cargo/bin"
+    "go/bin"
+    ".bun/bin"
+    ".local/share/pnpm"
+  ];
+in
 {
   catppuccin.flavor = "latte";
 
@@ -17,16 +28,12 @@
   home = {
     packages = [ pkgs.python3 ];
 
-    sessionPath = [
-      "$HOME/.vite-plus/bin"
-      "$HOME/.local/bin"
-      "$HOME/bin"
-      "$HOME/.cargo/bin"
-      "$HOME/go/bin"
-      "$HOME/.bun/bin"
-      "$HOME/.local/share/pnpm"
-    ];
+    sessionPath = map (directory: "$HOME/${directory}") userBinDirectories;
   };
+
+  systemd.user.sessionVariables.PATH = lib.concatStringsSep ":" (
+    map (directory: "${config.home.homeDirectory}/${directory}") userBinDirectories ++ [ "\${PATH}" ]
+  );
 
   programs.zsh.initContent = lib.mkAfter ''
     if [ -r "$HOME/.zshrc" ]; then
@@ -34,5 +41,8 @@
     fi
   '';
 
-  my.dev.enable = true;
+  my = {
+    dev.enable = true;
+    tmux.enable = lib.mkForce false;
+  };
 }

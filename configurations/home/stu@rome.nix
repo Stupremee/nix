@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   catppuccin.flavor = "latte";
 
@@ -9,15 +14,19 @@
     }
   ];
 
-  home.sessionPath = [
-    "$HOME/.vite-plus/bin"
-    "$HOME/.local/bin"
-    "$HOME/bin"
-    "$HOME/.cargo/bin"
-    "$HOME/go/bin"
-    "$HOME/.bun/bin"
-    "$HOME/.local/share/pnpm"
-  ];
+  home = {
+    packages = [ pkgs.python3 ];
+
+    sessionPath = [
+      "$HOME/.vite-plus/bin"
+      "$HOME/.local/bin"
+      "$HOME/bin"
+      "$HOME/.cargo/bin"
+      "$HOME/go/bin"
+      "$HOME/.bun/bin"
+      "$HOME/.local/share/pnpm"
+    ];
+  };
 
   my.dev.enable = true;
 }

@@ -1,7 +1,7 @@
 {
   lib,
   config,
-  pkgs,
+  pkgsUnstable,
   ...
 }:
 with lib;
@@ -17,7 +17,7 @@ in
     services.unifi = {
       enable = true;
       openFirewall = true;
-      unifiPackage = pkgs.unstable.unifi;
+      unifiPackage = pkgsUnstable.unifi;
     };
 
     my.persist.directories = [

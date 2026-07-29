@@ -31,7 +31,7 @@ in
         file
         procs
         jq
-        dogdns
+        doggo
         yq
         manix
         git

@@ -274,6 +274,14 @@ in
       };
     };
 
+    lsp.presets.tailwindcss-language-server.enable = true;
+
+    lsp.servers."rust-analyzer".settings."rust-analyzer" = {
+      files.excludeDirs = [ ".direnv" ];
+      checkOnSave = true;
+      procMacro.enable = true;
+    };
+
     languages = {
       enableFormat = true;
       enableTreesitter = true;
@@ -291,12 +299,11 @@ in
       bash.enable = true;
       terraform.enable = true;
       hcl.enable = true;
-      tailwind.enable = true;
       svelte = {
         enable = true;
         format.enable = false;
       };
-      ts = {
+      typescript = {
         enable = true;
         extensions.ts-error-translator.enable = true;
         format.enable = false;
@@ -312,18 +319,6 @@ in
         format.enable = true;
 
         extensions.crates-nvim.enable = true;
-
-        lsp.opts = ''
-          ['rust-analyzer'] = {
-            files = {
-              excludeDirs = { ".direnv" }
-            },
-            checkOnSave = true,
-            procMacro = {
-              enable = true,
-            },
-          },
-        '';
       };
     };
 

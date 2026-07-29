@@ -2,7 +2,7 @@
   lib,
   config,
   flake,
-  pkgs,
+  pkgsUnstable,
   ...
 }:
 with lib;
@@ -10,7 +10,7 @@ let
   cfg = config.my.neovim;
 
   customNeovim = flake.inputs.nvf.lib.neovimConfiguration {
-    pkgs = pkgs.unstable;
+    pkgs = pkgsUnstable;
 
     modules = [
       {

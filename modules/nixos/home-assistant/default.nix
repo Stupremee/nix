@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgsUnstable,
   config,
   ...
 }:
@@ -180,18 +181,18 @@ in
 
     services.esphome = {
       enable = true;
-      package = pkgs.unstable.esphome;
+      package = pkgsUnstable.esphome;
     };
 
     systemd.services.esphome = {
       environment = {
-        PYTHONPATH = "${pkgs.unstable.esphome}/lib/python3.13/site-packages:${pkgs.python3Packages.makePythonPath pkgs.esphome.dependencies}";
+        PYTHONPATH = "${pkgsUnstable.esphome}/lib/python3.13/site-packages:${pkgs.python3Packages.makePythonPath pkgs.esphome.dependencies}";
       };
     };
 
     services.zigbee2mqtt = {
       enable = true;
-      package = pkgs.unstable.zigbee2mqtt_2;
+      package = pkgsUnstable.zigbee2mqtt_2;
       dataDir =
         if config.my.persist.enable then "/persist/var/lib/zigbee2mqtt" else "/var/lib/zigbee2mqtt";
 
@@ -235,7 +236,7 @@ in
         group = "hass";
       }
       {
-        directory = "/var/lib/private/esphome";
+        directory = "/var/lib/esphome";
         user = "esphome";
         group = "esphome";
       }

@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgsUnstable,
   config,
   ...
 }:
@@ -20,7 +21,7 @@ in
   config = mkMerge [
     (mkIf cfg.enable {
       home = {
-        packages = with pkgs.unstable; [
+        packages = with pkgsUnstable; [
           cloudflared
           mkcert
           attic-client
@@ -45,7 +46,7 @@ in
 
     (mkIf cfg.k8s.enable {
       home = {
-        packages = with pkgs.unstable; [
+        packages = with pkgsUnstable; [
           kubectl
           kubelogin-oidc
           fluxcd
@@ -64,12 +65,12 @@ in
       programs = {
         k9s = {
           enable = true;
-          package = pkgs.unstable.k9s;
+          package = pkgsUnstable.k9s;
         };
         kubecolor = {
           enable = true;
           enableAlias = true;
-          package = pkgs.unstable.kubecolor;
+          package = pkgsUnstable.kubecolor;
         };
       };
     })
@@ -83,7 +84,7 @@ in
       in
       {
         home = {
-          packages = with pkgs.unstable; [
+          packages = with pkgsUnstable; [
             (pkgs.azure-cli.withExtensions extensions)
             azure-functions-core-tools
           ];

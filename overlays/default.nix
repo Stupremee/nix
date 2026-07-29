@@ -4,27 +4,10 @@ let
   inherit (inputs) self;
 
   packages = self + /packages;
-
-  mkPkgs =
-    system:
-    import inputs.nixpkgs-unstable {
-      inherit system;
-      config.allowUnfree = true;
-      overlays = [
-        (_: prev: {
-          direnv = prev.direnv.overrideAttrs (_: {
-            postPatch = ''
-              substituteInPlace GNUmakefile --replace-fail " -linkmode=external" ""
-            '';
-          });
-        })
-      ];
-    };
 in
 self: prev: {
-  unstable = mkPkgs self.system;
-  caddy = self.unstable.callPackage "${packages}/caddy" { };
-  sunspecModbusServer = self.unstable.callPackage "${packages}/sunspec-modbus-server" { };
+  caddy = prev.callPackage "${packages}/caddy" { };
+  sunspecModbusServer = prev.callPackage "${packages}/sunspec-modbus-server" { };
   direnv = prev.direnv.overrideAttrs (_: {
     postPatch = ''
       substituteInPlace GNUmakefile --replace-fail " -linkmode=external" ""

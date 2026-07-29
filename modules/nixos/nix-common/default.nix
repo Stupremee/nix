@@ -8,6 +8,20 @@
 with lib;
 let
   cfg = config.my.nix-common;
+
+  pkgsUnstable = import flake.inputs.nixpkgs-unstable {
+    localSystem = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+    overlays = [
+      (_: prev: {
+        direnv = prev.direnv.overrideAttrs (_: {
+          postPatch = ''
+            substituteInPlace GNUmakefile --replace-fail " -linkmode=external" ""
+          '';
+        });
+      })
+    ];
+  };
 in
 {
   options.my.nix-common = {
@@ -19,8 +33,12 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    nixpkgs.overlays = [ flake.inputs.self.overlays.default ];
+  config = mkMerge [
+    {
+      _module.args.pkgsUnstable = pkgsUnstable;
+    }
+    (mkIf cfg.enable {
+      nixpkgs.overlays = [ flake.inputs.self.overlays.default ];
 
     # Allow unfree licenced packages
     nixpkgs.config = {
@@ -97,10 +115,11 @@ in
     # Let 'nixos-version --json' know the Git revision of this flake.
     system.configurationRevision = lib.mkIf (flake.inputs.self ? rev) flake.inputs.self.rev;
 
-    nix.registry = {
-      nixpkgs.flake = flake.inputs.nixpkgs;
-      nixpkgs-unstable.flake = flake.inputs.nixpkgs-unstable;
-      my.flake = flake.inputs.self;
-    };
-  };
+      nix.registry = {
+        nixpkgs.flake = flake.inputs.nixpkgs;
+        nixpkgs-unstable.flake = flake.inputs.nixpkgs-unstable;
+        my.flake = flake.inputs.self;
+      };
+    })
+  ];
 }

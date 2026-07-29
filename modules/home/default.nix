@@ -5,6 +5,12 @@
   ...
 }:
 with lib;
+let
+  pkgsUnstable = import flake.inputs.nixpkgs-unstable {
+    localSystem = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
+in
 {
   imports =
     with flake.inputs;
@@ -15,9 +21,9 @@ with lib;
     ]
     ++ (attrValues (filterAttrs (name: _: name != "default") flake.inputs.self.homeModules));
 
-  home.packages = with pkgs; [
-    unstable.devenv
-  ];
+  _module.args.pkgsUnstable = pkgsUnstable;
+
+  home.packages = [ pkgsUnstable.devenv ];
 
   my.xdg.enable = lib.mkDefault true;
 
@@ -30,6 +36,7 @@ with lib;
   fonts.fontconfig.enable = true;
 
   catppuccin = {
+    autoEnable = true;
     enable = true;
     flavor = lib.mkDefault "frappe";
   };

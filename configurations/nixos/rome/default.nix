@@ -60,6 +60,9 @@
     stremio.enable = true;
   };
 
+  # Allow stu to run tailscale commands without sudo
+  services.tailscale.extraSetFlags = [ "--operator=stu" ];
+
   # Required for allowing document scanner to connect via SSH
   users.users.paperless = {
     useDefaultShell = true;

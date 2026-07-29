@@ -32,8 +32,14 @@ in
       userDirs = {
         enable = true;
         createDirectories = true;
+
+        # Keeps XDG_*_DIR exported in the session; tools like grimblast read
+        # them from the environment. Home Manager's default flips to false at
+        # stateVersion 26.05.
+        setSessionVariables = true;
+
         extraConfig = {
-          XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+          SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
         };
       };
     };

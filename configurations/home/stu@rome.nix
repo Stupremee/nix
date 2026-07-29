@@ -28,5 +28,11 @@
     ];
   };
 
+  programs.zsh.initContent = lib.mkAfter ''
+    if [ -r "$HOME/.zshrc" ]; then
+      source "$HOME/.zshrc"
+    fi
+  '';
+
   my.dev.enable = true;
 }

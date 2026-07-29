@@ -41,6 +41,11 @@ in
     fi
   '';
 
+  programs.git.signing = {
+    key = lib.mkForce null;
+    signByDefault = lib.mkForce false;
+  };
+
   my = {
     dev.enable = true;
     tmux.enable = lib.mkForce false;

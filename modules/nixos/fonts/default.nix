@@ -16,6 +16,7 @@ in
   config = mkIf cfg.enable {
     fonts = {
       fontDir.enable = true;
+      fontconfig.enable = true;
 
       packages = with pkgs; [
         nerd-fonts.monaspace

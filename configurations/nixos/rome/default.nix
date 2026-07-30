@@ -31,13 +31,13 @@
       pango
       systemd
 
-      xorg.libX11
-      xorg.libXcomposite
-      xorg.libXdamage
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXrandr
-      xorg.libxcb
+      libx11
+      libxcomposite
+      libxdamage
+      libxext
+      libxfixes
+      libxrandr
+      libxcb
     ];
   };
 
@@ -67,6 +67,7 @@
     };
 
     server.enable = true;
+    fonts.enable = true;
     user.stu.enableHome = true;
 
     secrets = {

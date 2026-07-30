@@ -13,7 +13,7 @@
         programs = {
           nixfmt = {
             enable = true;
-            package = pkgs.nixfmt-rfc-style;
+            package = pkgs.nixfmt;
           };
           shfmt.enable = true;
         };

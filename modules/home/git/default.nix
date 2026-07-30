@@ -82,10 +82,19 @@ in
         # core.pager = delta;
         # interactive.diffFilter = "${delta} --color-only --features=interactive";
 
-        credential.helper = [
-          "cache --timeout 7200"
-          "oauth"
-        ];
+        credential = {
+          helper = [
+            "cache --timeout 7200"
+            "oauth"
+          ];
+
+          # Authenticate GitHub via the gh CLI. The empty entry clears the
+          # helpers inherited from the section above so only gh is consulted.
+          "https://github.com".helper = [
+            ""
+            "!${getExe pkgs.gh} auth git-credential"
+          ];
+        };
       };
 
       lfs.enable = true;

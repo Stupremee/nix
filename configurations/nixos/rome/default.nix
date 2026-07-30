@@ -9,10 +9,34 @@
 
   programs.nix-ld = {
     enable = true;
+
     libraries = with pkgs; [
-      icu
-      zlib
-      libxcb
+      alsa-lib
+      atk
+      at-spi2-core
+      cairo
+      cups
+      dbus
+      expat
+      fontconfig
+      freetype
+      glib
+      gtk3
+      libdrm
+      libxkbcommon
+      mesa
+      nspr
+      nss
+      pango
+      systemd
+
+      xorg.libX11
+      xorg.libXcomposite
+      xorg.libXdamage
+      xorg.libXext
+      xorg.libXfixes
+      xorg.libXrandr
+      xorg.libxcb
     ];
   };
 

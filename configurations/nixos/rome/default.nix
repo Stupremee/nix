@@ -23,6 +23,7 @@
       glib
       gtk3
       libdrm
+      libgbm
       libxkbcommon
       mesa
       nspr

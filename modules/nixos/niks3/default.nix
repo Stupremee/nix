@@ -31,15 +31,9 @@ in
         r2-secret-key = secret ../../../secrets/r2-secret-key.age;
         niks3-api-token = secret ../../../secrets/niks3-api-token.age;
         niks3-sign-key = secret ../../../secrets/niks3-sign-key.age;
-        cloudflared-tunnel = {
-          rekeyFile = ../../../secrets/rome-cloudflare-tunnel.age;
-          mode = "444";
-        };
-        cloudflared-cert = {
-          rekeyFile = ../../../secrets/cloudflared-cert.age;
-          mode = "444";
-        };
       };
+
+    my.cloudflare-tunnel.enable = true;
 
     services.niks3 = {
       enable = true;
@@ -68,23 +62,6 @@ in
           boundClaims = {
             repository_owner = [ "Deutsche-Warmepumpen-Werke" ];
           };
-        };
-      };
-    };
-
-    services.cloudflared = {
-      enable = true;
-      certificateFile = config.age.secrets.cloudflared-cert.path;
-
-      tunnels = {
-        "rome" = {
-          credentialsFile = config.age.secrets.cloudflared-tunnel.path;
-
-          ingress = {
-            "nix.stu-dev.me" = "http://${config.services.niks3.httpAddr}";
-          };
-
-          default = "http_status:404";
         };
       };
     };

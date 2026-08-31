@@ -76,6 +76,7 @@
     };
 
     caddy.enable = true;
+    cliproxyapi.enable = true;
     paperless.enable = true;
     postfix.enable = true;
     oidc.enable = true;

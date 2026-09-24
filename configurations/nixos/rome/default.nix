@@ -44,6 +44,8 @@
   # Remote activation
   nixos-unified.sshTarget = "stu@rome";
 
+  environment.etc."ssl/cert.pem".source = "/etc/ssl/certs/ca-certificates.crt";
+
   home-manager.backupFileExtension = "hm-backup";
 
   my = {

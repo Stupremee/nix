@@ -95,7 +95,7 @@ in
     adminDomain = mkOption {
       type = types.str;
       default = "cliproxy-admin.stu-dev.me";
-      description = "Authelia-protected management hostname";
+      description = "Management hostname; management API requires CLIProxyAPI's management key";
     };
 
     port = mkOption {
@@ -153,11 +153,14 @@ in
       "http://:${toString adminProxyPort}".extraConfig = ''
         bind 127.0.0.1
 
-        forward_auth localhost:9091 {
+        # Plugin browser resources bypass CLIProxyAPI's management-key middleware.
+        @pluginResources path /v0/resource/plugins/*
+        forward_auth @pluginResources localhost:9091 {
           uri /api/authz/forward-auth
           header_up X-Forwarded-Proto https
           copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
         }
+
         reverse_proxy 127.0.0.1:${toString cfg.port}
       '';
     };

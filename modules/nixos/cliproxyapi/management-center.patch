@@ -1,0 +1,552 @@
+diff --git a/src/features/authFiles/components/AuthFileQuotaSection.tsx b/src/features/authFiles/components/AuthFileQuotaSection.tsx
+index b346b57..2b54c47 100644
+--- a/src/features/authFiles/components/AuthFileQuotaSection.tsx
++++ b/src/features/authFiles/components/AuthFileQuotaSection.tsx
+@@ -51,6 +51,7 @@ export function AuthFileQuotaSection(props: AuthFileQuotaSectionProps) {
+     if (quotaType === 'kimi') return state.kimiQuota[cacheKey] as QuotaCardState | undefined;
+     if (quotaType === 'meta') return state.metaQuota[cacheKey] as QuotaCardState | undefined;
+     if (quotaType === 'xai') return state.xaiQuota[cacheKey] as QuotaCardState | undefined;
++    if (quotaType === 'opencode-go') return state.openCodeGoQuota[cacheKey] as QuotaCardState | undefined;
+     return assertNever(quotaType);
+   });
+   const quota = storedQuota;
+diff --git a/src/features/authFiles/constants.ts b/src/features/authFiles/constants.ts
+index a584a12..fd0cacc 100644
+--- a/src/features/authFiles/constants.ts
++++ b/src/features/authFiles/constants.ts
+@@ -28,7 +28,7 @@ export type AuthFileModelItem = {
+ export type AuthFileIconAsset = string | { light: string; dark: string };
+ 
+ export type QuotaProviderType =
+-  'antigravity' | 'claude' | 'codex' | 'devin' | 'kimi' | 'xai' | 'meta';
++  'antigravity' | 'claude' | 'codex' | 'devin' | 'kimi' | 'xai' | 'meta' | 'opencode-go';
+ export type AuthFileQuotaFilter = QuotaProviderType | 'all' | null;
+ export type OAuthConfigLoadError = 'loading' | 'unsupported' | 'load' | null;
+ 
+@@ -40,6 +40,7 @@ export const QUOTA_PROVIDER_TYPES = new Set<QuotaProviderType>([
+   'devin',
+   'kimi',
+   'xai',
++  'opencode-go',
+ ]);
+ 
+ export const OAUTH_PROVIDER_PRESETS = [
+@@ -65,6 +66,7 @@ export const FALSY_TEXT_VALUES = new Set(['false', '0', 'no', 'n', 'off']);
+ export const AUTH_FILE_WEBSOCKET_PROVIDERS = new Set(['codex', 'xai']);
+ export const AUTH_FILE_USING_API_PROVIDERS = new Set(['xai']);
+ export const AUTH_FILE_MANUAL_REFRESH_PROVIDERS = new Set([
++  'opencode-go',
+   'meta',
+   'antigravity',
+   'claude',
+diff --git a/src/features/quota/QuotaPage.tsx b/src/features/quota/QuotaPage.tsx
+index 1bd1570..c1e6574 100644
+--- a/src/features/quota/QuotaPage.tsx
++++ b/src/features/quota/QuotaPage.tsx
+@@ -133,6 +133,7 @@ export function QuotaPage() {
+   const kimiQuota = useQuotaStore((state) => state.kimiQuota);
+   const metaQuota = useQuotaStore((state) => state.metaQuota);
+   const xaiQuota = useQuotaStore((state) => state.xaiQuota);
++  const openCodeGoQuota = useQuotaStore((state) => state.openCodeGoQuota);
+ 
+   const quotaByType = useMemo<Record<QuotaProviderType, Record<string, QuotaCardState>>>(
+     () =>
+@@ -144,8 +145,9 @@ export function QuotaPage() {
+         kimi: kimiQuota,
+         meta: metaQuota,
+         xai: xaiQuota,
++        'opencode-go': openCodeGoQuota,
+       }) as unknown as Record<QuotaProviderType, Record<string, QuotaCardState>>,
+-    [antigravityQuota, claudeQuota, codexQuota, devinQuota, kimiQuota, metaQuota, xaiQuota]
++    [antigravityQuota, claudeQuota, codexQuota, devinQuota, kimiQuota, metaQuota, xaiQuota, openCodeGoQuota]
+   );
+ 
+   const getQuota = useCallback(
+diff --git a/src/features/quota/constants.ts b/src/features/quota/constants.ts
+index b5252af..bf0a90b 100644
+--- a/src/features/quota/constants.ts
++++ b/src/features/quota/constants.ts
+@@ -9,6 +9,7 @@ export const QUOTA_TAB_ORDER: readonly QuotaProviderType[] = [
+   'kimi',
+   'devin',
+   'meta',
++  'opencode-go',
+ ];
+ 
+ export type QuotaTabId = 'all' | QuotaProviderType;
+diff --git a/src/features/quota/logic.ts b/src/features/quota/logic.ts
+index 0420d45..4e969eb 100644
+--- a/src/features/quota/logic.ts
++++ b/src/features/quota/logic.ts
+@@ -11,6 +11,7 @@ import { DEVIN_CONFIG } from './providers/devin/data';
+ import { KIMI_CONFIG } from './providers/kimi/data';
+ import { META_CONFIG } from './providers/meta/data';
+ import { XAI_CONFIG } from './providers/xai/data';
++import { OPENCODE_GO_CONFIG } from './providers/opencodeGo/data';
+ import type { QuotaProviderType } from './providers/types';
+ import { QUOTA_TAB_ORDER, type QuotaSortMode, type QuotaTabId } from './constants';
+ 
+@@ -22,6 +23,7 @@ const QUOTA_FILTER_MAP: Record<QuotaProviderType, (file: AuthFileItem) => boolea
+   kimi: KIMI_CONFIG.filterFn,
+   meta: META_CONFIG.filterFn,
+   xai: XAI_CONFIG.filterFn,
++  'opencode-go': OPENCODE_GO_CONFIG.filterFn,
+ };
+ 
+ export interface QuotaFileEntry {
+diff --git a/src/features/quota/providers/index.ts b/src/features/quota/providers/index.ts
+index 796915a..a71d401 100644
+--- a/src/features/quota/providers/index.ts
++++ b/src/features/quota/providers/index.ts
+@@ -25,6 +25,8 @@ import { KIMI_CONFIG } from './kimi/data';
+ import { KimiQuotaBody } from './kimi/KimiQuotaBody';
+ import { XAI_CONFIG } from './xai/data';
+ import { XaiQuotaBody } from './xai/XaiQuotaBody';
++import { OPENCODE_GO_CONFIG } from './opencodeGo/data';
++import { OpenCodeGoQuotaBody } from './opencodeGo/OpenCodeGoQuotaBody';
+ 
+ /** 所有 provider 额度状态的公共骨架（各 *QuotaState 的结构子集）。 */
+ export interface QuotaCardState {
+@@ -59,6 +61,7 @@ export const QUOTA_ADAPTERS: Record<QuotaProviderType, QuotaAdapter> = {
+   kimi: { ...KIMI_CONFIG, Body: KimiQuotaBody } as unknown as QuotaAdapter,
+   meta: { ...META_CONFIG, Body: MetaQuotaBody } as unknown as QuotaAdapter,
+   xai: { ...XAI_CONFIG, Body: XaiQuotaBody } as unknown as QuotaAdapter,
++  'opencode-go': { ...OPENCODE_GO_CONFIG, Body: OpenCodeGoQuotaBody } as unknown as QuotaAdapter,
+ };
+ 
+ export type QuotaMapUpdater = (
+diff --git a/src/features/quota/providers/opencodeGo/OpenCodeGoQuotaBody.tsx b/src/features/quota/providers/opencodeGo/OpenCodeGoQuotaBody.tsx
+new file mode 100644
+index 0000000..a6cf754
+--- /dev/null
++++ b/src/features/quota/providers/opencodeGo/OpenCodeGoQuotaBody.tsx
+@@ -0,0 +1,35 @@
++import { useMemo } from 'react';
++import { useTranslation } from 'react-i18next';
++import { buildResetDisplay } from '@/utils/quota';
++import { useNow } from '@/hooks/useNow';
++import { QuotaMeter } from '../../components/QuotaMeter';
++import { QuotaResetLabel } from '../../components/QuotaResetLabel';
++import { collectQuotaRowInstants, pickUrgentRowId } from '../../resetSchedule';
++import type { QuotaBodyProps } from '../../types';
++import type { OpenCodeGoQuotaState } from './data';
++
++export function OpenCodeGoQuotaBody({ quota, classes }: QuotaBodyProps<OpenCodeGoQuotaState>) {
++  const { t, i18n } = useTranslation();
++  const now = useNow();
++  const soonestRowId = useMemo(
++    () => pickUrgentRowId(collectQuotaRowInstants('opencode-go', quota), now),
++    [quota, now]
++  );
++  return <>
++    {quota.windows.map((window, index) => {
++      const remaining = Math.max(0, Math.min(100, 100 - window.usedPercent!));
++      const resetDisplay = buildResetDisplay(undefined, window.resetAtMs, now, i18n.resolvedLanguage);
++      const soon = window.id === soonestRowId;
++      return <div key={window.id} className={classes.quotaRow} title={soon ? t('quota_management.soonest_row_hint') : undefined}>
++        <div className={classes.quotaRowHeader}>
++          <span className={classes.quotaModel}>{t(window.labelKey)}</span>
++          <div className={classes.quotaMeta}>
++            <span className={classes.quotaPercent}>{Math.round(remaining)}%</span>
++            {resetDisplay && <QuotaResetLabel display={resetDisplay} classes={classes} soon={soon} />}
++          </div>
++        </div>
++        <QuotaMeter percent={remaining} classes={classes} index={index} />
++      </div>;
++    })}
++  </>;
++}
+diff --git a/src/features/quota/providers/opencodeGo/data.ts b/src/features/quota/providers/opencodeGo/data.ts
+new file mode 100644
+index 0000000..a348c59
+--- /dev/null
++++ b/src/features/quota/providers/opencodeGo/data.ts
+@@ -0,0 +1,69 @@
++import type { TFunction } from 'i18next';
++import type { AuthFileItem } from '@/types';
++import { apiClient } from '@/services/api/client';
++import { isDisabledAuthFile, resolveAuthProvider } from '@/utils/quota';
++import type { QuotaProviderData } from '../types';
++
++export type OpenCodeGoWindow = {
++  id: string;
++  labelKey: string;
++  usedPercent: number | null;
++  resetAtMs: number | null;
++  periodHours: number;
++  status: string;
++};
++
++export type OpenCodeGoQuotaState = {
++  status: 'idle' | 'loading' | 'success' | 'error';
++  windows: OpenCodeGoWindow[];
++  error?: string;
++  errorStatus?: number;
++};
++
++type QuotaWindowResponse = { status?: string; percent?: number; resets_at?: string };
++type QuotaResponse = {
++  usage?: { rolling?: QuotaWindowResponse; weekly?: QuotaWindowResponse; monthly?: QuotaWindowResponse };
++};
++
++export const parseOpenCodeGoWindows = (response: QuotaResponse): OpenCodeGoWindow[] => {
++  if (!response.usage) throw new Error('OpenCode Go returned no quota usage');
++  const periods = [
++    ['rolling', 5],
++    ['weekly', 168],
++    ['monthly', 720],
++  ] as const;
++  return periods.map(([id, periodHours]) => {
++    const window = response.usage?.[id];
++    if (!window || typeof window.percent !== 'number' || !Number.isFinite(window.percent)) {
++      throw new Error(`OpenCode Go returned invalid ${id} quota`);
++    }
++    const resetAtMs = window.resets_at ? Date.parse(window.resets_at) : NaN;
++    return {
++      id,
++      labelKey: `opencode_go_quota.${id}`,
++      usedPercent: window.percent,
++      resetAtMs: Number.isFinite(resetAtMs) ? resetAtMs : null,
++      periodHours,
++      status: window.status ?? '',
++    };
++  });
++};
++
++export const OPENCODE_GO_CONFIG: QuotaProviderData<OpenCodeGoQuotaState, OpenCodeGoWindow[]> = {
++  type: 'opencode-go',
++  i18nPrefix: 'opencode_go_quota',
++  filterFn: (file) => resolveAuthProvider(file) === 'opencode-go' && !isDisabledAuthFile(file),
++  fetchQuota: async (file: AuthFileItem, _t: TFunction) => {
++    const keyId = String(file.id || file.name.replace(/\.json$/, ''));
++    const response = await apiClient.post<QuotaResponse>(
++      '/plugins/opencode-go-cliproxyapi/quota-usage',
++      { key_id: keyId }
++    );
++    return parseOpenCodeGoWindows(response);
++  },
++  storeSelector: (state) => state.openCodeGoQuota,
++  storeSetter: 'setOpenCodeGoQuota',
++  buildLoadingState: () => ({ status: 'loading', windows: [] }),
++  buildSuccessState: (windows) => ({ status: 'success', windows }),
++  buildErrorState: (error, errorStatus) => ({ status: 'error', windows: [], error, errorStatus }),
++};
+diff --git a/src/features/quota/providers/types.ts b/src/features/quota/providers/types.ts
+index 5f9eb36..98254d3 100644
+--- a/src/features/quota/providers/types.ts
++++ b/src/features/quota/providers/types.ts
+@@ -16,11 +16,12 @@ import type {
+   MetaQuotaState,
+   XaiQuotaState,
+ } from '@/types';
++import type { OpenCodeGoQuotaState } from './opencodeGo/data';
+ 
+ export type QuotaUpdater<T> = T | ((prev: T) => T);
+ 
+ export type QuotaProviderType =
+-  'antigravity' | 'claude' | 'codex' | 'devin' | 'kimi' | 'xai' | 'meta';
++  'antigravity' | 'claude' | 'codex' | 'devin' | 'kimi' | 'xai' | 'meta' | 'opencode-go';
+ 
+ /** useQuotaStore 的结构契约（storeSelector/storeSetter 依赖）。 */
+ export interface QuotaStore {
+@@ -31,6 +32,7 @@ export interface QuotaStore {
+   kimiQuota: Record<string, KimiQuotaState>;
+   metaQuota: Record<string, MetaQuotaState>;
+   xaiQuota: Record<string, XaiQuotaState>;
++  openCodeGoQuota: Record<string, OpenCodeGoQuotaState>;
+   setAntigravityQuota: (updater: QuotaUpdater<Record<string, AntigravityQuotaState>>) => void;
+   setClaudeQuota: (updater: QuotaUpdater<Record<string, ClaudeQuotaState>>) => void;
+   setCodexQuota: (updater: QuotaUpdater<Record<string, CodexQuotaState>>) => void;
+@@ -38,6 +40,7 @@ export interface QuotaStore {
+   setKimiQuota: (updater: QuotaUpdater<Record<string, KimiQuotaState>>) => void;
+   setMetaQuota: (updater: QuotaUpdater<Record<string, MetaQuotaState>>) => void;
+   setXaiQuota: (updater: QuotaUpdater<Record<string, XaiQuotaState>>) => void;
++  setOpenCodeGoQuota: (updater: QuotaUpdater<Record<string, OpenCodeGoQuotaState>>) => void;
+   clearQuotaCache: () => void;
+ }
+ 
+diff --git a/src/features/quota/quotaTimelineModel.ts b/src/features/quota/quotaTimelineModel.ts
+index 726aba2..89351af 100644
+--- a/src/features/quota/quotaTimelineModel.ts
++++ b/src/features/quota/quotaTimelineModel.ts
+@@ -357,7 +357,7 @@ export function buildTimelineLane(input: TimelineLaneInput): TimelineLane {
+ 
+   if (!quota || quota.status !== 'success') return empty;
+ 
+-  if (provider === 'claude' || provider === 'codex') {
++  if (provider === 'claude' || provider === 'codex' || provider === 'opencode-go') {
+     const windows = ((quota as { windows?: WindowLike[] }).windows ?? []).filter(
+       (window) => typeof window.resetAtMs === 'number'
+     );
+diff --git a/src/features/quota/resetSchedule.ts b/src/features/quota/resetSchedule.ts
+index 884468e..ab90fe4 100644
+--- a/src/features/quota/resetSchedule.ts
++++ b/src/features/quota/resetSchedule.ts
+@@ -90,7 +90,7 @@ export function collectQuotaRowInstants(
+   const state = quota as { status?: string } | undefined;
+   if (!state || state.status !== 'success') return [];
+ 
+-  if (provider === 'claude' || provider === 'codex' || provider === 'devin') {
++  if (provider === 'claude' || provider === 'codex' || provider === 'devin' || provider === 'opencode-go') {
+     const windows = collectRows((quota as { windows?: WindowLike[] }).windows ?? [], 'window');
+     if (provider !== 'codex') return windows;
+ 
+diff --git a/src/i18n/locales/en.json b/src/i18n/locales/en.json
+index 2412979..5dd7f15 100644
+--- a/src/i18n/locales/en.json
++++ b/src/i18n/locales/en.json
+@@ -325,6 +325,7 @@
+     "filter_aistudio": "AIStudio",
+     "filter_claude": "Claude",
+     "filter_codex": "Codex",
++    "filter_opencode-go": "OpenCode Go",
+     "filter_meta": "Muse (Meta)",
+     "filter_devin": "Devin",
+     "filter_antigravity": "Antigravity",
+@@ -438,6 +439,16 @@
+     "refresh_button": "Refresh Quota",
+     "fetch_all": "Fetch All"
+   },
++  "opencode_go_quota": {
++    "empty_title": "No OpenCode Go credentials",
++    "empty_desc": "Configure an OpenCode Go API key to view its quota.",
++    "idle": "Click here to refresh quota",
++    "loading": "Loading quota...",
++    "load_failed": "Failed to load quota: {{message}}",
++    "rolling": "Rolling limit",
++    "weekly": "Weekly limit",
++    "monthly": "Monthly limit"
++  },
+   "claude_quota": {
+     "title": "Claude Quota",
+     "empty_title": "No Claude OAuth Files",
+diff --git a/src/i18n/locales/ru.json b/src/i18n/locales/ru.json
+index e1dbace..aca61cd 100644
+--- a/src/i18n/locales/ru.json
++++ b/src/i18n/locales/ru.json
+@@ -328,6 +328,7 @@
+     "filter_aistudio": "AIStudio",
+     "filter_claude": "Claude",
+     "filter_codex": "Codex",
++    "filter_opencode-go": "OpenCode Go",
+     "filter_meta": "Muse (Meta)",
+     "filter_devin": "Devin",
+     "filter_antigravity": "Antigravity",
+@@ -441,6 +442,16 @@
+     "refresh_button": "Обновить квоту",
+     "fetch_all": "Получить все"
+   },
++  "opencode_go_quota": {
++    "empty_title": "No OpenCode Go credentials",
++    "empty_desc": "Configure an OpenCode Go API key to view its quota.",
++    "idle": "Click here to refresh quota",
++    "loading": "Loading quota...",
++    "load_failed": "Failed to load quota: {{message}}",
++    "rolling": "Rolling limit",
++    "weekly": "Weekly limit",
++    "monthly": "Monthly limit"
++  },
+   "claude_quota": {
+     "title": "Квота Claude",
+     "empty_title": "Файлы авторизации Claude OAuth отсутствуют",
+diff --git a/src/i18n/locales/zh-CN.json b/src/i18n/locales/zh-CN.json
+index bebd040..d901c73 100644
+--- a/src/i18n/locales/zh-CN.json
++++ b/src/i18n/locales/zh-CN.json
+@@ -323,6 +323,7 @@
+     "filter_aistudio": "AIStudio",
+     "filter_claude": "Claude",
+     "filter_codex": "Codex",
++    "filter_opencode-go": "OpenCode Go",
+     "filter_meta": "Muse (Meta)",
+     "filter_devin": "Devin",
+     "filter_antigravity": "Antigravity",
+@@ -436,6 +437,16 @@
+     "refresh_button": "刷新额度",
+     "fetch_all": "获取全部"
+   },
++  "opencode_go_quota": {
++    "empty_title": "No OpenCode Go credentials",
++    "empty_desc": "Configure an OpenCode Go API key to view its quota.",
++    "idle": "Click here to refresh quota",
++    "loading": "Loading quota...",
++    "load_failed": "Failed to load quota: {{message}}",
++    "rolling": "Rolling limit",
++    "weekly": "Weekly limit",
++    "monthly": "Monthly limit"
++  },
+   "claude_quota": {
+     "title": "Claude 额度",
+     "empty_title": "暂无 Claude OAuth 认证",
+diff --git a/src/i18n/locales/zh-TW.json b/src/i18n/locales/zh-TW.json
+index 63efe14..96d878b 100644
+--- a/src/i18n/locales/zh-TW.json
++++ b/src/i18n/locales/zh-TW.json
+@@ -323,6 +323,7 @@
+     "filter_aistudio": "AIStudio",
+     "filter_claude": "Claude",
+     "filter_codex": "Codex",
++    "filter_opencode-go": "OpenCode Go",
+     "filter_meta": "Muse (Meta)",
+     "filter_devin": "Devin",
+     "filter_antigravity": "Antigravity",
+@@ -436,6 +437,16 @@
+     "refresh_button": "重新整理配額",
+     "fetch_all": "取得全部"
+   },
++  "opencode_go_quota": {
++    "empty_title": "No OpenCode Go credentials",
++    "empty_desc": "Configure an OpenCode Go API key to view its quota.",
++    "idle": "Click here to refresh quota",
++    "loading": "Loading quota...",
++    "load_failed": "Failed to load quota: {{message}}",
++    "rolling": "Rolling limit",
++    "weekly": "Weekly limit",
++    "monthly": "Monthly limit"
++  },
+   "claude_quota": {
+     "title": "Claude 配額",
+     "empty_title": "暫無 Claude OAuth 驗證",
+diff --git a/src/stores/useQuotaStore.ts b/src/stores/useQuotaStore.ts
+index 1dd1ac2..ece140f 100644
+--- a/src/stores/useQuotaStore.ts
++++ b/src/stores/useQuotaStore.ts
+@@ -4,6 +4,7 @@
+ 
+ import { create } from 'zustand';
+ import { getQuotaCacheFileName } from '@/utils/quota/identity';
++import type { OpenCodeGoQuotaState } from '@/features/quota/providers/opencodeGo/data';
+ import type {
+   AntigravityQuotaState,
+   ClaudeQuotaState,
+@@ -26,6 +27,7 @@ interface QuotaStoreState {
+   kimiQuota: Record<string, KimiQuotaState>;
+   metaQuota: Record<string, MetaQuotaState>;
+   xaiQuota: Record<string, XaiQuotaState>;
++  openCodeGoQuota: Record<string, OpenCodeGoQuotaState>;
+   setAntigravityQuota: (updater: QuotaUpdater<Record<string, AntigravityQuotaState>>) => void;
+   setClaudeQuota: (updater: QuotaUpdater<Record<string, ClaudeQuotaState>>) => void;
+   setCodexQuota: (updater: QuotaUpdater<Record<string, CodexQuotaState>>) => void;
+@@ -33,6 +35,7 @@ interface QuotaStoreState {
+   setKimiQuota: (updater: QuotaUpdater<Record<string, KimiQuotaState>>) => void;
+   setMetaQuota: (updater: QuotaUpdater<Record<string, MetaQuotaState>>) => void;
+   setXaiQuota: (updater: QuotaUpdater<Record<string, XaiQuotaState>>) => void;
++  setOpenCodeGoQuota: (updater: QuotaUpdater<Record<string, OpenCodeGoQuotaState>>) => void;
+   clearQuotaCache: (names?: string[]) => void;
+ }
+ 
+@@ -53,6 +56,7 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
+   kimiQuota: {},
+   metaQuota: {},
+   xaiQuota: {},
++  openCodeGoQuota: {},
+   setAntigravityQuota: (updater) =>
+     set((state) => ({
+       antigravityQuota: resolveUpdater(updater, state.antigravityQuota),
+@@ -79,6 +83,10 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
+     set((state) => ({
+       xaiQuota: resolveUpdater(updater, state.xaiQuota),
+     })),
++  setOpenCodeGoQuota: (updater) =>
++    set((state) => ({
++      openCodeGoQuota: resolveUpdater(updater, state.openCodeGoQuota),
++    })),
+   clearQuotaCache: (names) =>
+     set((state) => {
+       if (names) {
+@@ -106,6 +114,7 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
+           kimiQuota: omitNames(state.kimiQuota),
+           metaQuota: omitNames(state.metaQuota),
+           xaiQuota: omitNames(state.xaiQuota),
++          openCodeGoQuota: omitNames(state.openCodeGoQuota),
+         };
+       }
+       return {
+@@ -118,6 +127,7 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
+         kimiQuota: {},
+         metaQuota: {},
+         xaiQuota: {},
++        openCodeGoQuota: {},
+       };
+     }),
+ }));
+diff --git a/src/utils/quota/constants.ts b/src/utils/quota/constants.ts
+index 5647a12..923a038 100644
+--- a/src/utils/quota/constants.ts
++++ b/src/utils/quota/constants.ts
+@@ -6,6 +6,10 @@ import type { TypeColorSet } from '@/types';
+ 
+ // Theme colors for type badges — 与 authFiles/constants.ts 保持同步
+ export const TYPE_COLORS: Record<string, TypeColorSet> = {
++  'opencode-go': {
++    light: { bg: '#e8f3e8', text: '#276a3c' },
++    dark: { bg: '#203e2a', text: '#9ed7a9' },
++  },
+   qwen: {
+     light: { bg: '#ede5fd', text: '#5530c7' },
+     dark: { bg: '#36208a', text: '#b5a3f0' },
+diff --git a/tests/authFilesListLogic.test.ts b/tests/authFilesListLogic.test.ts
+index 74f706a..7e2bfe6 100644
+--- a/tests/authFilesListLogic.test.ts
++++ b/tests/authFilesListLogic.test.ts
+@@ -40,6 +40,7 @@ describe('resolveAuthFileQuotaType', () => {
+   test('resolves each supported provider while the all tab is selected', () => {
+     expect(resolveAuthFileQuotaType(authFile({ type: 'codex' }), 'all')).toBe('codex');
+     expect(resolveAuthFileQuotaType(authFile({ type: 'kimi' }), 'all')).toBe('kimi');
++    expect(resolveAuthFileQuotaType(authFile({ type: 'opencode-go' }), 'all')).toBe('opencode-go');
+   });
+ 
+   test('does not expose quota for unsupported or mismatched providers', () => {
+diff --git a/tests/opencodeGoQuota.test.ts b/tests/opencodeGoQuota.test.ts
+new file mode 100644
+index 0000000..a78c0e8
+--- /dev/null
++++ b/tests/opencodeGoQuota.test.ts
+@@ -0,0 +1,27 @@
++import { expect, test } from 'bun:test';
++import { OPENCODE_GO_CONFIG, parseOpenCodeGoWindows } from '../src/features/quota/providers/opencodeGo/data';
++
++test('OpenCode Go usage produces three quota windows', () => {
++  const windows = parseOpenCodeGoWindows({
++    usage: {
++      rolling: { status: 'ok', percent: 12, resets_at: '2026-09-24T12:00:00Z' },
++      weekly: { status: 'ok', percent: 45, resets_at: '2026-09-30T12:00:00Z' },
++      monthly: { status: 'ok', percent: 7, resets_at: '2026-10-24T12:00:00Z' },
++    },
++  });
++  expect(windows.map(({ id, usedPercent }) => [id, usedPercent])).toEqual([
++    ['rolling', 12], ['weekly', 45], ['monthly', 7],
++  ]);
++  expect(windows[0].resetAtMs).toBe(Date.parse('2026-09-24T12:00:00Z'));
++});
++
++test('OpenCode Go quota requires a usable usage payload', () => {
++  expect(() => parseOpenCodeGoWindows({})).toThrow();
++  expect(() => parseOpenCodeGoWindows({ usage: { rolling: { percent: 0 } } })).toThrow();
++});
++
++test('OpenCode Go auth records are selected while disabled ones are excluded', () => {
++  const file = { name: 'opencode-go-key-abc.json', type: 'opencode-go', provider: 'opencode-go' };
++  expect(OPENCODE_GO_CONFIG.filterFn(file)).toBe(true);
++  expect(OPENCODE_GO_CONFIG.filterFn({ ...file, disabled: true })).toBe(false);
++});
+diff --git a/tests/quotaPageLogic.test.ts b/tests/quotaPageLogic.test.ts
+index 746e25e..0dbb8c3 100644
+--- a/tests/quotaPageLogic.test.ts
++++ b/tests/quotaPageLogic.test.ts
+@@ -42,6 +42,7 @@ describe('resolveQuotaProviderType', () => {
+   test('maps provider aliases and rejects unsupported or disabled files', () => {
+     expect(resolveQuotaProviderType(file('a', 'grok'))).toBe('xai');
+     expect(resolveQuotaProviderType(file('a', 'antigravity'))).toBe('antigravity');
++    expect(resolveQuotaProviderType(file('opencode-go-key-abc.json', 'opencode-go'))).toBe('opencode-go');
+     expect(resolveQuotaProviderType(file('a', 'gemini'))).toBeNull();
+     expect(resolveQuotaProviderType(file('a', 'claude', { disabled: true }))).toBeNull();
+   });
+@@ -72,6 +73,7 @@ describe('buildTabCounts', () => {
+       kimi: 1,
+       devin: 0,
+       meta: 0,
++      'opencode-go': 0,
+     });
+   });
+ });

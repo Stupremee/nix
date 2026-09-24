@@ -11,6 +11,10 @@ let
   stateDirectory = "/var/lib/cliproxyapi";
   apiProxyPort = 8318;
   adminProxyPort = 8319;
+  managementPanel = pkgs.runCommand "cliproxy-management-panel" { nativeBuildInputs = [ pkgs.gzip ]; } ''
+    mkdir -p "$out"
+    gzip -dc ${./management.html.gz} > "$out/management.html"
+  '';
 
   bootstrapConfig = pkgs.writeShellScript "cliproxyapi-bootstrap-config" ''
     set -eu
@@ -161,7 +165,16 @@ in
           copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
         }
 
-        reverse_proxy 127.0.0.1:${toString cfg.port}
+        # Serve the pinned panel with native OpenCode Go quota cards.
+        @managementPanel path /management.html
+        handle @managementPanel {
+          root * ${managementPanel}
+          file_server
+        }
+
+        handle {
+          reverse_proxy 127.0.0.1:${toString cfg.port}
+        }
       '';
     };
   };

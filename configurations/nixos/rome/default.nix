@@ -83,6 +83,10 @@
       usageKeeper.enable = true;
     };
     paperless.enable = true;
+    paddleocr-vl = {
+      enable = true;
+      backend = "emulated"; # switch to "runpod" once secrets/paddleocr-vl.env.age exists
+    };
     postfix.enable = true;
     oidc.enable = true;
     home-assistant.enable = true;

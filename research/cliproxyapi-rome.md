@@ -65,7 +65,7 @@ and [management API documentation](https://help.router-for.me/management/api.htm
   persistent state, backup registration, and loopback Caddy listeners.
 - `modules/nixos/cloudflare-tunnel/default.nix` owns the existing local tunnel
   connector and its two ingress rules.
-- `configurations/nixos/rome/default.nix` enables CLIProxyAPI.
+- `configurations/nixos/rome/default.nix` enables CLIProxyAPI and Usage Keeper.
 - `secrets/rekeyed/rome/9214b5a44d0bb39f39d75dbecccf013c-cloudflare-tunnel-rome.age`
   is the Rome-host-encrypted tunnel credential generated from the existing
   YubiKey-encrypted source secret.
@@ -119,3 +119,25 @@ store requests in this pinned version; the `store-auth` rule is required.
 
 The Restic timer is active and next runs at midnight UTC. A reboot test was not
 performed during deployment.
+
+## Usage Keeper
+
+[CPA Usage Keeper](https://github.com/Willxup/cpa-usage-keeper) v1.15.7 stores
+CLIProxyAPI usage in SQLite and serves dashboards at
+`https://cliproxy-admin.stu-dev.me/keeper/`. It shares the admin origin, so its
+"Back to CPA" link reaches `/management.html` without extra configuration.
+
+The container uses host networking and listens on `127.0.0.1:8320`. It
+subscribes to CLIProxyAPI's Redis-protocol usage stream on port 8317, which
+requires `usage-statistics-enabled: true` in the live YAML. Caddy forwards
+`CF-Connecting-IP` as `X-Forwarded-For` so login rate limits apply per client.
+
+The first start writes `/var/lib/cpa-usage-keeper/keeper.env`, a root-only file
+holding `CPA_MANAGEMENT_KEY`, copied from the CLIProxyAPI bootstrap credentials,
+and a generated `LOGIN_PASSWORD`. Nix never rewrites the file. If the management
+key is rotated, edit this file and restart `docker-cpa-usage-keeper`. Keeper's
+SQLite database and its daily backups are in `/var/lib/cpa-usage-keeper/data`,
+which is persisted and included in Restic backups.
+
+`AUTH_ENABLED=true` is set explicitly because v1.9.1 defaulted it to false even
+though the README says the default is true.

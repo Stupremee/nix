@@ -9,6 +9,7 @@ let
   cfg = config.my.cliproxyapi;
 
   stateDirectory = "/var/lib/cliproxyapi";
+  pluginStoreEnvFile = "${stateDirectory}/plugin-store.env";
   apiProxyPort = 8318;
   adminProxyPort = 8319;
 
@@ -28,6 +29,12 @@ let
     install -d -m 0700 ${stateDirectory}/auth
     install -d -m 0700 ${stateDirectory}/logs
     install -d -m 0700 ${stateDirectory}/plugins
+
+    # Docker requires the env file to exist. The operator adds
+    # CLIPROXY_PLUGIN_STORE_GITHUB_TOKEN here for plugin store installs.
+    if [ ! -e ${pluginStoreEnvFile} ]; then
+      install -m 0600 /dev/null ${pluginStoreEnvFile}
+    fi
 
     if [ -s ${stateDirectory}/config.yaml ]; then
       exit 0
@@ -163,6 +170,7 @@ in
           "127.0.0.1:1455:1455"
           "127.0.0.1:54545:54545"
         ];
+        environmentFiles = [ pluginStoreEnvFile ];
         volumes = [
           "${stateDirectory}/config.yaml:/CLIProxyAPI/config.yaml"
           "${stateDirectory}/auth:/root/.cli-proxy-api"

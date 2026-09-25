@@ -111,9 +111,13 @@ plugins:
       token-env: "CLIPROXY_PLUGIN_STORE_GITHUB_TOKEN"
 ```
 
-Provide `CLIPROXY_PLUGIN_STORE_GITHUB_TOKEN` to the container through a root-only
-Docker environment file configured in Nix, using a separate GitHub token with
-only public-repository access. The live YAML is mutable and is not overwritten
+Nix passes the root-only `/var/lib/cliproxyapi/plugin-store.env` to the
+container and creates it empty if missing. Put
+`CLIPROXY_PLUGIN_STORE_GITHUB_TOKEN=...` there, using a separate fine-grained
+GitHub token with public-repository read access only. Plugins run inside the
+CLIProxyAPI process and can read its environment. Add the `store-auth` rule only
+after the token is set: CLIProxyAPI fails matching requests when the variable is
+empty. Restart `docker-cliproxyapi` after editing the file. The live YAML is mutable and is not overwritten
 by Nix deployments. Setting `GITHUB_TOKEN` alone does not authenticate plugin
 store requests in this pinned version; the `store-auth` rule is required.
 

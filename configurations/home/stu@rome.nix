@@ -35,6 +35,15 @@ in
     map (directory: "${config.home.homeDirectory}/${directory}") userBinDirectories ++ [ "\${PATH}" ]
   );
 
+  # t3code writes its own unit file, so limit it via a drop-in. Agent processes share this
+  # cgroup; a runaway gets OOM-killed at the cap instead of thrashing swap and locking out
+  # ssh. The unit's OOMPolicy=continue keeps the server alive when a child is killed.
+  xdg.configFile."systemd/user/t3code.service.d/limits.conf".text = ''
+    [Service]
+    MemoryMax=12G
+    MemorySwapMax=1G
+  '';
+
   programs.zsh.initContent = lib.mkAfter ''
     if [ -r "$HOME/.zshrc" ]; then
       source "$HOME/.zshrc"

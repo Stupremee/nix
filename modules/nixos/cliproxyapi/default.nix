@@ -29,7 +29,9 @@ let
   # Block-style YAML sequence, so yq writes it like the rest of the file.
   tailscaleTagsYaml = concatMapStrings (tag: "- ${builtins.toJSON tag}\n") cfg.tailscaleAllowedTags;
 
-  # Sets the Nix-owned keys in the otherwise mutable config.yaml. Runs as root
+  # Sets the Nix-owned keys in the otherwise mutable config.yaml. Caddy on
+  # loopback is the trusted proxy, so tailnet auth sees the client it forwards
+  # for cliproxy.jukl.dev. Runs as root
   # in stateDirectory before every start; files it creates take the
   # directory's owner (the service user).
   migrate = pkgs.writeShellScript "cliproxyapi-migrate" ''
@@ -46,11 +48,13 @@ let
       with(select(.oauth["auth-dir"] == "/root/.cli-proxy-api"); .oauth["auth-dir"] = strenv(AUTH_DIR)) |'
     if [ "$($yq '${v8Detect} or (.["api-keys"] | tag == "!!map")' config.yaml)" = true ]; then
       edits="$edits"'
+        .server["trusted-proxies"] = ["127.0.0.1"] |
         .management.tailscale.enable = true |
         .management.tailscale["allowed-tags"] = env(TAGS) |
         .observability.usage.analysis.enable = true'
     else
       edits="$edits"'
+        .["trusted-proxies"] = ["127.0.0.1"] |
         .["remote-management"].tailscale.enable = true |
         .["remote-management"].tailscale["allowed-tags"] = env(TAGS) |
         .["usage-analysis"].enable = true'
@@ -70,18 +74,6 @@ in
 {
   options.my.cliproxyapi = {
     enable = mkEnableOption "Enable CLIProxyAPI";
-
-    domain = mkOption {
-      type = types.str;
-      default = "cliproxy.stu-dev.me";
-      description = "Public API hostname";
-    };
-
-    adminDomain = mkOption {
-      type = types.str;
-      default = "cliproxy-admin.stu-dev.me";
-      description = "Management hostname; management API requires CLIProxyAPI's management key";
-    };
 
     port = mkOption {
       type = types.port;

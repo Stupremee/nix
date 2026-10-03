@@ -85,7 +85,7 @@
     };
 
     cliproxyapi = {
-      url = "github:Stupremee/CLIProxyAPI";
+      url = "git+ssh://git@github.com/Stupremee/CLIProxyAPI?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

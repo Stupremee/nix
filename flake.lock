@@ -84,18 +84,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1791055750,
-        "narHash": "sha256-xToV9aRR32OTQQs/QXqSSxEU4JiSEM/yV/8ONPx2sLI=",
-        "ref": "worktree-agent-a8e76c718b1bd5dcd",
-        "rev": "2bc642a32721be5d88d907257492692ab598703c",
-        "revCount": 4170,
+        "lastModified": 1791057004,
+        "narHash": "sha256-iMZmLdr/BSVTM3nPL6277Gvg3tEth32YWherJ2LT+Eo=",
+        "ref": "main",
+        "rev": "9948702bc089e7203a168272d13eed10274bd6d4",
+        "revCount": 4176,
         "type": "git",
-        "url": "file:///home/stu/dev/cliproxyapi"
+        "url": "ssh://git@github.com/Stupremee/CLIProxyAPI"
       },
       "original": {
-        "owner": "Stupremee",
-        "repo": "CLIProxyAPI",
-        "type": "github"
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/Stupremee/CLIProxyAPI"
       }
     },
     "crane": {

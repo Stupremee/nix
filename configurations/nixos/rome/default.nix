@@ -91,6 +91,12 @@
     niks3.enable = false;
     unifi.enable = true;
     stremio.enable = true;
+    brother-scan = {
+      enable = true;
+      printerAddress = "192.168.188.40";
+      model = "MFC-L2710DW";
+      hostAddress = "192.168.188.28";
+    };
   };
 
   # Allow stu to run tailscale commands without sudo

@@ -84,6 +84,11 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
+    cliproxyapi = {
+      url = "github:Stupremee/CLIProxyAPI";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     impermanence.url = "github:nix-community/impermanence";
 
     just-flake.url = "github:juspay/just-flake";

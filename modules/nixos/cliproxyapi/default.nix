@@ -7,118 +7,84 @@
 with lib;
 let
   cfg = config.my.cliproxyapi;
+  service = config.services.cliproxyapi;
 
-  stateDirectory = "/var/lib/cliproxyapi";
-  pluginStoreEnvFile = "${stateDirectory}/plugin-store.env";
+  stateDirectory = service.stateDir;
   apiProxyPort = 8318;
   adminProxyPort = 8319;
 
-  keeperStateDirectory = "/var/lib/cpa-usage-keeper";
-  keeperPort = 8320;
-  managementPanel =
-    pkgs.runCommand "cliproxy-management-panel" { nativeBuildInputs = [ pkgs.gzip ]; }
-      ''
-        mkdir -p "$out"
-        gzip -dc ${./management.html.gz} > "$out/management.html"
-      '';
+  # Left behind by the removed CPA Usage Keeper container; imported once into
+  # the native Analysis store.
+  keeperDatabase = "/var/lib/cpa-usage-keeper/data/app.db";
 
-  bootstrapConfig = pkgs.writeShellScript "cliproxyapi-bootstrap-config" ''
+  # Roots that only exist in the v8 config layout (see config.example.yaml).
+  v8Detect = concatMapStringsSep " or " (key: ''has("${key}")'') [
+    "config-version"
+    "server"
+    "management"
+    "access"
+    "credentials"
+    "requests"
+    "oauth"
+    "upstream"
+    "multimedia"
+    "observability"
+  ];
+
+  # Block-style YAML sequence, so yq writes it like the rest of the file.
+  tailscaleTagsYaml = concatMapStrings (tag: "- ${builtins.toJSON tag}\n") cfg.tailscaleAllowedTags;
+
+  # Sets the Nix-owned keys in the otherwise mutable config.yaml and runs the
+  # one-time Keeper import. Runs as root in stateDirectory before every start;
+  # files it creates take the directory's owner (the service user).
+  migrate = pkgs.writeShellScript "cliproxyapi-migrate" ''
     set -eu
+    umask 077
+    yq=${getExe pkgs.yq-go}
+    owner="$(stat -c %u:%g .)"
 
-    install -d -m 0700 ${stateDirectory}
-    install -d -m 0700 ${stateDirectory}/auth
-    install -d -m 0700 ${stateDirectory}/logs
-    install -d -m 0700 ${stateDirectory}/plugins
-
-    # Docker requires the env file to exist. The operator adds
-    # CLIPROXY_PLUGIN_STORE_GITHUB_TOKEN here for plugin store installs.
-    if [ ! -e ${pluginStoreEnvFile} ]; then
-      install -m 0600 /dev/null ${pluginStoreEnvFile}
+    # Docker mounted auth/ at /root/.cli-proxy-api.
+    export AUTH_DIR=${stateDirectory}/auth
+    export TAGS=${escapeShellArg tailscaleTagsYaml}
+    edits='
+      with(select(.["auth-dir"] == "/root/.cli-proxy-api"); .["auth-dir"] = strenv(AUTH_DIR)) |
+      with(select(.oauth["auth-dir"] == "/root/.cli-proxy-api"); .oauth["auth-dir"] = strenv(AUTH_DIR)) |'
+    if [ "$($yq '${v8Detect} or (.["api-keys"] | tag == "!!map")' config.yaml)" = true ]; then
+      edits="$edits"'
+        .management.tailscale.enable = true |
+        .management.tailscale["allowed-tags"] = env(TAGS) |
+        .observability.usage.analysis.enable = true'
+    else
+      edits="$edits"'
+        .["remote-management"].tailscale.enable = true |
+        .["remote-management"].tailscale["allowed-tags"] = env(TAGS) |
+        .["usage-analysis"].enable = true'
     fi
 
-    if [ -s ${stateDirectory}/config.yaml ]; then
-      exit 0
+    $yq "$edits" config.yaml > config.yaml.new
+    # Compare content, not formatting, so an up-to-date file is left untouched.
+    if [ "$($yq -o json config.yaml)" = "$($yq -o json config.yaml.new)" ]; then
+      rm config.yaml.new
+    else
+      chown "$owner" config.yaml.new
+      mv config.yaml.new config.yaml
+      echo "cliproxyapi-migrate: updated Nix-owned keys in config.yaml"
     fi
 
-    cliproxy_credentials_file="${stateDirectory}/bootstrap-credentials"
-    if [ ! -s "$cliproxy_credentials_file" ]; then
-      cliproxy_api_key="$(${pkgs.openssl}/bin/openssl rand -hex 32)"
-      cliproxy_management_key="$(${pkgs.openssl}/bin/openssl rand -hex 32)"
-      cliproxy_credentials_tmp="$(${pkgs.coreutils}/bin/mktemp ${stateDirectory}/bootstrap-credentials.XXXXXX)"
-      chmod 0600 "$cliproxy_credentials_tmp"
-      {
-        echo "CLIPROXY_API_KEY=$cliproxy_api_key"
-        echo "CLIPROXY_MANAGEMENT_KEY=$cliproxy_management_key"
-      } > "$cliproxy_credentials_tmp"
-      mv "$cliproxy_credentials_tmp" "$cliproxy_credentials_file"
+    if [ -e ${keeperDatabase} ] && [ ! -e .keeper-imported ]; then
+      tmp="$(mktemp -d)"
+      trap 'rm -rf "$tmp"' EXIT
+      cp ${keeperDatabase}* "$tmp"/
+      chown -R "$owner" "$tmp"
+      # The import logs errors but exits 0, so success is detected from its summary line.
+      out="$(HOME="$PWD" ${pkgs.util-linux}/bin/setpriv --reuid="''${owner%:*}" --regid="''${owner#*:}" --clear-groups \
+        ${getExe service.package} --config config.yaml --import-keeper-db "$tmp/app.db" 2>&1)" || true
+      echo "$out"
+      case "$out" in
+        *"Imported "*) touch .keeper-imported && chown "$owner" .keeper-imported ;;
+        *) echo "cliproxyapi-migrate: Keeper import failed; retrying on next start" ;;
+      esac
     fi
-
-    . "$cliproxy_credentials_file"
-    cliproxy_api_key="$CLIPROXY_API_KEY"
-    cliproxy_management_key="$CLIPROXY_MANAGEMENT_KEY"
-    cliproxy_config_tmp="$(${pkgs.coreutils}/bin/mktemp ${stateDirectory}/config.yaml.XXXXXX)"
-    chmod 0600 "$cliproxy_config_tmp"
-
-    {
-      echo 'host: ""'
-      echo 'port: ${toString cfg.port}'
-      echo
-      echo 'tls:'
-      echo '  enable: false'
-      echo '  cert: ""'
-      echo '  key: ""'
-      echo
-      echo 'remote-management:'
-      echo '  allow-remote: true'
-      echo "  secret-key: \"$cliproxy_management_key\""
-      echo '  disable-control-panel: false'
-      echo
-      echo 'auth-dir: "/root/.cli-proxy-api"'
-      echo
-      echo 'api-keys:'
-      echo "  - \"$cliproxy_api_key\""
-      echo
-      echo 'debug: false'
-      echo 'request-log: false'
-      echo 'logging-to-file: true'
-      echo 'logs-max-total-size-mb: 512'
-      echo 'usage-statistics-enabled: false'
-      echo
-      echo 'pprof:'
-      echo '  enable: false'
-      echo '  addr: "127.0.0.1:8316"'
-      echo
-      echo 'ws-auth: true'
-      echo
-      echo 'plugins:'
-      echo '  enabled: false'
-      echo '  dir: "plugins"'
-    } > "$cliproxy_config_tmp"
-
-    mv "$cliproxy_config_tmp" ${stateDirectory}/config.yaml
-  '';
-
-  # Creates Keeper's secret env file once. Later edits, such as a rotated
-  # management key, survive deployments.
-  bootstrapKeeperEnv = pkgs.writeShellScript "cpa-usage-keeper-bootstrap-env" ''
-    set -eu
-
-    install -d -m 0700 ${keeperStateDirectory}
-    install -d -m 0700 ${keeperStateDirectory}/data
-
-    keeper_env_file="${keeperStateDirectory}/keeper.env"
-    if [ -s "$keeper_env_file" ]; then
-      exit 0
-    fi
-
-    . ${stateDirectory}/bootstrap-credentials
-    keeper_env_tmp="$(${pkgs.coreutils}/bin/mktemp ${keeperStateDirectory}/keeper.env.XXXXXX)"
-    chmod 0600 "$keeper_env_tmp"
-    {
-      echo "CPA_MANAGEMENT_KEY=$CLIPROXY_MANAGEMENT_KEY"
-      echo "LOGIN_PASSWORD=$(${pkgs.openssl}/bin/openssl rand -hex 16)"
-    } > "$keeper_env_tmp"
-    mv "$keeper_env_tmp" "$keeper_env_file"
   '';
 in
 {
@@ -140,128 +106,63 @@ in
     port = mkOption {
       type = types.port;
       default = 8317;
-      description = "Host loopback port for CLIProxyAPI";
+      description = "CLIProxyAPI listen port, reachable from loopback and the tailnet";
     };
 
-    usageKeeper.enable = mkEnableOption "CPA Usage Keeper at the admin hostname's /keeper path";
+    tailscaleAllowedTags = mkOption {
+      type = types.listOf types.str;
+      default = [ "tag:laptop" ];
+      description = "Tailnet tags allowed to use the management panel without the management key";
+    };
   };
 
-  config = mkIf cfg.enable (mkMerge [
-    {
-      my = {
-        cloudflare-tunnel.enable = true;
-        docker.enable = true;
+  config = mkIf cfg.enable {
+    my = {
+      cloudflare-tunnel.enable = true;
 
-        persist.directories = [ stateDirectory ];
-        backups.cliproxyapi.paths = [ stateDirectory ];
-      };
-
-      systemd.tmpfiles.rules = [
-        "d ${stateDirectory} 0700 root root -"
-        "d ${stateDirectory}/auth 0700 root root -"
-        "d ${stateDirectory}/logs 0700 root root -"
-        "d ${stateDirectory}/plugins 0700 root root -"
+      persist.directories = [
+        {
+          directory = stateDirectory;
+          user = "cliproxyapi";
+          group = "cliproxyapi";
+          mode = "0700";
+        }
+        # Keeps the old Keeper data mounted for the one-time import. Remove
+        # together with the data once logs/usage-analysis.db holds the history.
+        "/var/lib/cpa-usage-keeper"
       ];
+      backups.cliproxyapi.paths = [ stateDirectory ];
+    };
 
-      virtualisation.oci-containers.containers.cliproxyapi = {
-        image = "eceasy/cli-proxy-api@sha256:238691ac26ce55e4d1c5219d72e3ad74838f81eda26359912eeb415e2820d163";
-        ports = [
-          "127.0.0.1:${toString cfg.port}:8317"
-          "127.0.0.1:1455:1455"
-          "127.0.0.1:54545:54545"
-        ];
-        environmentFiles = [ pluginStoreEnvFile ];
-        volumes = [
-          "${stateDirectory}/config.yaml:/CLIProxyAPI/config.yaml"
-          "${stateDirectory}/auth:/root/.cli-proxy-api"
-          "${stateDirectory}/logs:/CLIProxyAPI/logs"
-          "${stateDirectory}/plugins:/CLIProxyAPI/plugins"
-        ];
-      };
+    # Listens on all interfaces: rome's firewall only trusts tailscale0, so
+    # LAN clients are blocked while Caddy and tailnet peers get through.
+    services.cliproxyapi = {
+      enable = true;
+      inherit (cfg) port;
+    };
 
-      systemd.services.docker-cliproxyapi.preStart = mkBefore ''
-        ${bootstrapConfig}
+    systemd.services.cliproxyapi.serviceConfig.ExecStartPre = mkAfter [ "+${migrate}" ];
+
+    services.caddy.virtualHosts = {
+      "http://:${toString apiProxyPort}".extraConfig = ''
+        bind 127.0.0.1
+
+        @administrative path /management.html /v0/management /v0/management/* /v8/management /v8/management/* /v0/resource/plugins/*
+        respond @administrative 404
+
+        reverse_proxy 127.0.0.1:${toString cfg.port}
       '';
 
-      services.caddy.virtualHosts = {
-        "http://:${toString apiProxyPort}".extraConfig = ''
-          bind 127.0.0.1
+      "http://:${toString adminProxyPort}".extraConfig = ''
+        bind 127.0.0.1
 
-          @administrative path /management.html /v0/management /v0/management/* /v0/resource/plugins/*
-          respond @administrative 404
+        # Plugin browser resources bypass CLIProxyAPI's management-key middleware,
+        # and the features they provided are native now.
+        @pluginResources path /v0/resource/plugins/*
+        respond @pluginResources 404
 
-          reverse_proxy 127.0.0.1:${toString cfg.port}
-        '';
-
-        "http://:${toString adminProxyPort}".extraConfig = ''
-          bind 127.0.0.1
-
-          # Plugin browser resources bypass CLIProxyAPI's management-key middleware.
-          @pluginResources path /v0/resource/plugins/*
-          forward_auth @pluginResources localhost:9091 {
-            uri /api/authz/forward-auth
-            header_up X-Forwarded-Proto https
-            copy_headers Remote-User Remote-Groups Remote-Email Remote-Name
-          }
-
-          # Serve the pinned panel with native OpenCode Go quota cards.
-          @managementPanel path /management.html
-          handle @managementPanel {
-            root * ${managementPanel}
-            file_server
-          }
-
-          ${optionalString cfg.usageKeeper.enable ''
-            # Same origin as the panel, so Keeper's "Back to CPA" link works as is.
-            handle /keeper* {
-              reverse_proxy 127.0.0.1:${toString keeperPort} {
-                header_up X-Forwarded-Proto https
-                # cloudflared connects from loopback; pass the real client IP
-                # so Keeper rate-limits logins per client.
-                header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
-              }
-            }
-          ''}
-          handle {
-            reverse_proxy 127.0.0.1:${toString cfg.port}
-          }
-        '';
-      };
-    }
-
-    (mkIf cfg.usageKeeper.enable {
-      my = {
-        persist.directories = [ keeperStateDirectory ];
-        backups.cliproxyapi.paths = [ keeperStateDirectory ];
-      };
-
-      systemd.tmpfiles.rules = [ "d ${keeperStateDirectory} 0700 root root -" ];
-
-      # Keeper reads usage from CLIProxyAPI's Redis-protocol stream on the same
-      # port, so it shares the host network to reach the loopback-only listener.
-      virtualisation.oci-containers.containers.cpa-usage-keeper = {
-        # v1.15.7
-        image = "ghcr.io/willxup/cpa-usage-keeper@sha256:f533cd3630da32e31ed0e6833e460f279a6ac2916342d510b077d94c91893c6e";
-        dependsOn = [ "cliproxyapi" ];
-        extraOptions = [ "--network=host" ];
-        environment = {
-          CPA_BASE_URL = "http://127.0.0.1:${toString cfg.port}";
-          APP_HOST = "127.0.0.1";
-          APP_PORT = toString keeperPort;
-          APP_BASE_PATH = "/keeper";
-          # Explicit because older releases defaulted this to false.
-          AUTH_ENABLED = "true";
-          WORK_DIR = "/data";
-          TZ = config.time.timeZone;
-          LOG_FILE_ENABLED = "false";
-        };
-        environmentFiles = [ "${keeperStateDirectory}/keeper.env" ];
-        volumes = [ "${keeperStateDirectory}/data:/data" ];
-      };
-
-      systemd.services.docker-cpa-usage-keeper.preStart = mkBefore ''
-        ${bootstrapKeeperEnv}
+        reverse_proxy 127.0.0.1:${toString cfg.port}
       '';
-    })
-  ]);
+    };
+  };
 }

@@ -1,5 +1,8 @@
 # CLIProxyAPI deployment on `rome`
 
+> Superseded: rome now runs the fork natively, see
+> `modules/nixos/cliproxyapi/README.md`. The docker layout below is historical.
+
 Research and deployment date: 2026-08-31. The deployed image is the official
 `eceasy/cli-proxy-api` multi-architecture image at digest
 `sha256:238691ac26ce55e4d1c5219d72e3ad74838f81eda26359912eeb415e2820d163`,

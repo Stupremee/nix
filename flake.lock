@@ -77,6 +77,27 @@
         "type": "github"
       }
     },
+    "cliproxyapi": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791055750,
+        "narHash": "sha256-xToV9aRR32OTQQs/QXqSSxEU4JiSEM/yV/8ONPx2sLI=",
+        "ref": "worktree-agent-a8e76c718b1bd5dcd",
+        "rev": "2bc642a32721be5d88d907257492692ab598703c",
+        "revCount": 4170,
+        "type": "git",
+        "url": "file:///home/stu/dev/cliproxyapi"
+      },
+      "original": {
+        "owner": "Stupremee",
+        "repo": "CLIProxyAPI",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1731098351,
@@ -664,6 +685,7 @@
         "agenix": "agenix",
         "agenix-rekey": "agenix-rekey",
         "catppuccin": "catppuccin",
+        "cliproxyapi": "cliproxyapi",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",

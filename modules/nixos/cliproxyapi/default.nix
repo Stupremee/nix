@@ -11,7 +11,6 @@ let
 
   stateDirectory = service.stateDir;
   apiProxyPort = 8318;
-  adminProxyPort = 8319;
 
   # Roots that only exist in the v8 config layout (see config.example.yaml).
   v8Detect = concatMapStringsSep " or " (key: ''has("${key}")'') [
@@ -162,16 +161,6 @@ in
         reverse_proxy 127.0.0.1:${toString cfg.port}
       '';
 
-      "http://:${toString adminProxyPort}".extraConfig = ''
-        bind 127.0.0.1
-
-        # Plugin browser resources bypass CLIProxyAPI's management-key middleware,
-        # and the features they provided are native now.
-        @pluginResources path /v0/resource/plugins/*
-        respond @pluginResources 404
-
-        reverse_proxy 127.0.0.1:${toString cfg.port}
-      '';
     };
   };
 }

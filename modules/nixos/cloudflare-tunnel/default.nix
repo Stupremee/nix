@@ -18,11 +18,9 @@ in
       enable = true;
       tunnels.${tunnelId} = {
         credentialsFile = config.age.secrets.cloudflare-tunnel-rome.path;
-        ingress = {
-          "cliproxy.stu-dev.me" = "http://127.0.0.1:8318";
-          "cliproxy-admin.stu-dev.me" = "http://127.0.0.1:8319";
-        };
+        # No public hostnames: CLIProxyAPI is tailnet-only at cliproxy.jukl.dev.
         default = "http_status:404";
+        warp-routing.enabled = true;
       };
     };
   };

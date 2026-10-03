@@ -90,6 +90,12 @@ in
       description = "CLIProxyAPI listen port, reachable from loopback and the tailnet";
     };
 
+    tailnetDomain = mkOption {
+      type = types.str;
+      default = "cliproxy.jukl.dev";
+      description = "HTTPS hostname for the API and panel; resolves to rome's tailnet address";
+    };
+
     tailscaleAllowedTags = mkOption {
       type = types.listOf types.str;
       default = [ "tag:laptop" ];
@@ -127,6 +133,31 @@ in
 
         @administrative path /management.html /v0/management /v0/management/* /v8/management /v8/management/* /v0/resource/plugins/*
         respond @administrative 404
+
+        reverse_proxy 127.0.0.1:${toString cfg.port}
+      '';
+
+      ${cfg.tailnetDomain}.extraConfig = ''
+        # Caddy's Cloudflare token only covers stu-dev.me, so
+        # _acme-challenge.<domain> is a CNAME to this name in that zone.
+        tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+          resolvers 1.1.1.1 1.0.0.1
+          dns_challenge_override_domain _acme-challenge.${
+            replaceStrings [ "." ] [ "-" ] cfg.tailnetDomain
+          }.stu-dev.me
+        }
+
+        # Browsers opening the bare hostname land on the panel; API clients
+        # don't send Accept: text/html.
+        @browserRoot {
+          path /
+          header Accept *text/html*
+        }
+        redir @browserRoot /management.html
+
+        @pluginResources path /v0/resource/plugins/*
+        respond @pluginResources 404
 
         reverse_proxy 127.0.0.1:${toString cfg.port}
       '';

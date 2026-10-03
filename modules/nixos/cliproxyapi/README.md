@@ -16,8 +16,8 @@ the binary, so there is no pinned panel, plugin or Keeper container.
 `config.yaml` is mutable. On every start `cliproxyapi-migrate` (root
 `ExecStartPre`) sets the keys Nix owns, in whichever layout the file uses:
 the docker-era `auth-dir`, Analysis `enable`, and the Tailscale management
-auth. While `/var/lib/cpa-usage-keeper/data/app.db` exists it also imports the
-Keeper history once (marker `.keeper-imported`).
+auth. The Keeper history was imported once on 2026-10-03; to import another
+Keeper database run `cli-proxy-api --config config.yaml --import-keeper-db <app.db>`.
 
 Bump the binary with `nix flake update cliproxyapi`, then deploy with
 `nix run .# -- rome`.

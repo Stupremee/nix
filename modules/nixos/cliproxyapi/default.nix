@@ -13,10 +13,6 @@ let
   apiProxyPort = 8318;
   adminProxyPort = 8319;
 
-  # Left behind by the removed CPA Usage Keeper container; imported once into
-  # the native Analysis store.
-  keeperDatabase = "/var/lib/cpa-usage-keeper/data/app.db";
-
   # Roots that only exist in the v8 config layout (see config.example.yaml).
   v8Detect = concatMapStringsSep " or " (key: ''has("${key}")'') [
     "config-version"
@@ -34,9 +30,9 @@ let
   # Block-style YAML sequence, so yq writes it like the rest of the file.
   tailscaleTagsYaml = concatMapStrings (tag: "- ${builtins.toJSON tag}\n") cfg.tailscaleAllowedTags;
 
-  # Sets the Nix-owned keys in the otherwise mutable config.yaml and runs the
-  # one-time Keeper import. Runs as root in stateDirectory before every start;
-  # files it creates take the directory's owner (the service user).
+  # Sets the Nix-owned keys in the otherwise mutable config.yaml. Runs as root
+  # in stateDirectory before every start; files it creates take the
+  # directory's owner (the service user).
   migrate = pkgs.writeShellScript "cliproxyapi-migrate" ''
     set -eu
     umask 077
@@ -69,21 +65,6 @@ let
       chown "$owner" config.yaml.new
       mv config.yaml.new config.yaml
       echo "cliproxyapi-migrate: updated Nix-owned keys in config.yaml"
-    fi
-
-    if [ -e ${keeperDatabase} ] && [ ! -e .keeper-imported ]; then
-      tmp="$(mktemp -d)"
-      trap 'rm -rf "$tmp"' EXIT
-      cp ${keeperDatabase}* "$tmp"/
-      chown -R "$owner" "$tmp"
-      # The import logs errors but exits 0, so success is detected from its summary line.
-      out="$(HOME="$PWD" ${pkgs.util-linux}/bin/setpriv --reuid="''${owner%:*}" --regid="''${owner#*:}" --clear-groups \
-        ${getExe service.package} --config config.yaml --import-keeper-db "$tmp/app.db" 2>&1)" || true
-      echo "$out"
-      case "$out" in
-        *"Imported "*) touch .keeper-imported && chown "$owner" .keeper-imported ;;
-        *) echo "cliproxyapi-migrate: Keeper import failed; retrying on next start" ;;
-      esac
     fi
   '';
 in
@@ -127,9 +108,6 @@ in
           group = "cliproxyapi";
           mode = "0700";
         }
-        # Keeps the old Keeper data mounted for the one-time import. Remove
-        # together with the data once logs/usage-analysis.db holds the history.
-        "/var/lib/cpa-usage-keeper"
       ];
       backups.cliproxyapi.paths = [ stateDirectory ];
     };

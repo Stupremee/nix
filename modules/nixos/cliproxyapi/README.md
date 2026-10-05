@@ -17,7 +17,8 @@ CLIProxyAPI is tailnet-only; the Cloudflare tunnel publishes no hostnames for it
 `config.yaml` is mutable. On every start `cliproxyapi-migrate` (root
 `ExecStartPre`) sets the keys Nix owns, in whichever layout the file uses:
 the docker-era `auth-dir`, `trusted-proxies` (Caddy on loopback), Analysis
-`enable`, and the Tailscale management auth. The Keeper history was imported once on 2026-10-03; to import another
+`enable`, the Tailscale management auth, and `restrict-oauth-to-claude-code`
+(Claude OAuth logins only serve Claude Code). The Keeper history was imported once on 2026-10-03; to import another
 Keeper database run `cli-proxy-api --config config.yaml --import-keeper-db <app.db>`.
 
 Bump the binary with `nix flake update cliproxyapi`, then deploy with

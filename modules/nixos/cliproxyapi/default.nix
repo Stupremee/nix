@@ -31,7 +31,7 @@ let
 
   # Sets the Nix-owned keys in the otherwise mutable config.yaml. Caddy on
   # loopback is the trusted proxy, so tailnet auth sees the client it forwards
-  # for cliproxy.jukl.dev. Runs as root
+  # for cliproxy.jukl.dev. Claude OAuth logins only serve Claude Code. Runs as root
   # in stateDirectory before every start; files it creates take the
   # directory's owner (the service user).
   migrate = pkgs.writeShellScript "cliproxyapi-migrate" ''
@@ -51,13 +51,15 @@ let
         .server["trusted-proxies"] = ["127.0.0.1"] |
         .management.tailscale.enable = true |
         .management.tailscale["allowed-tags"] = env(TAGS) |
-        .observability.usage.analysis.enable = true'
+        .observability.usage.analysis.enable = true |
+        .upstream.claude["restrict-oauth-to-claude-code"] = true'
     else
       edits="$edits"'
         .["trusted-proxies"] = ["127.0.0.1"] |
         .["remote-management"].tailscale.enable = true |
         .["remote-management"].tailscale["allowed-tags"] = env(TAGS) |
-        .["usage-analysis"].enable = true'
+        .["usage-analysis"].enable = true |
+        .["claude-code"]["restrict-oauth-to-claude-code"] = true'
     fi
 
     $yq "$edits" config.yaml > config.yaml.new

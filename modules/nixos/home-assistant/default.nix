@@ -179,16 +179,8 @@ in
       };
     };
 
-    services.esphome = {
-      enable = true;
-      package = pkgsUnstable.esphome;
-    };
-
-    systemd.services.esphome = {
-      environment = {
-        PYTHONPATH = "${pkgsUnstable.esphome}/lib/python3.13/site-packages:${pkgs.python3Packages.makePythonPath pkgs.esphome.dependencies}";
-      };
-    };
+    # Stable on purpose: ESPHome 2026.8 removed the built-in dashboard this service runs.
+    services.esphome.enable = true;
 
     services.zigbee2mqtt = {
       enable = true;

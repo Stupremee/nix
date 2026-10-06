@@ -1,4 +1,4 @@
-{ flake, pkgs, ... }:
+{ flake, ... }:
 {
   imports = with flake.inputs; [
     self.nixosModules.default
@@ -7,46 +7,8 @@
     ./disks.nix
   ];
 
-  programs.nix-ld = {
-    enable = true;
-
-    libraries = with pkgs; [
-      alsa-lib
-      atk
-      at-spi2-core
-      cairo
-      cups
-      dbus
-      expat
-      fontconfig
-      freetype
-      glib
-      gtk3
-      libdrm
-      libgbm
-      libxkbcommon
-      mesa
-      nspr
-      nss
-      pango
-      systemd
-
-      libx11
-      libxcomposite
-      libxdamage
-      libxext
-      libxfixes
-      libxrandr
-      libxcb
-    ];
-  };
-
   # Remote activation
   nixos-unified.sshTarget = "stu@rome";
-
-  environment.etc."ssl/cert.pem".source = "/etc/ssl/certs/ca-certificates.crt";
-
-  home-manager.backupFileExtension = "hm-backup";
 
   my = {
     persist = {
@@ -69,6 +31,7 @@
     };
 
     server.enable = true;
+    agent-host.enable = true;
     fonts.enable = true;
     user.stu.enableHome = true;
 
@@ -95,9 +58,6 @@
       hostAddress = "192.168.188.28";
     };
   };
-
-  # Allow stu to run tailscale commands without sudo
-  services.tailscale.extraSetFlags = [ "--operator=stu" ];
 
   # Required for allowing document scanner to connect via SSH
   users.users.paperless = {

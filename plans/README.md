@@ -101,31 +101,11 @@ Real but lower leverage, or needing a decision this audit cannot make:
   on the HA client (`ha_client.py:56-62`). Each changes what the heat pump sees
   and deserves its own plan with a rollback story — much easier to write once
   plan 004 makes the test suite run.
-- **Six dead modules** orphaned by the `aerial`/`gleba` host removal:
-  `modules/nixos/{amd-gpu,gaming,laptop,localsend,logitech}` and
-  `modules/home/mako` are auto-imported into every host but enabled by none.
-  Pure deletion, low value, trivially recoverable from git.
-- **Broken desktop tooling on baldon**: `modules/home/rofi/powermenu.sh:27,37,50,60`
-  background the confirmation dialog inside command substitution
-  (`ans=$(rdialog &)`), so shutdown/reboot/suspend confirmation is unreliable;
-  `:47` calls `swaylock`, which is not installed anywhere (the repo uses
-  `hyprlock`). `modules/home/hyprland/default.nix:167-168` bind `makoctl` but
-  `my.mako` is never enabled, so there is no notification daemon and
-  `notify-send`/`slurp` in the screenshot script are absent too. Real, but
-  desktop-only annoyance.
 - **`with lib;` at file scope in 49 of ~60 modules**: the long-discouraged Nix
   pattern — defeats LSP go-to-definition, makes typos eval-time failures, and
   blocks `deadnix`. A mechanical `inherit (lib) ...` migration. Genuinely worth
   doing for maintainability but touches nearly every file; best done
   incrementally when touching a module, not as one unreviewable sweep.
-- **Unused flake inputs**: `lanzaboote` (declared, pinned to a tag from
-  2025-01-23, referenced nowhere — both hosts use plain systemd-boot) and
-  `hyprpanel` (the config uses home-manager's built-in `programs.hyprpanel`
-  module, not the input). Both drag redundant nixpkgs/home-manager trees into
-  the lock. Also `impermanence` has no `follows`, pulling a second full nixpkgs.
-- **`nixos-unified.primary-inputs` omits `agenix` and `agenix-rekey`**
-  (`modules/flake/toplevel.nix:26-36`), so `nix run .#update` never bumps the
-  two inputs that gate access to every secret. `agenix` is ~6 months stale.
 - **Domain hardcoded across nine modules**: `stu-dev.me` appears in ~20 sites;
   only `my.stremio.domain` was parameterized. A `my.domain` option would make
   the service modules reusable.

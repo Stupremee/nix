@@ -1,12 +1,14 @@
 {
   lib,
-  pkgs,
   config,
+  utils,
   ...
 }:
 with lib;
 let
   cfg = config.my.persist;
+
+  rootDevice = "${utils.escapeSystemdPath cfg.btrfs.disk}.device";
 in
 {
   options.my.persist = {
@@ -25,6 +27,8 @@ in
     btrfs = {
       enable = mkEnableOption "Enable impermanence using btrfs rollbacks";
 
+      # Block device holding the btrfs filesystem with the `rootfs` subvolume, e.g. a
+      # partition or an unlocked LUKS mapper device.
       disk = mkOption {
         type = types.str;
       };
@@ -92,10 +96,10 @@ in
       boot.initrd.supportedFilesystems = [ "btrfs" ];
 
       boot.initrd.systemd.services.btrfs-rollback = {
-        description = "Rollback btrfs root dataset to blank snapshot";
+        description = "Archive the btrfs root subvolume and start from an empty one";
         wantedBy = [ "initrd.target" ];
-        requires = [ "dev-disk-by\\x2dpartlabel-disk\\x2dsystem\\x2droot.device" ];
-        after = [ "dev-disk-by\\x2dpartlabel-disk\\x2dsystem\\x2droot.device" ];
+        requires = [ rootDevice ];
+        after = [ rootDevice ];
         before = [
           "-.mount"
           "sysroot.mount"

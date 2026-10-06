@@ -33,6 +33,11 @@
           "nvf"
           "catppuccin"
           "impermanence"
+          "agenix"
+          "agenix-rekey"
+          "disko"
+          "nix-darwin"
+          "nix-index-database"
         ];
       };
     };

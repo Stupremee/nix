@@ -7,7 +7,7 @@
 let
   inherit (lib.generators) mkLuaInline;
 
-  ctrlAlt = if pkgs.stdenv.isDarwin then "C" else "M";
+  ctrlAlt = if pkgs.stdenv.hostPlatform.isDarwin then "C" else "M";
 in
 {
   vim = {
@@ -249,7 +249,7 @@ in
 
       servers.tsgo = {
         cmd = [
-          (lib.getExe pkgs.typescript-go)
+          (lib.getExe pkgs.typescript)
           "--lsp"
           "--stdio"
         ];
@@ -336,37 +336,39 @@ in
     statusline = {
       lualine = {
         enable = true;
-        activeSection.b = [
-          ''
-            {
-              "filetype",
-              colored = true,
-              icon_only = true,
-              icon = { align = 'left' }
-            }
-          ''
-          ''
-            {
-              "filename",
-              symbols = {modified = ' ', readonly = ' '},
-              separator = {right = ''}
-            }
-          ''
-          ''
-            {
-              "macro",
-              fmt = function()
+        setupOpts.sections.lualine_b = [
+          {
+            "@1" = "filetype";
+            colored = true;
+            icon_only = true;
+            icon.align = "left";
+          }
+          {
+            "@1" = "filename";
+            symbols = {
+              modified = " ";
+              readonly = " ";
+            };
+            separator.right = "";
+          }
+          {
+            "@1" = "macro";
+            fmt = mkLuaInline ''
+              function()
                 local reg = vim.fn.reg_recording()
                 if reg ~= "" then
                   return "recording @" .. reg
                 end
                 return nil
-              end,
-              draw_empty = false,
-              colored = true,
-              separator = { left = '', right = '' }
-            }
-          ''
+              end
+            '';
+            draw_empty = false;
+            colored = true;
+            separator = {
+              left = "";
+              right = "";
+            };
+          }
         ];
       };
     };
@@ -471,7 +473,6 @@ in
       noice.enable = true;
       colorizer.enable = true;
       illuminate.enable = true;
-      breadcrumbs.enable = false;
 
       smartcolumn.enable = true;
       fastaction.enable = true;

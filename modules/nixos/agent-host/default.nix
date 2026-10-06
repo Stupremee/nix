@@ -60,6 +60,10 @@ in
       users.${config.my.user.mainUser}.my.agent-host.enable = true;
     };
 
+    # Start the main user's systemd instance at boot and keep it after logout, so t3code
+    # runs without an open session
+    users.users.${config.my.user.mainUser}.linger = true;
+
     # Runaway agents and dev servers must never lock us out. Everything the main user's systemd
     # instance runs (t3code, agents, and all their children) shares one budget, while
     # tailscaled, sshd and interactive SSH sessions stay outside it. Test with

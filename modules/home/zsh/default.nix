@@ -70,9 +70,14 @@ in
         ''
           ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
-          if [ -f "$HOME/.vite-plus/env" ]; then
-            source "$HOME/.vite-plus/env"
-          fi
+          # Newer Vite+ installs follow XDG; older ones (Rome, the Mac) live in ~/.vite-plus.
+          for vp_env in "''${XDG_CONFIG_HOME:-$HOME/.config}/vite-plus/env" "$HOME/.vite-plus/env"; do
+            if [ -f "$vp_env" ]; then
+              source "$vp_env"
+              break
+            fi
+          done
+          unset vp_env
 
           if (( $+commands[mise] )); then
             eval "$(mise activate zsh)"

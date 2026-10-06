@@ -8,7 +8,9 @@ with lib;
 let
   cfg = config.my.agent-host;
 
+  # Vite+ installs to XDG data on new hosts and ~/.vite-plus on older ones.
   userBinDirectories = [
+    ".local/share/vite-plus/bin"
     ".vite-plus/bin"
     ".local/bin"
     "bin"

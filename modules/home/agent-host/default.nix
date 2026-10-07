@@ -50,10 +50,11 @@ in
       fi
     '';
 
-    # Agent hosts have no YubiKey attached, so commits can't be signed there.
+    # Agent hosts have no YubiKey attached, so they sign with their passphrase-less SSH key,
+    # registered as a signing key on GitHub.
     programs.git.signing = {
-      key = mkForce null;
-      signByDefault = mkForce false;
+      format = "ssh";
+      key = mkForce "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
     };
 
     my = {

@@ -6,11 +6,7 @@
 }:
 with lib;
 let
-  inherit (builtins) readFile;
-
   cfg = config.my.git;
-
-  gitIdentity = pkgs.writeShellScriptBin "git-identity" (readFile ./git-identity.sh);
 in
 {
   options.my.git.enable = mkEnableOption "Enable proper Git in shell";
@@ -19,8 +15,6 @@ in
     home = {
       packages = with pkgs; [
         gh
-        fzf
-        gitIdentity
         git-credential-oauth
       ];
 
@@ -60,24 +54,6 @@ in
         pull.rebase = true;
         init.defaultBranch = "main";
         push.autoSetupRemote = true;
-
-        user = {
-          useConfigOnly = true;
-
-          # the `work` identity
-          work = {
-            name = "Justus Kliem";
-            email = "justus.kliem@ekd-solar.de";
-            signingKey = "31AC6529";
-          };
-
-          # the `personal` identity
-          personal = {
-            name = "Justus K";
-            email = "justus.k@protonmail.com";
-            signingKey = "D54A1CD51376F46C";
-          };
-        };
 
         # core.pager = delta;
         # interactive.diffFilter = "${delta} --color-only --features=interactive";

@@ -52,6 +52,9 @@ in
 
     environment.etc."ssl/cert.pem".source = "/etc/ssl/certs/ca-certificates.crt";
 
+    # 1Password CLI (`op`), installed through the module for its setgid wrapper
+    programs._1password.enable = true;
+
     # Allow the main user to run tailscale commands without sudo
     services.tailscale.extraSetFlags = [ "--operator=${config.my.user.mainUser}" ];
 

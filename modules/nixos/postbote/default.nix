@@ -31,7 +31,7 @@ in
       cloudflare-tunnel.enable = true;
 
       # No backup: the state holds a plaintext index of mail (rebuildable from IMAP) and OAuth
-      # tokens (a re-login replaces them).
+      # tokens (a new pairing replaces them).
       persist.directories = [
         {
           directory = "/var/lib/postbote";

@@ -25,7 +25,39 @@ in
       enable = true;
       publicUrl = "https://${cfg.domain}";
       trustedProxy = "cloudflare";
+
+      # Through Proton Bridge on loopback (my.protonmail-bridge), pinned to its self-signed cert.
+      accounts.proton = {
+        imap = {
+          host = "127.0.0.1";
+          port = 1143;
+          security = "starttls";
+          pinnedCertFile = ./proton-bridge-cert.pem;
+          username = "justus.k@protonmail.com";
+          passwordFile = config.age.secrets.postbote-proton-imap.path;
+        };
+        permissions = [
+          "read"
+          "draft"
+          "organize"
+        ];
+        index = {
+          since = "2023-01-01";
+          # Bridge exposes "All Mail", "Starred" and every label as a folder; indexing them
+          # duplicates mail.
+          excludeFolders = [
+            "All Mail"
+            "Starred"
+            "Labels/*"
+            "Spam"
+            "Trash"
+          ];
+        };
+      };
     };
+
+    # Root-owned: systemd reads it for LoadCredential, postbote never touches the file.
+    age.secrets.postbote-proton-imap.rekeyFile = ../../../secrets/postbote-proton-imap.age;
 
     my = {
       cloudflare-tunnel.enable = true;

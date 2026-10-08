@@ -27,3 +27,14 @@ input `postbote`) as `postbote.service`, user `postbote`, state in `/var/lib/pos
 
 For Proton, IMAP goes through Proton Bridge on loopback (STARTTLS on 1143); pin its certificate
 with `imap.pinnedCertFile`.
+
+## Account `proton`
+
+Bridge runs as `stu`'s user service (`my.protonmail-bridge`, vault key in `pass`). Its
+certificate is pinned from `proton-bridge-cert.pem`. When Bridge generates a new one (new vault,
+re-login), `doctor` fails with a pinning error; refresh the file on rome:
+
+```sh
+openssl s_client -starttls imap -connect 127.0.0.1:1143 </dev/null 2>/dev/null \
+  | openssl x509 -outform PEM > proton-bridge-cert.pem
+```

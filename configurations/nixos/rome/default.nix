@@ -42,6 +42,7 @@
 
     caddy.enable = true;
     cliproxyapi.enable = true;
+    postbote.enable = true;
     paperless.enable = true;
     paddleocr-vl.enable = true;
     postfix.enable = true;

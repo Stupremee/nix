@@ -18,7 +18,8 @@ in
       enable = true;
       tunnels.${tunnelId} = {
         credentialsFile = config.age.secrets.cloudflare-tunnel-rome.path;
-        # No public hostnames: CLIProxyAPI is tailnet-only at cliproxy.jukl.dev.
+        # Public hostnames come from service modules (postbote). CLIProxyAPI stays tailnet-only
+        # at cliproxy.jukl.dev.
         default = "http_status:404";
         warp-routing.enabled = true;
       };

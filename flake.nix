@@ -81,6 +81,10 @@
       url = "git+ssh://git@github.com/Stupremee/CLIProxyAPI?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    postbote = {
+      url = "git+ssh://git@github.com/Stupremee/postbote?ref=feat/v1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     impermanence = {
       url = "github:nix-community/impermanence";

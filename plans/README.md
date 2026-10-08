@@ -26,7 +26,7 @@ check for this reason. Re-verify excerpts before executing.
 | 003 | Stop services bypassing the firewall and auth proxy | P1 | S | — | TODO |
 | 004 | Verification baseline: green tests, real flake checks, CI | P1 | M | — | TODO |
 | 005 | Bootstrap, recovery, and conventions documentation | P2 | M | — | TODO |
-| 006 | Proton Mail account for postbote on rome | P2 | S | — | TODO |
+| 006 | Proton Mail account for postbote on rome | P2 | S | — | DONE |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) |
 REJECTED (with one-line rationale)

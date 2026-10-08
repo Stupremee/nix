@@ -82,7 +82,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     postbote = {
-      url = "git+ssh://git@github.com/Stupremee/postbote?ref=feat/v1";
+      url = "git+ssh://git@github.com/Stupremee/postbote?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

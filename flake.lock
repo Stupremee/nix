@@ -490,16 +490,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1791442727,
+        "lastModified": 1791443781,
         "narHash": "sha256-enHXnwpr1TnGw2xe55s/Y37a7VUZAysJOyaDmFnNUHs=",
-        "ref": "feat/v1",
-        "rev": "2f24e18585c7fd99ee74971ce6d27c3bb46041f0",
-        "revCount": 170,
+        "ref": "main",
+        "rev": "197c13e3e3ad3fce08f8e72d2246f13dc4fb40e3",
+        "revCount": 2,
         "type": "git",
         "url": "ssh://git@github.com/Stupremee/postbote"
       },
       "original": {
-        "ref": "feat/v1",
+        "ref": "main",
         "type": "git",
         "url": "ssh://git@github.com/Stupremee/postbote"
       }

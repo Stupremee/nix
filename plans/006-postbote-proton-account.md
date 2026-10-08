@@ -18,7 +18,8 @@
   public at `https://postbote.jukl.dev/mcp`, currently with **zero accounts**. Module docs:
   postbote repo `nix/README.md` and `README.md`.
 - PR Stupremee/postbote#1 is merged into `main` (squash `197c13e`). The flake input still
-  points at `ref=feat/v1`.
+  points at `ref=feat/v1`. postbote v2 (labels, structured data, calendar, sending with
+  approval, metrics) is on `feat/v2` and will be merged to `main` too; take `main` then.
 - Sign-in is via one-time pairing codes: `sudo postbote-ctl pair` on rome.
 - rome: lingering for `stu` is on, `stu` has one GPG secret key, `pass` is installed but **not
   initialised** (`~/.local/share/password-store` has no `.gpg-id`).
@@ -112,7 +113,8 @@ services.postbote.accounts.proton = {
   "mailbox is still being imported" meanwhile.
 - `journalctl -u postbote` shows no repeated errors.
 - **[Stu]** `sudo postbote-ctl pair`, add the connector `https://postbote.jukl.dev/mcp` in
-  claude.ai or Claude Code, paste the code, pick `proton`. Try a search.
+  claude.ai or Claude Code, paste the code, pick `proton`. Try a search, then a test send to
+  Stu's own address and approve it from the Pushover link.
 
 ### 7. Merge to master
 
@@ -124,5 +126,7 @@ machine keeps postbote. Update `plans/README.md`.
 - Bridge cannot keep its login across a restart (check after `systemctl --user restart`):
   report, do not work around with plaintext keychains.
 - `doctor` shows a TLS or pinning error: report the exact error; do not disable pinning.
+- A test send (draft to Stu's own address, `request_send`, approve) does not arrive, or arrives
+  with content different from the approval page: stop and report.
 - Anything in the diff-closures of step 1 or 2 touches services other than postbote, Bridge and
   the tunnel.

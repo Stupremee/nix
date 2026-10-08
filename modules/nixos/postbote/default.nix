@@ -32,6 +32,12 @@ in
         "https://executor.sh/api/oauth/client-id-metadata/kliem-software.json"
       ];
 
+      # Approval links for send and unsubscribe requests.
+      notify.pushover = {
+        appTokenFile = config.age.secrets.postbote-pushover-token.path;
+        userKeyFile = config.age.secrets.postbote-pushover-user.path;
+      };
+
       # Through Proton Bridge on loopback (my.protonmail-bridge), pinned to its self-signed cert.
       accounts.proton = {
         imap = {
@@ -74,8 +80,12 @@ in
       };
     };
 
-    # Root-owned: systemd reads it for LoadCredential, postbote never touches the file.
-    age.secrets.postbote-proton-imap.rekeyFile = ../../../secrets/postbote-proton-imap.age;
+    # Root-owned: systemd reads them for LoadCredential, postbote never touches the files.
+    age.secrets = {
+      postbote-proton-imap.rekeyFile = ../../../secrets/postbote-proton-imap.age;
+      postbote-pushover-token.rekeyFile = ../../../secrets/postbote-pushover-token.age;
+      postbote-pushover-user.rekeyFile = ../../../secrets/postbote-pushover-user.age;
+    };
 
     my = {
       cloudflare-tunnel.enable = true;

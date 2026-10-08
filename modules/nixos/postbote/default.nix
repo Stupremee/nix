@@ -26,6 +26,12 @@ in
       publicUrl = "https://${cfg.domain}";
       trustedProxy = "cloudflare";
 
+      # Replaces postbote's default (claude.ai and Claude Code).
+      oauth.trustedClients = [
+        "https://claude.ai/oauth/mcp-oauth-client-metadata"
+        "https://executor.sh/api/oauth/client-id-metadata/kliem-software.json"
+      ];
+
       # Through Proton Bridge on loopback (my.protonmail-bridge), pinned to its self-signed cert.
       accounts.proton = {
         imap = {

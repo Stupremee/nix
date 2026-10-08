@@ -42,10 +42,22 @@ in
           username = "justus.k@protonmail.com";
           passwordFile = config.age.secrets.postbote-proton-imap.path;
         };
+        # Bridge uses the same password and certificate for SMTP as for IMAP.
+        smtp = {
+          host = "127.0.0.1";
+          port = 1025;
+          security = "starttls";
+          pinnedCertFile = ./proton-bridge-cert.pem;
+          username = "justus.k@protonmail.com";
+          passwordFile = config.age.secrets.postbote-proton-imap.path;
+        };
+        # webhooks needs services.postbote.webhooks.allowedTargets(File) before it can register any.
         permissions = [
           "read"
           "draft"
           "organize"
+          "webhooks"
+          "send"
         ];
         index = {
           since = "2023-01-01";

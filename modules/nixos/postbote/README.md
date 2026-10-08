@@ -30,8 +30,10 @@ with `imap.pinnedCertFile`.
 
 ## Account `proton`
 
-Bridge runs as `stu`'s user service (`my.protonmail-bridge`, vault key in `pass`). Its
-certificate is pinned from `proton-bridge-cert.pem`. When Bridge generates a new one (new vault,
+Bridge runs as `stu`'s user service (`my.protonmail-bridge`, vault key in `pass`). Mail goes out
+through Bridge's SMTP (STARTTLS on 1025, same password). Without Pushover, approve sends on rome
+with `sudo postbote-ctl approve`. Bridge's certificate (IMAP and SMTP) is pinned from
+`proton-bridge-cert.pem`. When Bridge generates a new one (new vault,
 re-login), `doctor` fails with a pinning error; refresh the file on rome:
 
 ```sh

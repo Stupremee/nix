@@ -490,11 +490,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791458982,
-        "narHash": "sha256-RL7MpVZ8rkdTbRoyvNFkC9IB39uUWApVJA/Mb0ELpgQ=",
+        "lastModified": 1791544830,
+        "narHash": "sha256-Mh3myYseLZLb7hWbje2qoUCBVSNil5NJWPzLJnN2DHc=",
         "ref": "main",
-        "rev": "bc1139ccfcb38f28a618f3e1c9e04d7c4c51e537",
-        "revCount": 3,
+        "rev": "4f3e0327c791599130f9f4a6b4c57bd9f800eb86",
+        "revCount": 4,
         "type": "git",
         "url": "ssh://git@github.com/Stupremee/postbote"
       },

@@ -91,11 +91,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791742999,
-        "narHash": "sha256-vIKJEGHs2TYOsEQbWgrQzH+4jvn2dSDE5zvb6i3W0i0=",
+        "lastModified": 1791750120,
+        "narHash": "sha256-elCJ2+Jdiy/vyebgihA8hnk7cBmvYuVfqO9Z0srbkpw=",
         "ref": "main",
-        "rev": "18fec3d1db6574bd3eed85aef1d9309720dd9adf",
-        "revCount": 4186,
+        "rev": "4179e7852a3a8b05a0f2187eaaa64d59fd93d368",
+        "revCount": 4214,
         "type": "git",
         "url": "ssh://git@github.com/Stupremee/CLIProxyAPI"
       },

@@ -30,6 +30,7 @@ in
       oauth.trustedClients = [
         "https://claude.ai/oauth/mcp-oauth-client-metadata"
         "https://executor.sh/api/oauth/client-id-metadata/kliem-software.json"
+        "https://v2.executor.sh/oauth/client-metadata.json"
       ];
 
       # Approval links for send and unsubscribe requests.

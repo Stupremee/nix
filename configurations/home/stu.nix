@@ -13,8 +13,10 @@ in
   };
 
   my = {
-    zsh.enable = true;
-    tmux.enable = true;
+    zsh = {
+      enable = true;
+      rexPrompt = true;
+    };
     neovim.enable = true;
     git.enable = true;
   };

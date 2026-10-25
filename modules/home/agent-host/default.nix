@@ -77,9 +77,6 @@ in
       key = mkForce "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
     };
 
-    my = {
-      dev.enable = true;
-      tmux.enable = mkForce false;
-    };
+    my.dev.enable = true;
   };
 }

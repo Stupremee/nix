@@ -15,7 +15,12 @@ let
   };
 in
 {
-  options.my.zsh.enable = mkEnableOption "Enable ZSH shell";
+  options.my.zsh = {
+    enable = mkEnableOption "Enable ZSH shell";
+
+    # Rex sets REX_SESSION locally too, so only hosts reached through Rex should mark it.
+    rexPrompt = mkEnableOption "showing user and host in Rex sessions, like Starship does over SSH";
+  };
 
   config = mkIf cfg.enable {
     programs.atuin = {
@@ -55,48 +60,34 @@ in
         mkdir -p $ZSH_CACHE_DIR/completions
       '';
 
-      initContent =
-        let
-          tmuxStart =
-            if config.programs.tmux.enable then
-              ''
-                if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ ! -n "$SSH_CONNECTION" ]; then
-                  tmux a -t default || exec tmux new -s default;
-                fi
-              ''
-            else
-              "";
-        in
-        ''
-          ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
+      initContent = ''
+        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
-          # Newer Vite+ installs follow XDG; older ones (Rome, the Mac) live in ~/.vite-plus.
-          for vp_env in "''${XDG_CONFIG_HOME:-$HOME/.config}/vite-plus/env" "$HOME/.vite-plus/env"; do
-            if [ -f "$vp_env" ]; then
-              source "$vp_env"
-              break
-            fi
-          done
-          unset vp_env
-
-          if (( $+commands[mise] )); then
-            eval "$(mise activate zsh)"
+        # Newer Vite+ installs follow XDG; older ones (Rome, the Mac) live in ~/.vite-plus.
+        for vp_env in "''${XDG_CONFIG_HOME:-$HOME/.config}/vite-plus/env" "$HOME/.vite-plus/env"; do
+          if [ -f "$vp_env" ]; then
+            source "$vp_env"
+            break
           fi
+        done
+        unset vp_env
 
-          if (( $+commands[forge] )); then
-            eval "$(forge zsh theme)"
-            eval "$(forge zsh plugin)"
-          fi
+        if (( $+commands[mise] )); then
+          eval "$(mise activate zsh)"
+        fi
 
-          if (( $+commands[wt] )); then
-            eval "$(wt config shell init zsh)"
-          fi
+        if (( $+commands[forge] )); then
+          eval "$(forge zsh theme)"
+          eval "$(forge zsh plugin)"
+        fi
 
-          # Include hidden files in completions
-          _comp_options+=(globdots)
+        if (( $+commands[wt] )); then
+          eval "$(wt config shell init zsh)"
+        fi
 
-          ${tmuxStart}
-        '';
+        # Include hidden files in completions
+        _comp_options+=(globdots)
+      '';
     };
 
     programs.direnv = {
@@ -109,28 +100,45 @@ in
     programs.starship = {
       enable = true;
       enableZshIntegration = true;
-      settings = {
-        add_newline = true;
+      settings = mkMerge [
+        {
+          add_newline = true;
 
-        character =
-          let
-            vicmd = "[λ ·](bold green)";
-          in
-          {
-            success_symbol = "[λ ›](bold green)";
-            error_symbol = "[λ ›](bold red)";
-            vimcmd_symbol = vicmd;
-            vimcmd_replace_one_symbol = vicmd;
-            vimcmd_replace_symbol = vicmd;
-            vimcmd_visual_symbol = vicmd;
+          character =
+            let
+              vicmd = "[λ ·](bold green)";
+            in
+            {
+              success_symbol = "[λ ›](bold green)";
+              error_symbol = "[λ ›](bold red)";
+              vimcmd_symbol = vicmd;
+              vimcmd_replace_one_symbol = vicmd;
+              vimcmd_replace_symbol = vicmd;
+              vimcmd_visual_symbol = vicmd;
+            };
+
+          cmd_duration = {
+            show_notifications = false;
+            min_time = 10000;
+            min_time_to_notify = 60000;
           };
+        }
 
-        cmd_duration = {
-          show_notifications = false;
-          min_time = 10000;
-          min_time_to_notify = 60000;
-        };
-      };
+        # The SSH look with 🦖 in place of 🌐. hostname ANDs ssh_only with
+        # detect_env_vars, so SSH has to be listed there as well.
+        (mkIf cfg.rexPrompt {
+          format = "$username\${env_var.REX_SESSION}$hostname$all";
+          username.detect_env_vars = [ "REX_SESSION" ];
+          hostname = {
+            ssh_only = false;
+            detect_env_vars = [
+              "SSH_CONNECTION"
+              "REX_SESSION"
+            ];
+          };
+          env_var.REX_SESSION.format = "[🦖 ](bold dimmed green)";
+        })
+      ];
     };
 
     programs.nix-index = {

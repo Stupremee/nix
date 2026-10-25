@@ -9,8 +9,8 @@ the binary, so there is no pinned panel, plugin or Keeper container.
 CLIProxyAPI is tailnet-only; the Cloudflare tunnel publishes no hostnames for it.
 
 - `https://cliproxy.jukl.dev` (Caddy, resolves to rome's tailnet address): API
-  and panel. Caddy is the trusted proxy, so nodes tagged `tag:laptop` open the
-  panel without the management key.
+  and panel. Caddy is the trusted proxy, so untagged nodes of `Stupremee@github`
+  open the panel without the management key.
 - `127.0.0.1:8318` (Caddy): API only; management paths return 404.
 - `:8317` (CLIProxyAPI): loopback and tailnet only.
 

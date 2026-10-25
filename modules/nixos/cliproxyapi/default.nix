@@ -27,7 +27,9 @@ let
   ];
 
   # Block-style YAML sequence, so yq writes it like the rest of the file.
-  tailscaleTagsYaml = concatMapStrings (tag: "- ${builtins.toJSON tag}\n") cfg.tailscaleAllowedTags;
+  tailscaleUsersYaml = concatMapStrings (
+    user: "- ${builtins.toJSON user}\n"
+  ) cfg.tailscaleAllowedUsers;
 
   # Sets the Nix-owned keys in the otherwise mutable config.yaml. Caddy on
   # loopback is the trusted proxy, so tailnet auth sees the client it forwards
@@ -42,7 +44,7 @@ let
 
     # Docker mounted auth/ at /root/.cli-proxy-api.
     export AUTH_DIR=${stateDirectory}/auth
-    export TAGS=${escapeShellArg tailscaleTagsYaml}
+    export USERS=${escapeShellArg tailscaleUsersYaml}
     edits='
       with(select(.["auth-dir"] == "/root/.cli-proxy-api"); .["auth-dir"] = strenv(AUTH_DIR)) |
       with(select(.oauth["auth-dir"] == "/root/.cli-proxy-api"); .oauth["auth-dir"] = strenv(AUTH_DIR)) |'
@@ -50,14 +52,16 @@ let
       edits="$edits"'
         .server["trusted-proxies"] = ["127.0.0.1"] |
         .management.tailscale.enable = true |
-        .management.tailscale["allowed-tags"] = env(TAGS) |
+        .management.tailscale["allowed-users"] = env(USERS) |
+        del(.management.tailscale["allowed-tags"]) |
         .observability.usage.analysis.enable = true |
         .upstream.claude["restrict-oauth-to-claude-code"] = true'
     else
       edits="$edits"'
         .["trusted-proxies"] = ["127.0.0.1"] |
         .["remote-management"].tailscale.enable = true |
-        .["remote-management"].tailscale["allowed-tags"] = env(TAGS) |
+        .["remote-management"].tailscale["allowed-users"] = env(USERS) |
+        del(.["remote-management"].tailscale["allowed-tags"]) |
         .["usage-analysis"].enable = true |
         .["claude-code"]["restrict-oauth-to-claude-code"] = true'
     fi
@@ -89,10 +93,10 @@ in
       description = "HTTPS hostname for the API and panel; resolves to rome's tailnet address";
     };
 
-    tailscaleAllowedTags = mkOption {
+    tailscaleAllowedUsers = mkOption {
       type = types.listOf types.str;
-      default = [ "tag:laptop" ];
-      description = "Tailnet tags allowed to use the management panel without the management key";
+      default = [ "Stupremee@github" ];
+      description = "Tailscale logins whose untagged nodes may use the management panel without the management key";
     };
   };
 

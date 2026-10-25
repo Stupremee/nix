@@ -32,6 +32,7 @@
 
     server.enable = true;
     agent-host.enable = true;
+    rex.enable = true;
     fonts.enable = true;
     user.stu.enableHome = true;
 

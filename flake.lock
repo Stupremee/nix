@@ -92,11 +92,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792232663,
-        "narHash": "sha256-2csdIrXAxTpMSV7gMCSYpSALr25W7L/f+RJrkQBp14M=",
+        "lastModified": 1794300415,
+        "narHash": "sha256-Mvvrg5E2KtD05Xq6cicN7pAtbH4MwBwbhA69/BrHSnk=",
         "ref": "main",
-        "rev": "e71be3839441b17a057cacfc15ec76ccb375fcce",
-        "revCount": 4363,
+        "rev": "b54d51042d4aca66ed677091f52ba435e2a83955",
+        "revCount": 4867,
         "type": "git",
         "url": "ssh://git@github.com/Stupremee/CLIProxyAPI"
       },
@@ -446,11 +446,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1792615934,
-        "narHash": "sha256-MlvRfa1O5Cqc2/a+gG+l9TSuowEoCKCmrJ1d9oAVm0I=",
+        "lastModified": 1794165970,
+        "narHash": "sha256-XuAV2cUwaod3Bt4XFVqiXz3v1w2ex16W6Sv4S7EWres=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "da6dc0e7b26060f2f71ce3ef7088fb56ee44fa36",
+        "rev": "ac588ef1c914865dad517b337ea0eb9694a4021c",
         "type": "github"
       },
       "original": {

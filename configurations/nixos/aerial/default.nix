@@ -36,7 +36,12 @@
     };
 
     server.enable = true;
-    agent-host.enable = true;
+    # 62G RAM with about 3G in system.slice, so 93% leaves 4.4G outside the budget
+    agent-host = {
+      enable = true;
+      memoryHigh = "88%";
+      memoryMax = "93%";
+    };
     rex.enable = true;
     secure-boot.enable = true;
     fonts.enable = true;

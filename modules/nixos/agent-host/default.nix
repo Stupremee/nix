@@ -11,6 +11,20 @@ in
 {
   options.my.agent-host = {
     enable = mkEnableOption "the setup for hosts that run AI coding agents (t3code and friends) as the main user";
+
+    # Percentages of physical RAM. Raise them only where the system services outside the budget
+    # fit in what is left.
+    memoryHigh = mkOption {
+      type = types.str;
+      default = "75%";
+      description = "MemoryHigh= of the main user's systemd instance";
+    };
+
+    memoryMax = mkOption {
+      type = types.str;
+      default = "85%";
+      description = "MemoryMax= of the main user's systemd instance";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -74,11 +88,10 @@ in
     systemd.services."user@${toString config.users.users.${config.my.user.mainUser}.uid}" = {
       overrideStrategy = "asDropin";
       serviceConfig = {
-        MemoryHigh = "75%";
+        MemoryHigh = cfg.memoryHigh;
         # OOM kills happen inside the budget instead of system-wide
-        MemoryMax = "85%";
-        # Both hosts have 16G of swap; leave some for the system
-        MemorySwapMax = "12G";
+        MemoryMax = cfg.memoryMax;
+        # No swap cap: a full cap leaves only page cache to reclaim, which thrashes the disk
         # Lose to system services and SSH sessions under contention, use everything when idle
         CPUWeight = 20;
         IOWeight = 20;
@@ -89,6 +102,27 @@ in
     # When the kernel OOM-kills one runaway child, keep its service (t3code) running instead
     # of stopping it
     systemd.user.extraConfig = "DefaultOOMPolicy=continue";
+
+    # systemd-oomd kills whole leaf cgroups. Below this slice those are single agents, terminals
+    # and preview browsers (t3code-*.scope); t3code.service sits outside it and is never a
+    # candidate. Defined in /etc rather than through Home Manager because switch-to-configuration
+    # never restarts slices, and restarting this one would kill every agent.
+    systemd.oomd.enable = true;
+    systemd.user.slices.app-t3code-agents.sliceConfig = {
+      ManagedOOMMemoryPressure = "kill";
+      ManagedOOMMemoryPressureLimit = "40%";
+      ManagedOOMMemoryPressureDurationSec = "20s";
+      # Fires when RAM and swap are both more than 90% used
+      ManagedOOMSwap = "kill";
+    };
+
+    # Compressed swap cache in front of the swapfile. Unlike zram, its pool is charged to the
+    # cgroup that swapped, so it stays inside the budget above, and only cold pages reach the
+    # (encrypted) disk.
+    boot.kernelParams = [
+      "zswap.enabled=1"
+      "zswap.shrinker_enabled=1"
+    ];
 
     # Keep the way in responsive: system services' memory is never reclaimed or swapped out for
     # the budget above, and tailscaled is never chosen by the OOM killer

@@ -32,7 +32,11 @@
 
     server.enable = true;
     agent-host.enable = true;
-    rex.enable = true;
+    rex = {
+      enable = true;
+      # IPv6 is off here, so binding the tailnet v6 address would fail.
+      tailnetListen = "tailnet://100.118.251.19:7298";
+    };
     fonts.enable = true;
     user.stu.enableHome = true;
 

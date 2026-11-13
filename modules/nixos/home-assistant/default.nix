@@ -242,16 +242,15 @@ in
           adapter = "zstack";
         };
 
-        homeassistant.enable = true;
+        homeassistant.enabled = true;
 
         mqtt = {
-          enable = true;
           user = "zigbee2mqtt";
           password = "!${config.age.secrets."zigbee2mqtt-secrets.yaml".path} mqtt_password";
         };
 
         frontend = {
-          enable = true;
+          enabled = true;
           host = "127.0.0.1";
           port = 18080;
         };

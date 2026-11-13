@@ -30,6 +30,26 @@ in
       reverse_proxy :8123
     '';
 
+    # https://<host>.<tailnet>.ts.net:8123 next to home.stu-dev.me. Serve proxies
+    # from 127.0.0.1, which the UI-managed http config already trusts.
+    systemd.services.home-assistant-tailscale-serve =
+      let
+        tailscale = getExe config.services.tailscale.package;
+      in
+      {
+        description = "Home Assistant Tailscale Serve";
+        after = [ "tailscaled.service" ];
+        requires = [ "tailscaled.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStartPre = "${tailscale} wait";
+          ExecStart = "${tailscale} serve --bg --https=8123 http://127.0.0.1:8123";
+          ExecStop = "${tailscale} serve --https=8123 off";
+        };
+      };
+
     services.caddy.virtualHosts."esp.stu-dev.me".extraConfig = ''
       import cloudflare
       import authelia

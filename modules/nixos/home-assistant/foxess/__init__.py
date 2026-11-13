@@ -15,6 +15,7 @@ from .const import CONF_UNIT_ID, DEFAULT_PORT, DEFAULT_UNIT_ID, DOMAIN
 from .coordinator import FoxConfigEntry, FoxCoordinator, async_read_identity
 from .entity import Part, device_info
 from .migration import async_migrate_legacy_entities
+from .outage import OutageTracker
 
 PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.SENSOR, Platform.SWITCH]
 
@@ -68,7 +69,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: FoxConfigEntry) -> bool:
     inverter = dr.async_get(hass).async_get_or_create(
         config_entry_id=entry.entry_id, **device_info(identity, Part.INVERTER)
     )
-    coordinator = FoxCoordinator(hass, entry, unit, identity, inverter.id)
+    outages = OutageTracker(hass, identity.serial)
+    await outages.async_load()
+    coordinator = FoxCoordinator(hass, entry, unit, identity, inverter.id, outages)
     await coordinator.async_config_entry_first_refresh()
 
     entry.runtime_data = coordinator

@@ -267,6 +267,27 @@
       },
       "feeder_network_energy_today": {
         "name": "Einspeisung heute"
+      },
+      "cell_voltage_spread": {
+        "name": "Zellspreizung"
+      },
+      "battery_cycles": {
+        "name": "Vollzyklen"
+      },
+      "battery_time_remaining": {
+        "name": "Restlaufzeit"
+      },
+      "battery_time_to_full": {
+        "name": "Zeit bis voll"
+      },
+      "grid_outage_last": {
+        "name": "Letzter Netzausfall"
+      },
+      "grid_outage_duration": {
+        "name": "Dauer letzter Netzausfall"
+      },
+      "grid_outages": {
+        "name": "Netzausfälle"
       }
     },
     "switch": {

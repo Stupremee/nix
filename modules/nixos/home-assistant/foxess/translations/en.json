@@ -267,6 +267,27 @@
       },
       "feeder_network_energy_today": {
         "name": "Energy exported today"
+      },
+      "cell_voltage_spread": {
+        "name": "Cell voltage spread"
+      },
+      "battery_cycles": {
+        "name": "Full cycles"
+      },
+      "battery_time_remaining": {
+        "name": "Time remaining"
+      },
+      "battery_time_to_full": {
+        "name": "Time to full"
+      },
+      "grid_outage_last": {
+        "name": "Last grid outage"
+      },
+      "grid_outage_duration": {
+        "name": "Last grid outage duration"
+      },
+      "grid_outages": {
+        "name": "Grid outages"
       }
     },
     "switch": {

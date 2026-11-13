@@ -31,6 +31,7 @@ in
   imports = [
     "${flake.inputs.nixpkgs-unstable}/nixos/modules/${hassModule}"
     ./ha-mcp.nix
+    ./technik-cards/module.nix
   ];
 
   options.my.home-assistant = {

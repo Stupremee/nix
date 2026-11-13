@@ -14,6 +14,7 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DOMAIN
+from .outage import OutageTracker
 from .registers import (
     BATTERY_PACK_SERIALS,
     BLOCKS,
@@ -26,6 +27,8 @@ from .registers import (
     MANUFACTURER,
     MODEL,
     SERIAL,
+    STATUS_3,
+    STATUS_3_OFF_GRID,
     Register,
     firmware,
 )
@@ -132,6 +135,7 @@ class FoxCoordinator(DataUpdateCoordinator[Snapshot]):
         unit: ModbusUnit,
         identity: DeviceIdentity,
         inverter_device_id: str,
+        outages: OutageTracker,
     ) -> None:
         """Initialize the coordinator."""
         super().__init__(
@@ -144,17 +148,23 @@ class FoxCoordinator(DataUpdateCoordinator[Snapshot]):
         self.unit = unit
         self.identity = identity
         self.inverter_device_id = inverter_device_id
+        self.outages = outages
 
     @override
     async def _async_update_data(self) -> Snapshot:
         try:
-            return await _async_read(self.unit, BLOCKS)
+            data = await _async_read(self.unit, BLOCKS)
         except ModbusError as err:
             raise UpdateFailed(
                 translation_domain=DOMAIN,
                 translation_key="cannot_connect",
                 translation_placeholders={"error": str(err)},
             ) from err
+        status = data.raw(STATUS_3)
+        self.outages.update(
+            None if status is None else bool(status & STATUS_3_OFF_GRID)
+        )
+        return data
 
     async def async_write(self, register: Register, value: int) -> None:
         """Write one holding register a user changed, then read it back."""

@@ -2,6 +2,7 @@
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
+from datetime import datetime
 from typing import Literal, override
 
 from homeassistant.components.sensor import (
@@ -20,13 +21,16 @@ from homeassistant.const import (
     UnitOfPower,
     UnitOfReactivePower,
     UnitOfTemperature,
+    UnitOfTime,
 )
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.typing import StateType
+from homeassistant.util import dt as dt_util
 
 from .coordinator import FoxConfigEntry, Snapshot
 from .entity import FoxEntity, FoxEntityDescription, Part
+from .outage import Outage
 from .registers import (
     STATUS_1,
     STATUS_3,
@@ -537,14 +541,161 @@ SENSORS: tuple[FoxSensorDescription, ...] = (
 )
 
 
+# Inputs of the values derived below.
+CELL_VOLTAGE_MAX = _u16(37619)
+CELL_VOLTAGE_MIN = _u16(37620)
+STATE_OF_CHARGE = _u16(37612)
+REMAINING_ENERGY = _u16(37632, 10)
+DESIGN_ENERGY = _u16(37635, 10)
+BATTERY_POWER = _i32(39237)
+DISCHARGED = _energy(39609)
+
+# Below this the battery idles and a time estimate only jumps around.
+IDLE_POWER = 50
+
+
+def _numbers(data: Snapshot, *registers: Register) -> list[float] | None:
+    values = [data[register] for register in registers]
+    if any(not isinstance(value, int | float) for value in values):
+        return None
+    return [float(value) for value in values if isinstance(value, int | float)]
+
+
+def _cell_spread(data: Snapshot) -> float | None:
+    if (values := _numbers(data, CELL_VOLTAGE_MAX, CELL_VOLTAGE_MIN)) is None:
+        return None
+    high, low = values
+    return high - low
+
+
+def _cycles(data: Snapshot) -> float | None:
+    if (values := _numbers(data, DISCHARGED, DESIGN_ENERGY)) is None:
+        return None
+    discharged_kwh, design_wh = values
+    return round(discharged_kwh / (design_wh / 1000), 1) if design_wh else None
+
+
+def _time_remaining(data: Snapshot) -> float | None:
+    """Hours until empty at the current discharge power."""
+    if (values := _numbers(data, REMAINING_ENERGY, BATTERY_POWER)) is None:
+        return None
+    remaining_wh, power = values
+    return round(remaining_wh / power, 1) if power > IDLE_POWER else None
+
+
+def _time_to_full(data: Snapshot) -> float | None:
+    """Hours until full at the current charge power."""
+    if (
+        values := _numbers(data, REMAINING_ENERGY, STATE_OF_CHARGE, BATTERY_POWER)
+    ) is None:
+        return None
+    remaining_wh, soc, power = values
+    if power > -IDLE_POWER or soc <= 0:
+        return None
+    return round((remaining_wh / (soc / 100) - remaining_wh) / -power, 1)
+
+
+def _derived(
+    key: str,
+    value_fn: Callable[[Snapshot], StateType],
+    *,
+    device_class: SensorDeviceClass | None = None,
+    unit: str | None = None,
+    state_class: SensorStateClass | None = SensorStateClass.MEASUREMENT,
+    precision: int = 1,
+) -> FoxSensorDescription:
+    return FoxSensorDescription(
+        key=key,
+        part=Part.BATTERY,
+        translation_key=key,
+        device_class=device_class,
+        native_unit_of_measurement=unit,
+        state_class=state_class,
+        suggested_display_precision=precision,
+        value_fn=value_fn,
+    )
+
+
+DERIVED: tuple[FoxSensorDescription, ...] = (
+    _derived(
+        "cell_voltage_spread",
+        _cell_spread,
+        device_class=SensorDeviceClass.VOLTAGE,
+        unit=UnitOfElectricPotential.MILLIVOLT,
+        precision=0,
+    ),
+    _derived("battery_cycles", _cycles, state_class=SensorStateClass.TOTAL_INCREASING),
+    _derived(
+        "battery_time_remaining",
+        _time_remaining,
+        device_class=SensorDeviceClass.DURATION,
+        unit=UnitOfTime.HOURS,
+        state_class=None,
+    ),
+    _derived(
+        "battery_time_to_full",
+        _time_to_full,
+        device_class=SensorDeviceClass.DURATION,
+        unit=UnitOfTime.HOURS,
+        state_class=None,
+    ),
+)
+
+
+@dataclass(frozen=True, kw_only=True)
+class FoxOutageDescription(SensorEntityDescription, FoxEntityDescription):
+    """A sensor over the last grid outage."""
+
+    value_fn: Callable[[Outage, datetime], StateType | datetime]
+
+
+def _outage_minutes(outage: Outage, now: datetime) -> float | None:
+    duration = outage.duration(now)
+    return None if duration is None else round(duration.total_seconds() / 60, 1)
+
+
+OUTAGES: tuple[FoxOutageDescription, ...] = (
+    FoxOutageDescription(
+        key="grid_outage_last",
+        part=Part.GRID,
+        translation_key="grid_outage_last",
+        device_class=SensorDeviceClass.TIMESTAMP,
+        value_fn=lambda outage, _now: outage.started,
+    ),
+    FoxOutageDescription(
+        key="grid_outage_duration",
+        part=Part.GRID,
+        translation_key="grid_outage_duration",
+        device_class=SensorDeviceClass.DURATION,
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        suggested_display_precision=0,
+        value_fn=_outage_minutes,
+    ),
+    FoxOutageDescription(
+        key="grid_outages",
+        part=Part.GRID,
+        translation_key="grid_outages",
+        state_class=SensorStateClass.TOTAL_INCREASING,
+        value_fn=lambda outage, _now: outage.count,
+    ),
+)
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: FoxConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up the FoxESS sensors."""
+    coordinator = entry.runtime_data
     async_add_entities(
-        FoxSensor(entry.runtime_data, description) for description in SENSORS
+        [
+            *(
+                FoxSensor(coordinator, description)
+                for description in (*SENSORS, *DERIVED)
+            ),
+            *(FoxOutageSensor(coordinator, description) for description in OUTAGES),
+        ]
     )
 
 
@@ -559,3 +710,18 @@ class FoxSensor(FoxEntity, SensorEntity):
     def native_value(self) -> StateType:
         """Return the value from the last poll."""
         return self.entity_description.value_fn(self.coordinator.data)
+
+
+class FoxOutageSensor(FoxEntity, SensorEntity):
+    """The last grid outage, as the inverter saw it."""
+
+    entity_description: FoxOutageDescription
+    platform_domain = "sensor"
+
+    @property
+    @override
+    def native_value(self) -> StateType | datetime:
+        """Return the value for the last recorded outage."""
+        return self.entity_description.value_fn(
+            self.coordinator.outages.outage, dt_util.utcnow()
+        )

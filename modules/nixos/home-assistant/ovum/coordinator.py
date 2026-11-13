@@ -21,7 +21,7 @@ from .registers import BLOCKS, LOGIN_CODE, LOGIN_STATUS, Module, Register, Value
 
 _LOGGER = logging.getLogger(__name__)
 
-SCAN_INTERVAL = timedelta(seconds=30)
+SCAN_INTERVAL = timedelta(seconds=5)
 # The controller answers login attempts at most once a second.
 LOGIN_SETTLE = 1.1
 

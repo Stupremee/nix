@@ -111,6 +111,7 @@ in
 
         homeassistant = {
           name = "Lana-Landhof";
+          language = "de";
           auth_providers = [
             {
               type = "command_line";

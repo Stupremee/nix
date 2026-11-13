@@ -1,0 +1,289 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Der FoxESS-Wechselrichter ist bereits eingerichtet."
+    },
+    "error": {
+      "cannot_connect": "Verbindung fehlgeschlagen",
+      "unknown": "Unerwarteter Fehler"
+    },
+    "step": {
+      "user": {
+        "description": "Adresse der Modbus-TCP-Schnittstelle des Wechselrichters.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "unit_id": "Unit-ID"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "bms_online": {
+        "name": "BMS verbunden"
+      },
+      "meter_connected": {
+        "name": "Zähler verbunden"
+      },
+      "alarm": {
+        "name": "Alarm"
+      },
+      "bms_fault": {
+        "name": "Störung"
+      }
+    },
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "standby": "Standby",
+          "operation": "In Betrieb",
+          "fault": "Störung"
+        }
+      },
+      "grid_mode": {
+        "name": "Netzmodus",
+        "state": {
+          "on_grid": "Netzbetrieb",
+          "off_grid": "Inselbetrieb"
+        }
+      },
+      "pv_input_power_total": {
+        "name": "PV-Leistung"
+      },
+      "active_power": {
+        "name": "Wirkleistung"
+      },
+      "reactive_power": {
+        "name": "Blindleistung"
+      },
+      "inv_apparent_power_total": {
+        "name": "Scheinleistung"
+      },
+      "power_factor": {
+        "name": "Leistungsfaktor"
+      },
+      "grid_frequency": {
+        "name": "Netzfrequenz"
+      },
+      "internal_temperature": {
+        "name": "Innentemperatur"
+      },
+      "available_import_power": {
+        "name": "Verfügbare Bezugsleistung"
+      },
+      "available_export_power": {
+        "name": "Verfügbare Einspeiseleistung"
+      },
+      "grid_voltage_phase": {
+        "name": "Netzspannung {phase}"
+      },
+      "inverter_current_phase": {
+        "name": "Strom {phase}"
+      },
+      "inv_active_power_phase": {
+        "name": "Wirkleistung {phase}"
+      },
+      "inv_reactive_power_phase": {
+        "name": "Blindleistung {phase}"
+      },
+      "inv_apparent_power_phase": {
+        "name": "Scheinleistung {phase}"
+      },
+      "inv_frequency_phase": {
+        "name": "Frequenz {phase}"
+      },
+      "load_power": {
+        "name": "Hausverbrauch"
+      },
+      "load_power_phase": {
+        "name": "Hausverbrauch {phase}"
+      },
+      "mppt_voltage": {
+        "name": "MPPT {number} Spannung"
+      },
+      "mppt_current": {
+        "name": "MPPT {number} Strom"
+      },
+      "mppt_power": {
+        "name": "MPPT {number} Leistung"
+      },
+      "pv_voltage": {
+        "name": "String {number} Spannung"
+      },
+      "pv_current": {
+        "name": "String {number} Strom"
+      },
+      "pv_power": {
+        "name": "String {number} Leistung"
+      },
+      "eps_power": {
+        "name": "Notstrom-Leistung"
+      },
+      "eps_power_phase": {
+        "name": "Notstrom-Leistung {phase}"
+      },
+      "eps_voltage_phase": {
+        "name": "Notstrom-Spannung {phase}"
+      },
+      "eps_frequency": {
+        "name": "Notstrom-Frequenz"
+      },
+      "pv_energy_total": {
+        "name": "PV-Energie"
+      },
+      "pv_energy_today": {
+        "name": "PV-Energie heute"
+      },
+      "energy_generated_total": {
+        "name": "Erzeugte Energie"
+      },
+      "energy_generated_today": {
+        "name": "Erzeugte Energie heute"
+      },
+      "output_energy_total": {
+        "name": "AC-Abgabe"
+      },
+      "output_energy_today": {
+        "name": "AC-Abgabe heute"
+      },
+      "input_energy_total": {
+        "name": "AC-Aufnahme"
+      },
+      "input_energy_today": {
+        "name": "AC-Aufnahme heute"
+      },
+      "load_energy_total": {
+        "name": "Hausverbrauch Energie"
+      },
+      "load_energy_today": {
+        "name": "Hausverbrauch heute"
+      },
+      "bms1_state_of_charge": {
+        "name": "Ladezustand"
+      },
+      "bms1_state_of_health": {
+        "name": "Gesundheitszustand"
+      },
+      "battery_power_total": {
+        "name": "Leistung"
+      },
+      "bms1_voltage": {
+        "name": "Spannung"
+      },
+      "bms1_current": {
+        "name": "Strom"
+      },
+      "bms1_ambient_temperature": {
+        "name": "Umgebungstemperatur"
+      },
+      "bms1_temperature_max": {
+        "name": "Temperatur max"
+      },
+      "bms1_temperature_min": {
+        "name": "Temperatur min"
+      },
+      "bms1_cell_voltage_max": {
+        "name": "Zellspannung max"
+      },
+      "bms1_cell_voltage_min": {
+        "name": "Zellspannung min"
+      },
+      "bms1_remaining_energy": {
+        "name": "Restenergie"
+      },
+      "bms1_design_energy": {
+        "name": "Nennenergie"
+      },
+      "bms1_full_charge_capacity": {
+        "name": "Kapazität"
+      },
+      "charge_energy_total": {
+        "name": "Geladen"
+      },
+      "charge_energy_today": {
+        "name": "Geladen heute"
+      },
+      "discharge_energy_total": {
+        "name": "Entladen"
+      },
+      "discharge_energy_today": {
+        "name": "Entladen heute"
+      },
+      "battery1_voltage": {
+        "name": "Batterie 1 Spannung"
+      },
+      "battery1_current": {
+        "name": "Batterie 1 Strom"
+      },
+      "battery1_power": {
+        "name": "Batterie 1 Leistung"
+      },
+      "meter1_active_power_total": {
+        "name": "Leistung"
+      },
+      "meter1_active_power_phase": {
+        "name": "Leistung {phase}"
+      },
+      "meter1_voltage_phase": {
+        "name": "Spannung {phase}"
+      },
+      "meter1_current_phase": {
+        "name": "Strom {phase}"
+      },
+      "meter1_frequency": {
+        "name": "Frequenz"
+      },
+      "meter1_power_factor_total": {
+        "name": "Leistungsfaktor"
+      },
+      "meter1_power_factor_phase": {
+        "name": "Leistungsfaktor {phase}"
+      },
+      "meter1_reactive_power_total": {
+        "name": "Blindleistung"
+      },
+      "meter1_reactive_power_phase": {
+        "name": "Blindleistung {phase}"
+      },
+      "meter1_apparent_power_total": {
+        "name": "Scheinleistung"
+      },
+      "meter1_apparent_power_phase": {
+        "name": "Scheinleistung {phase}"
+      },
+      "meter_collection_active_power": {
+        "name": "Leistung (Wechselrichtersicht)"
+      },
+      "energy_consumed_total": {
+        "name": "Bezug"
+      },
+      "energy_consumed_today": {
+        "name": "Bezug heute"
+      },
+      "feeder_network_energy_total": {
+        "name": "Einspeisung"
+      },
+      "feeder_network_energy_today": {
+        "name": "Einspeisung heute"
+      }
+    },
+    "switch": {
+      "force_charge": {
+        "name": "Zwangsladung"
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "FoxESS-Wechselrichter nicht erreichbar: {error}"
+    },
+    "write_failed": {
+      "message": "Schreiben auf den FoxESS-Wechselrichter fehlgeschlagen: {error}"
+    },
+    "write_rejected": {
+      "message": "Der Wechselrichter hat {value} nicht übernommen, er hält {stored}."
+    }
+  }
+}

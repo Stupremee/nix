@@ -1,0 +1,289 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "The FoxESS inverter is already configured."
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "unknown": "Unexpected error"
+    },
+    "step": {
+      "user": {
+        "description": "Address of the inverter's Modbus TCP interface.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "unit_id": "Unit ID"
+        }
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "bms_online": {
+        "name": "BMS connected"
+      },
+      "meter_connected": {
+        "name": "Meter connected"
+      },
+      "alarm": {
+        "name": "Alarm"
+      },
+      "bms_fault": {
+        "name": "Fault"
+      }
+    },
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "standby": "Standby",
+          "operation": "Operating",
+          "fault": "Fault"
+        }
+      },
+      "grid_mode": {
+        "name": "Grid mode",
+        "state": {
+          "on_grid": "On grid",
+          "off_grid": "Off grid"
+        }
+      },
+      "pv_input_power_total": {
+        "name": "PV power"
+      },
+      "active_power": {
+        "name": "Active power"
+      },
+      "reactive_power": {
+        "name": "Reactive power"
+      },
+      "inv_apparent_power_total": {
+        "name": "Apparent power"
+      },
+      "power_factor": {
+        "name": "Power factor"
+      },
+      "grid_frequency": {
+        "name": "Grid frequency"
+      },
+      "internal_temperature": {
+        "name": "Internal temperature"
+      },
+      "available_import_power": {
+        "name": "Available import power"
+      },
+      "available_export_power": {
+        "name": "Available export power"
+      },
+      "grid_voltage_phase": {
+        "name": "Grid voltage {phase}"
+      },
+      "inverter_current_phase": {
+        "name": "Current {phase}"
+      },
+      "inv_active_power_phase": {
+        "name": "Active power {phase}"
+      },
+      "inv_reactive_power_phase": {
+        "name": "Reactive power {phase}"
+      },
+      "inv_apparent_power_phase": {
+        "name": "Apparent power {phase}"
+      },
+      "inv_frequency_phase": {
+        "name": "Frequency {phase}"
+      },
+      "load_power": {
+        "name": "House load"
+      },
+      "load_power_phase": {
+        "name": "House load {phase}"
+      },
+      "mppt_voltage": {
+        "name": "MPPT {number} voltage"
+      },
+      "mppt_current": {
+        "name": "MPPT {number} current"
+      },
+      "mppt_power": {
+        "name": "MPPT {number} power"
+      },
+      "pv_voltage": {
+        "name": "String {number} voltage"
+      },
+      "pv_current": {
+        "name": "String {number} current"
+      },
+      "pv_power": {
+        "name": "String {number} power"
+      },
+      "eps_power": {
+        "name": "Backup power"
+      },
+      "eps_power_phase": {
+        "name": "Backup power {phase}"
+      },
+      "eps_voltage_phase": {
+        "name": "Backup voltage {phase}"
+      },
+      "eps_frequency": {
+        "name": "Backup frequency"
+      },
+      "pv_energy_total": {
+        "name": "PV energy"
+      },
+      "pv_energy_today": {
+        "name": "PV energy today"
+      },
+      "energy_generated_total": {
+        "name": "Energy generated"
+      },
+      "energy_generated_today": {
+        "name": "Energy generated today"
+      },
+      "output_energy_total": {
+        "name": "AC output energy"
+      },
+      "output_energy_today": {
+        "name": "AC output energy today"
+      },
+      "input_energy_total": {
+        "name": "AC input energy"
+      },
+      "input_energy_today": {
+        "name": "AC input energy today"
+      },
+      "load_energy_total": {
+        "name": "House consumption"
+      },
+      "load_energy_today": {
+        "name": "House consumption today"
+      },
+      "bms1_state_of_charge": {
+        "name": "State of charge"
+      },
+      "bms1_state_of_health": {
+        "name": "State of health"
+      },
+      "battery_power_total": {
+        "name": "Power"
+      },
+      "bms1_voltage": {
+        "name": "Voltage"
+      },
+      "bms1_current": {
+        "name": "Current"
+      },
+      "bms1_ambient_temperature": {
+        "name": "Ambient temperature"
+      },
+      "bms1_temperature_max": {
+        "name": "Max temperature"
+      },
+      "bms1_temperature_min": {
+        "name": "Min temperature"
+      },
+      "bms1_cell_voltage_max": {
+        "name": "Max cell voltage"
+      },
+      "bms1_cell_voltage_min": {
+        "name": "Min cell voltage"
+      },
+      "bms1_remaining_energy": {
+        "name": "Remaining energy"
+      },
+      "bms1_design_energy": {
+        "name": "Design energy"
+      },
+      "bms1_full_charge_capacity": {
+        "name": "Full charge capacity"
+      },
+      "charge_energy_total": {
+        "name": "Energy charged"
+      },
+      "charge_energy_today": {
+        "name": "Energy charged today"
+      },
+      "discharge_energy_total": {
+        "name": "Energy discharged"
+      },
+      "discharge_energy_today": {
+        "name": "Energy discharged today"
+      },
+      "battery1_voltage": {
+        "name": "Battery 1 voltage"
+      },
+      "battery1_current": {
+        "name": "Battery 1 current"
+      },
+      "battery1_power": {
+        "name": "Battery 1 power"
+      },
+      "meter1_active_power_total": {
+        "name": "Power"
+      },
+      "meter1_active_power_phase": {
+        "name": "Power {phase}"
+      },
+      "meter1_voltage_phase": {
+        "name": "Voltage {phase}"
+      },
+      "meter1_current_phase": {
+        "name": "Current {phase}"
+      },
+      "meter1_frequency": {
+        "name": "Frequency"
+      },
+      "meter1_power_factor_total": {
+        "name": "Power factor"
+      },
+      "meter1_power_factor_phase": {
+        "name": "Power factor {phase}"
+      },
+      "meter1_reactive_power_total": {
+        "name": "Reactive power"
+      },
+      "meter1_reactive_power_phase": {
+        "name": "Reactive power {phase}"
+      },
+      "meter1_apparent_power_total": {
+        "name": "Apparent power"
+      },
+      "meter1_apparent_power_phase": {
+        "name": "Apparent power {phase}"
+      },
+      "meter_collection_active_power": {
+        "name": "Power seen by inverter"
+      },
+      "energy_consumed_total": {
+        "name": "Energy imported"
+      },
+      "energy_consumed_today": {
+        "name": "Energy imported today"
+      },
+      "feeder_network_energy_total": {
+        "name": "Energy exported"
+      },
+      "feeder_network_energy_today": {
+        "name": "Energy exported today"
+      }
+    },
+    "switch": {
+      "force_charge": {
+        "name": "Force charge"
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Failed to reach the FoxESS inverter: {error}"
+    },
+    "write_failed": {
+      "message": "Writing to the FoxESS inverter failed: {error}"
+    },
+    "write_rejected": {
+      "message": "The inverter did not take {value}, it holds {stored}."
+    }
+  }
+}

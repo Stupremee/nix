@@ -3,7 +3,6 @@
   "name": "Ovum",
   "codeowners": [],
   "config_flow": true,
-  "dependencies": ["modbus"],
   "documentation": "https://github.com/Stupremee/nix/tree/master/modules/nixos/home-assistant/ovum",
   "integration_type": "device",
   "iot_class": "local_polling",

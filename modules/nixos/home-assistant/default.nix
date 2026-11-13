@@ -13,6 +13,16 @@ let
   lldap-ha-auth = pkgs.callPackage ./lldap-ha-auth.nix { };
 
   hassModule = "services/home-automation/home-assistant.nix";
+
+  # Integrations that live in this directory, one per Modbus device.
+  localComponent =
+    domain:
+    pkgsUnstable.buildHomeAssistantComponent {
+      owner = "stu";
+      inherit domain;
+      inherit (importJSON ./${domain}/manifest.json) version;
+      src = ./${domain};
+    };
 in
 {
   # Module and package from unstable together: 2026.8 moved `http` into UI storage
@@ -91,13 +101,9 @@ in
           getmac
         ];
 
-      customComponents = [
-        (pkgsUnstable.buildHomeAssistantComponent {
-          owner = "stu";
-          domain = "ovum";
-          version = "0.1.0";
-          src = ./ovum;
-        })
+      customComponents = map localComponent [
+        "foxess"
+        "ovum"
       ];
 
       extraComponents = [
@@ -120,8 +126,13 @@ in
         "co2signal"
         "soundtouch"
         "mqtt"
+        "mcp_server"
 
         "homeassistant_hardware"
+
+        # Python packages for the shared Modbus connections of ./foxess and
+        # ./ovum. Neither declares it as a dependency, so it never loads.
+        "modbus"
       ];
 
       config = {
@@ -148,7 +159,12 @@ in
         };
 
         automation = "!include automations.yaml";
-        modbus = "!include ${./modbus.yaml}";
+        # FoxESS H3 inverter with battery and grid meter, see ./foxess
+        foxess = {
+          host = "ASP-E2-AS22AE30465G021.local";
+          port = 502;
+          unit_id = 247;
+        };
 
         # Ovum heat pump (MIRA controller), see ./ovum
         ovum = {

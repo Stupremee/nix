@@ -1,0 +1,11 @@
+{
+  "domain": "foxess",
+  "name": "FoxESS",
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/Stupremee/nix/tree/master/modules/nixos/home-assistant/foxess",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "requirements": [],
+  "version": "0.1.0"
+}

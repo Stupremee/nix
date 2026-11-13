@@ -109,7 +109,6 @@ in
       extraComponents = [
         # Components required to complete the onboarding
         "analytics"
-        "google_translate"
         "met"
         "shopping_list"
 
@@ -129,6 +128,11 @@ in
         "mcp_server"
 
         "homeassistant_hardware"
+
+        # Only so their discovery flows load and can be ignored: the HEA THOR
+        # heating rod runs through the WP ESP, the Sonoff stick through Z2M.
+        "my_pv"
+        "zha"
 
         # Python packages for the shared Modbus connections of ./foxess and
         # ./ovum. Neither declares it as a dependency, so it never loads.

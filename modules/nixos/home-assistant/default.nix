@@ -28,7 +28,10 @@ in
   # Module and package from unstable together: 2026.8 moved `http` into UI storage
   # and the unstable module dropped the matching options. Remove once on 26.11.
   disabledModules = [ hassModule ];
-  imports = [ "${flake.inputs.nixpkgs-unstable}/nixos/modules/${hassModule}" ];
+  imports = [
+    "${flake.inputs.nixpkgs-unstable}/nixos/modules/${hassModule}"
+    ./ha-mcp.nix
+  ];
 
   options.my.home-assistant = {
     enable = mkEnableOption "Enables home-assistant";
@@ -120,6 +123,7 @@ in
         "ipp"
         "brother"
         "esphome"
+        "tessie"
 
         # Non-device integrations
         "co2signal"

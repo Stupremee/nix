@@ -358,6 +358,12 @@ class HeizungCard extends HTMLElement implements LovelaceCard {
         <path d="M520 ${supplyY} H545 V60 H740" stroke="${supply}"/>
         <path d="M520 360 H545 V412 H740" stroke="${back}"/>
       </g>
+      <g data-more="${HEAT_PUMP.condenserOut}" font-size="11">
+        <text x="643" y="48" text-anchor="middle" class="m">Kondensator aus <tspan class="t num" font-size="13">${this.fmt(HEAT_PUMP.condenserOut)}°</tspan></text>
+      </g>
+      <g data-more="${HEAT_PUMP.condenserIn}" font-size="11">
+        <text x="643" y="434" text-anchor="middle" class="m">Kondensator ein <tspan class="t num" font-size="13">${this.fmt(HEAT_PUMP.condenserIn)}°</tspan></text>
+      </g>
       ${CIRCUITS.map((c, i) => this.circuitBox(c, 40 + i * 100)).join("")}
       <g opacity=".45"><rect x="240" y="140" width="90" height="200" rx="10" fill="none" stroke="var(--divider-color)" stroke-dasharray="4 5"/>
         <text x="285" y="164" text-anchor="middle" class="m" font-size="13" font-weight="600">HK3</text>
@@ -407,12 +413,9 @@ class HeizungCard extends HTMLElement implements LovelaceCard {
         <g font-size="11">
           <text x="752" y="298" class="m">Strom</text><text x="858" y="298" text-anchor="end" class="t num">${this.fmt(HEAT_PUMP.powerInput, 2)} kW</text>
           <text x="752" y="314" class="m">Wärme</text><text x="858" y="314" text-anchor="end" class="t num">${this.fmt(HEAT_PUMP.heatOutput, 2)} kW</text>
-          <text x="752" y="338" class="m" font-size="10" letter-spacing=".06em">KONDENSATOR</text>
-          <text x="752" y="354" class="m">Eintritt</text><text x="858" y="354" text-anchor="end" class="t num">${this.fmt(HEAT_PUMP.condenserIn)}°</text>
-          <text x="752" y="370" class="m">Austritt</text><text x="858" y="370" text-anchor="end" class="t num">${this.fmt(HEAT_PUMP.condenserOut)}°</text>
-          <text x="752" y="394" class="m">Abtauungen 24 h</text>
-          <text x="858" y="410" text-anchor="end" class="t num">${escape(this.defrostText())}</text>
-          <text x="752" y="428" class="m">Laufzeit</text><text x="858" y="428" text-anchor="end" class="t num">${this.fmt(HEAT_PUMP.runtime, 0)} h</text>
+          <text x="752" y="346" class="m">Abtauungen 24 h</text>
+          <text x="858" y="362" text-anchor="end" class="t num">${escape(this.defrostText())}</text>
+          <text x="752" y="392" class="m">Laufzeit</text><text x="858" y="392" text-anchor="end" class="t num">${this.fmt(HEAT_PUMP.runtime, 0)} h</text>
         </g>
       </g>
     </svg>`;

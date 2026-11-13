@@ -254,7 +254,7 @@
       input_type: input
       data_type: uint16
       unit_of_measurement: "Wh"
-      device_class: energy
+      device_class: energy_storage
       state_class: measurement
       scale: 10
       precision: 0
@@ -279,7 +279,7 @@
       input_type: input
       data_type: uint16
       unit_of_measurement: "Wh"
-      device_class: energy
+      device_class: energy_storage
       state_class: measurement
       scale: 10
       precision: 0

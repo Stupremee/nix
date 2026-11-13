@@ -3,6 +3,7 @@
   pkgs,
   pkgsUnstable,
   config,
+  flake,
   ...
 }:
 with lib;
@@ -10,8 +11,15 @@ let
   cfg = config.my.home-assistant;
 
   lldap-ha-auth = pkgs.callPackage ./lldap-ha-auth.nix { };
+
+  hassModule = "services/home-automation/home-assistant.nix";
 in
 {
+  # Module and package from unstable together: 2026.8 moved `http` into UI storage
+  # and the unstable module dropped the matching options. Remove once on 26.11.
+  disabledModules = [ hassModule ];
+  imports = [ "${flake.inputs.nixpkgs-unstable}/nixos/modules/${hassModule}" ];
+
   options.my.home-assistant = {
     enable = mkEnableOption "Enables home-assistant";
   };
@@ -19,7 +27,7 @@ in
   config = mkIf cfg.enable {
     services.caddy.virtualHosts."home.stu-dev.me".extraConfig = ''
       import cloudflare
-      reverse_proxy :${toString config.services.home-assistant.config.http.server_port}
+      reverse_proxy :8123
     '';
 
     services.caddy.virtualHosts."esp.stu-dev.me".extraConfig = ''
@@ -49,10 +57,14 @@ in
 
     services.home-assistant = {
       enable = true;
+      package = pkgsUnstable.home-assistant;
 
       extraPackages =
         python3Packages: with python3Packages; [
+          # HACS
           aiogithubapi
+          # hcu_integration
+          getmac
         ];
 
       extraComponents = [
@@ -60,7 +72,6 @@ in
         "analytics"
         "google_translate"
         "met"
-        "radio_browser"
         "shopping_list"
 
         # Recommended for fast zlib compression
@@ -68,22 +79,16 @@ in
         "isal"
 
         # Custom devices
-        "apple_tv"
-        "ezviz"
         "ipp"
         "brother"
         "esphome"
 
         # Non-device integrations
         "co2signal"
-        "tibber"
         "soundtouch"
-        "spotify"
-        "forecast_solar"
+        "mqtt"
 
-        "wiz"
         "homeassistant_hardware"
-        "tessie"
       ];
 
       config = {
@@ -110,12 +115,6 @@ in
 
         automation = "!include automations.yaml";
         modbus = "!include ${./modbus.yaml}";
-
-        http = {
-          use_x_forwarded_for = true;
-          server_host = "127.0.0.1";
-          trusted_proxies = [ "127.0.0.1" ];
-        };
       };
     };
 

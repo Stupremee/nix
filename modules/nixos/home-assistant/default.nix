@@ -143,6 +143,11 @@ in
         homeassistant = {
           name = "Lana-Landhof";
           language = "de";
+          # OAuth metadata only has absolute URLs and the protected-resource
+          # document when the request host matches one of these. MCP clients
+          # need both.
+          external_url = "https://home.stu-dev.me";
+          internal_url = "https://rome.neon-opah.ts.net:8123";
           auth_providers = [
             {
               type = "command_line";

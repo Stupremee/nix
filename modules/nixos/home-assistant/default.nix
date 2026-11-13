@@ -185,33 +185,6 @@ in
           port = 502;
           login_code_file = config.age.secrets.ovum-modbus-login-code.path;
         };
-
-        # Rolling compressor runtime. The source only counts up, so the change
-        # across the window is the runtime inside it. History comes from the
-        # recorder, which keeps 10 days by default.
-        sensor =
-          lib.mapAttrsToList
-            (label: max_age: {
-              platform = "statistics";
-              name = "Ovum Verdichterlaufzeit ${label}";
-              unique_id = "ovum_compressor_runtime_${label}";
-              entity_id = "sensor.ovum_compressor_runtime";
-              state_characteristic = "change";
-              inherit max_age;
-              keep_last_sample = true;
-              precision = 1;
-            })
-            {
-              "24h" = {
-                hours = 24;
-              };
-              "3d" = {
-                days = 3;
-              };
-              "7d" = {
-                days = 7;
-              };
-            };
       };
     };
 

@@ -53,6 +53,18 @@
       "compressor_runtime": {
         "name": "Verdichterlaufzeit"
       },
+      "compressor_runtime_24h": {
+        "name": "Verdichterlaufzeit 24h"
+      },
+      "compressor_runtime_3d": {
+        "name": "Verdichterlaufzeit 3 Tage"
+      },
+      "compressor_runtime_7d": {
+        "name": "Verdichterlaufzeit 7 Tage"
+      },
+      "compressor_runtime_30d": {
+        "name": "Verdichterlaufzeit 30 Tage"
+      },
       "condenser_inlet": {
         "name": "Kondensator Eintritt"
       },

@@ -2,7 +2,11 @@
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
+from datetime import timedelta
 from typing import override
+
+from homeassistant.components.recorder import get_instance
+from homeassistant.components.recorder.statistics import statistic_during_period
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -13,15 +17,19 @@ from homeassistant.components.sensor import (
 from homeassistant.const import (
     PERCENTAGE,
     EntityCategory,
+    Platform,
     UnitOfPower,
     UnitOfTemperature,
     UnitOfTime,
 )
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.typing import StateType
+from homeassistant.util import dt as dt_util
 
-from .coordinator import OvumConfigEntry, Snapshot
+from .const import DOMAIN
+from .coordinator import OvumConfigEntry, OvumCoordinator, Snapshot
 from .entity import OvumEntity
 from .registers import (
     BUFFER_BOTTOM,
@@ -51,6 +59,8 @@ from .registers import (
 )
 
 PARALLEL_UPDATES = 0
+# Only the runtime windows poll. Short-term statistics have 5 minute buckets.
+SCAN_INTERVAL = timedelta(minutes=5)
 
 # Below this electrical input the compressor is off and a ratio means nothing.
 COP_MIN_POWER_INPUT = 0.1
@@ -217,6 +227,14 @@ SENSORS: tuple[OvumSensorDescription, ...] = (
 )
 
 
+RUNTIME_WINDOWS = {
+    "24h": timedelta(hours=24),
+    "3d": timedelta(days=3),
+    "7d": timedelta(days=7),
+    "30d": timedelta(days=30),
+}
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: OvumConfigEntry,
@@ -225,6 +243,13 @@ async def async_setup_entry(
     """Set up the Ovum sensors."""
     async_add_entities(
         OvumSensor(entry.runtime_data, description) for description in SENSORS
+    )
+    async_add_entities(
+        (
+            OvumRuntimeWindowSensor(entry.runtime_data, label, window)
+            for label, window in RUNTIME_WINDOWS.items()
+        ),
+        update_before_add=True,
     )
 
 
@@ -238,3 +263,45 @@ class OvumSensor(OvumEntity, SensorEntity):
     def native_value(self) -> StateType:
         """Return the value from the last poll."""
         return self.entity_description.value_fn(self.coordinator.data)
+
+
+class OvumRuntimeWindowSensor(SensorEntity):
+    """Compressor runtime within a rolling window.
+
+    The controller only reports a lifetime counter. The change of its long-term
+    statistics over the window is the runtime inside it, and those statistics
+    outlive the recorder's purge of raw states.
+    """
+
+    _attr_has_entity_name = True
+    _attr_device_class = SensorDeviceClass.DURATION
+    _attr_native_unit_of_measurement = UnitOfTime.HOURS
+    _attr_suggested_display_precision = 1
+
+    def __init__(
+        self, coordinator: OvumCoordinator, label: str, window: timedelta
+    ) -> None:
+        """Initialize the sensor."""
+        self._window = window
+        self._attr_translation_key = f"compressor_runtime_{label}"
+        self._attr_unique_id = f"{DOMAIN}_compressor_runtime_{label}"
+        self._attr_device_info = coordinator.device_info
+
+    @override
+    async def async_update(self) -> None:
+        """Read the counter's change over the window from the statistics."""
+        statistic_id = er.async_get(self.hass).async_get_entity_id(
+            Platform.SENSOR, DOMAIN, f"{DOMAIN}_compressor_runtime"
+        )
+        if statistic_id is None:
+            return
+        result = await get_instance(self.hass).async_add_executor_job(
+            statistic_during_period,
+            self.hass,
+            dt_util.utcnow() - self._window,
+            None,
+            statistic_id,
+            {"change"},
+            {"duration": UnitOfTime.HOURS},
+        )
+        self._attr_native_value = result.get("change")

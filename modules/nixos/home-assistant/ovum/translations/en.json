@@ -53,6 +53,18 @@
       "compressor_runtime": {
         "name": "Compressor runtime"
       },
+      "compressor_runtime_24h": {
+        "name": "Compressor runtime 24h"
+      },
+      "compressor_runtime_3d": {
+        "name": "Compressor runtime 3d"
+      },
+      "compressor_runtime_7d": {
+        "name": "Compressor runtime 7d"
+      },
+      "compressor_runtime_30d": {
+        "name": "Compressor runtime 30d"
+      },
       "condenser_inlet": {
         "name": "Condenser inlet"
       },

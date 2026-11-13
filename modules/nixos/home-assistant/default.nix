@@ -139,7 +139,7 @@ in
     };
 
     services.sunspecModbusServer = {
-      enable = true;
+      enable = false;
       host = "0.0.0.0";
       port = 1502;
       unitId = 1;

@@ -28,8 +28,8 @@
           "oil_preheating": "Oil preheating",
           "ready": "Ready",
           "starting": "Starting",
-          "hot_water": "Hot water",
-          "heating": "Heating",
+          "hot_water": "WW",
+          "heating": "HZ",
           "cooling": "Cooling",
           "defrosting": "Defrosting",
           "manual_deicing": "Manual de-icing",
@@ -63,13 +63,13 @@
         "name": "Outdoor temperature"
       },
       "hot_water_top": {
-        "name": "Hot water top"
+        "name": "WW top"
       },
       "hot_water_bottom": {
-        "name": "Hot water bottom"
+        "name": "WW bottom"
       },
       "hot_water_target_active": {
-        "name": "Hot water active target"
+        "name": "WW active target"
       },
       "buffer_top": {
         "name": "Buffer top"
@@ -100,14 +100,14 @@
         "name": "HK{circuit} room temperature"
       },
       "hot_water_function": {
-        "name": "Hot water function",
+        "name": "WW function",
         "state": {
           "not_present": "Not present",
           "present": "Present"
         }
       },
       "buffer_type": {
-        "name": "Heating buffer",
+        "name": "HZ buffer",
         "state": {
           "none": "None",
           "buffer": "Buffer tank",
@@ -120,10 +120,10 @@
     },
     "number": {
       "hot_water_target": {
-        "name": "Hot water target"
+        "name": "WW target"
       },
       "hot_water_target_pv": {
-        "name": "Hot water target with PV"
+        "name": "WW target with PV"
       },
       "buffer_target_pv": {
         "name": "Buffer target with PV"
@@ -158,7 +158,7 @@
     },
     "select": {
       "hot_water": {
-        "name": "Hot water",
+        "name": "WW",
         "state": {
           "off": "Off",
           "on": "On"

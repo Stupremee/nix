@@ -28,8 +28,8 @@
           "oil_preheating": "Ölvorheizung",
           "ready": "Bereit",
           "starting": "Start",
-          "hot_water": "Warmwasser",
-          "heating": "Heizen",
+          "hot_water": "WW",
+          "heating": "HZ",
           "cooling": "Kühlen",
           "defrosting": "Abtauen",
           "manual_deicing": "Manuelles Enteisen",
@@ -63,13 +63,13 @@
         "name": "Außentemperatur"
       },
       "hot_water_top": {
-        "name": "Warmwasser oben"
+        "name": "WW oben"
       },
       "hot_water_bottom": {
-        "name": "Warmwasser unten"
+        "name": "WW unten"
       },
       "hot_water_target_active": {
-        "name": "Warmwasser Soll aktiv"
+        "name": "WW Soll aktiv"
       },
       "buffer_top": {
         "name": "Puffer oben"
@@ -100,14 +100,14 @@
         "name": "HK{circuit} Raumtemperatur"
       },
       "hot_water_function": {
-        "name": "Warmwasserfunktion",
+        "name": "WW-Funktion",
         "state": {
           "not_present": "Nicht vorhanden",
           "present": "Vorhanden"
         }
       },
       "buffer_type": {
-        "name": "Heizpuffer",
+        "name": "HZ-Puffer",
         "state": {
           "none": "Keiner",
           "buffer": "Pufferspeicher",
@@ -120,10 +120,10 @@
     },
     "number": {
       "hot_water_target": {
-        "name": "Warmwasser Soll"
+        "name": "WW Soll"
       },
       "hot_water_target_pv": {
-        "name": "Warmwasser Soll bei PV"
+        "name": "WW Soll bei PV"
       },
       "buffer_target_pv": {
         "name": "Puffer Soll bei PV"
@@ -158,7 +158,7 @@
     },
     "select": {
       "hot_water": {
-        "name": "Warmwasser",
+        "name": "WW",
         "state": {
           "off": "Aus",
           "on": "Ein"

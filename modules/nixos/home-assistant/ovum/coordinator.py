@@ -94,7 +94,10 @@ class OvumCoordinator(DataUpdateCoordinator[Snapshot]):
             for module, start, count in BLOCKS:
                 block = await self.units[module].read_holding_registers(start, count)
                 words.update(
-                    {(module, start + offset): word for offset, word in enumerate(block)}
+                    {
+                        (module, start + offset): word
+                        for offset, word in enumerate(block)
+                    }
                 )
         except ModbusError as err:
             raise UpdateFailed(

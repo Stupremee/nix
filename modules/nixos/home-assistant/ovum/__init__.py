@@ -48,7 +48,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: OvumConfigEntry) -> bool
     """Set up the Ovum controller from a config entry."""
     params = ModbusTcpParams(host=entry.data[CONF_HOST], port=entry.data[CONF_PORT])
     units = {module: async_get_unit(hass, entry, params, module) for module in Module}
-    login_code = await _async_read_login_code(hass, entry.data.get(CONF_LOGIN_CODE_FILE))
+    login_code = await _async_read_login_code(
+        hass, entry.data.get(CONF_LOGIN_CODE_FILE)
+    )
 
     coordinator = OvumCoordinator(hass, entry, units, login_code)
     await coordinator.async_config_entry_first_refresh()

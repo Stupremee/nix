@@ -84,7 +84,9 @@ class OvumSelect(OvumEntity, SelectEntity):
     def current_option(self) -> str | None:
         """Return the choice from the last poll."""
         raw = self.coordinator.data[self.entity_description.register]
-        return self.entity_description.choices.get(raw) if isinstance(raw, int) else None
+        return (
+            self.entity_description.choices.get(raw) if isinstance(raw, int) else None
+        )
 
     @override
     async def async_select_option(self, option: str) -> None:

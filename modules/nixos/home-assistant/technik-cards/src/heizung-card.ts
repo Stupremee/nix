@@ -35,15 +35,19 @@ interface DefrostStats {
 }
 
 const CSS = `
-  :host { display: block; --line: color-mix(in srgb, var(--primary-text-color) 22%, transparent);
+  :host { display: block; height: 100%; --line: color-mix(in srgb, var(--primary-text-color) 22%, transparent);
     --card-bg: var(--ha-card-background, var(--card-background-color, #1c1c1c));
     --hot: var(--warning-color, #ffa600); --ww: var(--error-color, #db4437); --cold: var(--info-color, #039be5); }
-  ha-card { padding: 16px; overflow: hidden; }
+  ha-card { padding: 16px; overflow: hidden; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; }
+  #root { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  #root > svg { flex: 1; min-height: 0; }
+  #root > .stack { flex: 1; min-height: 0; overflow: auto; }
   .bar { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; font-size: 12px; color: var(--secondary-text-color); margin: 0 2px 10px; }
   .bar b { color: var(--primary-text-color); font-size: 15px; margin-right: auto; }
   .bar strong { color: var(--primary-text-color); font-variant-numeric: tabular-nums; }
   .bar .alert { font-weight: 600; }
   svg { display: block; width: 100%; height: auto; font-family: inherit; user-select: none; }
+  .bar { flex: none; }
   .t { fill: var(--primary-text-color); } .m { fill: var(--secondary-text-color); }
   .num { font-variant-numeric: tabular-nums; font-weight: 600; }
   [data-sheet] { cursor: pointer; }
@@ -98,8 +102,9 @@ class HeizungCard extends HTMLElement implements LovelaceCard {
     return 8;
   }
 
-  getGridOptions(): { columns: string | number; rows: string } {
-    return { columns: "full", rows: "auto" };
+  getGridOptions(): { columns: string | number; rows: number } {
+    // Same height as Helios next to it; the schematic scales to fit.
+    return { columns: "full", rows: 9 };
   }
 
   set hass(hass: HomeAssistant) {

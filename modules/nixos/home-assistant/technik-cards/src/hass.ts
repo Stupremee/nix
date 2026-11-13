@@ -34,6 +34,7 @@ export interface StatisticRow {
   start: number;
   end: number;
   change?: number | null;
+  mean?: number | null;
 }
 
 export function moreInfo(from: HTMLElement, entityId: string): void {

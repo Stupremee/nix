@@ -1,0 +1,206 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "The Ovum controller is already configured."
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "unknown": "Unexpected error"
+    },
+    "step": {
+      "user": {
+        "description": "Address of the MIRA controller's Modbus TCP interface.",
+        "data": {
+          "host": "Host",
+          "port": "Port"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "status": {
+        "name": "Status",
+        "state": {
+          "fault": "Fault",
+          "inverter_offline": "Inverter offline",
+          "blocked": "Blocking period",
+          "oil_preheating": "Oil preheating",
+          "ready": "Ready",
+          "starting": "Starting",
+          "hot_water": "Hot water",
+          "heating": "Heating",
+          "cooling": "Cooling",
+          "defrosting": "Defrosting",
+          "manual_deicing": "Manual de-icing",
+          "stopping": "Stopping",
+          "below_operating_limit": "Below operating limit",
+          "inverter_reset": "Inverter reset"
+        }
+      },
+      "power_input": {
+        "name": "Electrical power"
+      },
+      "heat_output": {
+        "name": "Heat output"
+      },
+      "cop": {
+        "name": "COP"
+      },
+      "demand": {
+        "name": "Demand"
+      },
+      "compressor_runtime": {
+        "name": "Compressor runtime"
+      },
+      "condenser_inlet": {
+        "name": "Condenser inlet"
+      },
+      "condenser_outlet": {
+        "name": "Condenser outlet"
+      },
+      "outdoor_temperature": {
+        "name": "Outdoor temperature"
+      },
+      "hot_water_top": {
+        "name": "Hot water top"
+      },
+      "hot_water_bottom": {
+        "name": "Hot water bottom"
+      },
+      "hot_water_target_active": {
+        "name": "Hot water active target"
+      },
+      "buffer_top": {
+        "name": "Buffer top"
+      },
+      "buffer_bottom": {
+        "name": "Buffer bottom"
+      },
+      "buffer_target_active": {
+        "name": "Buffer active target"
+      },
+      "circuit_flow_temperature": {
+        "name": "HK{circuit} flow temperature"
+      },
+      "circuit_flow_target": {
+        "name": "HK{circuit} flow target"
+      },
+      "circuit_type": {
+        "name": "HK{circuit} type",
+        "state": {
+          "none": "None",
+          "unmixed": "Unmixed",
+          "return": "Return-controlled",
+          "mixed": "Mixed",
+          "cube_direct": "Cube direct"
+        }
+      },
+      "circuit_room_temperature": {
+        "name": "HK{circuit} room temperature"
+      },
+      "hot_water_function": {
+        "name": "Hot water function",
+        "state": {
+          "not_present": "Not present",
+          "present": "Present"
+        }
+      },
+      "buffer_type": {
+        "name": "Heating buffer",
+        "state": {
+          "none": "None",
+          "buffer": "Buffer tank",
+          "cube_storage": "Cube storage"
+        }
+      },
+      "system_name": {
+        "name": "System name"
+      }
+    },
+    "number": {
+      "hot_water_target": {
+        "name": "Hot water target"
+      },
+      "hot_water_target_pv": {
+        "name": "Hot water target with PV"
+      },
+      "buffer_target_pv": {
+        "name": "Buffer target with PV"
+      },
+      "circuit_room_target": {
+        "name": "HK{circuit} room target"
+      },
+      "circuit_pv_raise": {
+        "name": "HK{circuit} PV raise"
+      },
+      "circuit_pv_lower": {
+        "name": "HK{circuit} PV reduction"
+      },
+      "circuit_flow_target": {
+        "name": "HK{circuit} flow target"
+      },
+      "circuit_flow_temperature": {
+        "name": "HK{circuit} flow temperature"
+      },
+      "ems_battery_soc": {
+        "name": "EMS battery level"
+      },
+      "ems_grid_power": {
+        "name": "EMS grid power"
+      },
+      "ems_inverter_power": {
+        "name": "EMS inverter power"
+      },
+      "ems_target_power": {
+        "name": "EMS target power"
+      }
+    },
+    "select": {
+      "hot_water": {
+        "name": "Hot water",
+        "state": {
+          "off": "Off",
+          "on": "On"
+        }
+      },
+      "circuit_mode": {
+        "name": "HK{circuit} mode",
+        "state": {
+          "off": "Off",
+          "automatic": "Automatic",
+          "winter": "Winter",
+          "summer": "Summer"
+        }
+      },
+      "ems_pv_status": {
+        "name": "EMS PV status",
+        "state": {
+          "neutral": "Neutral",
+          "raise": "Raise (free PV power)",
+          "lower": "Lower (PV power expected)"
+        }
+      }
+    }
+  },
+  "exceptions": {
+    "cannot_connect": {
+      "message": "Failed to reach the Ovum controller: {error}"
+    },
+    "write_failed": {
+      "message": "Writing to the Ovum controller failed: {error}"
+    },
+    "write_rejected": {
+      "message": "The controller did not take {value}, it holds {stored}."
+    },
+    "login_required": {
+      "message": "Writing needs the Modbus login code, which is not configured."
+    },
+    "login_rejected": {
+      "message": "The controller rejected the Modbus login code."
+    },
+    "login_code_unreadable": {
+      "message": "Cannot read a login code from {path}."
+    }
+  }
+}

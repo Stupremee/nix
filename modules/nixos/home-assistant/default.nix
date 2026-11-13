@@ -46,6 +46,10 @@ in
       hass-mqtt-password = {
         generator.script = "alnum";
       };
+      ovum-modbus-login-code = {
+        rekeyFile = ../../../secrets/ovum-modbus-login-code.age;
+        owner = "hass";
+      };
       sunspec-home-assistant-token.rekeyFile = ../../../secrets/sunspec-home-assistant-token.age;
       zigbee2mqtt-mqtt-password.rekeyFile = ../../../secrets/zigbee2mqtt-mqtt-password.age;
       "zigbee2mqtt-secrets.yaml" = {
@@ -66,6 +70,15 @@ in
           # hcu_integration
           getmac
         ];
+
+      customComponents = [
+        (pkgsUnstable.buildHomeAssistantComponent {
+          owner = "stu";
+          domain = "ovum";
+          version = "0.1.0";
+          src = ./ovum;
+        })
+      ];
 
       extraComponents = [
         # Components required to complete the onboarding
@@ -115,6 +128,13 @@ in
 
         automation = "!include automations.yaml";
         modbus = "!include ${./modbus.yaml}";
+
+        # Ovum heat pump (MIRA controller), see ./ovum
+        ovum = {
+          host = "192.168.188.96";
+          port = 502;
+          login_code_file = config.age.secrets.ovum-modbus-login-code.path;
+        };
       };
     };
 

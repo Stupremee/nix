@@ -280,7 +280,7 @@ SENSORS: tuple[FoxSensorDescription, ...] = (
         options=["on_grid", "off_grid"],
         value_fn=_grid_mode,
     ),
-    _sensor("pv_input_power_total", INVERTER, "power", _i32(39118, precision=3)),
+    _sensor("pv_input_power_total", INVERTER, "power", _i32(39118)),
     _sensor("active_power", INVERTER, "power", _i32(39134, precision=3)),
     _sensor("reactive_power", INVERTER, "reactive_power_k", _i32(39136, 0.001, 3)),
     _sensor("inv_apparent_power_total", INVERTER, "apparent_power", _i32(39270)),

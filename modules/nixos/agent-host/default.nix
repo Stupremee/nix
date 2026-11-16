@@ -7,6 +7,7 @@
 with lib;
 let
   cfg = config.my.agent-host;
+  uid = toString config.users.users.${config.my.user.mainUser}.uid;
 in
 {
   options.my.agent-host = {
@@ -85,7 +86,7 @@ in
     # instance runs (t3code, agents, and all their children) shares one budget, while
     # tailscaled, sshd and interactive SSH sessions stay outside it. Test with
     # `systemd-run --user stress-ng --vm 8 --vm-bytes 100% --cpu 16`, then SSH in.
-    systemd.services."user@${toString config.users.users.${config.my.user.mainUser}.uid}" = {
+    systemd.services."user@${uid}" = {
       overrideStrategy = "asDropin";
       serviceConfig = {
         MemoryHigh = cfg.memoryHigh;
@@ -96,12 +97,45 @@ in
         CPUWeight = 20;
         IOWeight = 20;
         TasksMax = 8192;
+        # Mirrors `t3 service protect`: the kernel reclaims from agents before the t3code server.
+        # MemoryLow only takes effect when every ancestor slice grants it too.
+        MemoryLow = "2G";
+        # Sets the floor the user manager can lower t3code.service to
+        OOMScoreAdjust = -900;
       };
+    };
+    systemd.slices.user.sliceConfig.MemoryLow = "2G";
+    systemd.slices."user-${uid}" = {
+      overrideStrategy = "asDropin";
+      sliceConfig.MemoryLow = "2G";
     };
 
     # When the kernel OOM-kills one runaway child, keep its service (t3code) running instead
-    # of stopping it
-    systemd.user.extraConfig = "DefaultOOMPolicy=continue";
+    # of stopping it. Everything else the user manager starts is a preferred OOM victim.
+    systemd.user.extraConfig = ''
+      DefaultOOMPolicy=continue
+      DefaultOOMScoreAdjust=200
+    '';
+    systemd.user.slices.app = {
+      overrideStrategy = "asDropin";
+      sliceConfig.MemoryLow = "1536M";
+    };
+    systemd.user.units."init.scope" = {
+      overrideStrategy = "asDropin";
+      text = ''
+        [Scope]
+        MemoryLow=256M
+      '';
+    };
+    # t3code installs its own unit in ~/.config, so this only adds a drop-in. Raw text because
+    # systemd.user.services would also set PATH and hide the one from environment.d.
+    systemd.user.units."t3code.service" = {
+      overrideStrategy = "asDropin";
+      text = ''
+        [Service]
+        OOMScoreAdjust=-900
+      '';
+    };
 
     # systemd-oomd kills whole leaf cgroups. Below this slice those are single agents, terminals
     # and preview browsers (t3code-*.scope); t3code.service sits outside it and is never a

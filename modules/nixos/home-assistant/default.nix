@@ -185,6 +185,16 @@ in
           host = "192.168.188.96";
           port = 502;
           login_code_file = config.age.secrets.ovum-modbus-login-code.path;
+          # PV surplus regulation, fed by the FoxESS inverter (see ./ovum/regulator.py)
+          ems = {
+            battery_level = "sensor.ess_1_bms1_state_of_charge";
+            battery_power = "sensor.ess_1_battery_power_total";
+            grid_power = "sensor.ess_1_meter1_active_power_total";
+            grid_power_inverted = true;
+            pv_power = "sensor.ess_1_pv_input_power_total";
+            # HEA THOR in the heat pump's flow, via the WP-Steuerung ESP
+            heating_rod = "number.wp_steuerung_heizstab_pv_leistung";
+          };
         };
       };
     };

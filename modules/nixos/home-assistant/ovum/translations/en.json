@@ -128,6 +128,16 @@
       },
       "system_name": {
         "name": "System name"
+      },
+      "ems_state": {
+        "name": "EMS state",
+        "state": {
+          "off": "Off",
+          "no_input": "Inputs missing",
+          "idle": "No surplus",
+          "pending": "Surplus detected",
+          "raising": "Raising"
+        }
       }
     },
     "number": {
@@ -192,6 +202,11 @@
           "raise": "Raise (free PV power)",
           "lower": "Lower (PV power expected)"
         }
+      }
+    },
+    "switch": {
+      "pv_surplus": {
+        "name": "PV surplus"
       }
     }
   },

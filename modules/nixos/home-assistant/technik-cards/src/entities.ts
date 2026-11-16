@@ -1,4 +1,26 @@
-// Entity IDs of the Ovum heat pump and the WP-Steuerung ESP.
+// Entity IDs of the Ovum heat pump, the WP-Steuerung ESP and the FoxESS inverter.
+
+const E = "sensor.ess_1_";
+
+export const GRID = {
+  mode: `${E}grid_mode`,
+  /** Negative while importing. */
+  power: `${E}meter1_active_power_total`,
+  imported: `${E}energy_consumed_total`,
+  exported: `${E}feeder_network_energy_total`,
+  outageLast: `${E}grid_outage_last`,
+  outageMinutes: `${E}grid_outage_duration`,
+} as const;
+
+export const BATTERY = {
+  soc: `${E}bms1_state_of_charge`,
+  /** Negative while charging. */
+  power: `${E}battery_power_total`,
+  remaining: `${E}battery_time_remaining`,
+  toFull: `${E}battery_time_to_full`,
+} as const;
+
+export const HOUSE_ENERGY = `${E}load_energy_total`;
 
 export const OUTDOOR = "sensor.ovum_outdoor_temperature";
 
@@ -12,6 +34,13 @@ export const HEAT_PUMP = {
   condenserOut: "sensor.ovum_condenser_outlet",
   runtime: "sensor.ovum_compressor_runtime",
   pvStatus: "select.ovum_ems_pv_status",
+} as const;
+
+export const EMS = {
+  enabled: "switch.ovum_pv_surplus",
+  state: "sensor.ovum_ems_state",
+  /** Watts. */
+  target: "number.ovum_ems_target_power",
 } as const;
 
 export const TANK = {
@@ -37,6 +66,8 @@ export const ROD = {
   boostActive: "binary_sensor.wp_steuerung_heizstab_boost_aktiv",
   fault: "binary_sensor.wp_steuerung_heizstab_storung",
   energy: "sensor.wp_steuerung_heizstab_energie",
+  /** kW the PV surplus regulation asks for, honoured in mode Auto. */
+  pvPower: "number.wp_steuerung_heizstab_pv_leistung",
 } as const;
 
 export interface Circuit {

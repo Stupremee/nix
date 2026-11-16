@@ -5,7 +5,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from datetime import timedelta
 import logging
-from typing import override
+from typing import TYPE_CHECKING, override
 
 from modbus_connection import ModbusError, ModbusUnit
 from modbus_connection.encode import encode_int32
@@ -18,6 +18,9 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 from .const import DOMAIN, NAME
 from .registers import BLOCKS, LOGIN_CODE, LOGIN_STATUS, Module, Register, Value
+
+if TYPE_CHECKING:
+    from .ems import EmsController
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -80,6 +83,7 @@ class OvumCoordinator(DataUpdateCoordinator[Snapshot]):
         self.units = units
         self._login_code = login_code
         self._write_lock = asyncio.Lock()
+        self.ems: EmsController | None = None
         self.device_info = DeviceInfo(
             identifiers={(DOMAIN, entry.unique_id or entry.entry_id)},
             name=NAME,
@@ -108,10 +112,10 @@ class OvumCoordinator(DataUpdateCoordinator[Snapshot]):
         return Snapshot(words)
 
     async def async_write(self, register: Register, value: float) -> None:
-        """Write a value a user set, then read it back.
+        """Write a value, then read it back.
 
-        P_ registers go to flash on every write, so this runs only from a user
-        action, and skips values the device already holds.
+        P_ registers go to flash on every write, so those are written only from
+        a user action. Every write skips values the device already holds.
         """
         async with self._write_lock:
             if self.data[register] == value:

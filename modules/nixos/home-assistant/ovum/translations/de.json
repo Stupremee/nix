@@ -128,6 +128,16 @@
       },
       "system_name": {
         "name": "Anlagenname"
+      },
+      "ems_state": {
+        "name": "EMS-Zustand",
+        "state": {
+          "off": "Aus",
+          "no_input": "Eingangswerte fehlen",
+          "idle": "Kein Überschuss",
+          "pending": "Überschuss erkannt",
+          "raising": "Anheben"
+        }
       }
     },
     "number": {
@@ -192,6 +202,11 @@
           "raise": "Anheben (PV-Überschuss)",
           "lower": "Absenken (PV erwartet)"
         }
+      }
+    },
+    "switch": {
+      "pv_surplus": {
+        "name": "PV-Überschuss"
       }
     }
   },

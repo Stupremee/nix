@@ -7,17 +7,28 @@ import probatio
 
 from homeassistant.components.modbus import async_get_unit
 from homeassistant.config_entries import SOURCE_IMPORT
-from homeassistant.const import CONF_HOST, CONF_PORT, Platform
-from homeassistant.core import HomeAssistant
+from homeassistant.const import (
+    CONF_HOST,
+    CONF_PORT,
+    EVENT_HOMEASSISTANT_STOP,
+    Platform,
+)
+from homeassistant.core import Event, HomeAssistant
 from homeassistant.exceptions import ConfigEntryError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.typing import ConfigType
 
-from .const import CONF_LOGIN_CODE_FILE, DEFAULT_PORT, DOMAIN
+from .const import CONF_EMS, CONF_LOGIN_CODE_FILE, DEFAULT_PORT, DOMAIN
 from .coordinator import OvumConfigEntry, OvumCoordinator
+from .ems import EmsController, EmsInputs
 from .registers import Module
 
-PLATFORMS: list[Platform] = [Platform.NUMBER, Platform.SELECT, Platform.SENSOR]
+PLATFORMS: list[Platform] = [
+    Platform.NUMBER,
+    Platform.SELECT,
+    Platform.SENSOR,
+    Platform.SWITCH,
+]
 
 CONFIG_SCHEMA = probatio.Schema(
     {
@@ -26,6 +37,18 @@ CONFIG_SCHEMA = probatio.Schema(
                 probatio.Required(CONF_HOST): cv.string,
                 probatio.Optional(CONF_PORT, default=DEFAULT_PORT): cv.port,
                 probatio.Optional(CONF_LOGIN_CODE_FILE): cv.string,
+                probatio.Optional(CONF_EMS): probatio.Schema(
+                    {
+                        probatio.Required("battery_level"): cv.entity_id,
+                        probatio.Required("battery_power"): cv.entity_id,
+                        probatio.Required("grid_power"): cv.entity_id,
+                        probatio.Required("pv_power"): cv.entity_id,
+                        probatio.Optional(
+                            "grid_power_inverted", default=False
+                        ): cv.boolean,
+                        probatio.Optional("heating_rod"): cv.entity_id,
+                    }
+                ),
             }
         )
     },
@@ -54,6 +77,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: OvumConfigEntry) -> bool
 
     coordinator = OvumCoordinator(hass, entry, units, login_code)
     await coordinator.async_config_entry_first_refresh()
+    if inputs := entry.data.get(CONF_EMS):
+        ems = coordinator.ems = EmsController(hass, coordinator, EmsInputs(**inputs))
+
+        # Hand the heat pump back to its own control while nothing feeds it.
+        async def _async_release(_: Event | None = None) -> None:
+            await ems.async_disable()
+
+        entry.async_on_unload(_async_release)
+        entry.async_on_unload(
+            hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, _async_release)
+        )
 
     entry.runtime_data = coordinator
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)

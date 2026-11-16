@@ -31,6 +31,7 @@ from homeassistant.util import dt as dt_util
 from .const import DOMAIN
 from .coordinator import OvumConfigEntry, OvumCoordinator, Snapshot
 from .entity import OvumEntity
+from .regulator import EmsState
 from .registers import (
     BUFFER_BOTTOM,
     BUFFER_OPTIONS,
@@ -241,9 +242,12 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     """Set up the Ovum sensors."""
+    coordinator = entry.runtime_data
     async_add_entities(
-        OvumSensor(entry.runtime_data, description) for description in SENSORS
+        OvumSensor(coordinator, description) for description in SENSORS
     )
+    if coordinator.ems is not None:
+        async_add_entities([OvumEmsStateSensor(coordinator, EMS_STATE)])
     async_add_entities(
         (
             OvumRuntimeWindowSensor(entry.runtime_data, label, window)
@@ -263,6 +267,25 @@ class OvumSensor(OvumEntity, SensorEntity):
     def native_value(self) -> StateType:
         """Return the value from the last poll."""
         return self.entity_description.value_fn(self.coordinator.data)
+
+
+EMS_STATE = SensorEntityDescription(
+    key="ems_state",
+    translation_key="ems_state",
+    device_class=SensorDeviceClass.ENUM,
+    options=[state.value for state in EmsState],
+)
+
+
+class OvumEmsStateSensor(OvumEntity, SensorEntity):
+    """What the PV surplus regulation is doing, refreshed with every poll."""
+
+    @property
+    @override
+    def native_value(self) -> str | None:
+        """Return the regulator's state."""
+        ems = self.coordinator.ems
+        return None if ems is None else ems.state.value
 
 
 class OvumRuntimeWindowSensor(SensorEntity):

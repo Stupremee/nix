@@ -58,6 +58,7 @@
     niks3.enable = false;
     unifi.enable = true;
     stremio.enable = true;
+    trakt-mcp.enable = true;
     brother-scan = {
       enable = true;
       printerAddress = "192.168.188.40";
